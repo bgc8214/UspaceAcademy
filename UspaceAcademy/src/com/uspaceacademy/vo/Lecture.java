@@ -1,6 +1,8 @@
 package com.uspaceacademy.vo;
 
-public class Lecture
-{
+public class Lecture{
 
+	
+	
+	
 }
