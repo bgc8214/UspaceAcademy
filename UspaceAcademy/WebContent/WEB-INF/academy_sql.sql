@@ -22,7 +22,7 @@ create table teacher(
 	teacher_name varchar2(100) not null,
 	teacher_email varchar2(100) not null,
 	teacher_phone_no varchar2(13) not null,
-	teacher_adress varchar2(100) not null,
+	teacher_address varchar2(100) not null,
 	teacher_subject varchar2(50) not null,
 	teacher_salary number not null
 );
@@ -152,4 +152,3 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 
->>>>>>> branch 'master' of https://github.com/bgc8214/UspaceAcademy.git
