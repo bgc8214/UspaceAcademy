@@ -49,7 +49,7 @@ insert into STUDENT values('id-4','4444','김세은','iidd4@kosta.com','010-1111
 drop table basic_board;
 create table basic_board(
 	basic_no number primary key,
-	student_id varchar2(50) not null,
+	basic_writer varchar2(50) not null,
 	basic_title varchar2(100) not null,
 	basic_content clob not null,	
 	basic_date varchar2(10) not null,
@@ -311,3 +311,6 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 
+-- code_table insert하는 구문
+insert into CODE_TABLE values('1', '공지사항', 'basic_board');
+insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
