@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+	<mvc:annotation-driven />
+
+	<mvc:view-controller path="/main.do" view-name="main.tiles" />
+	<context:component-scan base-package="com.uspaceacademy"/>
+	<bean name="tilesConfig"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/config/tiles-defs.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean name="vr1"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver"
+		p:order="1" />
+	<bean name="vr2"
+		class="org.springframework.web.servlet.view.tiles3.TilesViewResolver"
+		p:order="2" />
+	<bean name="vr3"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="3" />
+
+	<bean p:maxTotal="100" p:password="tiger" p:username="scott"
+		p:url="jdbc:oracle:thin:@127.0.0.1:1521:XE" p:driverClassName="oracle.jdbc.driver.OracleDriver"
+		class="org.apache.commons.dbcp2.BasicDataSource" name="dataSource" />
+
+	<!-- - SqlSessionFactoryBean - SqlSessionFactory를 생성하는 Bean으로 DataSource와 
+		마이바티스 설정파일 또는 설정을 태그로 주입받아 SqlSessionFactory를 생성한다. -->
+
+
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" name="sqlSessionFactory"
+		p:configLocation="/WEB-INF/config/mybatis-config.xml"
+		p:dataSource-ref="dataSource" />
+
+	<!-- - SqlSessionTemplate - SqlSession 기능을 제공하는 클래스 - 주입받은 SqlSessionFactoryBean을 
+		이용해 SqlSession객체를 생성해 메소드를 호출한다. -->
+
+
+	<bean class="org.mybatis.spring.SqlSessionTemplate" name="sqlSessionTemplate"
+		c:sqlSessionFactory-ref="sqlSessionFactory" />
+
+	
+	<bean name="txmanager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+	p:dataSource-ref="dataSource"/>
+	<tx:annotation-driven transaction-manager="txmanager"/>
+	
+</beans>
