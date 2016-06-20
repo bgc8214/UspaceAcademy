@@ -1,5 +1,6 @@
 
 
+
 -- 코드테이블
 drop table code_table;
 create table code_table(
@@ -7,6 +8,7 @@ create table code_table(
 	code_name varchar2(30) not null,
 	code_type varchar2(30) not null
 );
+
 -- 관리자
 drop table administrator;
 create table administrator(
@@ -22,7 +24,7 @@ create table teacher(
 	teacher_name varchar2(100) not null,
 	teacher_email varchar2(100) not null,
 	teacher_phone_no varchar2(13) not null,
-	teacher_address varchar2(100) not null,
+	teacher_adress varchar2(100) not null,
 	teacher_subject varchar2(50) not null,
 	teacher_salary number not null
 );
@@ -54,6 +56,10 @@ create table basic_board(
 	basic_hit number not null,
 	basic_type varchar2(30) not null
 );
+
+create sequence basic_board_seq 
+nocache;
+
 
 -- 수강 후기
 drop table review_board;
@@ -125,7 +131,7 @@ create table assignment_board(
 	assingment_re_family number not null,
 	assingment_re_step number not null,
 	assingment_re_level number not null,
-	assingment_writer varchar2(50) not null,
+	assingment_id varchar2(50) not null,
 	assingment_deadline varchar2(10) not null,
 	lecture_no number not null,
 	constraint fk_assignment_lecture foreign key (lecture_no) references lecture(lecture_no)
@@ -152,3 +158,7 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 
+
+-- code_table insert하는 구문
+insert into CODE_TABLE values('1', '공지사항', 'basic_board');
+insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
