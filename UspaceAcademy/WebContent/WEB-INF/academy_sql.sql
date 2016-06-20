@@ -132,7 +132,7 @@ create table assignment_board(
 );
 
 -- 학생 강의 조인
-DROP table student_lecture_join;
+DROP table student_lecture_join cascade constraint;
 CREATE TABLE student_lecture_join(
 	student_id3 varchar2(50),
 	lecture_no3 number,
@@ -152,4 +152,3 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 
->>>>>>> branch 'master' of https://github.com/bgc8214/UspaceAcademy.git
