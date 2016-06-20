@@ -1,5 +1,6 @@
 
 
+
 -- 코드테이블
 drop table code_table;
 create table code_table(
@@ -310,4 +311,3 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 
->>>>>>> branch 'master' of https://github.com/bgc8214/UspaceAcademy.git
