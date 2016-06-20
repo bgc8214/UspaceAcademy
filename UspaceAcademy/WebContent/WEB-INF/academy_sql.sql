@@ -55,6 +55,10 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
+create sequence basic_board_seq 
+nocache;
+
+
 -- 수강 후기
 drop table review_board;
 create table review_board(
