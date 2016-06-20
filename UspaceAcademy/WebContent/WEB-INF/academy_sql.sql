@@ -6,7 +6,6 @@ create table code_table(
 	code_name varchar2(30) not null,
 	code_type varchar2(30) not null
 );
-
 -- 관리자
 drop table administrator;
 create table administrator(
