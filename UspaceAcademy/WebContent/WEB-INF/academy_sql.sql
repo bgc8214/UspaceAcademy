@@ -291,7 +291,7 @@ create table assignment_board(
 );
 
 -- 학생 강의 조인
-DROP table student_lecture_join;
+DROP table student_lecture_join cascade constraint;
 CREATE TABLE student_lecture_join(
 	student_id3 varchar2(50),
 	lecture_no3 number,
