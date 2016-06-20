@@ -1,11 +1,5 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+
+
 메인페이지
-</body>
-</html>
+<a href="/UspaceAcademy/insert.do">리스트요청</a>

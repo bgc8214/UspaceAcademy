@@ -6,7 +6,6 @@ create table code_table(
 	code_name varchar2(30) not null,
 	code_type varchar2(30) not null
 );
-
 -- 관리자
 drop table administrator;
 create table administrator(
@@ -47,7 +46,7 @@ insert into STUDENT values('id-4','4444','김세은','iidd4@kosta.com','010-1111
 drop table basic_board;
 create table basic_board(
 	basic_no number primary key,
-	student_id varchar2(50) not null,
+	basic_writer varchar2(50) not null,
 	basic_title varchar2(100) not null,
 	basic_content clob not null,	
 	basic_date varchar2(10) not null,
@@ -125,7 +124,7 @@ create table assignment_board(
 	assingment_re_family number not null,
 	assingment_re_step number not null,
 	assingment_re_level number not null,
-	assingment_id varchar2(50) not null,
+	assingment_writer varchar2(50) not null,
 	assingment_deadline varchar2(10) not null,
 	lecture_no number not null,
 	constraint fk_assignment_lecture foreign key (lecture_no) references lecture(lecture_no)
