@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inquiryMapper">
+	<sql id="inquiry-select">
+		select advanced_no,
+				advanced_secret,
+				advanced_title,
+				advanced_content,
+				advanced_date,
+				advanced_hit,
+				advanced_id,
+				lecture_no2
+		from	advanced_board		
+	</sql>
+	
+	<sql id="inquiry-select2">
+		select advanced_no,
+				advanced_secret,
+				advanced_title,
+				advanced_content,
+				advanced_date,
+				advanced_hit,
+				advanced_id
+		from	advanced_board		
+	</sql>
+	
+	<resultMap type="inquiry" id="inquiry-resultmap">
+		<result column="advanced_no" property="advancedNo"/>
+		<result column="advanced_secret" property="advancedSecret"/>
+		<result column="advanced_title" property="advancedTitle"/>
+		<result column="advanced_content" property="advancedContent"/>
+		<result column="advanced_Date" property="advancedDate"/>
+		<result column="advanced_hit" property="advancedHit"/>
+		<result column="advanced_id" property="advancedId"/>
+		<result column="lecture_no2" property="lectureNo2"/>
+	</resultMap>
+	
+	<resultMap type="inquiry" id="inquiry-resultmap2">
+		<result column="advanced_no" property="advancedNo"/>
+		<result column="advanced_secret" property="advancedSecret"/>
+		<result column="advanced_title" property="advancedTitle"/>
+		<result column="advanced_content" property="advancedContent"/>
+		<result column="advanced_Date" property="advancedDate"/>
+		<result column="advanced_hit" property="advancedHit"/>
+		<result column="advanced_id" property="advancedId"/>
+	</resultMap>
+
+ 	<insert id="insertInquiry" parameterType="inquiry">
+		insert into inquiry values (#{advanced_no}, #{advanced_secret}, #{advanced_title}, #{advanced_content}, #{advanced_date}, #{advanced_hit}, #{advanced_id}, #{lecture_no2})
+	</insert>
+	
+ 	<update id="updateInquiry" parameterType="inquiry">
+		update advanced_board
+		set advancedNo = #{advanced_no},
+			advancedSecret = #{advanced_secret},
+			advancedTitle = #{advanced_title},
+			advancedContent = #{advanced_content},
+			advancedDate = #{advanced_date},
+			advancedHit = #{advanced_hit},
+			advancedId = #{advanced_id},
+			lectureNo2 = #{lecture_no2}
+		where advancedNo = #{advanced_no}	
+	</update>
+	
+	<delete id="deleteInquiryByAdvancedNo" parameterType="_int">
+		delete from advanced_board where advancedNo = #{advancedNo}
+	</delete>
+	
+	<select id="selectAllInquirys" resultMap="inquiry-resultmap">
+		<include refid="inquiry-select"></include>
+	</select>
+	
+</mapper>
