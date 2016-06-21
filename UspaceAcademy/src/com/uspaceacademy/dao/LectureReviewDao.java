@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.uspaceacademy.vo.LectureReview;
+import org.springframework.stereotype.Repository;
 
+import com.uspaceacademy.vo.LectureReview;
+@Repository
 public class LectureReviewDao{
 
 	private String namespace="lectureReviewMapper";//
-	
 	private SqlSessionTemplate session;//
 	
 	@Autowired
