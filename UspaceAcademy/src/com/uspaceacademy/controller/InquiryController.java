@@ -1,6 +1,6 @@
 package com.uspaceacademy.controller;
 
-public class InquiryController
-{
+
+public class InquiryController {
 
 }
