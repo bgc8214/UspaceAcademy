@@ -51,5 +51,9 @@ public class NoticeDao
 		return session.delete(namespace+"delete_notice", no);
 	}
 	
+	public Notice selectByNo(int no) {
+		return session.selectOne(namespace+"select_byno", no);
+	}
+	
 	
 }

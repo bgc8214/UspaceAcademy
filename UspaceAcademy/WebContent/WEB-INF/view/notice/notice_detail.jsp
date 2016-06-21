@@ -7,8 +7,6 @@ no : ${requestScope.notice.basicNo}<br>
 내용 : ${requestScope.notice.basicContent}
 <p>
 <a href="/UspaceAcademy/notice/list.do">공지사항 리스트</a>
-<a href="/UspaceAcademy/notice/noticeUpdateForm.do"><input type="button" value="공지사항 수정"></a>
+<a href="/UspaceAcademy/notice/noticeUpdateForm.do?no=${requestScope.notice.basicNo}"><input type="button" value="공지사항 수정"></a>
+<a href="/UspaceAcademy/notice/noticeDelete.do?no=${requestScope.notice.basicNo}"><input type="button" value="공지사항 삭제"></a>
 
-형변환 - String
-
-버튼 클릭시 보내기 객체 보내기

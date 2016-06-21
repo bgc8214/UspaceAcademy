@@ -47,4 +47,8 @@ public class NoticeService
 		return dao.deleteNotice(no);
 	}
 	
+	public Notice selectByNo(int no) {
+		return dao.selectByNo(no);
+	}
+	
 }
