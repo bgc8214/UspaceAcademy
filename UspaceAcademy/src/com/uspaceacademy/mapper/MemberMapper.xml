@@ -1,0 +1,14 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper"><!-- 이름은 각자 맞게 바꾸면됨 -->
+	<insert id="insertStudent" parameterType="student">
+		INSERT INTO student
+		VALUES
+		(#{studentId},#{studentPassword},#{studentName},#{studentEmail},#{studentPhoneNo},#{studentAddress})
+	</insert>
+	<insert id="insertTeacher" parameterType="teacher">
+		INSERT INTO teacher
+		VALUES
+		(#{teacherId},#{teacherPassword},#{teacherName},#{teacherEmail},#{teacherPhoneNo},#{teacherAddress},#{teacherSubject},#{teacherSalary})
+	</insert>
+	
+</mapper>

@@ -162,3 +162,9 @@ CREATE TABLE attendance(
 -- code_table insert하는 구문
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
+
+insert into CODE_TABLE values('3', '국어', 'subject');
+insert into CODE_TABLE values('4', '영어', 'subject');
+insert into CODE_TABLE values('5', '수학', 'subject');
+
+

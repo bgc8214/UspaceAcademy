@@ -29,6 +29,10 @@
 		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}.jsp"/>
 	</definition>
 	
+	<definition name="UspaceAcademy/main.tiles" extends="template">
+		<put-attribute name="body" value="/WEB-INF/view/main.jsp"/>
+	</definition>
+	
 	<definition name="main.tiles" extends="template">
 		<put-attribute name="body" value="/WEB-INF/view/main.jsp"/>
 	</definition>
