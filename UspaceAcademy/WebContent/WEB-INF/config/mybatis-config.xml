@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
-	
-	<!--  typeAloases -->
+
 	<typeAliases>
-	<package name="com.uspaceacademy.vo"/>
+		<package name="com.uspaceacademy.vo"/>
 	</typeAliases>
-	
-	
-	
 	<mappers>
 		<mapper resource="com/uspaceacademy/mapper/ExamMapper.xml"/> <!-- 이름바꾸기 -->
+		<mapper resource="com/uspaceacademy/mapper/noticeMapper.xml"/>
+		<mapper resource="com/uspaceacademy/mapper/codeMapper.xml"/>
 	</mappers>
+	
 </configuration>
