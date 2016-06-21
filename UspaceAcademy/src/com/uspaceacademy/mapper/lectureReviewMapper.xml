@@ -68,7 +68,7 @@
 	
 	
 	
-	<!--  전체조회(제목+내용) -->  고치기 pdf보기
+	<!--  전체조회(제목+내용) --> 
 	<select id="selectTitleContent" resultType="LectureReview" parameterType="string">
 	SELECT 	review_no,
 				review_writer,

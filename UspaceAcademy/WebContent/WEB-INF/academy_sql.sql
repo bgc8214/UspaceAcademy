@@ -1,6 +1,5 @@
 
 
--------------------------------------------------------------------ok
 -- 코드테이블
 drop table code_table;
 create table code_table(
@@ -52,7 +51,7 @@ create table basic_board(
 	basic_writer varchar2(50) not null,
 	basic_title varchar2(100) not null,
 	basic_content clob not null,	
-	basic_date varchar2(10) not null,
+	basic_date varchar2(50) not null,
 	basic_hit number not null,
 	basic_type varchar2(30) not null
 );
@@ -61,18 +60,7 @@ create sequence basic_board_seq
 nocache;
 
 
-
-
-
-
-
-
-
-
-
-
 -- 수강 후기
-select * from REVIEW_BOARD;
 drop table review_board;
 create table review_board(
 	review_no number primary key,
@@ -81,35 +69,9 @@ create table review_board(
 	lecture_subject varchar2(50) not null,
 	review_title varchar2(100) not null,
 	review_content clob not null,
-	review_date varchar2(10) not null,
+	review_date varchar2(50) not null,
 	review_hit number not null
 );
-
-insert into review_board values (publisher_no_seq.nextval, '이영주', '국어고등3', '국어', '국어 수업 너무 재미있어요','국어고등3 국어수업을 들었습니다. 이것은 수강후기입니다. 수강후기','20160620',0);
-insert into review_board values (publisher_no_seq.nextval, '김수진', '영어고등3', '영어', '영어 수업 너무 재미있어요','영어고등3 영어수업을 들었습니다. 이것은 영어수강후기입니다. 수강후기','20160620',0);
-
---수강후기 페이징 처리   ------------------------------물어봐
-select review_no, review_writer, lecture_title, lecture_subject, review_title, review_content, review_date, review_hit
-from(
-	select ceil(rownum/8) page, review_no, review_writer, lecture_title, lecture_subject, review_title, review_content, review_date, review_hit
-	from(
-			select review_no, review_writer, lecture_title, lecture_subject, review_title, review_content, review_date, review_hit
-			from review_board order by review_no desc
-	)
-)where page=2
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 -- 강의
 DROP table lecture cascade constraint;
@@ -119,9 +81,9 @@ CREATE TABLE lecture(
 	lecture_description varchar2(1000) not null, --강의 설명
 	lecture_start_time number not null, --강의 시작 시간
 	lecture_end_time number not null, --강의 끝 시간
-	lecture_day varchar2(10) not null, --강의 요일
-	lecture_start_date varchar2(10) not null, --강의 시작일
-	lecture_end_date varchar2(10) not null, --강의 종료일
+	lecture_day varchar2(50) not null, --강의 요일
+	lecture_start_date varchar2(50) not null, --강의 시작일
+	lecture_end_date varchar2(50) not null, --강의 종료일
 	lecture_price number not null, --강의 수강료
 	lecture_total_student number not null, --강의 수강가능 인원
 	lecture_current_student number not null, --강의 현재수강 인원
@@ -137,7 +99,7 @@ create table advanced_board(
 	advanced_secret number not null,
 	advanced_title varchar2(100) not null,
 	advanced_content clob not null,
-	advanced_date varchar2(10) not null,
+	advanced_date varchar2(50) not null,
 	advanced_hit number not null,
 	advanced_id varchar2(50) not null,
 	lecture_no2 number null,
@@ -149,7 +111,7 @@ DROP table comment_table cascade constraint;
 CREATE TABLE comment_table(
 	comment_no number primary key,
 	comment_content clob not null,
-	comment_date varchar2(10) not null,
+	comment_date varchar2(50) not null,
 	comment_writer varchar2(50) not null, 
 	advanced_no2 number not null,
 	constraint fk_comment_advanced foreign key (advanced_no2) references advanced_board(advanced_no)
@@ -162,7 +124,7 @@ create table assignment_board(
 	assignment_secret number not null,
 	assignment_title varchar2(100) not null,
 	assignment_content clob not null,
-	assingment_date varchar2(10) not null,
+	assingment_date varchar2(50) not null,
 	assingment_hit number not null,
 	assingment_password number null,
 	assingment_re_family number not null,
@@ -173,8 +135,6 @@ create table assignment_board(
 	lecture_no number not null,
 	constraint fk_assignment_lecture foreign key (lecture_no) references lecture(lecture_no)
 );
-
-
 
 -- 학생 강의 조인
 DROP table student_lecture_join;
@@ -198,14 +158,7 @@ CREATE TABLE attendance(
 );
 
 
-
-
-
-
-
-
 -- code_table insert하는 구문
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
 
--------------------------------------------------------------------ok
