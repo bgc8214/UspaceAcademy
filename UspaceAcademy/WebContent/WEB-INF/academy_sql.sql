@@ -1,6 +1,5 @@
 
 
-
 -- 코드테이블
 drop table code_table;
 create table code_table(
@@ -162,3 +161,4 @@ CREATE TABLE attendance(
 -- code_table insert하는 구문
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
+

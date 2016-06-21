@@ -13,6 +13,7 @@ public class NoticeDao
 {
 	private String namespace = "noticeMapper.";
 
+
 	private SqlSessionTemplate session;
 	
 	@Autowired
