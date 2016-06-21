@@ -10,11 +10,10 @@ import org.springframework.stereotype.Service;
 import com.uspaceacademy.dao.NoticeDao;
 import com.uspaceacademy.vo.Notice;
 
-@Service("noticeBoardService")
+@Service
 public class NoticeService
 {
 	@Autowired
-	@Resource(name="noticeBoardDao")
 	private NoticeDao dao;
 	
 	// 공지사항 게시물 등록

@@ -2,7 +2,7 @@
 
 
 메인페이지
-<a href="/UspaceAcademy/insert.do">리스트요청</a>
+
 
 
 
@@ -14,3 +14,6 @@
 
 
 <a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항">공지사항폼</a>
+
+<a href="/UspaceAcademy/insert.do">리스트요청</a><br>
+<a href="/UspaceAcademy/register.do">회원가입</a>

@@ -21,7 +21,6 @@ public class NoticeController
 	private String value;
 	
 	@Autowired
-	@Resource(name="noticeBoardService")
 	private NoticeService service;
 	
 	@RequestMapping("/codeList.do")

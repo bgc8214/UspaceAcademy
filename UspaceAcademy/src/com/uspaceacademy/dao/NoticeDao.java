@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.uspaceacademy.vo.Notice;
 
-@Repository("noticeBoardDao")
+@Repository
 public class NoticeDao
 {
 	private String namespace = "noticeMapper.";
