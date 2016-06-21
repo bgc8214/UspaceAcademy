@@ -14,9 +14,8 @@ public class InquiryService
 	@Autowired
 	private InquiryDao dao;
 	
-	public int insertInquiry(){
-//		Inquiry inquiry = ;
-		int insertInquiry = dao.insertInquiry(new Inquiry(2, 1, "제목2", "내용2", "2016-05-23", 1, "id-13", 1));
+	public int insertInquiry(Inquiry inquiry){
+		int insertInquiry = dao.insertInquiry(inquiry);
 		return insertInquiry;
 	}
 	
@@ -25,13 +24,9 @@ public class InquiryService
 		return deleteInquiry;
 	}
 	
-	public List<Inquiry> selectAllInquiry(){
+	public List<Inquiry> selectAllInquirys(){
 	
 		List<Inquiry> list = dao.selectAllInquirys();
-		
-		for(Inquiry i : list){
-			System.out.println(i);
-		}
 		
 		return list;
 	}

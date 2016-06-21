@@ -63,11 +63,16 @@
 	</update>
 	
 	<delete id="deleteInquiryByAdvancedNo" parameterType="_int">
-		delete from advanced_board where advancedNo = #{advancedNo}
+		delete from advanced_board where advanced_no = #{advancedNo}
 	</delete>
 	
 	<select id="selectAllInquirys" resultMap="inquiry-resultmap">
 		<include refid="inquiry-select"></include>
 	</select>
+
+<!-- 	<select id="selectInquiryByAdvancedTitle" resultMap="inquiry-resultmap">
+		<include refid="inquiry-select"></include>
+		where advanced_title = #{advancedTitle}
+	</select> -->
 	
 </mapper>

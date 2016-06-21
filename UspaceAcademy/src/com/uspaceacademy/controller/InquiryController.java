@@ -1,5 +1,6 @@
 package com.uspaceacademy.controller;
 
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +19,22 @@ public class InquiryController
 	private InquiryService service;
 	
 	@RequestMapping("/insertInquiry")
-	public ModelAndView insertInquiry(){
-		int insertInquiry = service.insertInquiry();
+	public ModelAndView insertInquiry(Inquiry inquiry){
+		int insertInquiry = service.insertInquiry(inquiry);
 		return new ModelAndView("/Inquiry/insert_inquiry.tiles", "insertInquiry", insertInquiry);
+	}
+	
+	@RequestMapping("/deleteInquiryByAdvancedNo")
+	public ModelAndView deleteInquiryByAdvancedNo(int advancedNo){
+		int deleteInquiry = service.deleteInquiryByAdvancedNo(advancedNo);
+		return new ModelAndView("/inquiry/inquiry_detail.tiles", "deleteList", deleteInquiry);
 	}
 	
 	@RequestMapping("/inquiryList")
 	public ModelAndView inquiryList(){
 		System.out.println("전체조회");
-		List list = service.selectAllInquiry();
+		List list = service.selectAllInquirys();
 		
 		return new ModelAndView("Inquiry/Inquiry_list.tiles", "list", list);
-//		return list;
 	}
 }
