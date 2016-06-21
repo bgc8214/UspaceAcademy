@@ -2,98 +2,112 @@ package com.uspaceacademy.vo;
 
 public class Teacher
 {
-	private String teacher_id;
-	private String teacher_password;
-	private String teacher_name;
-	private String teacher_email;
-	private String teacher_phone_no;
-	private String teacher_address;
-	private String teacher_subject;
-	private int teacher_salary;
+	private String teacherId;
+	private String teacherPassword;
+	private String teacherName;
+	private String teacherEmail;
+	private String teacherPhoneNo;
+	private String teacherAddress;
+	private String teacherSubject;
+	private int teacherSalary;
 	
 	public Teacher()
 	{
 		
 	}
 
-	public String getTeacher_id()
+	public Teacher(String teacherId, String teacherPassword, String teacherName, String teacherEmail,
+			String teacherPhoneNo, String teacherAddress, String teacherSubject, int teacherSalary)
 	{
-		return teacher_id;
+		super();
+		this.teacherId = teacherId;
+		this.teacherPassword = teacherPassword;
+		this.teacherName = teacherName;
+		this.teacherEmail = teacherEmail;
+		this.teacherPhoneNo = teacherPhoneNo;
+		this.teacherAddress = teacherAddress;
+		this.teacherSubject = teacherSubject;
+		this.teacherSalary = teacherSalary;
 	}
 
-	public void setTeacher_id(String teacher_id)
+	public String getTeacherId()
 	{
-		this.teacher_id = teacher_id;
+		return teacherId;
 	}
 
-	public String getTeacher_password()
+	public void setTeacherId(String teacherId)
 	{
-		return teacher_password;
+		this.teacherId = teacherId;
 	}
 
-	public void setTeacher_password(String teacher_password)
+	public String getTeacherPassword()
 	{
-		this.teacher_password = teacher_password;
+		return teacherPassword;
 	}
 
-	public String getTeacher_name()
+	public void setTeacherPassword(String teacherPassword)
 	{
-		return teacher_name;
+		this.teacherPassword = teacherPassword;
 	}
 
-	public void setTeacher_name(String teacher_name)
+	public String getTeacherName()
 	{
-		this.teacher_name = teacher_name;
+		return teacherName;
 	}
 
-	public String getTeacher_email()
+	public void setTeacherName(String teacherName)
 	{
-		return teacher_email;
+		this.teacherName = teacherName;
 	}
 
-	public void setTeacher_email(String teacher_email)
+	public String getTeacherEmail()
 	{
-		this.teacher_email = teacher_email;
+		return teacherEmail;
 	}
 
-	public String getTeacher_phone_no()
+	public void setTeacherEmail(String teacherEmail)
 	{
-		return teacher_phone_no;
+		this.teacherEmail = teacherEmail;
 	}
 
-	public void setTeacher_phone_no(String teacher_phone_no)
+	public String getTeacherPhoneNo()
 	{
-		this.teacher_phone_no = teacher_phone_no;
+		return teacherPhoneNo;
 	}
 
-	public String getTeacher_address()
+	public void setTeacherPhoneNo(String teacherPhoneNo)
 	{
-		return teacher_address;
+		this.teacherPhoneNo = teacherPhoneNo;
 	}
 
-	public void setTeacher_address(String teacher_address)
+	public String getTeacherAddress()
 	{
-		this.teacher_address = teacher_address;
+		return teacherAddress;
 	}
 
-	public String getTeacher_subject()
+	public void setTeacherAddress(String teacherAddress)
 	{
-		return teacher_subject;
+		this.teacherAddress = teacherAddress;
 	}
 
-	public void setTeacher_subject(String teacher_subject)
+	public String getTeacherSubject()
 	{
-		this.teacher_subject = teacher_subject;
+		return teacherSubject;
 	}
 
-	public int getTeacher_salary()
+	public void setTeacherSubject(String teacherSubject)
 	{
-		return teacher_salary;
+		this.teacherSubject = teacherSubject;
 	}
 
-	public void setTeacher_salary(int teacher_salary)
+	public int getTeacherSalary()
 	{
-		this.teacher_salary = teacher_salary;
+		return teacherSalary;
+	}
+
+	public void setTeacherSalary(int teacherSalary)
+	{
+		this.teacherSalary = teacherSalary;
 	}
 
 	@Override
@@ -101,14 +115,14 @@ public class Teacher
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((teacher_address == null) ? 0 : teacher_address.hashCode());
-		result = prime * result + ((teacher_email == null) ? 0 : teacher_email.hashCode());
-		result = prime * result + ((teacher_id == null) ? 0 : teacher_id.hashCode());
-		result = prime * result + ((teacher_name == null) ? 0 : teacher_name.hashCode());
-		result = prime * result + ((teacher_password == null) ? 0 : teacher_password.hashCode());
-		result = prime * result + ((teacher_phone_no == null) ? 0 : teacher_phone_no.hashCode());
-		result = prime * result + teacher_salary;
-		result = prime * result + ((teacher_subject == null) ? 0 : teacher_subject.hashCode());
+		result = prime * result + ((teacherAddress == null) ? 0 : teacherAddress.hashCode());
+		result = prime * result + ((teacherEmail == null) ? 0 : teacherEmail.hashCode());
+		result = prime * result + ((teacherId == null) ? 0 : teacherId.hashCode());
+		result = prime * result + ((teacherName == null) ? 0 : teacherName.hashCode());
+		result = prime * result + ((teacherPassword == null) ? 0 : teacherPassword.hashCode());
+		result = prime * result + ((teacherPhoneNo == null) ? 0 : teacherPhoneNo.hashCode());
+		result = prime * result + teacherSalary;
+		result = prime * result + ((teacherSubject == null) ? 0 : teacherSubject.hashCode());
 		return result;
 	}
 
@@ -122,49 +136,49 @@ public class Teacher
 		if (getClass() != obj.getClass())
 			return false;
 		Teacher other = (Teacher) obj;
-		if (teacher_address == null)
+		if (teacherAddress == null)
 		{
-			if (other.teacher_address != null)
+			if (other.teacherAddress != null)
 				return false;
-		} else if (!teacher_address.equals(other.teacher_address))
+		} else if (!teacherAddress.equals(other.teacherAddress))
 			return false;
-		if (teacher_email == null)
+		if (teacherEmail == null)
 		{
-			if (other.teacher_email != null)
+			if (other.teacherEmail != null)
 				return false;
-		} else if (!teacher_email.equals(other.teacher_email))
+		} else if (!teacherEmail.equals(other.teacherEmail))
 			return false;
-		if (teacher_id == null)
+		if (teacherId == null)
 		{
-			if (other.teacher_id != null)
+			if (other.teacherId != null)
 				return false;
-		} else if (!teacher_id.equals(other.teacher_id))
+		} else if (!teacherId.equals(other.teacherId))
 			return false;
-		if (teacher_name == null)
+		if (teacherName == null)
 		{
-			if (other.teacher_name != null)
+			if (other.teacherName != null)
 				return false;
-		} else if (!teacher_name.equals(other.teacher_name))
+		} else if (!teacherName.equals(other.teacherName))
 			return false;
-		if (teacher_password == null)
+		if (teacherPassword == null)
 		{
-			if (other.teacher_password != null)
+			if (other.teacherPassword != null)
 				return false;
-		} else if (!teacher_password.equals(other.teacher_password))
+		} else if (!teacherPassword.equals(other.teacherPassword))
 			return false;
-		if (teacher_phone_no == null)
+		if (teacherPhoneNo == null)
 		{
-			if (other.teacher_phone_no != null)
+			if (other.teacherPhoneNo != null)
 				return false;
-		} else if (!teacher_phone_no.equals(other.teacher_phone_no))
+		} else if (!teacherPhoneNo.equals(other.teacherPhoneNo))
 			return false;
-		if (teacher_salary != other.teacher_salary)
+		if (teacherSalary != other.teacherSalary)
 			return false;
-		if (teacher_subject == null)
+		if (teacherSubject == null)
 		{
-			if (other.teacher_subject != null)
+			if (other.teacherSubject != null)
 				return false;
-		} else if (!teacher_subject.equals(other.teacher_subject))
+		} else if (!teacherSubject.equals(other.teacherSubject))
 			return false;
 		return true;
 	}
@@ -172,12 +186,11 @@ public class Teacher
 	@Override
 	public String toString()
 	{
-		return "Teacher [teacher_id=" + teacher_id + ", teacher_password=" + teacher_password + ", teacher_name="
-				+ teacher_name + ", teacher_email=" + teacher_email + ", teacher_phone_no=" + teacher_phone_no
-				+ ", teacher_address=" + teacher_address + ", teacher_subject=" + teacher_subject + ", teacher_salary="
-				+ teacher_salary + "]";
+		return "Teacher [teacherId=" + teacherId + ", teacherPassword=" + teacherPassword + ", teacherName="
+				+ teacherName + ", teacherEmail=" + teacherEmail + ", teacherPhoneNo=" + teacherPhoneNo
+				+ ", teacherAddress=" + teacherAddress + ", teacherSubject=" + teacherSubject + ", teacherSalary="
+				+ teacherSalary + "]";
 	}
-	
 	
 	
 }
