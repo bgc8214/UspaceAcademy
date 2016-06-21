@@ -4,92 +4,73 @@ import java.io.Serializable;
 
 public class Student implements Serializable
 {
-	private String student_id;
-	private String student_password;
-	private String student_name;
-	private String student_email;
-	private String student_phone_no;
-	private String student_address;
-	
-	public Student()
+	private String studentId;
+	private String studentPassword;
+	private String studentName;
+	private String studentEmail;
+	private String studentPhoneNo;
+	private String studentAddress;
+	public String getStudentId()
 	{
-		
+		return studentId;
 	}
-
-	public String getStudent_id()
+	public void setStudentId(String studentId)
 	{
-		return student_id;
+		this.studentId = studentId;
 	}
-
-	public void setStudent_id(String student_id)
+	public String getStudentPassword()
 	{
-		this.student_id = student_id;
+		return studentPassword;
 	}
-
-	public String getStudent_password()
+	public void setStudentPassword(String studentPassword)
 	{
-		return student_password;
+		this.studentPassword = studentPassword;
 	}
-
-	public void setStudent_password(String student_password)
+	public String getStudentName()
 	{
-		this.student_password = student_password;
+		return studentName;
 	}
-
-	public String getStudent_name()
+	public void setStudentName(String studentName)
 	{
-		return student_name;
+		this.studentName = studentName;
 	}
-
-	public void setStudent_name(String student_name)
+	public String getStudentEmail()
 	{
-		this.student_name = student_name;
+		return studentEmail;
 	}
-
-	public String getStudent_email()
+	public void setStudentEmail(String studentEmail)
 	{
-		return student_email;
+		this.studentEmail = studentEmail;
 	}
-
-	public void setStudent_email(String student_email)
+	public String getStudentPhoneNo()
 	{
-		this.student_email = student_email;
+		return studentPhoneNo;
 	}
-
-	public String getStudent_phone_no()
+	public void setStudentPhoneNo(String studentPhoneNo)
 	{
-		return student_phone_no;
+		this.studentPhoneNo = studentPhoneNo;
 	}
-
-	public void setStudent_phone_no(String student_phone_no)
+	public String getStudentAddress()
 	{
-		this.student_phone_no = student_phone_no;
+		return studentAddress;
 	}
-
-	public String getStudent_address()
+	public void setStudentAddress(String studentAddress)
 	{
-		return student_address;
+		this.studentAddress = studentAddress;
 	}
-
-	public void setStudent_address(String student_address)
-	{
-		this.student_address = student_address;
-	}
-
 	@Override
 	public int hashCode()
 	{
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((student_address == null) ? 0 : student_address.hashCode());
-		result = prime * result + ((student_email == null) ? 0 : student_email.hashCode());
-		result = prime * result + ((student_id == null) ? 0 : student_id.hashCode());
-		result = prime * result + ((student_name == null) ? 0 : student_name.hashCode());
-		result = prime * result + ((student_password == null) ? 0 : student_password.hashCode());
-		result = prime * result + ((student_phone_no == null) ? 0 : student_phone_no.hashCode());
+		result = prime * result + ((studentAddress == null) ? 0 : studentAddress.hashCode());
+		result = prime * result + ((studentEmail == null) ? 0 : studentEmail.hashCode());
+		result = prime * result + ((studentId == null) ? 0 : studentId.hashCode());
+		result = prime * result + ((studentName == null) ? 0 : studentName.hashCode());
+		result = prime * result + ((studentPassword == null) ? 0 : studentPassword.hashCode());
+		result = prime * result + ((studentPhoneNo == null) ? 0 : studentPhoneNo.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -100,64 +81,65 @@ public class Student implements Serializable
 		if (getClass() != obj.getClass())
 			return false;
 		Student other = (Student) obj;
-		if (student_address == null)
+		if (studentAddress == null)
 		{
-			if (other.student_address != null)
+			if (other.studentAddress != null)
 				return false;
-		} else if (!student_address.equals(other.student_address))
+		} else if (!studentAddress.equals(other.studentAddress))
 			return false;
-		if (student_email == null)
+		if (studentEmail == null)
 		{
-			if (other.student_email != null)
+			if (other.studentEmail != null)
 				return false;
-		} else if (!student_email.equals(other.student_email))
+		} else if (!studentEmail.equals(other.studentEmail))
 			return false;
-		if (student_id == null)
+		if (studentId == null)
 		{
-			if (other.student_id != null)
+			if (other.studentId != null)
 				return false;
-		} else if (!student_id.equals(other.student_id))
+		} else if (!studentId.equals(other.studentId))
 			return false;
-		if (student_name == null)
+		if (studentName == null)
 		{
-			if (other.student_name != null)
+			if (other.studentName != null)
 				return false;
-		} else if (!student_name.equals(other.student_name))
+		} else if (!studentName.equals(other.studentName))
 			return false;
-		if (student_password == null)
+		if (studentPassword == null)
 		{
-			if (other.student_password != null)
+			if (other.studentPassword != null)
 				return false;
-		} else if (!student_password.equals(other.student_password))
+		} else if (!studentPassword.equals(other.studentPassword))
 			return false;
-		if (student_phone_no == null)
+		if (studentPhoneNo == null)
 		{
-			if (other.student_phone_no != null)
+			if (other.studentPhoneNo != null)
 				return false;
-		} else if (!student_phone_no.equals(other.student_phone_no))
+		} else if (!studentPhoneNo.equals(other.studentPhoneNo))
 			return false;
 		return true;
 	}
-
 	@Override
 	public String toString()
 	{
-		return "Student [student_id=" + student_id + ", student_password=" + student_password + ", student_name="
-				+ student_name + ", student_email=" + student_email + ", student_phone_no=" + student_phone_no
-				+ ", student_address=" + student_address + "]";
+		return "Student [studentId=" + studentId + ", studentPassword=" + studentPassword + ", studentName="
+				+ studentName + ", studentEmail=" + studentEmail + ", studentPhoneNo=" + studentPhoneNo
+				+ ", studentAddress=" + studentAddress + "]";
 	}
-
-	public Student(String student_id, String student_password, String student_name, String student_email,
-			String student_phone_no, String student_address)
+	public Student(String studentId, String studentPassword, String studentName, String studentEmail,
+			String studentPhoneNo, String studentAddress)
 	{
 		super();
-		this.student_id = student_id;
-		this.student_password = student_password;
-		this.student_name = student_name;
-		this.student_email = student_email;
-		this.student_phone_no = student_phone_no;
-		this.student_address = student_address;
+		this.studentId = studentId;
+		this.studentPassword = studentPassword;
+		this.studentName = studentName;
+		this.studentEmail = studentEmail;
+		this.studentPhoneNo = studentPhoneNo;
+		this.studentAddress = studentAddress;
 	}
 	
-	
+	public Student()
+	{
+		
+	}
 }

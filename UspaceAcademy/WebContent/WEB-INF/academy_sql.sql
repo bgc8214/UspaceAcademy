@@ -56,8 +56,10 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
+drop sequence basic_board_seq 
 create sequence basic_board_seq 
 nocache;
+
 
 
 -- 수강 후기
@@ -162,3 +164,12 @@ CREATE TABLE attendance(
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
 
+insert into CODE_TABLE values('3', '국어', 'subject');
+insert into CODE_TABLE values('4', '영어', 'subject');
+insert into CODE_TABLE values('5', '수학', 'subject');
+
+
+INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);

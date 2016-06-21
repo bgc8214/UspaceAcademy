@@ -150,23 +150,4 @@
 	WHERE page=#{page}
 	</select>
 	
-	
-	
-	
-	
-	
-	
-	
-
-
 </mapper>
-
-
-
-
-
-
-
-
-
-
