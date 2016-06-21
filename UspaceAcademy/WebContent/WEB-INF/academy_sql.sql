@@ -81,7 +81,7 @@ CREATE TABLE lecture(
 	lecture_description varchar2(1000) not null, --강의 설명
 	lecture_start_time number not null, --강의 시작 시간
 	lecture_end_time number not null, --강의 끝 시간
-	lecture_day varchar2(10) not null, --강의 요일
+	lecture_day varchar2(50) not null, --강의 요일
 	lecture_start_date varchar2(50) not null, --강의 시작일
 	lecture_end_date varchar2(50) not null, --강의 종료일
 	lecture_price number not null, --강의 수강료
