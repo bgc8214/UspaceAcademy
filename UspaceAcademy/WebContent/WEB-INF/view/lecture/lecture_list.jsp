@@ -42,7 +42,7 @@ $(document).ready(function(){
 			}
 		})
 		
-	})
+	})//강의목록 클릭했을 때 세부정보 표시
 })
 </script>
 
@@ -67,9 +67,11 @@ $(document).ready(function(){
 </table>
 
 <!-- 관리자용 강의 등록 버튼 -->
-<c:if test="${sessionScope.memberType=='administrator' }">
-	<button>강의 등록</button>
-</c:if>
+<span class="lectureRegister">
+	<c:if test="${sessionScope.memberType=='administrator'}">
+		<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button>강의 등록</button></a>
+	</c:if>
+</span>
 
 
 
