@@ -23,7 +23,7 @@ create table teacher(
 	teacher_name varchar2(100) not null,
 	teacher_email varchar2(100) not null,
 	teacher_phone_no varchar2(13) not null,
-	teacher_adress varchar2(100) not null,
+	teacher_address varchar2(100) not null,
 	teacher_subject varchar2(50) not null,
 	teacher_salary number not null
 );
@@ -56,9 +56,13 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
+
 drop sequence basic_board_seq ;
-create sequence basic_board_seq 
-nocache;
+create sequence basic_board_seq nocache;
+
+drop sequence basic_board_seq; 
+create sequence basic_board_seq nocache;
+>>>>>>> branch 'master' of https://github.com/bgc8214/UspaceAcademy.git
 
 
 
@@ -93,6 +97,9 @@ CREATE TABLE lecture(
 	teacher_id2 varchar2(50), --강사아이디 foreign key
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
+
+drop sequence lecture_seq;
+create sequence lecture_seq nocache;
 
 -- 1:1문의, 질문게시판
 drop table advanced_board cascade constraint;
@@ -164,12 +171,14 @@ CREATE TABLE attendance(
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
 
-insert into CODE_TABLE values('3', '국어', 'subject');
-insert into CODE_TABLE values('4', '영어', 'subject');
-insert into CODE_TABLE values('5', '수학', 'subject');
+insert into CODE_TABLE values('3', '국어', 'teacherSubject');
+insert into CODE_TABLE values('4', '영어', 'teacherSubject');
+insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 
-INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(-1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(-2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(-3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(-4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+
+
