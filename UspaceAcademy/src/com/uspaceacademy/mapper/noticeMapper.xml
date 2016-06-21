@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<mapper namespace= "noticeMapper">  
+<sql id="notice-columns">
+	basic_no, basic_writer, basic_title, basic_content, basic_date, basic_hit, basic_type
+</sql>
+<resultMap type="notice" id="notice-resultMap">
+	<id column="basic_no" property="basicNo"/>
+	<result column="basic_writer" property="basicWriter"/>
+	<result column="basic_title" property="basicTitle"/>
+	<result column="basic_content" property="basicContent"/>
+	<result column="basic_date" property="basicDate"/>
+	<result column="basic_hit" property="basicHit"/>
+	<result column="basic_type" property="basicType"/>
+</resultMap>
+<insert id="insert_notice" parameterType="notice">
+	insert into basic_board
+	values(#{basicNo), #{basicWriter}, #{basicTitle}, #{basicContent}, #{basicDate}, #{basicHit}, #{basicType})
+</insert>
+<select id="selectNextNo" resultType="_int">
+	select basic_board_seq.nextval from dual
+</select>
+<select id="selectList" resultMap="notice-resultMap">
+	select <include refid="notice-columns"/> from basic_board
+</select>
+<update id="update_notice" parameterType="notice">
+	update basic_board
+	set basic_title = #{basicTitle},
+		basic_content = #{basicContent}
+	where basic_no  = #{basicNo}
+</update>
+<delete id="delete_notice" parameterType="_int">
+	delete from basic_board where basic_no = #{basic_no}
+</delete>
+</mapper> 
