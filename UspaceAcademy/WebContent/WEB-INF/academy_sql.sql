@@ -52,7 +52,7 @@ create table basic_board(
 	basic_writer varchar2(50) not null,
 	basic_title varchar2(100) not null,
 	basic_content clob not null,	
-	basic_date varchar2(10) not null,
+	basic_date varchar2(50) not null,
 	basic_hit number not null,
 	basic_type varchar2(30) not null
 );
@@ -70,7 +70,7 @@ create table review_board(
 	lecture_subject varchar2(50) not null,
 	review_title varchar2(100) not null,
 	review_content clob not null,
-	review_date varchar2(10) not null,
+	review_date varchar2(50) not null,
 	review_hit number not null
 );
 
@@ -83,8 +83,8 @@ CREATE TABLE lecture(
 	lecture_start_time number not null, --강의 시작 시간
 	lecture_end_time number not null, --강의 끝 시간
 	lecture_day varchar2(10) not null, --강의 요일
-	lecture_start_date varchar2(10) not null, --강의 시작일
-	lecture_end_date varchar2(10) not null, --강의 종료일
+	lecture_start_date varchar2(50) not null, --강의 시작일
+	lecture_end_date varchar2(50) not null, --강의 종료일
 	lecture_price number not null, --강의 수강료
 	lecture_total_student number not null, --강의 수강가능 인원
 	lecture_current_student number not null, --강의 현재수강 인원
@@ -100,7 +100,7 @@ create table advanced_board(
 	advanced_secret number not null,
 	advanced_title varchar2(100) not null,
 	advanced_content clob not null,
-	advanced_date varchar2(10) not null,
+	advanced_date varchar2(50) not null,
 	advanced_hit number not null,
 	advanced_id varchar2(50) not null,
 	lecture_no2 number null,
@@ -112,7 +112,7 @@ DROP table comment_table cascade constraint;
 CREATE TABLE comment_table(
 	comment_no number primary key,
 	comment_content clob not null,
-	comment_date varchar2(10) not null,
+	comment_date varchar2(50) not null,
 	comment_writer varchar2(50) not null, 
 	advanced_no2 number not null,
 	constraint fk_comment_advanced foreign key (advanced_no2) references advanced_board(advanced_no)
@@ -125,7 +125,7 @@ create table assignment_board(
 	assignment_secret number not null,
 	assignment_title varchar2(100) not null,
 	assignment_content clob not null,
-	assingment_date varchar2(10) not null,
+	assingment_date varchar2(50) not null,
 	assingment_hit number not null,
 	assingment_password number null,
 	assingment_re_family number not null,

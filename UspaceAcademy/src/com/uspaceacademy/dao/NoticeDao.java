@@ -13,9 +13,9 @@ public class NoticeDao
 {
 	private String namespace = "noticeMapper.";
 
-	@Autowired
 	private SqlSessionTemplate session;
 	
+	@Autowired
 	public NoticeDao(SqlSessionTemplate session) {
 		this.session = session;
 	}

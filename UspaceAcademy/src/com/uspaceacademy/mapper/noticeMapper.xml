@@ -15,7 +15,7 @@
 </resultMap>
 <insert id="insert_notice" parameterType="notice">
 	insert into basic_board
-	values(#{basicNo), #{basicWriter}, #{basicTitle}, #{basicContent}, #{basicDate}, #{basicHit}, #{basicType})
+	values(#{basicNo}, #{basicWriter}, #{basicTitle}, #{basicContent}, #{basicDate}, #{basicHit}, #{basicType})
 </insert>
 <select id="selectNextNo" resultType="_int">
 	select basic_board_seq.nextval from dual
@@ -30,6 +30,6 @@
 	where basic_no  = #{basicNo}
 </update>
 <delete id="delete_notice" parameterType="_int">
-	delete from basic_board where basic_no = #{basic_no}
+	delete from basic_board where basic_no = #{basicNo}
 </delete>
 </mapper> 

@@ -1,5 +1,6 @@
 package com.uspaceacademy.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -33,15 +34,17 @@ public class NoticeController
 				value = c.getCodeName();
 			}
 		}
-		return new ModelAndView("/WEB-INF/view/notice/notice_form.jsp", "codeName", value);
+		return new ModelAndView("notice/notice_form.tiles", "codeName", value);
 	}
 	
 	@RequestMapping("/noticeWrite.do")
 	public ModelAndView noticeAdd(String title, String content, String codeName) {
 		System.out.println("게시물 등록 method()");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		Date date = new Date();
+		String sDate = sdf.format(date);
 		int num = service.selectSeq();
-		Notice notice = new Notice(num, "관리자", title, content, date.toString(), 0, codeName);
+		Notice notice = new Notice(num, "관리자", title, content, sDate, 0, codeName);
 		service.register(notice);
 		System.out.println("공지사항 게시물 등록!");
 		return new ModelAndView("notice/notice_detail.tiles", "notice", notice);
@@ -69,6 +72,11 @@ public class NoticeController
 		service.deleteNotice(no);
 		List list = service.noticeAll();
 		return new ModelAndView("notice/notice_list.tiles", "list", list);
+	}
+	
+	@RequestMapping("/noticeUpdateForm.do")
+	public ModelAndView noticeUpdateForm(Notice notice) {
+		return new ModelAndView("notice/notice_update.tiles", "notice", notice);
 	}
 	
 	

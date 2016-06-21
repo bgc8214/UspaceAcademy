@@ -16,6 +16,7 @@ public class NoticeService
 	@Autowired
 	private NoticeDao dao;
 	
+	
 	// 공지사항 게시물 등록
 	public int register(Notice notice) {
 		return dao.insertNotice(notice);
