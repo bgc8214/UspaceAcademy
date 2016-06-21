@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="lectureReviewMapper">
+
+
+
+	<!-- 삽입 -->
+	<insert id="insert" parameterType="LectureReview"><!--  mybatis-config에 타입알리야스 지정 -->
+	INSERT INTO review_board VALUES (#{review_no},#{review_writer},#{lecture_title},#{lecture_subject},#{review_title},#{review_content},#{review_date},#{review_hit})                            
+	</insert>
+	
+	<!--  parameterType : 가져올값
+			resultType :  리턴타입
+	 -->
+	
+	
+	<!-- 수정 -->
+	<update id="update" parameterType="LectureReview">
+	UPDATE review_board
+	SET  	    reviewWriter=#{review_writer}, 
+			    lectureTitle=#{lecture_title},
+			    lectureSubject=#{lecture_subject}, 
+			    reviewTitle=#{review_title}, 
+			    reviewContent=#{review_content}, 
+			    reviewDate=#{review_date}, 
+			    reviewHit=#{review_hit} <!--  끝에 점 찍으면 안됨 -->
+	WHERE  	reviewNo=#{review_no}	
+	</update>
+	
+	
+	
+	<!-- 삭제 -->
+	<delete id="deleteByNo" parameterType="string">
+	DELETE FROM review_board WHERE reviewNo=#{review_no}
+	</delete>
+	
+	
+	
+	<!--  전체조회 -->
+	<select id="select" resultType="LectureReview">
+	SELECT 	review_no,
+				review_writer,
+				lecture_title,
+				lecture_subject,
+				review_title,
+				review_content,
+				review_date,
+				review_hit   
+	FROM 	review_board
+	</select>
+	
+	
+	
+	<!--  전체조회(no로)  -->
+	<select id="selectNo" resultType="LectureReview" parameterType="string">
+	SELECT 	review_no,
+				review_writer,
+				lecture_title,
+				lecture_subject,
+				review_title,
+				review_content,
+				review_date,
+				review_hit,   
+	FROM 	review_board
+	WHERE reviewNo=#{review_no}
+	</select>
+	
+	
+	
+	
+	<!--  전체조회(제목+내용) --> 
+	<select id="selectTitleContent" resultType="LectureReview" parameterType="string">
+	SELECT 	review_no,
+				review_writer,
+				lecture_title,
+				lecture_subject,
+				review_title,
+				review_content,
+				review_date,
+				review_hit,   
+	FROM 	review_board
+	WHERE lectureTitle=#{lecture_title} , reviewContent=#{review_content}
+	</select>
+	
+	
+	
+	
+	
+	
+	<!--  전체조회(제목) -->
+	<select id="selectTitle" resultType="LectureReview" parameterType="string">
+	SELECT 	review_no,
+				review_writer,
+				lecture_title,
+				lecture_subject,
+				review_title,
+				review_content,
+				review_date,
+				review_hit,   
+	FROM 	review_board
+	WHERE lectureTitle=#{lecture_title}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!--  전체조회(내용) -->
+	<select id="selectTitle" resultType="LectureReview" parameterType="string">
+	SELECT 	review_no,
+				review_writer,
+				lecture_title,
+				lecture_subject,
+				review_title,
+				review_content,
+				review_date,
+				review_hit,   
+	FROM 	review_board
+	WHERE reviewContent=#{review_content}
+	</select>
+	
+	
+	
+	
+	
+	<!--  select 페이징 처리!! -->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
