@@ -1,5 +1,6 @@
 
 
+-------------------------------------------------------------------ok
 -- 코드테이블
 drop table code_table;
 create table code_table(
@@ -7,6 +8,7 @@ create table code_table(
 	code_name varchar2(30) not null,
 	code_type varchar2(30) not null
 );
+
 -- 관리자
 drop table administrator;
 create table administrator(
@@ -22,7 +24,7 @@ create table teacher(
 	teacher_name varchar2(100) not null,
 	teacher_email varchar2(100) not null,
 	teacher_phone_no varchar2(13) not null,
-	teacher_address varchar2(100) not null,
+	teacher_adress varchar2(100) not null,
 	teacher_subject varchar2(50) not null,
 	teacher_salary number not null
 );
@@ -55,7 +57,22 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
+create sequence basic_board_seq 
+nocache;
+
+
+
+
+
+
+
+
+
+
+
+
 -- 수강 후기
+select * from REVIEW_BOARD;
 drop table review_board;
 create table review_board(
 	review_no number primary key,
@@ -67,6 +84,32 @@ create table review_board(
 	review_date varchar2(10) not null,
 	review_hit number not null
 );
+
+insert into review_board values (publisher_no_seq.nextval, '이영주', '국어고등3', '국어', '국어 수업 너무 재미있어요','국어고등3 국어수업을 들었습니다. 이것은 수강후기입니다. 수강후기','20160620',0);
+insert into review_board values (publisher_no_seq.nextval, '김수진', '영어고등3', '영어', '영어 수업 너무 재미있어요','영어고등3 영어수업을 들었습니다. 이것은 영어수강후기입니다. 수강후기','20160620',0);
+
+--수강후기 페이징 처리   ------------------------------물어봐
+select review_no, review_writer, lecture_title, lecture_subject, review_title, review_content, review_date, review_hit
+from(
+	select ceil(rownum/8) page, review_no, review_writer, lecture_title, lecture_subject, review_title, review_content, review_date, review_hit
+	from(
+			select review_no, review_writer, lecture_title, lecture_subject, review_title, review_content, review_date, review_hit
+			from review_board order by review_no desc
+	)
+)where page=2
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 -- 강의
 DROP table lecture cascade constraint;
@@ -125,11 +168,13 @@ create table assignment_board(
 	assingment_re_family number not null,
 	assingment_re_step number not null,
 	assingment_re_level number not null,
-	assingment_writer varchar2(50) not null,
+	assingment_id varchar2(50) not null,
 	assingment_deadline varchar2(10) not null,
 	lecture_no number not null,
 	constraint fk_assignment_lecture foreign key (lecture_no) references lecture(lecture_no)
 );
+
+
 
 -- 학생 강의 조인
 DROP table student_lecture_join;
@@ -152,3 +197,15 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 
+
+
+
+
+
+
+
+-- code_table insert하는 구문
+insert into CODE_TABLE values('1', '공지사항', 'basic_board');
+insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
+
+-------------------------------------------------------------------ok

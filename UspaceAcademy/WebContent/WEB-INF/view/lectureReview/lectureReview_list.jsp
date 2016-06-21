@@ -14,7 +14,7 @@
 <h5>수강후기</h5>
 
 
-<%-- <c:if test="${fn:length(request.Scope.noticeList) != 0 }"><!-- 게시물이 있으면 --> --%>
+<%-- <%-- <c:if test="${fn:length(request.Scope.noticeList) != 0 }"><!-- 게시물이 있으면 --> --%>
 	<table width="500" border='1'>
 		<thead>
 			<tr>
@@ -105,25 +105,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ --%>
 
 
 

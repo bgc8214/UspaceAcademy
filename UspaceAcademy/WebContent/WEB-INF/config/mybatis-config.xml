@@ -2,6 +2,12 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
 	
+	<!--  typeAloases -->
+	<typeAliases>
+	<package name="com.uspaceacademy.vo"/>
+	</typeAliases>
+	
+	
 	
 	<mappers>
 		<mapper resource="com/uspaceacademy/mapper/ExamMapper.xml"/> <!-- 이름바꾸기 -->
