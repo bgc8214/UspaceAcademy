@@ -1,5 +1,7 @@
 package com.uspaceacademy.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,5 +27,19 @@ public class MemberService
 		System.out.println(dao.insertTeacher(teacher)+"명 추가");
 		
 	}
-
+	
+	public List searchCode(String code)
+	{
+		return dao.selectCode(code);
+	}
+	
+	public Student findStudentById(String id)
+	{
+		return dao.findStudentById(id);
+	}
+	
+	public Teacher findTeacherById(String id)
+	{
+		return dao.findTeacherById(id);
+	}
 }

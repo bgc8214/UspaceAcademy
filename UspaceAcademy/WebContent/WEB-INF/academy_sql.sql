@@ -23,7 +23,7 @@ create table teacher(
 	teacher_name varchar2(100) not null,
 	teacher_email varchar2(100) not null,
 	teacher_phone_no varchar2(13) not null,
-	teacher_adress varchar2(100) not null,
+	teacher_address varchar2(100) not null,
 	teacher_subject varchar2(50) not null,
 	teacher_salary number not null
 );
@@ -164,9 +164,9 @@ CREATE TABLE attendance(
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
 
-insert into CODE_TABLE values('3', '국어', 'subject');
-insert into CODE_TABLE values('4', '영어', 'subject');
-insert into CODE_TABLE values('5', '수학', 'subject');
+insert into CODE_TABLE values('3', '국어', 'teacherSubject');
+insert into CODE_TABLE values('4', '영어', 'teacherSubject');
+insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 
 INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
