@@ -55,5 +55,7 @@ public class NoticeDao
 		return session.selectOne(namespace+"select_byno", no);
 	}
 	
-	
+	public int selectHit(int no) {
+		return session.selectOne(namespace+"select_hit", no);
+	}
 }

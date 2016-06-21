@@ -27,7 +27,8 @@
 	update basic_board
 	set basic_title = #{basicTitle},
 		basic_content = #{basicContent},
-		basic_date = #{basicDate}
+		basic_date = #{basicDate},
+		basic_hit = #{basicHit}
 	where basic_no  = #{basicNo}
 </update>
 <delete id="delete_notice" parameterType="_int">
@@ -35,6 +36,11 @@
 </delete>
 <select id="select_byno" parameterType="_int" resultMap="notice-resultMap">
 	select <include refid="notice-columns"></include>
+	from basic_board
+	where basic_no = #{basicNo}
+</select>
+<select id="select_hit" parameterType="_int" resultType="_int">
+	select basic_hit
 	from basic_board
 	where basic_no = #{basicNo}
 </select>

@@ -53,7 +53,7 @@ public class NoticeController
 	
 	@RequestMapping("/list.do")
 	public ModelAndView noticeAllList() {
-		System.out.println("공지사항 전체리스트");
+//		System.out.println("공지사항 전체리스트");
 		List list = service.noticeAll();
 		return new ModelAndView("notice/notice_list.tiles", "list", list);
 	}
@@ -75,7 +75,7 @@ public class NoticeController
 	// 공지사항 삭제
 	@RequestMapping("/noticeDelete.do")
 	public ModelAndView noticeRemove(String no) {
-		System.out.println("공지사항 삭제");
+//		System.out.println("공지사항 삭제");
 		int num = Integer.parseInt(no);
 		service.deleteNotice(num);
 		List list = service.noticeAll();
@@ -90,4 +90,15 @@ public class NoticeController
 		return new ModelAndView("notice/notice_update.tiles", "notice", notice);
 	}
 	
+	
+	@RequestMapping("/noticeDetail.do")
+	public ModelAndView noticeDetail(String no) {
+		int num = Integer.parseInt(no);
+		Notice notice = service.selectByNo(num);
+		int val = notice.getBasicHit();
+		notice.setBasicHit(++val);
+		System.out.println(notice);
+		service.modifyNotice(notice);
+		return new ModelAndView("notice/notice_detail.tiles", "notice", notice);
+	}
 }

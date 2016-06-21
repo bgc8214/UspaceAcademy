@@ -17,18 +17,19 @@ $(document).ready(function() {
 			<tr>
 				<td>No</td>
 				<td>공지제목</td>
-				<td>공지내용</td>
 				<td>등록일</td>
+				<td>조회수</td>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="notice" items="${requestScope.list}">
 				<tr id="tb">
 					<td>${notice.basicNo}</td>
-					<td>${notice.basicTitle}</td>
-					<td>${notice.basicContent}</td>
+					<td><a href="/UspaceAcademy/notice/noticeDetail.do?no=${notice.basicNo}">${notice.basicTitle}</a></td>
 					<td>${notice.basicDate}</td>
+					<td>${notice.basicHit}</td>
 				</tr>
 			</c:forEach>
 		</tbody>	
-	</table>
+	</table><p>
+<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><input type="button" value="공지사항등록"></a>

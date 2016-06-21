@@ -51,4 +51,8 @@ public class NoticeService
 		return dao.selectByNo(no);
 	}
 	
+	public int selectHit(int no) {
+		return dao.selectHit(no);
+	}
+	
 }
