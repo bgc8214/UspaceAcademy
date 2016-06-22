@@ -51,7 +51,7 @@ width:130;height:30;  /*--버튼 크기---*/
 <a href="/UspaceAcademy/lecture/lectureList.do"><button>개설강좌</button></a>
 &emsp;&emsp;
 
-<a href="/UspaceAcademy/lecture_review_insert.do"><button>수강후기</button></a>
+<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button>수강후기</button></a>
 &emsp;&emsp;
 
 <a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button>공지사항</button></a>
@@ -73,7 +73,7 @@ width:130;height:30;  /*--버튼 크기---*/
 <a href="/UspaceAcademy/lecture/lectureList.do"><button>개설강좌</button></a>
 &emsp;&emsp;
 
-<a href="/UspaceAcademy/lecture_review_insert.do"><button>수강후기</button></a>
+<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button>수강후기</button></a>
 &emsp;&emsp;
 
 <a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button>공지사항</button></a>

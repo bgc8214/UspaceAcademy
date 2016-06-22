@@ -22,30 +22,35 @@
 
 	<!-- 삽입 -->
 	<insert id="insert" parameterType="LectureReview"><!--  mybatis-config에 타입알리야스 지정 -->
-	INSERT INTO review_board VALUES (#{review_no},#{review_writer},#{lecture_title},#{lecture_subject},#{review_title},#{review_content},#{review_date},#{review_hit})                            
+	INSERT INTO review_board VALUES (#{reviewNo},#{reviewWriter},#{lectureTitle},#{lectureSubject},#{reviewTitle},#{reviewContent},#{reviewDate},#{reviewHit})   <!-- VO값넣기 -->                          
 	</insert>
 	
 
+	<!--  시퀀스 -->
+	<select id="selectNextNo" resultType="_int">
+	select review_board_seq.nextval from dual
+	</select>
+	
 	
 	
 	<!-- 수정 -->
 	<update id="update" parameterType="LectureReview">
 	UPDATE review_board
-	SET  	    reviewWriter=#{review_writer}, 
-			    lectureTitle=#{lecture_title},
-			    lectureSubject=#{lecture_subject}, 
-			    reviewTitle=#{review_title}, 
-			    reviewContent=#{review_content}, 
-			    reviewDate=#{review_date}, 
-			    reviewHit=#{review_hit} <!--  끝에 점 찍으면 안됨 -->
-	WHERE  	reviewNo=#{review_no}	
+	SET  	    review_writer=#{reviewWriter}, 
+			    lecture_title=#{lectureTitle},
+			    lecture_subject=#{lectureSubject}, 
+			    review_title=#{reviewTitle}, 
+			    review_content=#{reviewContent}, 
+			    review_date=#{reviewDate}, 
+			    review_hit=#{reviewHit} <!--  끝에 점 찍으면 안됨 -->
+	WHERE  	review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
 	</update>
 	
 	
 	
 	<!-- 삭제 -->
-	<delete id="deleteByNo" parameterType="string">
-	DELETE FROM review_board WHERE reviewNo=#{review_no}
+	<delete id="deleteByNo" parameterType="_int">
+	DELETE FROM review_board WHERE review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
 	</delete>
 	
 	
@@ -65,8 +70,8 @@
 	
 	
 	
-	<!--  전체조회(no로)  -->
-	<select id="selectNo" resultType="LectureReview" parameterType="string">
+	<!--  전체조회(no로) (수강신청-세부조회할때) -->
+	<select id="selectNo" resultType="LectureReview" parameterType="_int">
 	SELECT 	review_no reviewNo,
 				review_writer reviewWriter,
 				lecture_title lectureTitle,
@@ -76,7 +81,7 @@
 				review_date reviewDate,
 				review_hit reviewHit      
 	FROM 	review_board
-	WHERE reviewNo=#{review_no}
+	WHERE review_no=#{reviewNo}   <!--    쿼리이름!! => VO이름!!    -->
 	</select>
 	
 	
@@ -93,7 +98,7 @@
 				review_date reviewDate,
 				review_hit reviewHit   
 	FROM 	review_board
-	WHERE lectureTitle=#{lecture_title} , reviewContent=#{review_content}
+	WHERE lecture_title=#{lectureTitle} , review_content=#{reviewContent}     <!--  쿼리 => VO -->
 	</select>
 	
 	
@@ -112,7 +117,7 @@
 				review_date reviewDate,
 				review_hit reviewHit   
 	FROM 	review_board
-	WHERE lectureTitle=#{lecture_title}
+	WHERE lecture_title=#{lectureTitle}   <!--  쿼리 => VO -->
 	</select>
 	
 	
@@ -132,7 +137,7 @@
 				review_date reviewDate,
 				review_hit reviewHit   
 	FROM 	review_board
-	WHERE reviewContent=#{review_content}
+	WHERE review_content=#{reviewContent} <!--  쿼리 => VO -->
 	</select>
 	
 	

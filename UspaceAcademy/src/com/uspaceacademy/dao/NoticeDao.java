@@ -26,7 +26,7 @@ public class NoticeDao
 		return session.insert(namespace+"insert_notice", notice);
 	}
 	
-	// 공지사항 게시물 no sequence
+	// 공지사항 게시물 시퀀스no sequence
 	public int selectNextNo() {
 		return session.selectOne(namespace+"selectNextNo");
 	}
@@ -50,6 +50,9 @@ public class NoticeDao
 	public int deleteNotice(int no) {
 		return session.delete(namespace+"delete_notice", no);
 	}
+	
+	
+	
 	
 	
 }
