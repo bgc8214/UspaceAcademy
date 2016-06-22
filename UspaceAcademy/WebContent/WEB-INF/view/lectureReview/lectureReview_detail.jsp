@@ -36,8 +36,8 @@
 		</tbody>	
 	</table>
 
-<a href="/UspaceAcademy/lectureReview/lecture_review_delete.do">삭제버튼</a>
-<a href="/UspaceAcademy/lectureReview/lecture_review_modify.do">수정버튼</a>
+<a href="/UspaceAcademy/lectureReview/lecture_review_delete.do?reviewNo=${lectureListReview2.reviewNo}">삭제버튼</a><!-- 삭제할때 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/lectureReview/lecture_review_modify.do?reviewNo=${lectureListReview2.reviewNo}">수정버튼</a><!-- 수정할때도 No값 넘겨줘야함*  -->
 
 
 

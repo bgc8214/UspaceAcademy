@@ -30,7 +30,7 @@ public class LectureReviewDao{
 	}
 	
 	
-	//수강후기 게시물 시퀀스 no sequence===========
+	//수강후기 게시물 시퀀스 no sequence===========*ok
 	public int selectNextNo(){
 		return session.selectOne(namespace+"selectNextNo");
 	}
@@ -42,9 +42,9 @@ public class LectureReviewDao{
 	}
 	
 	
-	//수강후기 (no로) 삭제
-	public int deleteByNo(int no){
-	return session.delete(namespace+"delete", no);
+	//수강후기 (no로) 삭제   *ok
+	public int deleteByNo(int reviewNo){
+	return session.delete(namespace+"deleteByNo", reviewNo);// mapper에서 deleteByNo 로함 잘보기 *
 	}
 	
 	//수강후기 no로 조회 (수강신청 세부조회할때) *ok

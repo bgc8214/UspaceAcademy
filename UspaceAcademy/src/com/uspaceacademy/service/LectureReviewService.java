@@ -17,29 +17,29 @@ public class LectureReviewService{
 //----------------------------------------	
 	
 	
-	//수강후기 게시물등록
+	//수강후기 게시물등록 *ok
 	public int insert(LectureReview lectureReview){
 		return dao.insert(lectureReview);
 	}
 	
-	//수강후기 게시물 LectureReview sequence처리==============
+	//수강후기 게시물 LectureReview sequence처리==============*ok
 	public int selectNextNo(){
 		return dao.selectNextNo();
 	}
 	
-	//수강후기 전체 리스트
+	//수강후기 전체 리스트 *ok
 	public List selectList(){
 		return dao.selectList();
 	}
 	
-	//수강후기 수정
+	//수강후기 수정 
 	public int update(LectureReview lectureReview){
 		return dao.update(lectureReview);
 	}
 	
-	//수강후기 삭제
-	public int delete(int no){
-		return dao.deleteByNo(no);
+	//수강후기 삭제 *ok
+	public int delete(int reviewNo){
+		return dao.deleteByNo(reviewNo);
 	}
 	
 	//수강후기 세부조회 *ok

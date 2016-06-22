@@ -1,6 +1,5 @@
 package com.uspaceacademy.controller;
-
-
+//영주 - 수강후기
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.LectureReviewService;
 import com.uspaceacademy.vo.LectureReview;
+
 
 @Controller
 @RequestMapping("/lectureReview")
@@ -66,14 +66,10 @@ public class LectureReviewController{
 		//글번호
 		int num = service.selectNextNo();
 		
-		
-		
 		LectureReview lectureReview = new LectureReview(num,"이영주",lectureReviewSubject,lectureReviewTitle,title,content,sdfDate,0);
 		service.insert(lectureReview);
 		
-		
 		System.out.println("수강후기 작성하고 등록ok");
-		
 	return new ModelAndView("lectureReview/lectureReview_detail.tiles","lectureListReview2",lectureReview); // 영주 수정할것  :  success페이지 따로만들어야함 새로고침하면 또 등록되니까 (리다이렉트 방식으로 어떻게해서..)
 	}
 	
@@ -87,15 +83,12 @@ public class LectureReviewController{
 	
 	//수강후기 삭제(수강상세조회에서 삭제 눌렀을때)
 	@RequestMapping("/lecture_review_delete")//lectureReview_detail.jsp 에서  
-	public ModelAndView delete(){
-
-		
-		
+	public ModelAndView delete(int reviewNo){
+		service.delete(reviewNo);
+		List list = service.selectList();
 		System.out.println("수강후기 삭제 ok");
-		
-	return new ModelAndView("lectureReview/lectureReview_delete.tiles"); // 영주 수정할것  :  success페이지 따로만들어야함 새로고침하면 또 등록되니까 (리다이렉트 방식으로 어떻게해서..)
+	return new ModelAndView("lectureReview/lectureReview_delete.tiles","list",list); // 영주 수정할것  :  삭제되긴하는데 새로고침해야보여짐, 삭제후 상세페이지보여주기
 	}
-	
 	
 	
 	
@@ -105,13 +98,14 @@ public class LectureReviewController{
 	
 	//수강후기 수정(수강상세조회에서 수정 눌렀을때)
 	@RequestMapping("/lecture_review_modify")//lectureReview_detail.jsp 에서  
-	public ModelAndView modify(){
-
+	public ModelAndView modify(int reviewNo, String reviewWriter,String lectureReviewSubject, String lectureReviewTitle ,String title, String content){
 		
+		LectureReview lectureReview = new LectureReview(reviewNo,reviewWriter,lectureReviewSubject,lectureReviewTitle,title,content);
+		service.update(lectureReview);
 		
 		System.out.println("수강후기 수정 ok");
-		
-	return new ModelAndView("lectureReview/lectureReview_modify.tiles"); // 영주 수정할것  :  success페이지 따로만들어야함 새로고침하면 또 등록되니까 (리다이렉트 방식으로 어떻게해서..)
+		return new ModelAndView("lectureReview/lectureReview_request.tiles"); // 영주 수정할것  :
+		//return new ModelAndView("lectureReview/lectureReview_modify.tiles"); 
 	}
 	
 	

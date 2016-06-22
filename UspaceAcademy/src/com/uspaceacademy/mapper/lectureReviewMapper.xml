@@ -36,20 +36,20 @@
 	<!-- 수정 -->
 	<update id="update" parameterType="LectureReview">
 	UPDATE review_board
-	SET  	    reviewWriter=#{review_writer}, 
-			    lectureTitle=#{lecture_title},
-			    lectureSubject=#{lecture_subject}, 
-			    reviewTitle=#{review_title}, 
-			    reviewContent=#{review_content}, 
-			    reviewDate=#{review_date}, 
-			    reviewHit=#{review_hit} <!--  끝에 점 찍으면 안됨 -->
+	SET  	    review_writer=#{reviewWriter}, 
+			    lecture_title=#{lectureTitle},
+			    lecture_subject=#{lectureSubject}, 
+			    review_title=#{reviewTitle}, 
+			    review_content=#{reviewContent}, 
+			    review_date=#{reviewDate}, 
+			    review_hit=#{reviewHit} <!--  끝에 점 찍으면 안됨 -->
 	WHERE  	review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
 	</update>
 	
 	
 	
 	<!-- 삭제 -->
-	<delete id="deleteByNo" parameterType="string">
+	<delete id="deleteByNo" parameterType="_int">
 	DELETE FROM review_board WHERE review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
 	</delete>
 	
