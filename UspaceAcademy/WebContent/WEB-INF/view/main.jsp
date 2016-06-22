@@ -3,6 +3,7 @@
 
 메인페이지<br>
 <a href="/UspaceAcademy/insert.do">리스트요청</a><br>
+
 <a href="/UspaceAcademy/lecture/lectureList.do">개설강좌목록</a><br>
 
 <a href="/UspaceAcademy/lecture_review_insert.do">수강후기 리스트 요청 - 영주</a><br>
@@ -10,3 +11,5 @@
 <a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항">공지사항폼</a><br>
 
 <a href="/UspaceAcademy/registerSelect.do">회원가입</a><br>
+
+<a href="/UspaceAcademy/loginForm.do">로그인</a><br>

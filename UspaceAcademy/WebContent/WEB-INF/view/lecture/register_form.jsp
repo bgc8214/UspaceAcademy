@@ -26,7 +26,6 @@ $(document).ready(function(){
 	});
 })
 </script-->
-
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 	$(document).ready(function(){
