@@ -92,7 +92,6 @@ CREATE TABLE lecture(
 	teacher_id2 varchar2(50), --강사아이디 foreign key
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
-
 drop sequence lecture_seq;
 create sequence lecture_seq nocache;
 
