@@ -34,10 +34,11 @@
 	<tr>
 		<th>과목</th>
 		<th>
-			<select name="subject">
-				<option value="a">국어</option>
-				<option value="b">수학</option>
-				<option value="c">영어</option>
+			<select name="teacherSubject">
+			<c:forEach items="${requestScope.codeType }" var="code">
+				<option value="${code.codeName }">${code.codeName }</option>
+			
+			</c:forEach>
 			</select>
 		</th>
 	</tr>
@@ -47,4 +48,7 @@
 		</td>
 	</tr>
 </table>
+${requestScope.codeType[0].codeType }
+${requestScope.codeType[1].codeType }
+${requestScope.codeType[2].codeType }
 </form>

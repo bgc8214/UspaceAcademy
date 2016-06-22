@@ -20,11 +20,11 @@ public class MemberDao
 	}
 	
 	
-	public int insertStudent(Student student){
+	public int insertStudent(Student student){ //학생 등록
 		return session.insert("memberMapper.insertStudent", student);
 	}
 	
-	public int insertTeacher(Teacher teacher)
+	public int insertTeacher(Teacher teacher) //강사 등록
 	{
 		return session.insert("memberMapper.insertTeacher", teacher);
 	}
@@ -37,6 +37,20 @@ public class MemberDao
 
 	public List selectTeacherBySubject(String teacherSubject) {
 		return session.selectList("memberMapper.selectTeacherBySubject", teacherSubject);
+	}
+	
+	public List selectCode(String code) { //코드 목록 조회
+		return session.selectList("codeTable.selectCodeName", code);
+	}
+	
+	public Student findStudentById(String id) //아이디로 학생 조회
+	{
+		return session.selectOne("memberMapper.selectStudentByID", id);
+	}
+	public Teacher findTeacherById(String id) //아이디로 강사 조회
+
+	{
+		return session.selectOne("memberMapper.selectTeacherByID", id);
 	}
 	
 

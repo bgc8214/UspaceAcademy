@@ -40,7 +40,6 @@ public class LectureController {
 	@ResponseBody
 	public List getLectureByNo(int lectureNo, HttpSession session){
 		Lecture lecture = lectureService.getLectureByNo(lectureNo);
-		session.setAttribute("memberType", "administrator");
 		String memberType = (String) session.getAttribute("memberType");
 		ArrayList list = new ArrayList();
 		list.add(lecture);

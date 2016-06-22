@@ -27,6 +27,21 @@ public class MemberService
 		System.out.println(dao.insertTeacher(teacher)+"명 추가");
 		
 	}
+	
+	public List searchCode(String code)
+	{
+		return dao.selectCode(code);
+	}
+	
+	public Student findStudentById(String id)
+	{
+		return dao.findStudentById(id);
+	}
+	
+	public Teacher findTeacherById(String id)
+	{
+		return dao.findTeacherById(id);
+	}
 
 	public List getAllTeacher() {
 		
