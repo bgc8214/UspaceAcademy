@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
 <configuration>
+
+
+	
 	<settings>
-		<!-- 파라미터 매핑에 null 값이 들어왔을 경우 일괄적으로 처리하는 설정. -->
+		<!-- 파라미터 매핑에 null값이 들어왔을 경우 일괄적으로 처리하는 설정. -->
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
-	<typeAliases>
-		<package name="com.uspaceacademy.vo"/>
-	</typeAliases>
 
-		
-	
+	<typeAliases>
+		<typeAlias type="com.uspaceacademy.vo.Inquiry" alias="inquiry"></typeAlias>
+		<package name="com.uspaceacademy.vo"/>
+
+	</typeAliases>	
+
 	<mappers>
+
+
+
+		<mapper resource="com/uspaceacademy/mapper/InquiryMapper.xml"/>
+
+
 		<mapper resource="com/uspaceacademy/mapper/lectureReviewMapper.xml" /><!--  영주 -->
+
 		<mapper resource="com/uspaceacademy/mapper/MemberMapper.xml" /> <!-- 이름바꾸기 -->
-		<mapper resource="com/uspaceacademy/mapper/LectureMapper.xml"/> 
+
+		<mapper resource="com/uspaceacademy/mapper/LectureMapper.xml"/> <!-- 이름바꾸기 -->
+
 		<mapper resource="com/uspaceacademy/mapper/noticeMapper.xml"/>
 		<mapper resource="com/uspaceacademy/mapper/codeMapper.xml"/>
+
+		<mapper resource="com/uspaceacademy/mapper/faqMapper.xml"/>
+
 	</mappers>
 	
 </configuration>

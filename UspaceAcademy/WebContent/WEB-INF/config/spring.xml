@@ -17,7 +17,12 @@
 	<mvc:view-controller path="/registerSelect.do" view-name="member/registerSelect.tiles"/>
 	<mvc:view-controller path="/member/studentRegisterForm.do" view-name="member/studentRegisterForm.tiles"/>
 	<mvc:view-controller path="/loginForm.do" view-name="member/loginForm.tiles"/>
+	<mvc:view-controller path="/introduceSelct.do" view-name="academicInfo/introduceSelect.tiles"/>
+	<mvc:view-controller path="/academyIntroduce.do" view-name="academicInfo/academyIntroduce.tiles"/>
+	<mvc:view-controller path="/roadIntroduce.do" view-name="academicInfo/roadIntroduce.tiles"/>
+	<mvc:view-controller path="/teacherIntroduce.do" view-name="academicInfo/teacherIntroduce.tiles"/>
 	
+
 	<context:component-scan base-package="com.uspaceacademy"/>
 	
 	<bean name="tilesConfig"

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="inquiryMapper">
+	<sql id="inquiry-select">
+		select advanced_no,
+				advanced_secret,
+				advanced_title,
+				advanced_content,
+				advanced_date,
+				advanced_hit,
+				advanced_id,
+				lecture_no2
+		from	advanced_board		
+	</sql>
+	
+	<sql id="inquiry-select2">
+		select advanced_no,
+				advanced_secret,
+				advanced_title,
+				advanced_content,
+				advanced_date,
+				advanced_hit,
+				advanced_id
+		from	advanced_board		
+	</sql>
+	
+	<resultMap type="inquiry" id="inquiry-resultmap">
+		<result column="advanced_no" property="advancedNo"/>
+		<result column="advanced_secret" property="advancedSecret"/>
+		<result column="advanced_title" property="advancedTitle"/>
+		<result column="advanced_content" property="advancedContent"/>
+		<result column="advanced_Date" property="advancedDate"/>
+		<result column="advanced_hit" property="advancedHit"/>
+		<result column="advanced_id" property="advancedId"/>
+		<result column="lecture_no2" property="lectureNo2"/>
+	</resultMap>
+	
+	<resultMap type="inquiry" id="inquiry-resultmap2">
+		<result column="advanced_no" property="advancedNo"/>
+		<result column="advanced_secret" property="advancedSecret"/>
+		<result column="advanced_title" property="advancedTitle"/>
+		<result column="advanced_content" property="advancedContent"/>
+		<result column="advanced_Date" property="advancedDate"/>
+		<result column="advanced_hit" property="advancedHit"/>
+		<result column="advanced_id" property="advancedId"/>
+	</resultMap>
+	
+	<!-- 글번호sequence -->
+	<select id="increaseAdvancedNo" resultType="_int">
+		select advanced_board_seq.nextval from dual
+	</select>
+	
+	<!-- 등록하기 -->
+ 	<insert id="insertInquiry" parameterType="inquiry">
+		insert into advanced_board values(#{advancedNo}, #{advancedSecret}, #{advancedTitle}, #{advancedContent}, #{advancedDate}, #{advancedHit}, #{advancedId}, #{lectureNo2})
+	</insert>
+	
+	<!-- 수정하기 -->
+ 	<update id="updateInquiryByAdvancedNo" parameterType="_int">
+		update advanced_board
+		set advanced_title = #{advancedTitle},
+			advanced_content = #{advancedContent}
+		where advanced_no = #{advancedNo}	
+	</update>
+	
+	<!-- 삭제하기 -->
+	<delete id="deleteInquiryByAdvancedNo" parameterType="_int">
+		delete from advanced_board where advanced_no = #{advancedNo}
+	</delete>
+	
+	<!-- 전체 조회 -->
+	<select id="selectAllInquirys" resultMap="inquiry-resultmap">
+		<include refid="inquiry-select"></include>
+	</select>
+
+	<!-- 상세조회 -->
+	<select id="selectInquiryByAdvancedNo" resultMap="inquiry-resultmap" parameterType="_int">
+		<include refid="inquiry-select"></include>
+		where advanced_no = #{advancedNo}
+	</select>
+	
+</mapper>
