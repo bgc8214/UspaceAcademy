@@ -28,8 +28,8 @@ public class NoticeService
 	}
 	
 	// 공지사항 게시물 전체리스트
-	public List noticeAll() {
-		return dao.noticeList();
+	public List noticeAll(String type) {
+		return dao.noticeList(type);
 	}
 	
 	// 코드 값 search
@@ -45,6 +45,14 @@ public class NoticeService
 	// 공지사항 삭제
 	public int deleteNotice(int no) {
 		return dao.deleteNotice(no);
+	}
+	
+	public Notice selectByNo(int no) {
+		return dao.selectByNo(no);
+	}
+	
+	public int selectHit(int no) {
+		return dao.selectHit(no);
 	}
 	
 }

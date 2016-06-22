@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<mapper namespace= "faqMapper">  
+<sql id="faq-columns">
+	basic_no, basic_writer, basic_title, basic_content, basic_date, basic_hit, basic_type
+</sql>	
+<resultMap type="fAQ" id="faq-resultMap">
+	<id column="basic_no" property="basicNo"/>
+	<result column="basic_writer" property="basicWriter"/>
+	<result column="basic_title" property="basicTitle"/>
+	<result column="basic_content" property="basicContent"/>
+	<result column="basic_date" property="basicDate"/>
+	<result column="basic_hit" property="basicHit"/>
+	<result column="basic_type" property="basicType"/>
+</resultMap>
+
+<!-- FAQ 등록 -->
+<insert id="insert_faq" parameterType="fAQ">
+	insert into basic_board
+	values(#{basicNo}, #{basicWriter}, #{basicTitle}, #{basicContent}, #{basicDate}, #{basicHit}, #{basicType})
+</insert>
+
+<!-- basic_no 조회 -->
+<select id="selectNextNo" resultType="_int">
+	select basic_board_seq.nextval from dual
+</select>
+
+<!-- FAQ 전체조회 -->
+<select id="selectList" resultMap="faq-resultMap" parameterType="string">
+	select <include refid="faq-columns"/> 
+	from basic_board
+	where basic_type = #{value}
+</select>
+
+<!-- FAQ 수정 -->
+<update id="update_faq" parameterType="fAQ">
+	update basic_board
+	set basic_title = #{basicTitle},
+		basic_content = #{basicContent},
+		basic_date = #{basicDate},
+		basic_hit = #{basicHit}
+	where basic_no  = #{basicNo}
+</update>
+
+<!-- FAQ 삭제  -->
+<delete id="delete_faq" parameterType="_int">
+	delete from basic_board where basic_no = #{basicNo}
+</delete>
+
+<!-- basic_no로 게시글 조회 -->
+<select id="select_byno" parameterType="_int" resultMap="faq-resultMap">
+	select <include refid="faq-columns"/>
+	from basic_board
+	where basic_no = #{basicNo}
+</select>
+
+<!-- 조회수 증가를 위한 조회수 조회 -->
+<select id="select_hit" parameterType="_int" resultType="_int">
+	select basic_hit
+	from basic_board
+	where basic_no = #{basicNo}
+</select>
+
+</mapper> 

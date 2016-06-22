@@ -20,16 +20,30 @@
 <select id="selectNextNo" resultType="_int">
 	select basic_board_seq.nextval from dual
 </select>
-<select id="selectList" resultMap="notice-resultMap">
-	select <include refid="notice-columns"/> from basic_board
+<select id="selectList" resultMap="notice-resultMap" parameterType="string">
+	select <include refid="notice-columns"/> 
+	from basic_board
+	where basic_type = #{basicType}
 </select>
 <update id="update_notice" parameterType="notice">
 	update basic_board
 	set basic_title = #{basicTitle},
-		basic_content = #{basicContent}
+		basic_content = #{basicContent},
+		basic_date = #{basicDate},
+		basic_hit = #{basicHit}
 	where basic_no  = #{basicNo}
 </update>
 <delete id="delete_notice" parameterType="_int">
 	delete from basic_board where basic_no = #{basicNo}
 </delete>
+<select id="select_byno" parameterType="_int" resultMap="notice-resultMap">
+	select <include refid="notice-columns"></include>
+	from basic_board
+	where basic_no = #{basicNo}
+</select>
+<select id="select_hit" parameterType="_int" resultType="_int">
+	select basic_hit
+	from basic_board
+	where basic_no = #{basicNo}
+</select>
 </mapper> 
