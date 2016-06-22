@@ -42,4 +42,14 @@ public class MemberService
 	{
 		return dao.findTeacherById(id);
 	}
+
+	public List getAllTeacher() {
+		
+		return dao.selectAllTeacher();
+	}
+
+	public List getTeacherBySubject(String teacherSubject) {
+		return dao.selectTeacherBySubject(teacherSubject);
+	}
+
 }

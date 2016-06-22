@@ -28,6 +28,16 @@ public class MemberDao
 	{
 		return session.insert("memberMapper.insertTeacher", teacher);
 	}
+
+
+	public List selectAllTeacher() {
+		return session.selectList("memberMapper.selectAllTeacher");
+	}
+
+
+	public List selectTeacherBySubject(String teacherSubject) {
+		return session.selectList("memberMapper.selectTeacherBySubject", teacherSubject);
+	}
 	
 	public List selectCode(String code) { //코드 목록 조회
 		return session.selectList("codeTable.selectCodeName", code);

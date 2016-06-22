@@ -56,9 +56,8 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
-drop sequence basic_board_seq 
-create sequence basic_board_seq 
-nocache;
+drop sequence basic_board_seq; 
+create sequence basic_board_seq nocache;
 
 
 
@@ -93,6 +92,9 @@ CREATE TABLE lecture(
 	teacher_id2 varchar2(50), --강사아이디 foreign key
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
+
+drop sequence lecture_seq;
+create sequence lecture_seq nocache;
 
 -- 1:1문의, 질문게시판
 drop table advanced_board cascade constraint;
@@ -169,7 +171,9 @@ insert into CODE_TABLE values('4', '영어', 'teacherSubject');
 insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 
-INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(-1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(-2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(-3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(-4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+
+

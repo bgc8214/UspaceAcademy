@@ -66,10 +66,10 @@ public class MemberController
 	@RequestMapping("/teacherRegister.do")
 	public String teacherRegister(@ModelAttribute Teacher teacher)
 	{
-
-		System.out.println(teacher);
-		service.insertTeacher(teacher);
-
+	
+			System.out.println(teacher);
+			service.insertTeacher(teacher);
+		
 		return "redirect:/member/teacherRedirect.do";
 	}
 
@@ -111,7 +111,7 @@ public class MemberController
 			{
 				System.out.println("강사로 로그인 성공");
 				session.setAttribute("login_info", teacher);
-				session.setAttribute("memberType", 1);
+				session.setAttribute("memberType","administrator");
 			} else
 			{
 				System.out.println("강사 비밀번호 틀림");
@@ -122,7 +122,7 @@ public class MemberController
 			{
 				System.out.println("학생으로로 로그인 성공");
 				session.setAttribute("login_info", student);
-				session.setAttribute("memberType", 0);
+				session.setAttribute("memberType", "student");
 			} else
 			{
 				System.out.println("학생 비밀번호 틀림");
