@@ -2,18 +2,20 @@ package com.uspaceacademy.vo;
 
 public class LectureReview{
 	
-	private int reviewNo;
-	private String reviewWriter;
-	private String lectureTitle;
-	private String lectureSubject;
-	private String reviewTitle;
-	private String reviewContent;
-	private String reviewDate;
-	private int reviewHit;
+	private int reviewNo;//글번호
+	private String reviewWriter;//글쓴이
+	private String lectureTitle;//강의명
+	private String lectureSubject;//강의과목
+	private String reviewTitle;//글제목
+	private String reviewContent;//글내용
+	private String reviewDate;//글등록일
+	private int reviewHit;//글조회
 	
+	public LectureReview() {
+	}
+
 	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject,
 			String reviewTitle, String reviewContent, String reviewDate, int reviewHit) {
-		super();
 		this.reviewNo = reviewNo;
 		this.reviewWriter = reviewWriter;
 		this.lectureTitle = lectureTitle;

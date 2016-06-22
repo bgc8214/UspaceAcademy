@@ -26,6 +26,11 @@
 	</insert>
 	
 
+	<!--  시퀀스 -->
+	<select id="selectNextNo" resultType="_int">
+	select review_board_seq.nextval from dual
+	</select>
+	
 	
 	
 	<!-- 수정 -->
@@ -65,8 +70,8 @@
 	
 	
 	
-	<!--  전체조회(no로)  -->
-	<select id="selectNo" resultType="LectureReview" parameterType="string">
+	<!--  전체조회(no로) (수강신청-세부조회할때) -->
+	<select id="selectNo" resultType="LectureReview" parameterType="_int">
 	SELECT 	review_no reviewNo,
 				review_writer reviewWriter,
 				lecture_title lectureTitle,
@@ -76,7 +81,7 @@
 				review_date reviewDate,
 				review_hit reviewHit      
 	FROM 	review_board
-	WHERE reviewNo=#{review_no}
+	WHERE review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
 	</select>
 	
 	
