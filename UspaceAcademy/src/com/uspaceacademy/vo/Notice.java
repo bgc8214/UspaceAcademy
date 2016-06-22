@@ -15,9 +15,11 @@ public class Notice implements Serializable
 	public Notice(){ }
 	
 	// 수정시
-	public Notice(int basicNo, String basicTitle, String basicContent) {
+	public Notice(int basicNo, String basicTitle, String basicContent, String basicDate) {
+		this.basicNo = basicNo;
 		this.basicTitle = basicTitle;
 		this.basicContent = basicContent;
+		this.basicDate = basicDate;
 	}
 
 	public Notice(int basicNo, String basicWriter, String basicTitle, String basicContent, String basicDate,

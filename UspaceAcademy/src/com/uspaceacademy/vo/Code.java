@@ -1,6 +1,7 @@
 package com.uspaceacademy.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Code implements Serializable {
 	
@@ -40,6 +41,7 @@ public class Code implements Serializable {
 	public void setCodeType(String codeType) {
 		this.codeType = codeType;
 	}
+
 
 	@Override
 	public String toString() {

@@ -17,6 +17,7 @@
 		<mapper resource="com/uspaceacademy/mapper/LectureMapper.xml"/> 
 		<mapper resource="com/uspaceacademy/mapper/noticeMapper.xml"/>
 		<mapper resource="com/uspaceacademy/mapper/codeMapper.xml"/>
+		<mapper resource="com/uspaceacademy/mapper/faqMapper.xml"/>
 	</mappers>
 	
 </configuration>

@@ -57,7 +57,8 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
-drop sequence basic_board_seq; 
+
+drop sequence basic_board_seq;
 create sequence basic_board_seq nocache;
 
 

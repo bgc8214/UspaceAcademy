@@ -12,6 +12,6 @@
 <select id="selectCodeName" resultMap="code-resultMap" parameterType="string">
 	SELECT <include refid="code_colums"/>
 	from code_table
-	where code_type = #{value}
+	where code_type = #{codeType}
 </select>
 </mapper> 
