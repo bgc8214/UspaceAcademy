@@ -70,6 +70,10 @@ create table review_board(
 	review_hit number not null
 );
 
+drop sequence review_board_seq 
+create sequence review_board_seq 
+nocache;
+
 -- 강의
 DROP table lecture cascade constraint;
 CREATE TABLE lecture(
