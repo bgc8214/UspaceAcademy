@@ -62,6 +62,8 @@ create sequence basic_board_seq nocache;
 
 
 -- 수강 후기
+delete from REVIEW_BOARD
+select * from review_board
 drop table review_board;
 create table review_board(
 	review_no number primary key,
@@ -73,6 +75,17 @@ create table review_board(
 	review_date varchar2(50) not null,
 	review_hit number not null
 );
+
+drop sequence review_board_seq;
+create sequence review_board_seq nocache;
+select review_board_seq.nextval from dual;
+
+
+
+
+
+
+
 
 -- 강의
 DROP table lecture cascade constraint;
@@ -160,7 +173,7 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 
-
+---------------------------------------------------------------------------------------------------------------------------------------------
 -- code_table insert하는 구문
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
@@ -170,9 +183,12 @@ insert into CODE_TABLE values('4', '영어', 'teacherSubject');
 insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 
-INSERT INTO lecture VALUES(-1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(-2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(-3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(-4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+<<<<<<< HEAD
+INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 
-
+--수강후기
+insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
