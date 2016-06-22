@@ -27,7 +27,7 @@ public class NoticeController
 	// 코드테일 name과 일치할 때만 구분 값 넣기
 	@RequestMapping("/codeList.do")
 	public ModelAndView codeSearch(String codeNames) {
-		System.out.println("codeTable 조회");
+//		System.out.println("codeTable 조회");
 		List codeList = service.searchCode("basic_board");
 		for(int i=0; i<codeList.size(); i++) {
 			Code c = (Code) codeList.get(i);
@@ -41,7 +41,7 @@ public class NoticeController
 	// 공시사항 게시물 등록
 	@RequestMapping("/noticeWrite.do")
 	public ModelAndView noticeAdd(String title, String content, String codeName) {
-		System.out.println("게시물 등록 method()");
+//		System.out.println("게시물 등록 method()");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm");
 		Date date = new Date();
 		String sDate = sdf.format(date);
@@ -52,9 +52,10 @@ public class NoticeController
 	}
 	
 	@RequestMapping("/list.do")
-	public ModelAndView noticeAllList() {
+	public ModelAndView noticeAllList(String type) {
 //		System.out.println("공지사항 전체리스트");
-		List list = service.noticeAll();
+		System.out.println("전체리스트 :"+type);
+		List list = service.noticeAll(type);
 		return new ModelAndView("notice/notice_list.tiles", "list", list);
 	}
 	
@@ -74,11 +75,12 @@ public class NoticeController
 	
 	// 공지사항 삭제
 	@RequestMapping("/noticeDelete.do")
-	public ModelAndView noticeRemove(String no) {
+	public ModelAndView noticeRemove(String no, String type) {
 //		System.out.println("공지사항 삭제");
+		System.out.println("삭제후 전체리스트: "+type);
 		int num = Integer.parseInt(no);
 		service.deleteNotice(num);
-		List list = service.noticeAll();
+		List list = service.noticeAll(type);
 		return new ModelAndView("notice/notice_list.tiles", "list", list);
 	}
 	

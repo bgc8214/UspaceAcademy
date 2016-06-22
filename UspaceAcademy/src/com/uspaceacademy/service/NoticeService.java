@@ -28,8 +28,8 @@ public class NoticeService
 	}
 	
 	// 공지사항 게시물 전체리스트
-	public List noticeAll() {
-		return dao.noticeList();
+	public List noticeAll(String type) {
+		return dao.noticeList(type);
 	}
 	
 	// 코드 값 search

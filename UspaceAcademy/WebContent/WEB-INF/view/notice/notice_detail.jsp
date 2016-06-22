@@ -6,7 +6,7 @@
 공지내용 <br>
 <textarea rows="45" cols="100" readonly="readonly">${requestScope.notice.basicContent}</textarea>
 <p>
-<a href="/UspaceAcademy/notice/list.do">공지사항 리스트</a>
+<a href="/UspaceAcademy/notice/list.do?type=${requestScope.notice.basicType}">공지사항 리스트</a>
 <a href="/UspaceAcademy/notice/noticeUpdateForm.do?no=${requestScope.notice.basicNo}"><input type="button" value="공지사항 수정"></a>
-<a href="/UspaceAcademy/notice/noticeDelete.do?no=${requestScope.notice.basicNo}"><input type="button" value="공지사항 삭제"></a>
+<a href="/UspaceAcademy/notice/noticeDelete.do?no=${requestScope.notice.basicNo}&type=${reuestScope.notice.basicType}"><input type="button" value="공지사항 삭제"></a>
 

@@ -57,12 +57,8 @@ create table basic_board(
 );
 
 
-drop sequence basic_board_seq ;
+drop sequence basic_board_seq;
 create sequence basic_board_seq nocache;
-
-drop sequence basic_board_seq; 
-create sequence basic_board_seq nocache;
->>>>>>> branch 'master' of https://github.com/bgc8214/UspaceAcademy.git
 
 
 

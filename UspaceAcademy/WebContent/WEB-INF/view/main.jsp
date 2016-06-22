@@ -10,3 +10,5 @@
 <a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항">공지사항폼</a><br>
 
 <a href="/UspaceAcademy/registerSelect.do">회원가입</a><br>
+
+<a href="/UspaceAcademy/FAQ/codeList.do?codeNames=FAQ">FAQ폼</a><br>

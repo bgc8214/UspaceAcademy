@@ -1,18 +1,15 @@
 package com.uspaceacademy.dao;
 
 import java.util.List;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.uspaceacademy.vo.Notice;
 
 @Repository
 public class NoticeDao
 {
 	private String namespace = "noticeMapper.";
-
 
 	private SqlSessionTemplate session;
 	
@@ -32,12 +29,13 @@ public class NoticeDao
 	}
 	
 	// 공지사항 게시물 전체조회
-	public List noticeList() {
-		return session.selectList(namespace+"selectList");
+	public List noticeList(String type) {
+		return session.selectList(namespace+"selectList", type);
 	}
 	
 	// codeTable에서 name값 가져오기
 	public List selectCode(String code) {
+		System.out.println(session.selectList("codeTable.selectCodeName", code));
 		return session.selectList("codeTable.selectCodeName", code);
 	}
 	
