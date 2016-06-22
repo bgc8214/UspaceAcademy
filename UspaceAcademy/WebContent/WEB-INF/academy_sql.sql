@@ -14,6 +14,7 @@ create table administrator(
 	administrator_password varchar2(50) not null
 );
 
+
 -- 강사
 drop table teacher cascade constraint;
 create table teacher(
@@ -105,7 +106,7 @@ create table advanced_board(
 	advanced_date varchar2(50) not null,
 	advanced_hit number not null,
 	advanced_id varchar2(50) not null,
-	lecture_no2 number null,
+	lecture_no2 number,
 	constraint fk_advanced_lecture foreign key(lecture_no2) references lecture(lecture_no)
 );
 

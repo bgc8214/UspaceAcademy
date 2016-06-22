@@ -40,8 +40,8 @@ public class InquiryController
 	public ModelAndView insertInquiry(String advancedTitle, String advancedContent, String codeName){
 		int advancedNo = service.increaseAdvancedNo();
 		String date = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-		Inquiry inquiry = new Inquiry(advancedNo, 1, advancedTitle, advancedContent, date, 1, "admin", 1);
-		
+		Inquiry inquiry = new Inquiry(advancedNo, 1, advancedTitle, advancedContent, date, 1, "admin", 5);
+		System.out.println(inquiry);
 		int insertInquiry = service.insertInquiry(inquiry);
 		return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", inquiry);
 	}

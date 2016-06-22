@@ -15,12 +15,12 @@
 <table>
 	<tr>
 		<td>
-			<input type="text" name="title" size="70" placeholder="공지사항 제목">
+			<input type="text" name="advancedTitle" size="70" placeholder="공지사항 제목">
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<textarea rows="20" cols="100" name="content" placeholder="내용을 입력하세요."></textarea>
+			<textarea rows="20" cols="100" name="advancedContent" placeholder="내용을 입력하세요."></textarea>
 		</td>
 	</tr>
 	<tr>
