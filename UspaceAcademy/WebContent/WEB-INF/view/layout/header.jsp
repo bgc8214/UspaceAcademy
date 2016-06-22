@@ -45,7 +45,7 @@ width:130;height:30;  /*--버튼 크기---*/
 <c:choose>
 <c:when test="${sessionScope.memberType==null }">
 
-<a href="/UspaceAcademy/lecture/lectureList.do"><button>학원소개</button></a>
+<a href="/UspaceAcademy/introduceSelct.do"><button>학원소개</button></a>
 &emsp;&emsp;
 
 <a href="/UspaceAcademy/lecture/lectureList.do"><button>개설강좌</button></a>
@@ -67,7 +67,7 @@ width:130;height:30;  /*--버튼 크기---*/
 </c:when>
 <c:otherwise>
 <br>
-<a href="/UspaceAcademy/lecture/lectureList.do"><button>학원소개</button></a>
+<a href="/UspaceAcademy/introduceSelct.do"><button>학원소개</button></a>
 &emsp;&emsp;
 
 <a href="/UspaceAcademy/lecture/lectureList.do"><button>개설강좌</button></a>
