@@ -1,12 +1,14 @@
 package com.uspaceacademy.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.FAQService;
@@ -51,14 +53,15 @@ public class FAQController
 		int num = service.selectSeq();
 		FAQ faq = new FAQ(num, "관리자", title, content, sDate, 0, codeName);
 		service.register(faq);
-		return new ModelAndView("FAQ/FAQ_detail.tiles", "faq", faq);
+		List list = service.FAQAll(faq.getBasicType());
+		return new ModelAndView("FAQ/FAQ_list.tiles",	"list", list);
 		}
 	
 	
 	@RequestMapping("/list.do")
 	public ModelAndView noticeAllList(String type) {
 //		System.out.println("FAQ 전체리스트");
-		List list = service.noticeAll(type);
+		List list = service.FAQAll(type);
 		return new ModelAndView("FAQ/FAQ_list.tiles", "list", list);
 	}
 	
@@ -73,7 +76,12 @@ public class FAQController
 		String uDate = sdf.format(date1);
 		FAQ faq = new FAQ(num, title, content, uDate);
 		service.modifyFAQ(faq);
-		return new ModelAndView("FAQ/FAQ_detail.tiles", "faq", faq);
+		
+		FAQ faq1 = service.selectByNo(num);
+		
+		List list = service.FAQAll(faq1.getBasicType());
+	
+		return new ModelAndView("FAQ/FAQ_list.tiles", "list", list);
 	}
 	
 	// FAQ 삭제
@@ -81,8 +89,9 @@ public class FAQController
 	public ModelAndView noticeRemove(String no, String type) {
 //		System.out.println("공지사항 삭제");
 		int num = Integer.parseInt(no);
+		System.out.println(no+" "+type);
 		service.deleteFAQ(num);
-		List list = service.noticeAll(type);
+		List list = service.FAQAll(type);
 		return new ModelAndView("FAQ/FAQ_list.tiles", "list", list);
 	}
 	
@@ -95,7 +104,7 @@ public class FAQController
 	}
 		
 		
-	@RequestMapping("/FAQDetail.do")
+/*	@RequestMapping("/FAQDetail.do")
 	public ModelAndView noticeDetail(String no) {
 		int num = Integer.parseInt(no);
 		FAQ faq = service.selectByNo(num);
@@ -104,6 +113,17 @@ public class FAQController
 		System.out.println(faq);
 		service.modifyFAQ(faq);
 		return new ModelAndView("FAQ/FAQ_detail.tiles", "faq", faq);
-	}
+	}*/
 	
+	@RequestMapping("/findFAQByNo.do") 
+	@ResponseBody
+	public FAQ getFAQByNo(String no, String hit) {
+		int num = Integer.parseInt(no);
+		FAQ faq = service.selectByNo(Integer.parseInt(no));
+		int count = Integer.parseInt(hit);
+		faq.setBasicHit(++count);
+		service.modifyFAQ(faq);
+//		System.out.println(faq);
+		return faq;
+	}
 }

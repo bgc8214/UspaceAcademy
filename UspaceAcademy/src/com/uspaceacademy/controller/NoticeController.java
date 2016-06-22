@@ -35,6 +35,7 @@ public class NoticeController
 				value = c.getCodeName();
 			}
 		}
+		System.out.println(value);
 		return new ModelAndView("notice/notice_form.tiles", "codeName", value);
 	}
 	
@@ -42,19 +43,21 @@ public class NoticeController
 	@RequestMapping("/noticeWrite.do")
 	public ModelAndView noticeAdd(String title, String content, String codeName) {
 //		System.out.println("게시물 등록 method()");
+//		System.out.println(codeName);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm");
 		Date date = new Date();
 		String sDate = sdf.format(date);
 		int num = service.selectSeq();
 		Notice notice = new Notice(num, "관리자", title, content, sDate, 0, codeName);
 		service.register(notice);
+//		System.out.println(notice);
 		return new ModelAndView("notice/notice_detail.tiles", "notice", notice);
 	}
 	
 	@RequestMapping("/list.do")
 	public ModelAndView noticeAllList(String type) {
 //		System.out.println("공지사항 전체리스트");
-		System.out.println("전체리스트 :"+type);
+//		System.out.println("전체리스트 :"+type);
 		List list = service.noticeAll(type);
 		return new ModelAndView("notice/notice_list.tiles", "list", list);
 	}
@@ -77,10 +80,12 @@ public class NoticeController
 	@RequestMapping("/noticeDelete.do")
 	public ModelAndView noticeRemove(String no, String type) {
 //		System.out.println("공지사항 삭제");
-		System.out.println("삭제후 전체리스트: "+type);
+//		System.out.println(no);
+//		System.out.println("삭제후 전체리스트: "+type);
 		int num = Integer.parseInt(no);
 		service.deleteNotice(num);
 		List list = service.noticeAll(type);
+//		System.out.println(list);
 		return new ModelAndView("notice/notice_list.tiles", "list", list);
 	}
 	
@@ -92,14 +97,14 @@ public class NoticeController
 		return new ModelAndView("notice/notice_update.tiles", "notice", notice);
 	}
 	
-	
+	// 공지사항 상세페이지 
 	@RequestMapping("/noticeDetail.do")
 	public ModelAndView noticeDetail(String no) {
 		int num = Integer.parseInt(no);
 		Notice notice = service.selectByNo(num);
 		int val = notice.getBasicHit();
 		notice.setBasicHit(++val);
-		System.out.println(notice);
+//		System.out.println(notice);
 		service.modifyNotice(notice);
 		return new ModelAndView("notice/notice_detail.tiles", "notice", notice);
 	}

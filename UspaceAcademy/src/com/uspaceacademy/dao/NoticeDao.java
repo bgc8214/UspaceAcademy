@@ -35,7 +35,7 @@ public class NoticeDao
 	
 	// codeTable에서 name값 가져오기
 	public List selectCode(String code) {
-		System.out.println(session.selectList("codeTable.selectCodeName", code));
+//		System.out.println(session.selectList("codeTable.selectCodeName", code));
 		return session.selectList("codeTable.selectCodeName", code);
 	}
 	

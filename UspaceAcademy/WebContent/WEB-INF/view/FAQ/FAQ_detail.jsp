@@ -1,6 +1,5 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 제목 <input type="text" value="${requestScope.faq.basicTitle}" readonly="readonly">&nbsp;&nbsp;&nbsp;&nbsp; 
 등록일 <input type="text" value="${requestScope.faq.basicDate}" readonly="readonly"><br>
 FAQ내용 <br>

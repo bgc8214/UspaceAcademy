@@ -23,8 +23,8 @@ public class FAQService
 	}
 	
 	// 공지사항 게시물 전체리스트
-	public List noticeAll(String type) {
-		return dao.noticeList(type);
+	public List FAQAll(String type) {
+		return dao.FAQList(type);
 	}
 	
 	// 코드 값 search

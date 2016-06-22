@@ -29,13 +29,13 @@ public class FAQDao
 	}
 	
 	// 공지사항 게시물 전체조회
-	public List noticeList(String type) {
+	public List FAQList(String type) {
 		return session.selectList(namespace+"selectList", type);
 	}
 	
 	// codeTable에서 name값 가져오기
 	public List selectCode(String code) {
-		System.out.println(session.selectList("codeTable.selectCodeName", code));
+//		System.out.println(session.selectList("codeTable.selectCodeName", code));
 		return session.selectList("codeTable.selectCodeName", code);
 	}
 	

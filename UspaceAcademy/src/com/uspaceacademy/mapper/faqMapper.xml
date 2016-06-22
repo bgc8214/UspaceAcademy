@@ -49,7 +49,7 @@
 
 <!-- basic_no로 게시글 조회 -->
 <select id="select_byno" parameterType="_int" resultMap="faq-resultMap">
-	select <include refid="faq-columns"></include>
+	select <include refid="faq-columns"/>
 	from basic_board
 	where basic_no = #{basicNo}
 </select>
