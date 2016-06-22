@@ -104,7 +104,7 @@ public class LectureReviewController{
 		service.update(lectureReview);
 		
 		System.out.println("수강후기 수정 ok");
-		return new ModelAndView("lectureReview/lectureReview_request.tiles"); // 영주 수정할것  :
+		return new ModelAndView("lectureReview/lectureReview_register.tiles"); // 영주 수정할것  : 내용그대로뿌려주는거안됨
 		//return new ModelAndView("lectureReview/lectureReview_modify.tiles"); 
 	}
 	
