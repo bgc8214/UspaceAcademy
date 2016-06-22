@@ -33,7 +33,8 @@
 			</list>
 		</property>
 	</bean>
-
+	<bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	 
 	<bean name="vr1"
 		class="org.springframework.web.servlet.view.BeanNameViewResolver"
 		p:order="1" />
