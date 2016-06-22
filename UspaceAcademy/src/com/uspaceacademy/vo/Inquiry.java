@@ -12,6 +12,13 @@ public class Inquiry implements Serializable
 	
 	public Inquiry(){}
 	
+	public Inquiry(int advancedNo, String advancedTitle, String advancedContent) {
+		super();
+		this.advancedNo = advancedNo;
+		this.advancedTitle = advancedTitle;
+		this.advancedContent = advancedContent;
+	}
+	
 	public Inquiry(int advancedNo, int advancedSecret, String advancedTitle, String advancedContent,
 			String advancedDate, int advancedHit, String advancedId) {
 		super();

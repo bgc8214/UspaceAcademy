@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<mapper namespace="lecture">
+ 	
+ 	<sql id="column-basic">
+ 		lecture_no, lecture_title, lecture_description, lecture_start_time, lecture_end_time, lecture_day, lecture_start_date, lecture_end_date, lecture_price, lecture_total_student, lecture_current_student, lecture_subject, teacher_id2   
+ 	</sql>
+ 	
+ 	<resultMap type="Lecture" id="lecture-basic">
+ 		<id column="lecture_no" property="lectureNo"/>
+		<result column="lecture_title" property="lectureTitle"/>
+		<result column="lecture_description" property="lectureDescription"/>
+		<result column="lecture_start_time" property="lectureStartTime"/>
+		<result column="lecture_end_time" property="lectureEndTime"/>
+		<result column="lecture_day" property="lectureDay"/>
+		<result column="lecture_start_date" property="lectureStartDate"/>
+		<result column="lecture_end_date" property="lectureEndDate"/>
+		<result column="lecture_price" property="lecturePrice"/>
+		<result column="lecture_total_student" property="lectureTotalStudent"/>
+		<result column="lecture_current_student" property="lectureCurrentStudent"/>
+		<result column="lecture_subject" property="lectureSubject"/>
+		<result column="teacher_id2" property="teacherId2"/>
+ 	</resultMap>
+ 	
+ 	<!-- 강의 전체 조회 -->
+ 	<select id="selectLectureList" resultMap="lecture-basic">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   lecture
+ 	</select>
+ 	
+ 	<!-- 강의 번호로 조회(PK로) -->
+ 	<select id="selectLectureByNo" resultMap="lecture-basic" parameterType="_int">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   lecture
+ 		WHERE  lecture_no = #{value}
+ 	</select>
+ 	
+ 	
+</mapper>
