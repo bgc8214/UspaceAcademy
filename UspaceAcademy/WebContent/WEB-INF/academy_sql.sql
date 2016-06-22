@@ -118,7 +118,7 @@ create table advanced_board(
 	advanced_date varchar2(50) not null,
 	advanced_hit number not null,
 	advanced_id varchar2(50) not null,
-	lecture_no2 number null,
+	lecture_no2 number,
 	constraint fk_advanced_lecture foreign key(lecture_no2) references lecture(lecture_no)
 );
 
@@ -192,3 +192,5 @@ INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,�
 --수강후기
 insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
 insert into REVIEW_BOARD values(review_board_seq.nextval,'김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+
+INSERT INTO administrator values('admin', '1234');

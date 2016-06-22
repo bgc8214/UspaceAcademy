@@ -23,13 +23,16 @@ $(document).ready(function(){
 				//if(tmp.next().children().eq(0).text()==""){
 					tmp.next().children().eq(0).append(txt);
 					if(list[1]=="student"){
-						tmp.next().children().eq(0).append($("<button class='lectureApply'>수강신청</button><button class='lectureZzim'>찜하기</button>"));
+						var txt = tmp.children().eq(0).text();
+						var temp = "<a href="+"/UspaceAcademy/lecture/ApplyLectureByNo.do?lectureNo="+txt+"><button class='lectureApply'>수강신청</button></a>"+
+								   "<a href="+"/UspaceAcademy/lecture/ZzimLectureByNo.do?lectureNo="+txt+"><button class='lectureZzim'>찜하기</button></a>";
+						tmp.next().children().eq(0).append($(temp));
 					}
 					if(list[1]=="administrator"){
-						var txt = tmp.children().eq(0).text();
-						var temp = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?lectureNo="+txt+"&codeType=teacherSubject><button class='lectureModify'>강의수정</button></a>"+
-								   "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?lectureNo="+txt+"><button class='lectureRemove'>강의삭제</button></a>";
-						tmp.next().children().eq(0).append($(temp));
+						var txt2 = tmp.children().eq(0).text();
+						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?lectureNo="+txt2+"&codeType=teacherSubject><button class='lectureModify'>강의수정</button></a>"+
+								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?lectureNo="+txt2+"><button class='lectureRemove'>강의삭제</button></a>";
+						tmp.next().children().eq(0).append($(temp2));
 					}
 				//}
 			},
