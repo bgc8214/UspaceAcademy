@@ -184,7 +184,6 @@ insert into CODE_TABLE values('4', '영어', 'teacherSubject');
 insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 
-<<<<<<< HEAD
 INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
