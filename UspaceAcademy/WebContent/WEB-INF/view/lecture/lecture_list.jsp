@@ -26,7 +26,10 @@ $(document).ready(function(){
 						tmp.next().children().eq(0).append($("<button class='lectureApply'>수강신청</button><button class='lectureZzim'>찜하기</button>"));
 					}
 					if(list[1]=="administrator"){
-						tmp.next().children().eq(0).append($("<button class='lectureModify'>강의수정</button><button class='lectureRemove'>강의삭제</button>"));
+						var txt = tmp.children().eq(0).text();
+						var temp = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?lectureNo="+txt+"&codeType=teacherSubject><button class='lectureModify'>강의수정</button></a>"+
+								   "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?lectureNo="+txt+"><button class='lectureRemove'>강의삭제</button></a>";
+						tmp.next().children().eq(0).append($(temp));
 					}
 				//}
 			},
@@ -43,6 +46,7 @@ $(document).ready(function(){
 		})
 		
 	})//강의목록 클릭했을 때 세부정보 표시
+	
 })
 </script>
 

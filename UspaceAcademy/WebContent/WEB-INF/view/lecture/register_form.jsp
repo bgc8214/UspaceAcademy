@@ -57,9 +57,9 @@ $(document).ready(function(){
 </script>
 
 <h2>강의 등록폼</h2>
-<form action="" method="post">
+<form action="/UspaceAcademy/lecture/registerLecture.do" method="post">
 강의명 : <input type="text" name="lectureTitle"><br>
-강의 설명 : <textarea rows="10" cols="20"></textarea><br>
+강의 설명 : <textarea rows="10" cols="20" name="lectureDescription"></textarea><br>
 강의 시작시간 : <input type="text" name="lectureStartTime"><br>
 강의 끝시간 : <input type="text" name="lectureEndTime"><br>
 강의 요일 : <input type="text" name="lectureDay"><br>
@@ -80,7 +80,9 @@ $(document).ready(function(){
 
 강의 강사 : 
 <select id="teacher" name="teacherId2">
-
+	<c:forEach items="${requestScope.teacherList }" var="teacher">
+				<option value="${teacher.teacherId }">${teacher.teacherName }</option>
+	</c:forEach>
 </select>
 <input type="submit" value="강의 등록">
 </form>

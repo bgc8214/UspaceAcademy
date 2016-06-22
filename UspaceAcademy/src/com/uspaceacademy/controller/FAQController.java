@@ -1,7 +1,6 @@
 package com.uspaceacademy.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.uspaceacademy.service.FAQService;
 import com.uspaceacademy.vo.Code;
 import com.uspaceacademy.vo.FAQ;
-import com.uspaceacademy.vo.Notice;
 
 
 @Controller

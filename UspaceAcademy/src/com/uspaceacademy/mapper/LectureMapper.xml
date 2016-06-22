@@ -35,5 +35,39 @@
  		WHERE  lecture_no = #{value}
  	</select>
  	
+ 	<!-- 강의 번호 시퀀스로부터 조회 -->
+ 	<select id="selectLectureSequence" resultType="_int">
+ 		SELECT lecture_seq.nextval 
+ 		FROM   dual
+ 	</select>
+ 	
+ 	<insert id="insertLecture" parameterType="Lecture">
+ 		INSERT INTO lecture VALUES(#{lectureNo}, #{lectureTitle}, #{lectureDescription}, #{lectureStartTime}, #{lectureEndTime}, #{lectureDay}, #{lectureStartDate}, #{lectureEndDate}, #{lecturePrice}, #{lectureTotalStudent}, #{lectureCurrentStudent}, #{lectureSubject}, #{teacherId2})
+ 	</insert>
+ 	
+ 	<!--  강의 수정하기 -->
+ 	<update id="updateLectureByNo" parameterType="Lecture">
+ 		UPDATE lecture
+ 		SET    lecture_title=#{lectureTitle}, 
+ 		       lecture_description=#{lectureDescription},
+ 		       lecture_start_time=#{lectureStartTime},
+ 		       lecture_end_time=#{lectureEndTime},
+ 		       lecture_day=#{lectureDay},
+ 		       lecture_start_date=#{lectureStartDate},
+ 		       lecture_end_date=#{lectureEndDate},
+ 		       lecture_price=#{lecturePrice},
+ 		       lecture_total_student=#{lectureTotalStudent},
+ 		       lecture_current_student=#{lectureCurrentStudent},
+ 		       lecture_subject=#{lectureSubject},
+ 		       teacher_id2=#{teacherId2}
+ 		WHERE  lecture_no=#{lectureNo}
+ 	</update>
+ 	
+ 	<!-- id로 강의 삭제하기 -->
+ 	<delete id="deleteLectureByNo" parameterType="_int">
+ 		DELETE FROM lecture
+ 		WHERE  lecture_no = #{value}
+ 	</delete>
+ 	
  	
 </mapper>

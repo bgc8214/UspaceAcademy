@@ -27,6 +27,22 @@ public class LectureService {
 	public List searchCode(String codeType){
 		return lectureDao.selectCode(codeType);
 	}
-	//@Transactional(rollbackFor=Exception.class)
+	
+	//강의 등록하기 위한 서비스
+	@Transactional(rollbackFor=Exception.class)
+	public int registerLecture(Lecture lecture) {
+		//시퀀스로부터 강의번호를 조회해온다
+		int lectureNo = lectureDao.selectLectureSequence();
+		lecture.setLectureNo(lectureNo);
+		return lectureDao.insertLecture(lecture);
+	}
+	//강의 수정하기 위한 서비스
+	public int modifyLectureByNo(Lecture lecture) {
+		return lectureDao.updateLectureByNo(lecture);
+	}
+	//강의 삭제하기 위한 서비스
+	public int removeLectureByNo(int lectureNo) {
+		return lectureDao.deleteLectureByNo(lectureNo);
+	}
 	
 }

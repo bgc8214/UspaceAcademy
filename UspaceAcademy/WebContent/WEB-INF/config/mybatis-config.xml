@@ -12,8 +12,9 @@
 		
 	
 	<mappers>
+		<mapper resource="com/uspaceacademy/mapper/lectureReviewMapper.xml" /><!--  영주 -->
 		<mapper resource="com/uspaceacademy/mapper/MemberMapper.xml" /> <!-- 이름바꾸기 -->
-		<mapper resource="com/uspaceacademy/mapper/LectureMapper.xml"/> <!-- 이름바꾸기 -->
+		<mapper resource="com/uspaceacademy/mapper/LectureMapper.xml"/> 
 		<mapper resource="com/uspaceacademy/mapper/noticeMapper.xml"/>
 		<mapper resource="com/uspaceacademy/mapper/codeMapper.xml"/>
 		<mapper resource="com/uspaceacademy/mapper/faqMapper.xml"/>
