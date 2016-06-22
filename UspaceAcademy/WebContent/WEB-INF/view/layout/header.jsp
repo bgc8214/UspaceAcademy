@@ -57,7 +57,7 @@ width:130;height:30;  /*--버튼 크기---*/
 <a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button>공지사항</button></a>
 &emsp;&emsp;
 
-<a href="/UspaceAcademy/lecture/lectureList.do"><button>고객센터</button></a>
+<a href="/UspaceAcademy/inquiry/inquiryList.do"><button>고객센터</button></a>
 &emsp;&emsp;
 
 
@@ -80,7 +80,7 @@ width:130;height:30;  /*--버튼 크기---*/
 &emsp;&emsp;
 
 
-<a href="/UspaceAcademy/lecture/lectureList.do"><button>고객센터</button></a>
+<a href="/UspaceAcademy/inquiry/inquiryList.do"><button>고객센터</button></a>
 &emsp;&emsp;
 
 
