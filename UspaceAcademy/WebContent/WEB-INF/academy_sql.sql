@@ -15,6 +15,7 @@ create table administrator(
 	administrator_password varchar2(50) not null
 );
 
+
 -- 강사
 drop table teacher cascade constraint;
 create table teacher(

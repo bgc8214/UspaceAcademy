@@ -26,7 +26,7 @@ span {
 
 			<td><input type="text" name="studentId"
 				value="${requestScope.student.studentId }"><span
-				class="error"> <form:errors path="student.StudentId"
+				class="error"> <form:errors path="student.studentId"
 						delimiter="//" /> <!-- BindingResult의 에러메세지 출력 -->
 
 			</span></td>

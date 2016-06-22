@@ -15,10 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.MemberService;
 import com.uspaceacademy.validaotor.StudentValidator;
+import com.uspaceacademy.validaotor.TeacherValidator;
 import com.uspaceacademy.vo.Code;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
-
 
 @Controller
 @RequestMapping("/member")
@@ -42,14 +42,13 @@ public class MemberController
 		validator.validate(student, errors);
 		boolean error = errors.hasErrors();
 		int errorCount = errors.getErrorCount();
-		System.out.printf("요청파라미터 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n",error,errorCount);
-		if(errors.hasErrors())
+		System.out.printf("학생 가입 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n", error, errorCount);
+		if (errors.hasErrors())
 		{
-			//에러 응답 페이지로 이동
+			// 에러 응답 페이지로 이동
 			return "/member/studentRegisterForm.do";
 		}
-		
-		
+
 		service.insertStudent(student);
 
 		return "redirect:/member/studentRedirect.do";
@@ -64,12 +63,20 @@ public class MemberController
 	}
 
 	@RequestMapping("/teacherRegister.do")
-	public String teacherRegister(@ModelAttribute Teacher teacher)
+	public String teacherRegister(@ModelAttribute Teacher teacher, BindingResult errors)
 	{
-	
-			System.out.println(teacher);
-			service.insertTeacher(teacher);
-		
+		TeacherValidator validator = new TeacherValidator();
+		validator.validate(teacher, errors);
+		boolean error = errors.hasErrors();
+		int errorCount = errors.getErrorCount();
+		System.out.printf("강사 가입 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n", error, errorCount);
+		if (errors.hasErrors())
+		{
+			// 에러 응답 페이지로 이동
+			return "/member/teacherRegisterForm.do?codeType=teacherSubject";
+		}
+		service.insertTeacher(teacher);
+
 		return "redirect:/member/teacherRedirect.do";
 	}
 
@@ -97,24 +104,45 @@ public class MemberController
 	public String memberLogin(String id, String password, HttpServletRequest request)
 	{
 		HttpSession session = request.getSession();
-
+		
 		Student student = service.findStudentById(id);
 		Teacher teacher = service.findTeacherById(id);
 		System.out.println(student);
 		System.out.println(teacher);
+		if(id.equals("admin")) //관리자 로그인
+		{
+			if(password.equals("1234"))
+			{
+				System.out.println("관리자 로그인 성공");
+				session.setAttribute("login_info", "administrator");
+				session.setAttribute("memberType", "administrator");
+				return "main.tiles";
+			}
+			else
+			{
+				System.out.println("관리자 로그인 실패");
+				request.setAttribute("passwordError", "패스워드를 틀렸습니다.");
+				return "/loginForm.do";
+			}
+		}
+		
 		if (student == null && teacher == null)
 		{
 			System.out.println("아이디 없음");
+			request.setAttribute("idError", "아이디를 틀렸습니다.");
+			return "/loginForm.do";
 		} else if (student == null && teacher != null)
 		{
 			if (teacher.getTeacherPassword().equals(password))
 			{
 				System.out.println("강사로 로그인 성공");
 				session.setAttribute("login_info", teacher);
-				session.setAttribute("memberType","administrator");
+				session.setAttribute("memberType", "teacher");
 			} else
 			{
 				System.out.println("강사 비밀번호 틀림");
+				request.setAttribute("passwordError", "패스워드를 틀렸습니다.");
+				return "/loginForm.do";
 			}
 		} else if (student != null && teacher == null)
 		{
@@ -126,6 +154,8 @@ public class MemberController
 			} else
 			{
 				System.out.println("학생 비밀번호 틀림");
+				request.setAttribute("passwordError", "패스워드를 틀렸습니다.");
+				return "/loginForm.do";
 			}
 		} else // 로그인시 입력 아이디가 학생, 강사 둘 다 있을때
 		{
@@ -135,6 +165,8 @@ public class MemberController
 			} else
 			{
 				System.out.println("둘 다 될 때 강사 비밀번호 틀림");
+				request.setAttribute("passwordError", "패스워드를 틀렸습니다.");
+				return "/loginForm.do";
 			}
 
 			if (student.getStudentPassword().equals(password))
@@ -143,9 +175,19 @@ public class MemberController
 			} else
 			{
 				System.out.println("둘 다 될 때 학생 비밀번호 틀림");
+				request.setAttribute("passwordError", "패스워드를 틀렸습니다.");
+				return "/loginForm.do";
 			}
 		}
 
+		return "main.tiles";
+	}
+	
+	@RequestMapping("/logout")
+	public String memberLogout(HttpServletRequest request)
+	{
+		HttpSession session = request.getSession();
+		session.invalidate();
 		return "main.tiles";
 	}
 
