@@ -22,7 +22,7 @@
 
 	<!-- 삽입 -->
 	<insert id="insert" parameterType="LectureReview"><!--  mybatis-config에 타입알리야스 지정 -->
-	INSERT INTO review_board VALUES (#{review_no},#{review_writer},#{lecture_title},#{lecture_subject},#{review_title},#{review_content},#{review_date},#{review_hit})                            
+	INSERT INTO review_board VALUES (#{reviewNo},#{reviewWriter},#{lectureTitle},#{lectureSubject},#{reviewTitle},#{reviewContent},#{reviewDate},#{reviewHit})   <!-- VO값넣기 -->                          
 	</insert>
 	
 
@@ -43,14 +43,14 @@
 			    reviewContent=#{review_content}, 
 			    reviewDate=#{review_date}, 
 			    reviewHit=#{review_hit} <!--  끝에 점 찍으면 안됨 -->
-	WHERE  	reviewNo=#{review_no}	
+	WHERE  	review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
 	</update>
 	
 	
 	
 	<!-- 삭제 -->
 	<delete id="deleteByNo" parameterType="string">
-	DELETE FROM review_board WHERE reviewNo=#{review_no}
+	DELETE FROM review_board WHERE review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
 	</delete>
 	
 	
@@ -81,7 +81,7 @@
 				review_date reviewDate,
 				review_hit reviewHit      
 	FROM 	review_board
-	WHERE review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
+	WHERE review_no=#{reviewNo}   <!--    쿼리이름!! => VO이름!!    -->
 	</select>
 	
 	
@@ -98,7 +98,7 @@
 				review_date reviewDate,
 				review_hit reviewHit   
 	FROM 	review_board
-	WHERE lectureTitle=#{lecture_title} , reviewContent=#{review_content}
+	WHERE lecture_title=#{lectureTitle} , review_content=#{reviewContent}     <!--  쿼리 => VO -->
 	</select>
 	
 	
@@ -117,7 +117,7 @@
 				review_date reviewDate,
 				review_hit reviewHit   
 	FROM 	review_board
-	WHERE lectureTitle=#{lecture_title}
+	WHERE lecture_title=#{lectureTitle}   <!--  쿼리 => VO -->
 	</select>
 	
 	
@@ -137,7 +137,7 @@
 				review_date reviewDate,
 				review_hit reviewHit   
 	FROM 	review_board
-	WHERE reviewContent=#{review_content}
+	WHERE review_content=#{reviewContent} <!--  쿼리 => VO -->
 	</select>
 	
 	

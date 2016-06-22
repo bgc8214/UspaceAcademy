@@ -10,4 +10,9 @@
 
 
 
-<a href="/UspaceAcademy/lectureReview/lecture_review_insert.do">수강후기 리스트 요청 - 영주</a><br>
+<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo">수강후기 리스트 요청 - 영주</a><br>
+<!--  ?reviewNo 설정 해주기 (글등록중..)  -->
+
+
+
+<!--  -->

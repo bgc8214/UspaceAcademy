@@ -51,7 +51,6 @@ public class MemberController
 	{
 	
 			System.out.println(teacher);
-			teacher.setTeacherSubject("영어");
 			service.insertTeacher(teacher);
 		
 		return "redirect:/member/teacherRedirect.do";

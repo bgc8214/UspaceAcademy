@@ -36,6 +36,8 @@
 		</tbody>	
 	</table>
 
-수정버튼
-삭제버튼
+<a href="/UspaceAcademy/lectureReview/lecture_review_delete.do">삭제버튼</a>
+<a href="/UspaceAcademy/lectureReview/lecture_review_modify.do">수정버튼</a>
+
+
 

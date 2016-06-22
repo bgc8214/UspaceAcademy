@@ -23,7 +23,7 @@ create table teacher(
 	teacher_name varchar2(100) not null,
 	teacher_email varchar2(100) not null,
 	teacher_phone_no varchar2(13) not null,
-	teacher_adress varchar2(100) not null,
+	teacher_address varchar2(100) not null,
 	teacher_subject varchar2(50) not null,
 	teacher_salary number not null
 );
@@ -56,9 +56,8 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
-drop sequence basic_board_seq 
-create sequence basic_board_seq 
-nocache;
+drop sequence basic_board_seq; 
+create sequence basic_board_seq nocache;
 
 
 
@@ -106,6 +105,9 @@ CREATE TABLE lecture(
 	teacher_id2 varchar2(50), --강사아이디 foreign key
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
+
+drop sequence lecture_seq;
+create sequence lecture_seq nocache;
 
 -- 1:1문의, 질문게시판
 drop table advanced_board cascade constraint;
@@ -172,16 +174,17 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 
------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
 -- code_table insert하는 구문
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
 
-insert into CODE_TABLE values('3', '국어', 'subject');
-insert into CODE_TABLE values('4', '영어', 'subject');
-insert into CODE_TABLE values('5', '수학', 'subject');
+insert into CODE_TABLE values('3', '국어', 'teacherSubject');
+insert into CODE_TABLE values('4', '영어', 'teacherSubject');
+insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 
+<<<<<<< HEAD
 INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
@@ -190,16 +193,3 @@ INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,�
 --수강후기
 insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
 insert into REVIEW_BOARD values(review_board_seq.nextval,'김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
-
-
-
-
-
-
-
-
-
-
-
-
-)

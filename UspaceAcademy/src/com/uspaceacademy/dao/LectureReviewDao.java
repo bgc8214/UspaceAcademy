@@ -5,7 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
+import com.uspaceacademy.vo.LectureReview;
 import com.uspaceacademy.vo.LectureReview;
 
 @Repository
@@ -25,6 +25,7 @@ public class LectureReviewDao{
 	
 	//수강후기 삽입 *ok
 	public int insert(LectureReview lectureReview){
+		System.out.println(lectureReview);
 		return session.insert(namespace+"insert", lectureReview);
 	}
 	
@@ -89,7 +90,7 @@ public class LectureReviewDao{
 	
 	
 	
-	//수강후기 조회수 ===================
+	//수강후기 조회수 ====================
 	
 	
 	

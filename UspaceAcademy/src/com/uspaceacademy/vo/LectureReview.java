@@ -14,6 +14,9 @@ public class LectureReview{
 	public LectureReview() {
 	}
 
+
+
+	
 	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject,
 			String reviewTitle, String reviewContent, String reviewDate, int reviewHit) {
 		this.reviewNo = reviewNo;
@@ -24,6 +27,17 @@ public class LectureReview{
 		this.reviewContent = reviewContent;
 		this.reviewDate = reviewDate;
 		this.reviewHit = reviewHit;
+	}
+	
+	
+	
+	//수정시
+	public LectureReview(String lectureTitle, String lectureSubject, String reviewTitle, String reviewContent) {
+		super();
+		this.lectureTitle = lectureTitle;
+		this.lectureSubject = lectureSubject;
+		this.reviewTitle = reviewTitle;
+		this.reviewContent = reviewContent;
 	}
 
 	@Override

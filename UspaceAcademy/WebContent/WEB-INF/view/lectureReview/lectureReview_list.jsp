@@ -38,8 +38,8 @@
 		</tbody>	
 	</table>
 
-<input type="submit" value="수강후기등록"/>
-<a href="/UspaceAcademy/lectureReview/lecture_review_register.do">수강후기 등록</a>  <!--  controller에서 jsp로 전달하는 구문써야함 -->
+
+<a href="/UspaceAcademy/lectureReview/lecture_review_register.do">수강후기 등록폼</a>  <!--  이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
 
 
 
