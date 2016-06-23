@@ -20,42 +20,22 @@
 
 <!-- ************************************************************************************************************************************************ -->
 
-	<!-- 삽입 -->
+	<!-- 1.삽입 -->
 	<insert id="insert" parameterType="LectureReview"><!--  mybatis-config에 타입알리야스 지정 -->
 	INSERT INTO review_board VALUES (#{reviewNo},#{reviewWriter},#{lectureTitle},#{lectureSubject},#{reviewTitle},#{reviewContent},#{reviewDate},#{reviewHit})   <!-- VO값넣기 -->                          
 	</insert>
 	
 
-	<!--  시퀀스 -->
+
+
+	<!--  2.시퀀스 -->
 	<select id="selectNextNo" resultType="_int">
 	select review_board_seq.nextval from dual
 	</select>
 	
 	
 	
-	<!-- 수정 -->
-	<update id="update" parameterType="LectureReview">
-	UPDATE review_board
-	SET  	    review_writer=#{reviewWriter}, 
-			    lecture_title=#{lectureTitle},
-			    lecture_subject=#{lectureSubject}, 
-			    review_title=#{reviewTitle}, 
-			    review_content=#{reviewContent}, 
-			    review_date=#{reviewDate}, 
-			    review_hit=#{reviewHit} <!--  끝에 점 찍으면 안됨 -->
-	WHERE  	review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
-	</update>
-	
-	
-	
-	<!-- 삭제 -->
-	<delete id="deleteByNo" parameterType="_int">
-	DELETE FROM review_board WHERE review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
-	</delete>
-	
-	
-	
-	<!--  전체조회 -->
+	<!--  3.전체조회 -->
 	<select id="select" resultType="LectureReview">
 	SELECT 	review_no reviewNo,
 				review_writer reviewWriter,
@@ -70,7 +50,34 @@
 	
 	
 	
-	<!--  전체조회(no로) (수강신청-세부조회할때) -->
+	
+	<!-- 4.수정 -->
+	<update id="update" parameterType="LectureReview">
+	UPDATE review_board
+	SET  	    review_writer=#{reviewWriter}, 
+			    lecture_title=#{lectureTitle},
+			    lecture_subject=#{lectureSubject}, 
+			    review_title=#{reviewTitle}, 
+			    review_content=#{reviewContent}  
+			   <!--  review_date=#{reviewDate},  -->
+			    <!-- review_hit=#{reviewHit}  --><!--  끝에 점 찍으면 안됨 -->
+	WHERE  	review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
+	</update>
+	
+	
+	
+	<!-- 5.삭제 -->
+	<delete id="deleteByNo" parameterType="_int">
+	DELETE FROM review_board WHERE review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
+	</delete>
+	
+	
+	
+
+	
+	
+	
+	<!--  6.전체조회(no로) (수강신청-세부조회할때) -->
 	<select id="selectNo" resultType="LectureReview" parameterType="_int">
 	SELECT 	review_no reviewNo,
 				review_writer reviewWriter,
@@ -81,8 +88,39 @@
 				review_date reviewDate,
 				review_hit reviewHit      
 	FROM 	review_board
-	WHERE review_no=#{reviewNo}   <!--    쿼리이름!! => VO이름!!    -->
+	WHERE    review_no=#{reviewNo}<!--    쿼리이름!! => VO이름!!    -->
 	</select>
+	
+	
+	
+	
+	
+	<!-- 7.조회수 처리  -->
+	<select id="updateHit" parameterType="LectureReview" > <!--  _int -->
+	UPDATE  review_board
+		SET    review_hit=#{reviewHit}
+	WHERE   review_no=#{reviewNo} <!--  review_board테이블에 있는 hit값을 ?로 바꿈 -> ex)no가 7인 게시물의 hits를 바꾼다 -->
+	</select>
+	
+	
+
+	
+	
+	
+<!-- ************************************************************************************************************************************************ -->
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -101,10 +139,7 @@
 	WHERE lecture_title=#{lectureTitle} , review_content=#{reviewContent}     <!--  쿼리 => VO -->
 	</select>
 	
-	
-	
-	
-	
+
 	
 	<!--  전체조회(제목) -->
 	<select id="selectTitle" resultType="LectureReview" parameterType="string">
@@ -120,11 +155,7 @@
 	WHERE lecture_title=#{lectureTitle}   <!--  쿼리 => VO -->
 	</select>
 	
-	
-	
-	
-	
-	
+
 	
 	<!--  전체조회(내용) -->
 	<select id="selectContent" resultType="LectureReview" parameterType="string">
@@ -141,9 +172,7 @@
 	</select>
 	
 	
-	
-	
-	
+
 	<!--  select 페이징 처리!! -->
 	<select id="selectList" parameterType="map" resultType="LectureReview">
 	SELECT <include refid="lecture-review-columns"/>

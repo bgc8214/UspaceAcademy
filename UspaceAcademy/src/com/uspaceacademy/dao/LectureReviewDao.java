@@ -13,6 +13,7 @@ import com.uspaceacademy.vo.LectureReview;
 public class LectureReviewDao{
 
 	private String namespace="lectureReviewMapper.";//끝에 점 붙혀야됨*
+	private String codemapper="codeTable.";  //코드mapper
 	
 	private SqlSessionTemplate session;//
 	
@@ -24,35 +25,101 @@ public class LectureReviewDao{
 	
 //-----------------------------------------------------------------------------------------	
 	
-	//수강후기 삽입 *ok
+	
+	
+	//1.수강후기 삽입(게시물등록)ㅇ
 	public int insert(LectureReview lectureReview){
 		System.out.println(lectureReview);
 		return session.insert(namespace+"insert", lectureReview);
 	}
 	
 	
-	//수강후기 게시물 시퀀스 no sequence===========*ok
+	
+	//2.수강후기 게시물 시퀀스 no sequence ㅇ
 	public int selectNextNo(){
 		return session.selectOne(namespace+"selectNextNo");
 	}
 	
 	
-	//수강후기 수정
+	
+	//3.수강후기 전제조회 ㅇ
+	public List selectList(String type){
+	return session.selectList(namespace+"select",type);
+	}
+	
+	
+	
+	
+	//4.수강후기 수정 ㅇ
 	public int update(LectureReview lectureReview){
 	return session.update(namespace+"update",lectureReview);
 	}
 	
 	
-	//수강후기 (no로) 삭제   *ok
+	
+	//5.수강후기 (no로) 삭제  ㅇ
 	public int deleteByNo(int reviewNo){
 	return session.delete(namespace+"deleteByNo", reviewNo);// mapper에서 deleteByNo 로함 잘보기 *
 	}
 	
-	//수강후기 no로 조회 (수강신청 세부조회할때) *ok
+	
+	
+	//6.수강후기 no로 조회 (수강신청 세부조회할때) ㅇ
 	public LectureReview selectNo(int reviewNo){
 		//System.out.println("dao "+session.selectOne(namespace+"selectNo", reviewNo));
 		return session.selectOne(namespace+"selectNo", reviewNo); 
 	}
+	
+	
+	
+	
+	//-------------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
+	
+	//코드 영주1
+	public List selectCodeName(String code){
+		System.out.println("렉쳐리뷰 다오" + code);
+		return session.selectList(codemapper+"selectCodeName",code);
+	}
+	
+	
+	
+	
+	
+	
+	//7.조회수 처리
+	public List selectHit(LectureReview lectureReview){
+		lectureReview.setReviewHit(lectureReview.getReviewHit()+1); //dao - 여기서 1증가 시키기
+		return session.selectList(namespace+"updateHit",lectureReview);
+	}
+	
+	
+	
+	
+	
+	
+	
+	//-------------------------------------------------------------------------------------------------------------
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//수강후기 제목+내용 으로조회  --리스트로 받아야함 (오류)*=================
 	public List<LectureReview> selectTitleContent(String lectureTitle, String reviewContent){
@@ -69,10 +136,7 @@ public class LectureReviewDao{
 	return session.selectList(namespace+"reviewContent");
 	}
 	
-	//수강후기 전제조회
-	public List selectList(){
-	return session.selectList(namespace+"select");
-	}
+	
 	
 	
 	

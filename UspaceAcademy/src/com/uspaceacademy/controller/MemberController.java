@@ -88,18 +88,24 @@ public class MemberController
 		return "main.tiles";
 	}
 
+	
+	
+	//영주1
 	@RequestMapping("/teacherRegisterForm.do") // 강사가입폼으로 이동 , 코드 타입을 받아온다
 	public ModelAndView moveTeacher(String codeType)
 	{
 		HashMap map = new HashMap<>(); // 코드테이블을 넘기기 위한 맵
-		System.out.println(codeType);
+		System.out.println("멤버컨트롤러 코드타입"+codeType);
 		List codeList = service.searchCode(codeType); // 코드타입 정보를 리스트로 받는다.
-		System.out.println(codeList);
+		System.out.println("멤버컨트롤러 코드리스트"+codeList);
 
 		map.put("codeType", codeList);
 		return new ModelAndView("member/teacherRegisterForm.tiles", map);
 	}
 
+	
+	
+	
 	@RequestMapping("/login.do")
 	public String memberLogin(String id, String password, HttpServletRequest request)
 	{
