@@ -39,7 +39,7 @@
 	</table>
 
 
-<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=subject">수강후기 등록폼</a>  <!-- 코드타입 여기서 넘겨줌!!!!!!!!!!!!!, 이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
+<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject">수강후기 등록폼</a>  <!-- 코드타입 여기서 넘겨줌!!!!!!!!!!!!!, 이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
 
 
 
