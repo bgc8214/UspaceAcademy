@@ -15,15 +15,13 @@ $(document).ready(function() {
 				$("tbody tr.dummy").remove();
 				$('<tr class="dummy"><td colspan="7" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
 				var txt = "답변 : "+faq.basicContent+"<br>";
-				var txt1 = faq.basicNo;
-/* 				alert(tmp.children().eq(0).text()); */
-				
+
 				tmp.children().eq(3).text(faq.basicHit);
 				tmp.next().children().eq(0).append(txt);
-			/* 	tmp.next().children().eq(0).append($("<a href='/UspaceAcademy/FAQ/FAQUpdateForm.do?no='+tmp.children().eq(0).text()><input type='button' value='FAQ수정'></a>")); */
-				
-				tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"><input type='button' value='FAQ수정'></a>"));
-				tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"><input type='button' value='FAQ삭제'></a>"));
+				if("${sessionScope.memberType}"=='administrator') {
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"><input type='button' value='FAQ수정'></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"><input type='button' value='FAQ삭제' id='deleteFAQ'></a>"));
+				}
 			},
 			"error":function(xhr, status, errorMsg) {
 				alert("오류발생"+status+","+errorMsg);
@@ -32,7 +30,8 @@ $(document).ready(function() {
 				
 			}
 		})
-	})	
+	})
+
 })
 </script>
 
@@ -53,7 +52,6 @@ $(document).ready(function() {
 				<tr class="faqList">
 					<td>${faq.basicNo}</td>
 					<td>${faq.basicTitle}</td>
-<%-- 					<td><a href="/UspaceAcademy/FAQ/FAQDetail.do?no=${faq.basicNo}">${faq.basicTitle}</a></td> --%>
 					<td>${faq.basicDate}</td>
 					<td>${faq.basicHit}</td>
 					<td>${faq.basicType}</td>
@@ -61,5 +59,11 @@ $(document).ready(function() {
 			</c:forEach>
 		</tbody>	
 	</table><p>
-	
-<a href="/UspaceAcademy/FAQ/codeList.do?codeNames=FAQ"><input type="button" value="FAQ등록"></a>
+
+<!-- 관리자용 FAQ 등록 버튼 -->
+<span class="FAQRegister"> 
+	<c:if test="${sessionScope.memberType=='administrator'}">
+		<a href="/UspaceAcademy/FAQ/codeList.do?codeNames=FAQ"><input type="button" value="FAQ등록"></a>
+	</c:if>
+</span>	
+

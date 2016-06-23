@@ -23,6 +23,7 @@
 	<mvc:view-controller path="/teacherIntroduce.do" view-name="academicInfo/teacherIntroduce.tiles"/>
 	<mvc:view-controller path="/studentIdCheck.do" view-name="/WEB-INF/view/member/studentDuplicationCheck.jsp"/>
 	<mvc:view-controller path="teacherIdCheck.do" view-name="/WEB-INF/view/member/teacherDuplicationCheck.jsp"/>
+	<mvc:view-controller path="/serviceCenter.do" view-name="FAQ/serviceCenter.tiles"/>
 	
 	<context:component-scan base-package="com.uspaceacademy"/>
 	

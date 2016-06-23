@@ -16,6 +16,7 @@ create table administrator(
 );
 insert into ADMINISTRATOR('admin','1234');
 
+insert into administrator values('admin', '1234');
 
 -- 강사
 drop table teacher cascade constraint;
@@ -60,6 +61,8 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
+
+
 -- 수강 후기
 drop table review_board;
 create table review_board(
@@ -72,6 +75,9 @@ create table review_board(
 	review_date varchar2(50) not null,
 	review_hit number not null
 );
+
+drop sequence review_board_seq;
+create sequence review_board_seq nocache;
 
 -- 강의
 DROP table lecture cascade constraint;
@@ -176,13 +182,16 @@ insert into code_table values('6', '1:1문의', 'advanced_board');
 
 -- code_table insert하는 구문     //영주1
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
-insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
+insert into CODE_TABLE values('2', 'FAQ', 'basic_board');
 
-insert into CODE_TABLE values('3', '국어', 'subject');
-insert into CODE_TABLE values('4', '영어', 'subject');
-insert into CODE_TABLE values('5', '수학', 'subject');
+insert into CODE_TABLE values('3', '국어', 'teacherSubject');
+insert into CODE_TABLE values('4', '영어', 'teacherSubject');
+insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 select * from CODE_TABLE;
+	SELECT *
+	from code_table
+	where code_type = 'basic_board'
 
 
 INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);

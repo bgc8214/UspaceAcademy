@@ -30,6 +30,7 @@
 	select <include refid="faq-columns"/> 
 	from basic_board
 	where basic_type = #{value}
+	order by basic_no desc
 </select>
 
 <!-- FAQ 수정 -->

@@ -99,10 +99,10 @@ $(document).ready(function(){ // 마우스를 올렸을 때 하위 메뉴 나온
 <a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button id="lectureReview">수강후기</button></a>
 </td>
 <td>
-<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button id="notice">공지사항</button></a>
+<a href="/UspaceAcademy/notice/list.do?type=공지사항"><button id="notice">공지사항</button></a>
 </td>
 <td>
-<a href="/UspaceAcademy/inquiry/inquiryList.do"><button id="customerCenter">고객센터</button></a>
+<a href="/UspaceAcademy/serviceCenter.do"><button id="customerCenter">고객센터</button></a>
 </td>
 <td>
 <a href="/UspaceAcademy/registerSelect.do"><button id="join">회원가입</button></a>
@@ -136,9 +136,9 @@ $(document).ready(function(){ // 마우스를 올렸을 때 하위 메뉴 나온
 </td><td>
 <a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button id="lectureReview">수강후기</button></a>
 </td><td>
-<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button id="notice">공지사항</button></a>
+<a href="/UspaceAcademy/notice/list.do?type=공지사항"><button id="notice">공지사항</button></a>
 </td><td>
-<a href="/UspaceAcademy/inquiry/inquiryList.do"><button id="customerCenter">고객센터</button></a>
+<a href="/UspaceAcademy/serviceCenter.do"><button id="customerCenter">고객센터</button></a>
 </td><td>
 <a href="/UspaceAcademy/lecture/lectureList.do"><button id="myPage">마이페이지</button></a>
 </td>
@@ -159,6 +159,7 @@ $(document).ready(function(){ // 마우스를 올렸을 때 하위 메뉴 나온
 <form>
 <input type="hidden" id="memberType" value="${sessionScope.memberType }">
 </form>
+
 
 </c:otherwise>
 </c:choose>

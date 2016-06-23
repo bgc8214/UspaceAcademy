@@ -15,6 +15,25 @@ public class FAQ implements Serializable
 	
 	public FAQ() { }
 	
+	public FAQ(int basicNo, String basicTitle, String basicContent, String basicDate, int basicHit) {
+		super();
+		this.basicNo = basicNo;
+		this.basicTitle = basicTitle;
+		this.basicContent = basicContent;
+		this.basicDate = basicDate;
+		this.basicHit = basicHit;
+	}
+
+
+
+
+	public FAQ(String basicTitle, String basicContent, String basicType) {
+		super();
+		this.basicTitle = basicTitle;
+		this.basicContent = basicContent;
+		this.basicType = basicType;
+	}
+
 	// 수정시
 	public FAQ(int basicNo, String basicTitle, String basicContent, String basicDate) {
 		super();

@@ -30,6 +30,7 @@ public class NoticeDao
 	
 	// 공지사항 게시물 전체조회
 	public List noticeList(String type) {
+//		System.out.println("dao : "+type);
 		return session.selectList(namespace+"selectList", type);
 	}
 	

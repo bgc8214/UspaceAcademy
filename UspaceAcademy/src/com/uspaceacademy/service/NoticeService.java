@@ -29,6 +29,7 @@ public class NoticeService
 	
 	// 공지사항 게시물 전체리스트
 	public List noticeAll(String type) {
+//		System.out.println("service : "+type);
 		return dao.noticeList(type);
 	}
 	
