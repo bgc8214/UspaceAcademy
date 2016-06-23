@@ -21,6 +21,7 @@
 	<mvc:view-controller path="/academyIntroduce.do" view-name="academicInfo/academyIntroduce.tiles"/>
 	<mvc:view-controller path="/roadIntroduce.do" view-name="academicInfo/roadIntroduce.tiles"/>
 	<mvc:view-controller path="/teacherIntroduce.do" view-name="academicInfo/teacherIntroduce.tiles"/>
+	<mvc:view-controller path="/serviceCenter.do" view-name="FAQ/serviceCenter.tiles"/>
 	
 
 	<context:component-scan base-package="com.uspaceacademy"/>

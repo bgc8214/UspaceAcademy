@@ -14,6 +14,7 @@ create table administrator(
 	administrator_password varchar2(50) not null
 );
 
+insert into administrator values('admin', '1234');
 
 -- 강사
 drop table teacher cascade constraint;
@@ -58,6 +59,8 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
+
+
 -- 수강 후기
 drop table review_board;
 create table review_board(
@@ -70,6 +73,9 @@ create table review_board(
 	review_date varchar2(50) not null,
 	review_hit number not null
 );
+
+drop sequence review_board_seq;
+create sequence review_board_seq nocache;
 
 -- 강의
 DROP table lecture cascade constraint;
@@ -176,9 +182,9 @@ insert into code_table values('6', '1:1문의', 'advanced_board');
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
 
-insert into CODE_TABLE values('3', '국어', 'subject');
-insert into CODE_TABLE values('4', '영어', 'subject');
-insert into CODE_TABLE values('5', '수학', 'subject');
+insert into CODE_TABLE values('3', '국어', 'teacherSubject');
+insert into CODE_TABLE values('4', '영어', 'teacherSubject');
+insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 select * from CODE_TABLE;
 

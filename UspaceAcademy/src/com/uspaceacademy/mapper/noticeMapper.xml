@@ -24,6 +24,7 @@
 	select <include refid="notice-columns"/> 
 	from basic_board
 	where basic_type = #{basicType}
+	order by basic_no desc
 </select>
 <update id="update_notice" parameterType="notice">
 	update basic_board
