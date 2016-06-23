@@ -104,28 +104,27 @@ public class MemberController
 	public String memberLogin(String id, String password, HttpServletRequest request)
 	{
 		HttpSession session = request.getSession();
-		
+
 		Student student = service.findStudentById(id);
 		Teacher teacher = service.findTeacherById(id);
 		System.out.println(student);
 		System.out.println(teacher);
-		if(id.equals("admin")) //관리자 로그인
+		if (id.equals("admin")) // 관리자 로그인
 		{
-			if(password.equals("1234"))
+			if (password.equals("1234"))
 			{
 				System.out.println("관리자 로그인 성공");
 				session.setAttribute("login_info", "administrator");
 				session.setAttribute("memberType", "administrator");
 				return "main.tiles";
-			}
-			else
+			} else
 			{
 				System.out.println("관리자 로그인 실패");
 				request.setAttribute("passwordError", "패스워드를 틀렸습니다.");
 				return "/loginForm.do";
 			}
 		}
-		
+
 		if (student == null && teacher == null)
 		{
 			System.out.println("아이디 없음");
@@ -182,7 +181,69 @@ public class MemberController
 
 		return "main.tiles";
 	}
+
+	@RequestMapping("/studentIdCheck.do")
+	public String studentIdCheck(String id,  HttpServletRequest request) // 아이디
+																					// 중복체크
+	{
+		if (id.equals(null) || id.trim().isEmpty())
+		{
+			request.setAttribute("idError", "아이디를 입력하세요");
+
+			return "/WEB-INF/view/member/studentDuplicationCheck.jsp";
+		}
+
+		if (id.length() < 5)
+		{
+			request.setAttribute("idError", "아이디는 5글자보다 길어야합니다");
+
+			return "/WEB-INF/view/member/studentDuplicationCheck.jsp";
+		}
+
+		if (service.findStudentById(id) != null || service.findTeacherById(id) != null || id.equals("admin"))
+		{
+			System.out.println("아이디가 중복됩니다.");
+			request.setAttribute("idCheck", false);
+		} else
+		{
+			request.setAttribute("idCheck", true);
+			request.setAttribute("id", id);
+		}
+
+		return "/WEB-INF/view/member/studentDuplicationCheck.jsp";
+	}
 	
+	@RequestMapping("/teacherIdCheck.do")
+	public String teacherIdCheck(String id, HttpServletRequest request) // 아이디
+																					// 중복체크
+	{
+		if (id.equals(null) || id.trim().isEmpty())
+		{
+			request.setAttribute("idError", "아이디를 입력하세요");
+
+			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
+		}
+
+		if (id.length() < 5)
+		{
+			request.setAttribute("idError", "아이디는 5글자보다 길어야합니다");
+
+			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
+		}
+
+		if (service.findStudentById(id) != null || service.findTeacherById(id) != null || id.equals("admin"))
+		{
+			System.out.println("아이디가 중복됩니다.");
+			request.setAttribute("idCheck", false);
+		} else
+		{
+			request.setAttribute("idCheck", true);
+			request.setAttribute("id", id);
+		}
+
+		return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
+	}
+
 	@RequestMapping("/logout")
 	public String memberLogout(HttpServletRequest request)
 	{
