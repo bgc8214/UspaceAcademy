@@ -66,4 +66,6 @@
 	p:dataSource-ref="dataSource"/>
 	<tx:annotation-driven transaction-manager="txmanager"/>
 	
+	<bean p:basename="com.uspaceacademy.validaotor.error_message" class="org.springframework.context.support.ResourceBundleMessageSource" name="messageSource"/>
+	
 </beans>

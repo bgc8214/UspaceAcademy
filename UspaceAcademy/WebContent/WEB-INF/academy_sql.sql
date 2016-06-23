@@ -178,9 +178,9 @@ insert into code_table values('6', '1:1문의', 'advanced_board');
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
 
-insert into CODE_TABLE values('3', '국어', 'subject');
-insert into CODE_TABLE values('4', '영어', 'subject');
-insert into CODE_TABLE values('5', '수학', 'subject');
+insert into CODE_TABLE values('3', '국어', 'teacherSubject');
+insert into CODE_TABLE values('4', '영어', 'teacherSubject');
+insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 select * from CODE_TABLE;
 
@@ -195,3 +195,6 @@ insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','국어','�
 insert into REVIEW_BOARD values(review_board_seq.nextval,'김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
 
 INSERT INTO administrator values('admin', '1234');
+
+SELECT * FROM student_lecture_join;
+DELETE FROM student_lecture_join;
