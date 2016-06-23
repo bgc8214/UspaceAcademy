@@ -1,21 +1,29 @@
 package com.uspaceacademy.vo;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class LectureReview{
 	
 	private int reviewNo;//글번호
 	private String reviewWriter;//글쓴이
 	private String lectureTitle;//강의명
 	private String lectureSubject;//강의과목
+	
+	//@NotEmpty(message="글제목을 입력하세요")
 	private String reviewTitle;//글제목
+	
+	//@NotEmpty(message="글내용을 입력하세요")
 	private String reviewContent;//글내용
 	private String reviewDate;//글등록일
 	private int reviewHit;//글조회
 	
+	
+	
+	
 	public LectureReview() {
 	}
-
-
-
+	
+	
 	
 	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject,
 			String reviewTitle, String reviewContent, String reviewDate, int reviewHit) {
@@ -31,10 +39,11 @@ public class LectureReview{
 	
 	
 	
-	//수정시
+	//수정시  (6개)
 	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject, String reviewTitle, String reviewContent) {
 		super();
-		this.reviewWriter=reviewWriter;//ㅎㅎㅎㅎㅎㅎㅎㅎㅎㅎ?
+		this.reviewNo=reviewNo; //오류:이거빠져있었음....
+		this.reviewWriter=reviewWriter;
 		this.lectureTitle = lectureTitle;
 		this.lectureSubject = lectureSubject;
 		this.reviewTitle = reviewTitle;

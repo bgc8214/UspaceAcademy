@@ -1,6 +1,7 @@
 
 -- 코드테이블
 drop table code_table;
+select * from code_table;
 create table code_table(
 	code_id varchar2(1) primary key,
 	code_name varchar2(30) not null,
@@ -13,6 +14,7 @@ create table administrator(
 	administrator_id varchar2(50) primary key,
 	administrator_password varchar2(50) not null
 );
+insert into ADMINISTRATOR('admin','1234');
 
 
 -- 강사
@@ -90,7 +92,7 @@ CREATE TABLE lecture(
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
 
-insert into lecture values(5, '수학', '설명', '0515', '0516', '0820', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+insert into lecture values(5, '수학고등3', '설명', '0515', '0516', '0820', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 
 -- 1:1문의, 질문게시판
 drop table advanced_board cascade constraint;
@@ -172,7 +174,7 @@ nocache;
 
 insert into code_table values('6', '1:1문의', 'advanced_board');
 
--- code_table insert하는 구문
+-- code_table insert하는 구문     //영주1
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
 

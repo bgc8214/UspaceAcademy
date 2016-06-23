@@ -10,9 +10,7 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.uspaceacademy.vo.Inquiry" alias="inquiry"></typeAlias>
 		<package name="com.uspaceacademy.vo"/>
-
 	</typeAliases>	
 
 	<mappers>
