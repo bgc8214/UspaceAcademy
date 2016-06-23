@@ -58,6 +58,11 @@ public class LectureReviewService{
 	}
 	
 	
+	//7.조회수 처리
+	public List selectHit(LectureReview lectureReview){
+		//lectureReview.setReviewHit(lectureReview.getReviewHit()+1);//
+		return dao.selectHit(lectureReview);
+	}
 	
 	
 	

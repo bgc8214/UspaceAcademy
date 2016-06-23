@@ -88,14 +88,31 @@
 				review_date reviewDate,
 				review_hit reviewHit      
 	FROM 	review_board
-	WHERE review_no=#{reviewNo}   <!--    쿼리이름!! => VO이름!!    -->
+	WHERE    review_no=#{reviewNo}<!--    쿼리이름!! => VO이름!!    -->
 	</select>
 	
 	
 	
 	
 	
+	<!-- 7.조회수 처리  -->
+	<select id="updateHit" parameterType="LectureReview" > <!--  _int -->
+	UPDATE  review_board
+		SET    review_hit=#{reviewHit}
+	WHERE   review_no=#{reviewNo} <!--  review_board테이블에 있는 hit값을 ?로 바꿈 -> ex)no가 7인 게시물의 hits를 바꾼다 -->
+	</select>
+	
+	
+
+	
+	
+	
 <!-- ************************************************************************************************************************************************ -->
+	
+	
+
+	
+	
 	
 	
 	

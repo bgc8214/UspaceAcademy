@@ -33,6 +33,7 @@ public class LectureReviewController{
 	@RequestMapping("/lecture_review_list") //main.jsp링크*
 	public ModelAndView list(String type){
 		System.out.println("수강후기 리스트ok");
+		System.out.println();
 		List lectureListReview = service.selectList(type);
 		return new ModelAndView("lectureReview/lectureReview_list.tiles", "lectureListReview", lectureListReview);
 	}
@@ -48,9 +49,12 @@ public class LectureReviewController{
 		int num = Integer.parseInt(reviewNo);				//parseInt해야함
 		System.out.println("수강후기 상세조회ok");
 		
-		LectureReview lectureListReview = service.selectNo(num);//
 		
-		//service.update(lectureListReview); //
+		
+		LectureReview lectureListReview = service.selectNo(num);//no값으로 게시물 찾아옴
+		service.selectHit(lectureListReview);//조회수 증가시키기 - 수강후기 상세조회 여기서 처리.
+		
+
 		
 		return new ModelAndView("lectureReview/lectureReview_detail.tiles", "lectureListReview", lectureListReview);
 	}
@@ -65,7 +69,7 @@ public class LectureReviewController{
 	public ModelAndView registerForm(String codeType){
 		
 		HashMap map = new HashMap<>();
-		System.out.println("test"+codeType);
+		//System.out.println("test"+codeType);
 		List codeList = service.selectCodeName(codeType);
 		
 		
@@ -147,13 +151,13 @@ public class LectureReviewController{
 	
 	//수강후기수정완료하기 (수정폼에서 수강후기 수정완료 눌렀을때)
 	@RequestMapping("/lecture_review_modify") //lectureReview_modify.jsp에서
-	public ModelAndView modify(String reviewNo, String reviewWriter,String lectureSubject, String lectureTitle ,String title, String content, String reviewDate){//오류:여기에서6개 넘겨줌, 매매 mapper에서도 6개 쿼리적어줘야함!!!*
+	public ModelAndView modify(String reviewNo, String reviewWriter,String lectureSubject, String lectureTitle ,String title, String content, String reviewDate, int reviewHit){//오류:여기에서6개 넘겨줌, 매매 mapper에서도 6개 쿼리적어줘야함!!!*
 		
 		/*SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
 		Date date1 = new Date();
 		String uDate = sdf.format(date1);*/
-	
-		LectureReview lectureReview = new LectureReview(Integer.parseInt(reviewNo),reviewWriter,lectureTitle,lectureSubject,title,content);//여기 date없음
+																																												//오류:여기에 reviewHit없어서 수정했을때 조회수 안올라간거였음
+		LectureReview lectureReview = new LectureReview(Integer.parseInt(reviewNo),reviewWriter,lectureTitle,lectureSubject,title,content,reviewHit );//여기 date없음
 		service.update(lectureReview);
 		lectureReview.setReviewDate(reviewDate);//reviewDate setter로 넣어줌
 		

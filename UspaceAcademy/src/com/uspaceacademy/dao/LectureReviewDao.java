@@ -76,6 +76,9 @@ public class LectureReviewDao{
 	//-------------------------------------------------------------------------------------------------------------
 	
 	
+	
+	
+	
 	//코드 영주1
 	public List selectCodeName(String code){
 		System.out.println("렉쳐리뷰 다오" + code);
@@ -86,6 +89,12 @@ public class LectureReviewDao{
 	
 	
 	
+	
+	//7.조회수 처리
+	public List selectHit(LectureReview lectureReview){
+		lectureReview.setReviewHit(lectureReview.getReviewHit()+1); //dao - 여기서 1증가 시키기
+		return session.selectList(namespace+"updateHit",lectureReview);
+	}
 	
 	
 	

@@ -24,7 +24,21 @@ public class LectureReview{
 	}
 	
 	
-	
+	//date없는 생성자
+	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject,
+			String reviewTitle, String reviewContent, int reviewHit) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewWriter = reviewWriter;
+		this.lectureTitle = lectureTitle;
+		this.lectureSubject = lectureSubject;
+		this.reviewTitle = reviewTitle;
+		this.reviewContent = reviewContent;
+		this.reviewHit = reviewHit;
+	}
+
+
+
 	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject,
 			String reviewTitle, String reviewContent, String reviewDate, int reviewHit) {
 		this.reviewNo = reviewNo;
