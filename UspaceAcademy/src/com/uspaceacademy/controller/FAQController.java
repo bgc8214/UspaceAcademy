@@ -6,11 +6,14 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.FAQService;
+import com.uspaceacademy.validaotor.FAQValidator;
 import com.uspaceacademy.vo.Code;
 import com.uspaceacademy.vo.FAQ;
 
@@ -37,91 +40,119 @@ public class FAQController
 				value = c.getCodeName();
 			}
 		}
-//		System.out.println(value);
+//		System.out.println("코드 테이블에서 조회: "+value);
 		return new ModelAndView("FAQ/FAQ_form.tiles", "codeName", value);
 	}
 	
 	// FAQ 게시물 등록
 	@RequestMapping("/FAQWrite.do")
-	public ModelAndView noticeAdd(String title, String content, String codeName) {
+	public String FAQAdd(@ModelAttribute("FAQForm") FAQ faq, BindingResult errors) {
 //		System.out.println("FAQ 게시물 등록 method()");
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm");
-		Date date = new Date();
-		String sDate = sdf.format(date);
-		int num = service.selectSeq();
-		FAQ faq = new FAQ(num, "관리자", title, content, sDate, 0, codeName);
-		service.register(faq);
-		List list = service.FAQAll(faq.getBasicType());
-		return new ModelAndView("FAQ/FAQ_list.tiles",	"list", list);
+//		System.out.println("입력 폼에서 넘어온 객체 : "+faq);
+		
+		FAQValidator validator = new FAQValidator();
+		validator.validate(faq, errors);
+		boolean error = errors.hasErrors();
+		int errorCount = errors.getErrorCount();
+		
+		System.out.printf("FAQ 등록 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n", error, errorCount);
+		
+		if(errors.hasErrors()) {
+			return "/FAQ/codeList.do?codeNames="+faq.getBasicType();
 		}
+//		System.out.println(new SimpleDateFormat("yyyyy-MM-dd kk:mm").format(new Date()));
+		
+		FAQ faq1 = new FAQ(service.selectSeq(), "administrator", faq.getBasicTitle(), faq.getBasicContent(), new SimpleDateFormat("yyyy-MM-dd kk:mm").format(new Date()), 0, faq.getBasicType());
+		service.register(faq1);
+		List list = service.FAQAll(faq.getBasicType());
+		return "redirect:/FAQ/list.do?type="+faq.getBasicType();
+	}
 	
+	@RequestMapping("/FAQRedirect.do")
+	public String FAQRedirectRegister(int no) {	// 새로고침 시 더 등록 안되도록 redirect 처리
+		return "redirect:/FAQ/FAQDetatil.do?no="+no;
+	}
 	
 	@RequestMapping("/list.do")
-	public ModelAndView noticeAllList(String type) {
+	public ModelAndView FAQAllList(String type) {
 //		System.out.println("FAQ 전체리스트");
+		System.out.println("list.do : "+type);
 		List list = service.FAQAll(type);
 		return new ModelAndView("FAQ/FAQ_list.tiles", "list", list);
 	}
 	
 	// FAQ 수정
 	@RequestMapping("/FAQUpdate.do")
-	public ModelAndView noticeModify(String no, String title, String content, String date) {
+	public String FAQModify(@ModelAttribute("FAQForm") FAQ faq, BindingResult errors) {
 //		System.out.println("공지사항 수정");
 //		System.out.println(no);
-		int num = Integer.parseInt(no);
-		SimpleDateFormat sdf = new SimpleDateFormat("yyy-MM-dd kk:mm");
-		Date date1 = new Date();
-		String uDate = sdf.format(date1);
-		FAQ faq = new FAQ(num, title, content, uDate);
-		service.modifyFAQ(faq);
+		System.out.println(faq);
+		FAQValidator validator = new FAQValidator();
+		validator.validate(faq, errors);
+		boolean error = errors.hasErrors();
+		int errorCount = errors.getErrorCount();
 		
-		FAQ faq1 = service.selectByNo(num);
+//		System.out.println(faq.getBasicNo());
+			
+		System.out.printf("FAQ 수정 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n", error, errorCount);
 		
-		List list = service.FAQAll(faq1.getBasicType());
+		if(errors.hasErrors()) {
+			return "FAQ/FAQ_update.tiles";
+		}
+		System.out.println("에러 안남");
+		
+		System.out.println(faq);
+		FAQ faq1 = new FAQ(faq.getBasicNo(), faq.getBasicTitle(), faq.getBasicContent(), new SimpleDateFormat("yyyy-MM-dd kk:mm").format(new Date()), faq.getBasicHit());
+		service.modifyFAQ(faq1);
+		
+		FAQ faq2 = service.selectByNo(faq.getBasicNo());
+		
+		List list = service.FAQAll(faq2.getBasicType());
 	
-		return new ModelAndView("FAQ/FAQ_list.tiles", "list", list);
+		return "redirect:/FAQ/FAQUpdateRedirect.do?type="+faq2.getBasicType();
+	}
+	
+	@RequestMapping("/FAQUpdateRedirect.do")
+	public String FAQRedirectUpdate(String type) {	// 새로고침 시 더 등록 안되도록 redirect 처리
+		System.out.println("수정 리다이렉트 "+type);
+		return "redirect:/FAQ/list.do?type="+type;
 	}
 	
 	// FAQ 삭제
 	@RequestMapping("/FAQDelete.do")
-	public ModelAndView noticeRemove(String no, String type) {
-//		System.out.println("공지사항 삭제");
-		int num = Integer.parseInt(no);
-		System.out.println(no+" "+type);
-		service.deleteFAQ(num);
+	public ModelAndView FAQRemove(int no, String type) {
+		service.deleteFAQ(no);
 		List list = service.FAQAll(type);
 		return new ModelAndView("FAQ/FAQ_list.tiles", "list", list);
 	}
 	
+	@RequestMapping("/findFAQByNo.do") 
+	@ResponseBody
+	public FAQ getFAQByNo(int no, int hit) {
+		FAQ faq = service.selectByNo(no);
+		faq.setBasicHit(++hit);
+		service.modifyFAQ(faq);
+		return faq;
+	}
+	
 	// 수정 폼 가기전에 no로 vo 가져오기
 	@RequestMapping("/FAQUpdateForm.do")
-	public ModelAndView noticeUpdateForm(String no) {
-		int num = Integer.parseInt(no);
-		FAQ faq = service.selectByNo(num);
+	public ModelAndView FAQUpdateForm(int no, int hit) {
+//		System.out.println(no+" "+hit);
+		FAQ faq = service.selectByNo(no);
+		faq.setBasicHit(hit);
 		return new ModelAndView("FAQ/FAQ_update.tiles", "faq", faq);
 	}
 		
-		
-/*	@RequestMapping("/FAQDetail.do")
-	public ModelAndView noticeDetail(String no) {
-		int num = Integer.parseInt(no);
-		FAQ faq = service.selectByNo(num);
+	// FAQ 상세페이지로 이동	
+	@RequestMapping("/FAQDetail.do")
+	public ModelAndView FAQDetail(int no) {
+		FAQ faq = service.selectByNo(no);
 		int val = faq.getBasicHit();
 		faq.setBasicHit(++val);
-		System.out.println(faq);
 		service.modifyFAQ(faq);
 		return new ModelAndView("FAQ/FAQ_detail.tiles", "faq", faq);
-	}*/
-	
-	@RequestMapping("/findFAQByNo.do") 
-	@ResponseBody
-	public FAQ getFAQByNo(String no, String hit) {
-		int num = Integer.parseInt(no);
-		FAQ faq = service.selectByNo(Integer.parseInt(no));
-		int count = Integer.parseInt(hit);
-		faq.setBasicHit(++count);
-		service.modifyFAQ(faq);
-//		System.out.println(faq);
-		return faq;
 	}
+	
+	
 }

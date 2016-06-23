@@ -28,10 +28,12 @@ public class MemberService
 		
 	}
 	
+	//영주1
 	public List searchCode(String code)
 	{
 		return dao.selectCode(code);
 	}
+	
 	
 	public Student findStudentById(String id)
 	{

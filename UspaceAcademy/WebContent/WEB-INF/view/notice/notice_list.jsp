@@ -21,4 +21,15 @@
 			</c:forEach>
 		</tbody>	
 	</table><p>
-<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><input type="button" value="공지사항등록"></a>
+	
+	<!-- 관리자용 공지사항 등록 버튼 -->
+<span class="lectureRegister">
+	<c:if test="${sessionScope.memberType=='administrator'}">
+		<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><input type="button" value="공지사항등록"></a>
+	</c:if>
+</span>
+	
+	
+	
+	
+

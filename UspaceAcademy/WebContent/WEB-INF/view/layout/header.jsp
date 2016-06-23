@@ -54,10 +54,10 @@ width:130;height:30;  /*--버튼 크기---*/
 <a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button>수강후기</button></a>
 &emsp;&emsp;
 
-<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button>공지사항</button></a>
+<a href="/UspaceAcademy/notice/list.do?type=공지사항"><button>공지사항</button></a>
 &emsp;&emsp;
 
-<a href="/UspaceAcademy/inquiry/inquiryList.do"><button>고객센터</button></a>
+<a href="/UspaceAcademy/serviceCenter.do"><button>고객센터</button></a>
 &emsp;&emsp;
 
 
@@ -76,11 +76,11 @@ width:130;height:30;  /*--버튼 크기---*/
 <a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button>수강후기</button></a>
 &emsp;&emsp;
 
-<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button>공지사항</button></a>
+<a href="/UspaceAcademy/notice/list.do?type=공지사항"><button>공지사항</button></a>
 &emsp;&emsp;
 
 
-<a href="/UspaceAcademy/inquiry/inquiryList.do"><button>고객센터</button></a>
+<a href="/UspaceAcademy/serviceCenter.do"><button>고객센터</button></a>
 &emsp;&emsp;
 
 
