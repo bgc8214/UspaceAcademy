@@ -2,18 +2,34 @@ package com.uspaceacademy.vo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
+
 public class Lecture implements Serializable{
 	
 	private int lectureNo;
+	@NotEmpty
 	private String lectureTitle;
+	@NotEmpty
 	private String lectureDescription;
+	@Range(min=1, max=24)
 	private int lectureStartTime;
+	@Range(min=1, max=24)
 	private int lectureEndTime;
 	private String lectureDay;
+	@NotEmpty
 	private String lectureStartDate;
+	@NotEmpty
 	private String lectureEndDate;
+	@Min(1)
 	private int lecturePrice;
+	@Min(1)
 	private int lectureTotalStudent;
+	@Max(300)
 	private int lectureCurrentStudent;
 	private String lectureSubject;
 	private String teacherId2;//외래키(teacher table)
@@ -23,6 +39,65 @@ public class Lecture implements Serializable{
 	public Lecture(){
 		
 	}
+
+	
+	
+	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, int lectureStartTime,
+			int lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
+			int lectureTotalStudent, String lectureSubject, String teacherId2) {
+		super();
+		this.lectureNo = lectureNo;
+		this.lectureTitle = lectureTitle;
+		this.lectureDescription = lectureDescription;
+		this.lectureStartTime = lectureStartTime;
+		this.lectureEndTime = lectureEndTime;
+		this.lectureDay = lectureDay;
+		this.lectureStartDate = lectureStartDate;
+		this.lectureEndDate = lectureEndDate;
+		this.lecturePrice = lecturePrice;
+		this.lectureTotalStudent = lectureTotalStudent;
+		this.lectureSubject = lectureSubject;
+		this.teacherId2 = teacherId2;
+	}
+	
+	
+
+
+	public Lecture(String lectureTitle, String lectureDescription, int lectureStartTime, int lectureEndTime,
+			String lectureStartDate, String lectureEndDate, int lecturePrice, int lectureTotalStudent,
+			String lectureSubject, String teacherId2) {
+		super();
+		this.lectureTitle = lectureTitle;
+		this.lectureDescription = lectureDescription;
+		this.lectureStartTime = lectureStartTime;
+		this.lectureEndTime = lectureEndTime;
+		this.lectureStartDate = lectureStartDate;
+		this.lectureEndDate = lectureEndDate;
+		this.lecturePrice = lecturePrice;
+		this.lectureTotalStudent = lectureTotalStudent;
+		this.lectureSubject = lectureSubject;
+		this.teacherId2 = teacherId2;
+	}
+
+
+
+	public Lecture(String lectureTitle, String lectureDescription, int lectureStartTime, int lectureEndTime,
+			String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
+			int lectureTotalStudent, String lectureSubject, String teacherId2) {
+		super();
+		this.lectureTitle = lectureTitle;
+		this.lectureDescription = lectureDescription;
+		this.lectureStartTime = lectureStartTime;
+		this.lectureEndTime = lectureEndTime;
+		this.lectureDay = lectureDay;
+		this.lectureStartDate = lectureStartDate;
+		this.lectureEndDate = lectureEndDate;
+		this.lecturePrice = lecturePrice;
+		this.lectureTotalStudent = lectureTotalStudent;
+		this.lectureSubject = lectureSubject;
+		this.teacherId2 = teacherId2;
+	}
+
 
 
 	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, int lectureStartTime,
