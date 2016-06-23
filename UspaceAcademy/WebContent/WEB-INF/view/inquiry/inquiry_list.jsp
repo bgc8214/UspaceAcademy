@@ -16,7 +16,7 @@
 		<c:forEach items="${requestScope.list}" var="list" >
 			<tr>
 				<td>${list.advancedNo }</td>
-				<td><a href="/UspaceAcademy/inquiry/selectInquiryByAdvancedNo.do?advancedNo=${list.advancedNo }">${list.advancedTitle }</a></td>
+				<td><a href="/UspaceAcademy/inquiry/selectByAdvancedNo.do?advancedNo=${list.advancedNo }">${list.advancedTitle }</a></td>
 				<td>${list.advancedId }</td>
 				<td>${list.advancedDate }</td>
 				<td>${list.advancedHit }</td>
@@ -24,7 +24,7 @@
  		</c:forEach> 
 	</tbody>
 </table>
-	
+<p>
 <a href="/UspaceAcademy/inquiry/codeList.do?codeName=1:1문의">1:1문의 등록</a>
 	
 	<%-- ${requestScope.list} --%>

@@ -1,26 +1,22 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<%-- <form action="/UspaceAcademy/inquiry/insertInquiry.do" method="post">
-<input type="hidden" name="codeName" value="${requestScope.codeName}">
-제목: <input type="text" name="title"><br>
-내용<br>
-<textarea rows="50" cols="100" name="content"></textarea><br>
-<input type="submit" value="등록">
-</form> --%>
-
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <form action="/UspaceAcademy/inquiry/insertInquiry.do" method="post" name="insertInquiry">
 <input type="hidden" name="codeName" value="${requestScope.codeName}">
 <table>
 	<tr>
 		<td>
-			<input type="text" name="advancedTitle" size="70" placeholder="공지사항 제목">
+			제목: <input type="text" name="advancedTitle" size="70" value="${requestScope.inquiryValidate.advancedTitle }">
+			<span class="error"> <form:errors path="inquiryValidate.advancedTitle" delimiter="//" /></span>
 		</td>
 	</tr>
 	<tr>
 		<td>
-			<textarea rows="20" cols="100" name="advancedContent" placeholder="내용을 입력하세요."></textarea>
+			내용: <textarea rows="20" cols="100" name="advancedContent">${requestScope.inquiryValidate.advancedContent }</textarea>
+			<span class="error"> <form:errors path="inquiryValidate.advancedContent" delimiter="//" /></span>
 		</td>
 	</tr>
 	<tr>

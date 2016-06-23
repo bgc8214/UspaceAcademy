@@ -14,6 +14,8 @@ create table administrator(
 	administrator_password varchar2(50) not null
 );
 
+insert into administrator values('admin', '1234');
+
 
 -- 강사
 drop table teacher cascade constraint;
@@ -29,6 +31,7 @@ create table teacher(
 );
 
 insert into teacher values('id-12', '1111', '홍길동', 'a@naver.com', '010-6666-5153', '서울시 서초구', '수학', 1000000);
+select * from teacher;
 
 -- 학생
 DROP table student cascade constraint;
@@ -71,7 +74,7 @@ create table review_board(
 	review_hit number not null
 );
 
-drop sequence review_board_seq 
+drop sequence review_board_seq;
 create sequence review_board_seq 
 nocache;
 
@@ -94,6 +97,10 @@ CREATE TABLE lecture(
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
 
+drop sequence lecture_seq;
+create sequence lecture_seq
+nocache;
+
 insert into lecture values(5, '수학', '설명', '0515', '0516', '0820', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 
 -- 1:1문의, 질문게시판
@@ -110,9 +117,9 @@ create table advanced_board(
 	constraint fk_advanced_lecture foreign key(lecture_no2) references lecture(lecture_no)
 );
 
-insert into advanced_board values(1, 1, '제목', '내용', '2016-05-22', 1, 'id-11', 1);
-insert into advanced_board values(2, 1, '제목2', '내용2', '2016-05-23', 1, 'id-13', 1);
-insert into advanced_board values(3, 1, '제목3', '내용3', '2016-05-24', 1, 'id-14', 1);
+insert into advanced_board values(4, 1, '제목', '내용', '2016-05-22', 1, 'id-11', 5);
+insert into advanced_board values(5, 1, '제목2', '내용2', '2016-05-23', 1, 'id-13', null);
+insert into advanced_board values(6, 1, '제목3', '내용3', '2016-05-24', 1, 'id-14', null);
 select * from ADVANCED_BOARD;
 
 drop sequence advanced_board_seq 

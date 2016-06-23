@@ -14,44 +14,37 @@ public class InquiryService
 	@Autowired
 	private InquiryDao dao;
 	
+	//전체 조회
+	public List<Inquiry> selectAllInquirys(){		
+		return dao.selectAllInquirys();
+	}
+	
 	//등록하기
 	public int insertInquiry(Inquiry inquiry){
-		int insertInquiry = dao.insertInquiry(inquiry);
-		return insertInquiry;
+		return dao.insertInquiry(inquiry);
+	}	
+	
+	//상세조회
+	public Inquiry selectByAdvancedNo(int advancedNo){
+		return dao.selectByAdvancedNo(advancedNo);
 	}
 	
-	
-	public int inquiryAdvancedNo() {
-		return dao.inquiryAdvancedNo();
-	}
-	
-	
-	//삭제하기
-	public int deleteInquiryByAdvancedNo(int advancedNo){
-		int deleteInquiry = dao.deleteInquiryByAdvancedNo(advancedNo);
-		return deleteInquiry;
+	//조회수
+	public int selectHit(int advancedNo){
+		return dao.selectHit(advancedNo);
 	}
 	
 	//수정하기
-	public int updateInquiryByAdvancedNo(int advancedNo){
-		int updateInquiry = dao.updateInquiryByAdvancedNo(advancedNo);
-		return updateInquiry;
+	public int updateInquiry(Inquiry inquiry){
+		return dao.updateInquiry(inquiry);
 	}
 	
-	//전체 조회
-	public List<Inquiry> selectAllInquirys(){
-	
-		List<Inquiry> list = dao.selectAllInquirys();
-		
-		return list;
+	//삭제하기
+	public int deleteByAdvancedNo(int advancedNo){
+		return dao.deleteByAdvancedNo(advancedNo);
 	}
 	
-	//상세조회
-	public Inquiry selectInquiryByAdvancedNo(int advancedNo){
-		return dao.selectInquiryByAdvancedNo(advancedNo);
-	}
-	
-	//글번호 sequence
+	//글 번호 sequence
 	public int increaseAdvancedNo(){
 		return dao.increaseAdvancedNo();
 	}

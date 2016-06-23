@@ -1,15 +1,31 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%-- no: ${requestScope.insertInquiry.advancedNo}<br>
-제목: ${requestScope.insertInquiry.advancedNo}<br>
-글쓴이: ${requestScope.inquiry.advancedId}<br>
-비밀글 여부: ${requestScope.inquiry.advancedSecret}<br>
-내용<br>
-${requestScope.inquiry.advancedContent}<br>
-글 등록일: ${requestScope.inquiry.advancedDate}<br>
-조회수: ${requestScope.inquiry.advancedHit}<br>
-강의 번호: ${requestScope.inquiry.lectureNo2}<br> --%>
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	$(".inquiryComment").on("click", function(){
+		$.ajax({
+			"url":"/UspaceAcademy/inquiry/insertComment.do",
+			"type":"POST",
+			"data":"commentNo",
+			"dataType":"json",
+			"success":function(){
+				
+			},
+			"error":function(xhr, status, errorMsg){
+				alert("오류가 발생했습니다. " + status + ", " + errorMsg);
+			}
+/* 			"beforeSend":function(){
+				
+			} */
+		})
+	})
+})
+
+</script>
 
 <table>
 	<tr>
@@ -31,8 +47,11 @@ ${requestScope.inquiry.advancedContent}<br>
 </table>
 
 <p>
+<c:forEach items="requestScope.inquiryComment" var="inquiryComment">
+	<a href="/UspaceAcademy/inquiry/insertComment.do">댓글 쓰기</a>
+</c:forEach>
 
-<%-- <a href="/UspaceAcademy/inquiry/updateInquiryByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">1:1문의 수정</a> --%>
-<a href="/UspaceAcademy/inquiry/updateInquiryByAdvancedNo.do?advancedNo=1">1:1문의 수정</a>
-<a href="/UspaceAcademy/inquiry/deleteInquiryByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">1:1문의 삭제</a>
+<p>
+<a href="/UspaceAcademy/inquiry/updateByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">1:1문의 수정</a>
+<a href="/UspaceAcademy/inquiry/deleteByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">1:1문의 삭제</a>
 <a href="/UspaceAcademy/inquiry/inquiryList.do">1:1문의 목록</a>
