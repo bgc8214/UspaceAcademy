@@ -1,9 +1,14 @@
 package com.uspaceacademy.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.uspaceacademy.util.Constants;
 import com.uspaceacademy.vo.Notice;
 
 @Repository
@@ -57,5 +62,19 @@ public class NoticeDao
 	public int selectHit(int no) {
 		return session.selectOne(namespace+"select_hit", no);
 	}
-
+	
+	// 페이징 처리
+	public List selectListPage(int page, String type) {
+		Map map = new HashMap<>();
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("basicType", type);
+		return session.selectList(namespace+"selectListByPaing", map);
+	}
+	
+	// 페이징 처리
+	public int selectCountContents(String type) {
+		return session.selectOne(namespace+"selectCountContents", type);
+	}
+	
 }

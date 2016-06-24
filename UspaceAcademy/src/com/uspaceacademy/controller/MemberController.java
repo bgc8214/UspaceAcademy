@@ -57,7 +57,6 @@ public class MemberController
 	@RequestMapping("/studentRedirect.do")
 	public String studentRedirectRegister() // 새로고침 시 더 등록 안되도록 redirect 처리
 	{
-
 		System.out.println("리다이렉트");
 		return "main.tiles";
 	}
