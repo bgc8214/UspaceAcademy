@@ -70,5 +70,9 @@ public class MemberDao
 		return session.selectOne("memberMapper.findTeacherPassword",teacher);
 	}
 	
+	//강사이름으로 강사 목록 조회해옴( where 조건에 like이용)
+	public List selectTeacherListByTeacherName(String teacherName){
+		return session.selectList("memberMapper.selectTeacherListByTeacherName", teacherName);
+	}
 
 }

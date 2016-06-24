@@ -1,7 +1,6 @@
 
 -- 코드테이블
 drop table code_table;
-select * from code_table;
 create table code_table(
 	code_id varchar2(1) primary key,
 	code_name varchar2(30) not null,
@@ -102,14 +101,11 @@ CREATE TABLE lecture(
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 drop sequence lecture_seq;
 create sequence lecture_seq
 nocache;
 
 insert into lecture values(5, '수학', '설명', '0515', '0516', '0820', '0821', '0822', 11, 2, 3, '수학', 'id-12');
-=======
 insert into lecture values(5, '수학고등3', '설명', '0515', '0516', '0820', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 insert into lecture values(1, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 insert into lecture values(2, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
@@ -122,7 +118,6 @@ insert into lecture values(6, '수학고등3', '설ㅇ', '0515', '0516', '0420',
 select * from lecture;
 
 
->>>>>>> branch 'master' of https://github.com/bgc8214/UspaceAcademy.git
 
 -- 1:1문의, 질문게시판
 drop table advanced_board cascade constraint;
@@ -224,7 +219,6 @@ select * from CODE_TABLE;
 	SELECT *
 	from code_table
 	where code_type = 'basic_board'
----------------------------------------------------------------------
 
 INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
@@ -246,3 +240,6 @@ DELETE FROM student_lecture_join;
 
 select  * from review_board where review_no=75;
 
+
+delete from lecture where lecture_no=-1 cascade constraint;
+--select  * from review_board where review_no=75;

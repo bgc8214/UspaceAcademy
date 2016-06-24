@@ -12,11 +12,14 @@
 
 }
 </style>
-<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#submit").on("click", function(){
 		return confirm("선택된 항목을 정말 결제하시겠습니까?");
+	});
+	
+	$(".checkbox").on("mouseover",function(){
+		this.style.cursor = 'pointer';
 	})
 
 })
@@ -24,7 +27,7 @@ $(document).ready(function(){
 </script>
 
 <h2>${sessionScope.login_info.studentName }님의 찜 목록</h2>
-
+<font color="red" size="5">${requestScope.errorMessage}</font>
 <form class="form" method="post" action="/UspaceAcademy/lecture/applyFromZzimList.do?page=${requestScope.page }">
 <table border="1">
 <thead>

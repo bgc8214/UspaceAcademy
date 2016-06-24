@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=utf-8"%>
+<%-- <%@ page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -58,10 +58,10 @@ $(document).ready(function(){
 </table>
 
 <p>
-<%-- <c:forEach items="requestScope.inquiryComment" var="inquiryComment"> --%>
+<c:forEach items="requestScope.inquiryComment" var="inquiryComment">
 <!-- 	<a id="insertComment" href="/UspaceAcademy/inquiry/insertComment.do">댓글 쓰기</a>
 	<textarea rows="" cols=""></textarea> -->
-<%-- </c:forEach> --%>
+</c:forEach>
 <!-- <form method="post" action="/UspaceAcademy/inquiry/insertComment.do"> -->
 <input type="text" id="commentContent"><br>
 <input type="button" value="댓글 등록" id="btn">
@@ -71,3 +71,4 @@ $(document).ready(function(){
 <a href="/UspaceAcademy/inquiry/updateByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">1:1문의 수정</a>
 <a href="/UspaceAcademy/inquiry/deleteByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">1:1문의 삭제</a>
 <a href="/UspaceAcademy/inquiry/inquiryList.do">1:1문의 목록</a>
+ --%>

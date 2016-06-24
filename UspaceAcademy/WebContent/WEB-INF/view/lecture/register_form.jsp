@@ -8,8 +8,6 @@ span.errors{
 	color:red
 }
 </style>
-
-<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
 
 <link href="/UspaceAcademy/jQuery/jquery-ui.min.css" rel="stylesheet">
@@ -18,6 +16,66 @@ span.errors{
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		//폼체크
+		$("#submit1").on("click", function(){
+			if(!$("input[name=lectureTitle]").val()){
+				alert("강의명을 입력하세요.");
+				return false;
+			}
+			if($("textarea[name=lectureDescription]").val()==""){
+				alert("강의세부내용을 입력하세요.");
+				return false;
+			}
+			if(isNaN($("input[name=lectureStartTime]").val())){
+				alert("강의 시작시간은 숫자만 입력하세요.");
+				return false;
+			}
+			if($("input[name=lectureStartTime]").val()>24||$("input[name=lectureStartTime]").val()<0){
+				alert("강의 시작시간은 0~24사이의 숫자만 입력하세요.");
+				return false;
+			}
+			if(isNaN($("input[name=lectureEndTime]").val())){
+				alert("강의 끝시간은 숫자만 입력하세요.");
+				
+				return false;
+			}
+			if($("input[name=lectureEndTime]").val()>24||$("input[name=lectureEndTime]").val()<0){
+				alert("강의 끝시간은 0~24사이의 숫자만 입력하세요.");
+				return false;
+			}
+			//요일 검증 시작
+			var flag = false;
+			$("input[type=checkbox]").each(function(index, item){
+				
+				if(item.checked==true){
+					flag = true;
+				}
+			})
+			if(!flag){
+				alert("한 개 이상의 요일을 선택하세요!!");
+				return false;
+			}else{
+				return true;
+			}
+			//요일 검증 끝
+			if(isNaN($("input[name=lecturePrice]").val())){
+				alert("수강료는 숫자만 입력하세요.");
+				return false;
+			}
+			if(isNaN($("input[name=lectureTotalStudent]").val())){
+				alert("수강인원은 숫자만 입력하세요.");
+				return false;
+			}
+			if(!$("input[name=lectureStartDate]").val()){
+				alert("강의 시작일을 입력하세요.");
+				return false;
+			}
+			if(!$("input[name=lectureStartDate]").val()){
+				alert("강의 종료일을 입력하세요.");
+				return false;
+			}
+		})
+		
 		$("#subject").on("change",function(){
 			var tmp = $(this);
 			$.ajax({
@@ -70,13 +128,13 @@ span.errors{
 강의 시작시간 : <input type="text" name="lectureStartTime"><span class="errors"><form:errors path="lecture.lectureStartTime" delimiter="//"/></span><br>
 강의 끝시간 : <input type="text" name="lectureEndTime"><span class="errors"><form:errors path="lecture.lectureEndTime" delimiter="//"/></span><br>
 <%-- 강의 요일 : <input type="text" name="lectureDay"><span class="errors"><form:errors path="lecture.lectureDay" delimiter="//"/></span><br> --%>
-강의 요일(체크박스) :<label> 월 <input type="checkbox" name="lectureDay2" value='월'></label>
-					 <label> 화 <input type="checkbox" name="lectureDay2" value='화'></label>
-					 <label> 수 <input type="checkbox" name="lectureDay2" value='수'></label>
-					 <label> 목 <input type="checkbox" name="lectureDay2" value='목'></label>
-					 <label> 금 <input type="checkbox" name="lectureDay2" value='금'></label>
-					 <label> 토 <input type="checkbox" name="lectureDay2" value='토'></label>
-					 <label> 일 <input type="checkbox" name="lectureDay2" value='일'></label> <font color="red">${param.errorMessage }</font><br>
+강의 요일 :<label> 월 <input type="checkbox" name="lectureDay2" value='월'></label>
+		   <label> 화 <input type="checkbox" name="lectureDay2" value='화'></label>
+		   <label> 수 <input type="checkbox" name="lectureDay2" value='수'></label>
+		   <label> 목 <input type="checkbox" name="lectureDay2" value='목'></label>
+		   <label> 금 <input type="checkbox" name="lectureDay2" value='금'></label>
+		   <label> 토 <input type="checkbox" name="lectureDay2" value='토'></label>
+		   <label> 일 <input type="checkbox" name="lectureDay2" value='일'></label> <font color="red">${param.errorMessage }</font><br>
 강의 수강료 : <input type="text" name="lecturePrice"><span class="errors"><form:errors path="lecture.lecturePrice" delimiter="//"/></span><br>
 강의 수강인원 : <input type="text" name="lectureTotalStudent"><span class="errors"><form:errors path="lecture.lectureTotalStudent" delimiter="//"/></span><br>
 <input type="hidden" name="lectureCurrentStudent" value="0"><span class="errors"><form:errors path="lecture.lectureCurrentStudent" delimiter="//"/></span><br>
@@ -99,5 +157,5 @@ span.errors{
 	</c:forEach>
 </select>
 <p>
-<input type="submit" value="강의 등록">
+<input id="submit1" type="submit" value="강의 등록">
 </form>
