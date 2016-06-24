@@ -2,11 +2,13 @@ package com.uspaceacademy.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.uspaceacademy.util.Constants;
 import com.uspaceacademy.vo.LectureReview;
 
 @Repository
@@ -101,6 +103,27 @@ public class LectureReviewDao{
 	
 	
 	
+	//8.페이징 selectPaging
+	public List selectPaging(int page){
+		Map map = new HashMap();
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		return session.selectList(namespace+"selectPaging", map);
+	}
+	
+	//9.페이징 selectCount
+	public int selectCount(){
+		return session.selectOne(namespace+"selectCount");
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	//-------------------------------------------------------------------------------------------------------------
 	
@@ -136,30 +159,7 @@ public class LectureReviewDao{
 	return session.selectList(namespace+"reviewContent");
 	}
 	
-	
-	
-	
-	
-	//수강후기 페이징처리===========================
-	public List selectListPage(int page){
-	HashMap param = new HashMap();
-	param.put("itemPerPage", 10);
-	param.put("page",page);
-	return session.selectList("lectureReviewMapper.selectList",param);
-	}
-	//수강후기 총no가 몇개인지 세어줌==================페이징처리관련
-	public int selectLectureReviewCount(){
-		return 0; //??????????????????????????????????????????????????????????????
-	}
-	
-	
-	
-	
-	//수강후기 조회수 ====================
-	
-	
-	
-	
+
 	
 	
 	

@@ -62,7 +62,7 @@ $(document).ready(function(){
 </tr>
 </thead>
 <tbody>
-<form><input id="page" type="hidden" value="${param.page }"></form>
+<form><input id="page" type="hidden" value="${param.page}"></form>
 <c:forEach items="${requestScope.lectureList }" var="lectureList">
 		<tr class="lectureList">
 			<td>${lectureList.lectureNo }</td><td>${lectureList.lectureSubject }</td><td>${lectureList.lectureTitle }</td>
