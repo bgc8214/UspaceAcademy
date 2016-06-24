@@ -17,14 +17,20 @@ span {
 	color: red;
 }
 </style>
-
+<script type="text/javascript">
+function idCheck()
+{
+	window.open("/UspaceAcademy/teacherIdCheck.do","아이디 중복 확인","width=400,height=200,resizable=no");
+}
+</script>
 <h2>강사 가입폼</h2>
-<form action="/UspaceAcademy/member/teacherRegister.do" method="post">
+ <button onclick="idCheck();">아이디 중복체크</button>
+<form action="/UspaceAcademy/member/teacherRegister.do" method="post" name="join_form">
 <table>
 	<tr>
 		<th>ID</th>
 		
-		<td><input type="text" name="teacherId"  value="${requestScope.teacher.teacherId }"><span class="error">
+		<td><input type="text" name="teacherId" readonly="readonly" value="${requestScope.teacher.teacherId }"><span class="error">
 		<form:errors path="teacher.teacherId" delimiter="//"/> <!-- BindingResult의 에러메세지 출력 -->
 		
 		</span></td>

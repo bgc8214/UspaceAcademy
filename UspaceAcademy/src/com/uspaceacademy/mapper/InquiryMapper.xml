@@ -14,8 +14,19 @@
 		from	advanced_board		
 	</sql>
 	
+	<sql id="column-basic">
+		advanced_no,
+		advanced_secret,
+		advanced_title,
+		advanced_content,
+		advanced_date,
+		advanced_hit,
+		advanced_id,
+		lecture_no2
+	</sql>
+	
 	<resultMap type="inquiry" id="inquiry-resultmap">
-		<result column="advanced_no" property="advancedNo"/>
+		<id column="advanced_no" property="advancedNo"/>
 		<result column="advanced_secret" property="advancedSecret"/>
 		<result column="advanced_title" property="advancedTitle"/>
 		<result column="advanced_content" property="advancedContent"/>
@@ -52,16 +63,20 @@
 	</select>
 	
 	<!-- 조회수 -->
-	<select id="selectHit">
-		select advanced_hit from advanced_board where advanced_no = #{advancedNo}
-	</select>
+	<update id="updateHit" parameterType="inquiry">
+		update advanced_board set advanced_hit = #{advancedHit} where advanced_no = #{advancedNo}
+	</update>
 	
 	<!-- 수정하기 -->
  	<update id="updateInquiry" parameterType="inquiry">
 		update advanced_board
-		set advanced_title = #{advancedTitle},
+		set advanced_secret = #{advancedSecret},
+			advanced_title = #{advancedTitle},
 			advanced_content = #{advancedContent},
-			advanced_date = #{advancedDate}
+			advanced_date = #{advancedDate},
+			advanced_hit = #{advancedHit},
+			advanced_id = #{advancedId},
+			lecture_no2 = #{lectureNo2}
 		where advanced_no = #{advancedNo}	
 	</update>
 	
@@ -74,5 +89,26 @@
 	<select id="increaseAdvancedNo" resultType="_int">
 		select advanced_board_seq.nextval from dual
 	</select>
+	
+	<!-- 강의 리스트 페이징 조회 -->
+ 	<select id="selectListByPaging" parameterType="map" resultMap="inquiry-resultmap">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   (
+ 			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   advanced_board
+<!--  				where code_name = #{codeName} -->
+ 				ORDER BY advanced_no DESC  
+ 			)
+ 		)
+ 		WHERE  page = #{page}
+ 	</select>
+	
+	<!-- 강의 리스트 페이징 헬퍼 -->
+ 	<select id="selectCountContents" resultType="_int">
+ 		SELECT count(advanced_no) 
+ 		FROM   advanced_board 
+ 	</select>
 	
 </mapper>

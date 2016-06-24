@@ -1,6 +1,7 @@
 
 -- 코드테이블
 drop table code_table;
+select * from code_table;
 create table code_table(
 	code_id varchar2(1) primary key,
 	code_name varchar2(30) not null,
@@ -13,9 +14,9 @@ create table administrator(
 	administrator_id varchar2(50) primary key,
 	administrator_password varchar2(50) not null
 );
+insert into ADMINISTRATOR('admin','1234');
 
 insert into administrator values('admin', '1234');
-
 
 -- 강사
 drop table teacher cascade constraint;
@@ -61,6 +62,9 @@ create table basic_board(
 	basic_type varchar2(30) not null
 );
 
+drop sequence basic_board_seq; 
+create sequence basic_board_seq nocache;
+
 -- 수강 후기
 drop table review_board;
 create table review_board(
@@ -74,9 +78,9 @@ create table review_board(
 	review_hit number not null
 );
 
-drop sequence review_board_seq;
-create sequence review_board_seq 
-nocache;
+DROP SEQUENCE review_board_seq;
+CREATE SEQUENCE review_board_seq nocache;
+
 
 -- 강의
 DROP table lecture cascade constraint;
@@ -97,6 +101,7 @@ CREATE TABLE lecture(
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
 
+<<<<<<< HEAD
 drop sequence lecture_seq;
 create sequence lecture_seq
 nocache;
@@ -122,9 +127,8 @@ insert into advanced_board values(5, 1, '제목2', '내용2', '2016-05-23', 1, '
 insert into advanced_board values(6, 1, '제목3', '내용3', '2016-05-24', 1, 'id-14', null);
 select * from ADVANCED_BOARD;
 
-drop sequence advanced_board_seq 
-create sequence advanced_board_seq 
-nocache;
+drop sequence advanced_board_seq;
+create sequence advanced_board_seq nocache;
 
 -- 코멘트
 DROP table comment_table cascade constraint;
@@ -136,6 +140,9 @@ CREATE TABLE comment_table(
 	advanced_no2 number not null,
 	constraint fk_comment_advanced foreign key (advanced_no2) references advanced_board(advanced_no)
 );
+
+drop sequence comment_board_seq;
+create sequence comment_board_seq nocache;
 
 -- 과제
 drop table assignment_board;
@@ -177,24 +184,37 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 
-drop sequence basic_board_seq 
-create sequence basic_board_seq 
-nocache;
+
 
 insert into code_table values('6', '1:1문의', 'advanced_board');
+insert into code_table values('7', '1:1문의댓글', 'comment_board');
+insert into code_table values('8', '강의질문하기', 'advanced_board');
 
--- code_table insert하는 구문
+-- code_table insert하는 구문     //영주1
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
-insert into CODE_TABLE values('2', 'FAQ', 'basic_baord');
+insert into CODE_TABLE values('2', 'FAQ', 'basic_board');
 
-insert into CODE_TABLE values('3', '국어', 'subject');
-insert into CODE_TABLE values('4', '영어', 'subject');
-insert into CODE_TABLE values('5', '수학', 'subject');
+insert into CODE_TABLE values('3', '국어', 'teacherSubject');
+insert into CODE_TABLE values('4', '영어', 'teacherSubject');
+insert into CODE_TABLE values('5', '수학', 'teacherSubject');
 
 select * from CODE_TABLE;
+	SELECT *
+	from code_table
+	where code_type = 'basic_board'
 
 
 INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+
+--수강후기
+insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+
+INSERT INTO administrator values('admin', '1234');
+
+SELECT * FROM student_lecture_join;
+DELETE FROM student_lecture_join;
+select  * from review_board where review_no=75;

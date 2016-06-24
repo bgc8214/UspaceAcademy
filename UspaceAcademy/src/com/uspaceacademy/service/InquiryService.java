@@ -1,14 +1,19 @@
 package com.uspaceacademy.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.uspaceacademy.dao.InquiryDao;
+import com.uspaceacademy.util.PagingBean;
 import com.uspaceacademy.vo.Inquiry;
 
 @Service
+@Transactional
 public class InquiryService
 {
 	@Autowired
@@ -30,8 +35,8 @@ public class InquiryService
 	}
 	
 	//조회수
-	public int selectHit(int advancedNo){
-		return dao.selectHit(advancedNo);
+	public int updateHit(Inquiry inquiry){
+		return dao.updateHit(inquiry);
 	}
 	
 	//수정하기
@@ -52,5 +57,13 @@ public class InquiryService
 	//코드
 	public List selectCodeName(String codeName) {
 		return dao.selectCodeName(codeName);
+	}
+	
+	//강의 목록 페이징 처리
+	public Map getInquiryList(int page) {
+		Map map = new HashMap();
+		map.put("inquiryList", dao.selectList(page));
+		map.put("paging", new PagingBean(dao.selectCountContents(), page));
+		return map;
 	}
 }

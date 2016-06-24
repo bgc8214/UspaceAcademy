@@ -14,43 +14,62 @@ public class LectureReviewService{
 	@Autowired
 	private LectureReviewDao dao;
 	
-//----------------------------------------	
+	//--------------------------------------------------------------------------------------------------------------------	
 	
 	
-	//수강후기 게시물등록 *ok
+	//수강후기 게시물등록 ㅇ
 	public int insert(LectureReview lectureReview){
 		return dao.insert(lectureReview);
 	}
 	
-	//수강후기 게시물 LectureReview sequence처리==============*ok
+	//수강후기 게시물 LectureReview sequence처리 ㅇ
 	public int selectNextNo(){
 		return dao.selectNextNo();
 	}
 	
-	//수강후기 전체 리스트 *ok
-	public List selectList(){
-		return dao.selectList();
+	//수강후기 전체 리스트ㅇ
+	public List selectList(String type){
+		return dao.selectList(type);
 	}
 	
-	//수강후기 수정 
+	//수강후기 수정 ㅇ
 	public int update(LectureReview lectureReview){
 		return dao.update(lectureReview);
 	}
 	
-	//수강후기 삭제 *ok
+	//수강후기 삭제ㅇ
 	public int delete(int reviewNo){
 		return dao.deleteByNo(reviewNo);
 	}
 	
-	//수강후기 세부조회 *ok
+	//수강후기 세부조회ㅇ
 	public LectureReview selectNo(int reviewNo){
-		//System.out.println("service "+dao.selectNo(reviewNo));
 		return dao.selectNo(reviewNo);
+	}
+	
+	
+//--------------------------------------------------------------------------------------------------------------------	
+	
+	
+	//코드 영주1
+	public List selectCodeName(String code){
+		System.out.println("렉쳐리뷰 서비스" + code);
+		return dao.selectCodeName(code);
+	}
+	
+	
+	//7.조회수 처리
+	public List selectHit(LectureReview lectureReview){
+		//lectureReview.setReviewHit(lectureReview.getReviewHit()+1);//
+		return dao.selectHit(lectureReview);
 	}
 	
 	
 	
 	
+	
+//--------------------------------------------------------------------------------------------------------------------		
+
 	
 	
 	

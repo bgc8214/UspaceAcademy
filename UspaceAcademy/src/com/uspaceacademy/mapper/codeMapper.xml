@@ -9,6 +9,8 @@
 	<result column="code_name" property="codeName"/>
 	<result column="code_type" property="codeType"/>
 </resultMap> 
+
+<!--  강사 과목   영주1   -->
 <select id="selectCodeName" resultMap="code-resultMap" parameterType="string">
 	SELECT <include refid="code_colums"/>
 	from code_table

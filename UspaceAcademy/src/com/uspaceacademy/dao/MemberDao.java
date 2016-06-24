@@ -39,6 +39,7 @@ public class MemberDao
 		return session.selectList("memberMapper.selectTeacherBySubject", teacherSubject);
 	}
 	
+	//영주 1
 	public List selectCode(String code) { //코드 목록 조회
 		return session.selectList("codeTable.selectCodeName", code);
 	}

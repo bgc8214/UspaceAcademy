@@ -3,12 +3,14 @@ package com.uspaceacademy.controller;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.InquiryService;
@@ -27,8 +29,11 @@ public class InquiryController
 	
 	//1:1문의 전체 목록
 	@RequestMapping("/inquiryList")
-	public ModelAndView inquiryList(){	
-		return new ModelAndView("inquiry/inquiry_list.tiles", "list", service.selectAllInquirys());
+	public ModelAndView inquiryList(@RequestParam(defaultValue="1") int page){	
+//		return new ModelAndView("inquiry/inquiry_list.tiles", "list", service.selectAllInquirys());
+		Map map = service.getInquiryList(page);
+		map.put("page", page);
+		return new ModelAndView("inquiry/inquiry_list.tiles", map);
 	}
 	
 	//1:1문의 전체목록에서 조회할 글을 눌렀을 때 상세페이지 조회하기. 
@@ -37,7 +42,7 @@ public class InquiryController
 		Inquiry selectInquiry = service.selectByAdvancedNo(advancedNo);
 		int advancedHit = selectInquiry.getAdvancedHit();
 		selectInquiry.setAdvancedHit(++advancedHit);
-		service.updateInquiry(selectInquiry);
+		service.updateHit(selectInquiry);
 		return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", selectInquiry);
 	}
 	
@@ -54,58 +59,48 @@ public class InquiryController
 		return new ModelAndView("inquiry/insert_inquiry.tiles", "codeName", value);
 	}
 	
-	//1:1문의 글을 등록했을 때 상세페이지 조회하기
-//	@RequestMapping("/insertInquiry")
-//	public ModelAndView insertInquiry(String advancedTitle, String advancedContent, String codeName){
-//		System.out.println(advancedTitle);
-//		int advancedNo = service.increaseAdvancedNo();
-//		String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-//		Inquiry inquiry = new Inquiry(advancedNo, 1, advancedTitle, advancedContent, advancedDate, 1, "admin");
-//		System.out.println(inquiry);
-//		int insertInquiry = service.insertInquiry(inquiry);
-//		return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", inquiry);
-//	}
-	
+	//1:1문의 글을 등록했을 때 상세페이지 조회하기	
 //	String advancedTitle, String advancedContent, String codeName,
 	@RequestMapping("/insertInquiry")
-	public String insertInquiry(String codeName, @ModelAttribute Inquiry inquiry, BindingResult error){
+	public String insertInquiry(String codeName, @ModelAttribute Inquiry inquiry, BindingResult errors){
 		int advancedNo = service.increaseAdvancedNo();
 		String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-		inquiry = new Inquiry(advancedNo, 1, inquiry.getAdvancedTitle(), inquiry.getAdvancedContent(), advancedDate, 1, "admin");
+		inquiry = new Inquiry(advancedNo, 1, inquiry.getAdvancedTitle(), inquiry.getAdvancedContent(), advancedDate, 0, "admin");
 		
 		InquiryValidator validator = new InquiryValidator();
-		validator.validate(inquiry, error);
+		validator.validate(inquiry, errors);
 		
-		if (error.hasErrors())
+		if (errors.hasErrors())
 		{
 			return "/inquiry/codeList.do";
 		}
 		
 		service.insertInquiry(inquiry);
-		return "redirect:inquiry/inquiry_detail.tiles";
+		return "redirect:/inquiry/inquiryRedirect.do?advancedNo="+inquiry.getAdvancedNo();
 	}	
 	
 	//등록 redirect 처리
-//	@RequestMapping("/inquiryRedirect")
-//	public String inquiryRedirect() // 새로고침 시 더 등록 안되도록 redirect 처리
-//	{
-//		return "inquiry/inquiry_detail.tiles";
-//	}
+	@RequestMapping("/inquiryRedirect")
+	public ModelAndView inquiryRedirect(int advancedNo, @RequestParam(defaultValue="1") int page) // 새로고침 시 더 등록 안되도록 redirect 처리
+	{
+		Map map = service.getInquiryList(page);
+		return new ModelAndView("/inquiry/selectByAdvancedNo.do?advancedNo="+advancedNo, map);
+	}
 
 	//1:1문의 수정폼
 	@RequestMapping("/updateByAdvancedNo")
 	public ModelAndView updateByAdvancedNo(int advancedNo){
-		Inquiry selectUpdateInquiry = service.selectByAdvancedNo(advancedNo);
-		return new ModelAndView("inquiry/inquiry_modify.tiles", "selectUpdateInquiry", selectUpdateInquiry);
+		Inquiry inquiryDetail = service.selectByAdvancedNo(advancedNo);
+		return new ModelAndView("inquiry/inquiry_modify.tiles", "inquiryDetail", inquiryDetail);
 	}
 	
 	//1:1문의 수정하기
 	@RequestMapping("/updateInquiry")
-	public ModelAndView updateInquiry(int advancedNo, String advancedTitle, String advancedContent){
+	public ModelAndView updateInquiry(Inquiry inquiry){
 		String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-		Inquiry updateInquiry = new Inquiry(advancedNo, advancedTitle, advancedContent, advancedDate);
-		service.updateInquiry(updateInquiry);
-		return new ModelAndView("inquiry/inquiry_detail.tiles", "updateInquiry", updateInquiry);
+		Inquiry inquiryDetail = new Inquiry(inquiry.getAdvancedNo(), inquiry.getAdvancedSecret(), inquiry.getAdvancedTitle(), inquiry.getAdvancedContent(), advancedDate, inquiry.getAdvancedHit(), inquiry.getAdvancedId());
+		service.updateInquiry(inquiryDetail);
+		return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", inquiryDetail);
 	}
 	
 	//1:1문의 삭제하기

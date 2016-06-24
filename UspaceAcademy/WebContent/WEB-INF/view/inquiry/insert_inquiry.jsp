@@ -10,13 +10,13 @@
 	<tr>
 		<td>
 			제목: <input type="text" name="advancedTitle" size="70" value="${requestScope.inquiryValidate.advancedTitle }">
-			<span class="error"> <form:errors path="inquiryValidate.advancedTitle" delimiter="//" /></span>
+			<span class="error"> <form:errors path="inquiry.advancedTitle" delimiter="//" /></span>
 		</td>
 	</tr>
 	<tr>
 		<td>
 			내용: <textarea rows="20" cols="100" name="advancedContent">${requestScope.inquiryValidate.advancedContent }</textarea>
-			<span class="error"> <form:errors path="inquiryValidate.advancedContent" delimiter="//" /></span>
+			<span class="error"> <form:errors path="inquiry.advancedContent" delimiter="//" /></span>
 		</td>
 	</tr>
 	<tr>

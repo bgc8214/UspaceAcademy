@@ -21,8 +21,10 @@
 	<mvc:view-controller path="/academyIntroduce.do" view-name="academicInfo/academyIntroduce.tiles"/>
 	<mvc:view-controller path="/roadIntroduce.do" view-name="academicInfo/roadIntroduce.tiles"/>
 	<mvc:view-controller path="/teacherIntroduce.do" view-name="academicInfo/teacherIntroduce.tiles"/>
+	<mvc:view-controller path="/studentIdCheck.do" view-name="/WEB-INF/view/member/studentDuplicationCheck.jsp"/>
+	<mvc:view-controller path="teacherIdCheck.do" view-name="/WEB-INF/view/member/teacherDuplicationCheck.jsp"/>
+	<mvc:view-controller path="/serviceCenter.do" view-name="FAQ/serviceCenter.tiles"/>
 	
-
 	<context:component-scan base-package="com.uspaceacademy"/>
 	
 	<bean name="tilesConfig"
@@ -33,7 +35,8 @@
 			</list>
 		</property>
 	</bean>
-
+	<bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	 
 	<bean name="vr1"
 		class="org.springframework.web.servlet.view.BeanNameViewResolver"
 		p:order="1" />
@@ -65,5 +68,7 @@
 	<bean name="txmanager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
 	p:dataSource-ref="dataSource"/>
 	<tx:annotation-driven transaction-manager="txmanager"/>
+	
+	<bean p:basename="com.uspaceacademy.validaotor.error_message" class="org.springframework.context.support.ResourceBundleMessageSource" name="messageSource"/>
 	
 </beans>

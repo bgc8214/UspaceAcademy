@@ -9,6 +9,10 @@ public class Code implements Serializable {
 	private String codeName;
 	private String codeType;
 	
+	/*insert into CODE_TABLE values('3', '국어', 'subject');
+	insert into CODE_TABLE values('4', '영어', 'subject');
+	insert into CODE_TABLE values('5', '수학', 'subject');*/
+	
 	public Code() { }
 
 	public Code(String codeId, String codeName, String codeType) {
