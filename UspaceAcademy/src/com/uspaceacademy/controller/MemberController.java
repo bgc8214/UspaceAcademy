@@ -2,15 +2,29 @@ package com.uspaceacademy.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Properties;
 
+import javax.mail.Authenticator;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.MemberService;
@@ -256,6 +270,130 @@ public class MemberController
 		HttpSession session = request.getSession();
 		session.invalidate();
 		return "main.tiles";
+	}
+	
+	@RequestMapping("/findId")
+	@ResponseBody 
+	public String findId(String name, String phoneNo) //이름과 핸드폰 번호로 아이디 조회
+	{
+		Student student = new Student();
+		student.setStudentName(name);
+		student.setStudentPhoneNo(phoneNo);
+		Student findStudent = service.findStudentId(student);  //학생으로 조회
+		
+		Teacher teacher = new Teacher();
+		teacher.setTeacherName(name);
+		teacher.setTeacherPhoneNo(phoneNo);
+		Teacher findTeacher = service.findTeacherId(teacher);
+		
+		
+		if(findStudent==null && findTeacher==null) //찾는 아이디가 없는경우
+		{
+			return "없습니다";
+		}else if (findStudent!=null && findTeacher==null) { //학생 아이디 발견
+			return findStudent.getStudentId();
+		}else if(findStudent==null && findTeacher!=null) // 강사 아이디 발견
+		{
+			return findTeacher.getTeacherId(); 
+		}else //둘 다 있는 경우 (있어서는 안된다) 처리는 해줌
+		{
+			return findStudent.getStudentId()+","+findTeacher.getTeacherId();
+		}
+		
+	}
+	
+	
+	@RequestMapping("/sendMail")
+	public String sendMail(Student student,Teacher teacher) throws MessagingException //이메일을 보내주는 매소드
+	{
+		System.out.println("이메일");
+		 String host = "smtp.gmail.com";
+	        int port=465;
+	         
+	        // 메일 내용
+	        String recipient = ""; // 받을 사람
+	        if(student==null){  //받아온 정보로 이메일 알려준다.
+	        	recipient = teacher.getTeacherEmail(); 
+		    }else
+		    {
+		      	recipient = student.getStudentEmail();
+		    }
+	        String subject = "패스워드 찾은 결과입니다."; //메일 제목 지정
+	        String body;
+	        if(student==null){  //받아온 정보로 비밀번호 알려준다.
+	         body = "비밀번호 : "+teacher.getTeacherPassword();   //메일의 내용을 설정한다.
+	        }else
+	        {
+	        	 body = "비밀번호 : "+student.getStudentPassword();
+	        }
+	        Properties props = System.getProperties();
+	         
+	         
+	        props.put("mail.smtp.host", host);
+	        props.put("mail.smtp.port", port);
+	        props.put("mail.smtp.auth", "true");
+	        props.put("mail.smtp.ssl.enable", "true");
+	        props.put("mail.smtp.ssl.trust", host);
+	          
+	        Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+	            protected PasswordAuthentication getPasswordAuthentication() {
+	                return new PasswordAuthentication("wce3308", "qorrbcjf123"); //자신의 아이디 비밀번호
+	            }
+	        });
+	        session.setDebug(true); //for debug
+	          
+	        Message mimeMessage = new MimeMessage(session);
+	        if(student==null){
+	        mimeMessage.setFrom(new InternetAddress(teacher.getTeacherEmail())); //받아온 정보로 메일 지정
+	        }
+	        else
+	        {
+	        	mimeMessage.setFrom(new InternetAddress(student.getStudentEmail()));
+	        }
+	        mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
+	        mimeMessage.setSubject(subject);
+	        mimeMessage.setText(body);
+	        Transport.send(mimeMessage);
+
+		return "main.tiles";
+	}
+	
+	@RequestMapping("/findPassword")
+	@ResponseBody 
+	public String findPassword(String id, String email) throws MessagingException //이름과 핸드폰 번호로 아이디 조회
+	{
+		System.out.println("비밀번호 조회");
+		System.out.println("아이디"+id);
+		System.out.println(email);
+		Student student = new Student();
+		student.setStudentId(id);
+		student.setStudentEmail(email);
+		Student findStudent = service.findStudentPassword(student);  //학생으로 조회
+		
+		Teacher teacher = new Teacher(); //강사로 조회
+		teacher.setTeacherId(id);
+		teacher.setTeacherEmail(email);
+		Teacher findTeacher = service.findTeacherPassword(teacher);
+		
+		
+		if(findStudent==null && findTeacher==null) //찾는 비밀번호가 없는경우
+		{
+			System.out.println("비밀번호 없음");
+			return "찾으시는 비밀번호가 없습니다.";
+		}else if (findStudent!=null && findTeacher==null) { //학생 비밀번호 발견
+			System.out.println("학생 비밀번호");
+			sendMail(findStudent, null);
+			return "메일을 통해 비밀번호를 보내드렸습니다.";
+		}else if(findStudent==null && findTeacher!=null) // 강사 비밀번호 발견
+		{
+			System.out.println("강사 비밀번호");
+			sendMail(null, findTeacher);
+			return "메일을 통해 비밀번호를 보내드렸습니다."; 
+		}else //둘 다 있는 경우 (있어서는 안된다) 처리는 해줌
+		{
+			return "main.tiles";
+		}
+		
 	}
 
 }

@@ -38,10 +38,35 @@
    
    </select>
    
+   <select id="findStudentId" resultMap="student-basic" parameterType="student">
+      SELECT <include refid="column-basic-student"/>
+      FROM student
+      WHERE student_name = #{studentName} and student_phone_no= #{studentPhoneNo}
+   </select>
+   
+   <select id="findStudentPassword" resultMap="student-basic" parameterType="student">
+      SELECT <include refid="column-basic-student"/>
+      FROM student
+      WHERE student_id = #{studentId} and student_email=#{studentEmail} 
+   </select>
+   
    <select id="selectTeacherByID" resultMap="teacher-basic" parameterType="String">
       SELECT <include refid="column-basic-teacher"/>
       FROM teacher
       WHERE teacher_id = #{value}
+   </select>
+   
+     
+   <select id="findTeacherId" resultMap="teacher-basic" parameterType="teacher">
+      SELECT <include refid="column-basic-teacher"/>
+      FROM teacher
+      WHERE teacher_name = #{teacherName} and teacher_phone_no=#{teacherPhoneNo}
+   </select>
+   
+   <select id="findTeacherPassword" resultMap="teacher-basic" parameterType="teacher">
+      SELECT <include refid="column-basic-teacher"/>
+      FROM teacher
+      WHERE teacher_id = #{teacherId} and teacher_email=#{teacherEmail} 
    </select>
    
    <insert id="insertStudent" parameterType="student">

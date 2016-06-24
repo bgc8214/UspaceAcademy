@@ -53,6 +53,22 @@ public class MemberDao
 	{
 		return session.selectOne("memberMapper.selectTeacherByID", id);
 	}
+	public Student findStudentId(Student student) //학생 아이디 찾기
+	{
+		return session.selectOne("memberMapper.findStudentId", student);
+	}
+	public Teacher findTeacherId(Teacher teacher) //강사 아이디 찾기
+	{
+		return session.selectOne("memberMapper.findTeacherId", teacher);
+	}
+	public Student findStudentPassword(Student student) //학생 비밀번호 찾기
+	{
+		return session.selectOne("memberMapper.findStudentPassword",student);
+	}
+	public Teacher findTeacherPassword(Teacher teacher) //강사 비밀번호 찾기
+	{
+		return session.selectOne("memberMapper.findTeacherPassword",teacher);
+	}
 	
 
 }

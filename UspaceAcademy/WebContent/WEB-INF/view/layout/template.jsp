@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <style type="text/css">
 header{
+	min-width : 1080px;
 	background-color:skyblue;
 	text-align:center;
 	padding: 5px;
@@ -24,12 +25,14 @@ section{
 	padding: 15px;
 	min-height:400px;
 	float:left;
+	min-width : 1080px;
 }
 footer{
 	background-color:skyblue;
 	padding-top:20px;
 	text-align:center;
 	height:50px;
+	min-width : 1080px;
 	clear:both;
 }
 </style>

@@ -35,15 +35,36 @@ public class MemberService
 	}
 	
 	
-	public Student findStudentById(String id)
+	public Student findStudentById(String id) //로그인 때 필요한 아이디 찾기
 	{
 		return dao.findStudentById(id);
 	}
 	
-	public Teacher findTeacherById(String id)
+	public Student findStudentId(Student student) //학생 아이디 찾기
+	{
+		return dao.findStudentId(student);
+	}
+	
+	public Student findStudentPassword(Student student) //학생 비밀번호 찾기
+	{
+		return dao.findStudentPassword(student);
+	}
+	
+	public Teacher findTeacherById(String id) //로그인 때 필요한 아이디 찾기
 	{
 		return dao.findTeacherById(id);
 	}
+	
+	public Teacher findTeacherId(Teacher teacher) //강사 아이디 찾기
+	{
+		return dao.findTeacherId(teacher);
+	}
+	
+	public Teacher findTeacherPassword(Teacher teacher) //강사 비밀번호 찾기
+	{
+		return dao.findTeacherPassword(teacher);
+	}
+	
 
 	public List getAllTeacher() {
 		

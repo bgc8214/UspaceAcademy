@@ -208,3 +208,4 @@ INSERT INTO administrator values('admin', '1234');
 SELECT * FROM student_lecture_join;
 DELETE FROM student_lecture_join;
 select  * from review_board where review_no=75;
+

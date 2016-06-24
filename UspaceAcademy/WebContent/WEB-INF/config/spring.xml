@@ -11,8 +11,12 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 	
-	<mvc:annotation-driven/>
-
+	<mvc:annotation-driven>
+		 <mvc:message-converters>
+		 	<bean class="org.springframework.http.converter.StringHttpMessageConverter" c:defaultCharset="UTF-8"/>
+		 </mvc:message-converters>
+	</mvc:annotation-driven>
+	<mvc:view-controller path="/findMember.do" view-name="member/findMember.tiles"/>
 	<mvc:view-controller path="/main.do" view-name="main.tiles" />
 	<mvc:view-controller path="/registerSelect.do" view-name="member/registerSelect.tiles"/>
 	<mvc:view-controller path="/member/studentRegisterForm.do" view-name="member/studentRegisterForm.tiles"/>
@@ -22,8 +26,10 @@
 	<mvc:view-controller path="/roadIntroduce.do" view-name="academicInfo/roadIntroduce.tiles"/>
 	<mvc:view-controller path="/teacherIntroduce.do" view-name="academicInfo/teacherIntroduce.tiles"/>
 	<mvc:view-controller path="/studentIdCheck.do" view-name="/WEB-INF/view/member/studentDuplicationCheck.jsp"/>
+	<mvc:view-controller path="/findIdResult.do" view-name="/WEB-INF/view/member/findResult.jsp"/>
 	<mvc:view-controller path="teacherIdCheck.do" view-name="/WEB-INF/view/member/teacherDuplicationCheck.jsp"/>
 	<mvc:view-controller path="/serviceCenter.do" view-name="FAQ/serviceCenter.tiles"/>
+	
 	
 	<context:component-scan base-package="com.uspaceacademy"/>
 	
