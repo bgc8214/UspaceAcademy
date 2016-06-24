@@ -47,4 +47,24 @@
 	from basic_board
 	where basic_no = #{basicNo}
 </select>
+
+<!-- 공지 리스트 페이징 조회 -->
+<select id="selectListByPaing" parameterType="map" resultMap="notice-resultMap">
+SELECT 
+<include refid="notice-columns"/>
+FROM ( SELECT ceil(rownum/#{itemsPerPage}) page, 
+<include refid="notice-columns"/>
+FROM ( SELECT 
+<include refid="notice-columns"/>
+FROM basic_board WHERE basic_type = #{basicType} ORDER BY basic_no DESC ) ) WHERE page = #{page} 
+</select>
+
+<!-- 공지 리스트 페이징 헬퍼 -->
+<select id="selectCountContents" resultType="_int" parameterType="string">
+ SELECT count(basic_no) 
+ FROM basic_board 
+ WHERE basic_type = #{type} 
+ </select>
+
+
 </mapper> 

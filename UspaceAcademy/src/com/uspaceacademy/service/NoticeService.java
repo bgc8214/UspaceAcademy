@@ -1,13 +1,13 @@
 package com.uspaceacademy.service;
 
+import java.util.HashMap;
 import java.util.List;
-
-import javax.annotation.Resource;
-
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uspaceacademy.dao.NoticeDao;
+import com.uspaceacademy.util.PagingBean;
 import com.uspaceacademy.vo.Notice;
 
 @Service
@@ -54,6 +54,14 @@ public class NoticeService
 	
 	public int selectHit(int no) {
 		return dao.selectHit(no);
+	}
+	
+	// 공지목록 페이징 처리
+	public Map getNoticeList(int page, String type) {
+		Map map = new HashMap();
+		map.put("noticeList", dao.selectListPage(page, type));
+		map.put("paging", new PagingBean(dao.selectCountContents(type), page));
+		return map;
 	}
 	
 }

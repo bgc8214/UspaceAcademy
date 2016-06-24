@@ -6,14 +6,17 @@ public class LectureReview{
 	
 	private int reviewNo;//글번호
 	private String reviewWriter;//글쓴이
+	
 	private String lectureTitle;//강의명
+	
 	private String lectureSubject;//강의과목
 	
-	//@NotEmpty(message="글제목을 입력하세요")
+	@NotEmpty(message="제목을 입력해주세요")
 	private String reviewTitle;//글제목
 	
-	//@NotEmpty(message="글내용을 입력하세요")
+	@NotEmpty(message="내용을 입력해주세요")
 	private String reviewContent;//글내용
+	
 	private String reviewDate;//글등록일
 	private int reviewHit;//글조회
 	
@@ -23,7 +26,16 @@ public class LectureReview{
 	public LectureReview() {
 	}
 	
-	
+	//객체생성 밸리 (lectureReview_register.jsp 에서 컨트롤러로 보내는  4개의 값에 대한 생성자)*
+	public LectureReview(String lectureTitle, String lectureSubject, String reviewTitle, String reviewContent) {
+		super();
+		this.lectureTitle = lectureTitle;
+		this.lectureSubject = lectureSubject;
+		this.reviewTitle = reviewTitle;
+		this.reviewContent = reviewContent;
+	}
+
+
 	//date없는 생성자
 	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject,
 			String reviewTitle, String reviewContent, int reviewHit) {

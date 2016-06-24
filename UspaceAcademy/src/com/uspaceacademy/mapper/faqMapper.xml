@@ -62,4 +62,46 @@
 	where basic_no = #{basicNo}
 </select>
 
+<!-- FAQ 리스트 페이징 조회 -->
+<select id="selectListByPaging" parameterType="map" resultMap="faq-resultMap">
+SELECT 
+<include refid="faq-columns"/>
+FROM ( SELECT ceil(rownum/#{itemsPerPage}) page, 
+<include refid="faq-columns"/>
+FROM ( SELECT 
+<include refid="faq-columns"/>
+FROM basic_board WHERE basic_type = #{basicType} ORDER BY basic_no DESC ) ) WHERE page = #{page} 
+</select>
+
+<!-- FAQ 리스트 페이징 help -->
+<select id="selectCountContents" resultType="_int" parameterType="String">
+SELECT count(basic_no)
+FROM basic_board
+WHERE basic_type = #{type}
+</select> 
+<!-- FAQ 제목으로 검색시 페이징  -->
+<select id="selectFAQTitle" resultMap="faq-resultMap" parameterType="map">
+SELECT <include refid="faq-columns"/>
+FROM(SELECT ceil(rownum/#{itemsPerPage}) page,
+<include refid="faq-columns"/>
+FROM (SELECT
+<include refid="faq-columns"/>
+FROM basic_board WHERE basic_type=#{basicType} and basic_title like '%'||#{basicTitle}||'%'
+ORDER BY basic_no DESC))
+WHERE page = #{page}
+
+<!-- SELECT <include refid="faq-columns"/>
+FROM basic_board
+where basic_type = #{basicType} and basic_title like '%'||#{basicTitle}||'%'
+ORDER BY basic_no desc
+ -->
+ </select>
+<!-- FAQ 리스트 페이징 help -->
+<select id="selectFAQCountContents" resultType="_int" parameterType="map">
+SELECT count(basic_no)
+FROM basic_board
+WHERE basic_type = #{basicType} and basic_title like '%'||#{basicTitle}||'%'
+</select> 
+
+
 </mapper> 
