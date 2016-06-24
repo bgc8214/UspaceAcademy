@@ -87,7 +87,7 @@ span.errors{
 
 
 <h2>강의 수정폼</h2>
-<form action="/UspaceAcademy/lecture/modifyLectureByNo.do?page=${param.page }&lectureNo=${requestScope.lecture.lectureNo}" method="post">
+<form action="/UspaceAcademy/lecture/modifyLectureByNo.do?page=${param.page}&lectureNo=${requestScope.lecture.lectureNo}" method="post">
 강의명 : <input type="text" name="lectureTitle" value="${requestScope.lecture.lectureTitle }"><span class="errors"><form:errors path="lectureForm.lectureTitle" delimiter="//"/></span><br>
 강의 설명 : <textarea rows="10" cols="20" name="lectureDescription">${requestScope.lecture.lectureDescription }</textarea><span class="errors"><form:errors path="lectureForm.lectureDescription" delimiter="//"/></span><br>
 강의 시작시간 : <input type="text" name="lectureStartTime" value="${requestScope.lecture.lectureStartTime }"><span class="errors"><form:errors path="lectureForm.lectureStartTime" delimiter="//"/></span><br>

@@ -16,8 +16,9 @@ public class FAQValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 		FAQ faq = (FAQ)target;
 		
-		if(faq.getBasicTitle()==null || faq.getBasicTitle().trim().isEmpty()) {
-			errors.rejectValue("basicTitle", "", "제목은 필수 입력사항입니다.");
+		if(faq.getBasicTitle()==null || faq.getBasicTitle().trim().isEmpty() || faq.getBasicTitle().length()>15) {
+			System.out.println(faq.getBasicTitle().length());
+			errors.rejectValue("basicTitle", "", "제목은 필수 입력사항(15글자로 제한)");
 		}
 		if(faq.getBasicContent()==null || faq.getBasicContent().trim().isEmpty()) {
 			errors.rejectValue("basicContent", "", "내용은 필수 입력사항입니다");

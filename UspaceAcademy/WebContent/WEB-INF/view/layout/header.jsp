@@ -11,11 +11,12 @@ button {
 	height: 30; /*--버튼 크기---*/
 }
 
-table{
+table {
 	margin-left: auto;
 	margin-right: auto;
 }
-form{
+
+form {
 	margin-right: auto;
 }
 </style>
@@ -46,10 +47,11 @@ form{
 											var td = $(this).text();
 											$("#td5")
 													.html(
-															'<button style="width:76px">FAQ</button><button>1대1문의</button>');
+															'<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button style="width:76px">FAQ</button></a><button>1대1문의</button>');
 											$("#td1").html("");
 											$("#td6").html("");
 										});
+
 
 						$("#myPage")
 								.on(
@@ -98,7 +100,7 @@ form{
 							id="customerCenter">고객센터</button></a></td>
 				<td><a href="/UspaceAcademy/registerSelect.do"><button
 							id="join">회원가입</button></a></td>
-				
+
 			</tr>
 
 			<tr>
@@ -125,12 +127,12 @@ form{
 							id="lectureReview">수강후기</button></a></td>
 				<td><a href="/UspaceAcademy/notice/list.do?type=공지사항"><button
 							id="notice">공지사항</button></a></td>
-				<td><a href="/UspaceAcademy/serviceCenter.do"><button
+				<td><a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button
 							id="customerCenter">고객센터</button></a></td>
 				<td><a href="/UspaceAcademy/lecture/lectureList.do"><button
 							id="myPage">마이페이지</button></a></td>
 			</tr>
-	
+
 			<tr>
 				<td width="74" id="td1"></td>
 				<td width="74" id="td2"></td>
@@ -140,10 +142,10 @@ form{
 				<td width="100" id="td6"></td>
 			</tr>
 		</table>
-		
-	
-		
-		
+
+
+
+
 		<form>
 			<input type="hidden" id="memberType"
 				value="${sessionScope.memberType }">
@@ -160,9 +162,9 @@ form{
 		<!-- 로그인 안했을 때 -->
 
 		<form action="/UspaceAcademy/member/login.do" method="post">
-			ID : <input type="text" name="id">
-			PASSWORD : <input type="password" name="password"> <input
-				type="submit" value="login">
+			ID : <input type="text" name="id"> PASSWORD : <input
+				type="password" name="password"> <input type="submit"
+				value="login">
 		</form>
 	</c:when>
 	<c:otherwise>

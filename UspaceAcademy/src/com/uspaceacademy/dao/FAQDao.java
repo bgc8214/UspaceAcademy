@@ -1,9 +1,14 @@
 package com.uspaceacademy.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.uspaceacademy.util.Constants;
 import com.uspaceacademy.vo.FAQ;
 
 @Repository
@@ -56,4 +61,44 @@ public class FAQDao
 	public int selectHit(int no) {
 		return session.selectOne(namespace+"select_hit", no);
 	}
+	
+	// 페이징 처리
+	public List selectListPage(int page, String type) {
+		Map map = new HashMap<>();
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("basicType", type);
+		return session.selectList(namespace+"selectListByPaging", map);
+	}
+
+	// 페이징 처리
+	public int selectCountContents(String type) {
+		return session.selectOne(namespace+"selectCountContents", type);
+	}
+	
+	// FAQ 제목으로 공통된 게시글 찾기
+	public List selectFAQTitle(String title, String type, int page) {
+		Map map = new HashMap<>();
+		map.put("basicTitle", title);
+		map.put("basicType", type);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("page", page);
+		return session.selectList(namespace+"selectFAQTitle", map);
+	}
+	
+	public int selectFAQCountContents(String title, String type) {
+		Map map = new HashMap<>();
+		map.put("basicTitle", title);
+		map.put("basicType", type);
+		System.out.println("DAO - "+session.selectOne(namespace+"selectFAQCountContents", map));
+		return session.selectOne(namespace+"selectFAQCountContents", map);
+
+	}
+/*	public int selectFAQCountContents(String type) {
+		Map map = new HashMap<>();
+		map.put("basicType", type);
+//		System.out.println("DAO - "+session.selectOne(namespace+"selectFAQCountContents", map));
+		return session.selectOne(namespace+"selectFAQCountContents", map);
+
+	}*/
 }
