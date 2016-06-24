@@ -59,11 +59,18 @@
    	SELECT <include refid="column-basic-teacher"/>
    	FROM teacher
    </select>
-   
+   <!-- 과목으로 강사 목록 조회해옴 -->
    <select id="selectTeacherBySubject" parameterType="string" resultMap="teacher-basic">
    	SELECT <include refid="column-basic-teacher"/>
-   	FROM teacher
+   	FROM  teacher
    	WHERE teacher_subject = #{value}
+   </select>
+   
+    <!-- 이름으로 강사 목록 조회해옴 -->
+   <select id="selectTeacherListByTeacherName" parameterType="string" resultMap="teacher-basic">
+   	SELECT <include refid="column-basic-teacher"/>
+   	FROM   teacher
+    WHERE  teacher_name like '%'||#{teacherName}||'%'
    </select>
    
 </mapper>

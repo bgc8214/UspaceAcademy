@@ -5,10 +5,12 @@ tr.dummy, td.dummy{
 	border:0px;
 }
 </style>
-<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 var tmp;//이벤트소스를 저장하기 위한 변수
 $(document).ready(function(){
+	
+		
+	
 	
 	$(".lectureList").on("click",function(){
 		tmp = $(this);
@@ -19,14 +21,16 @@ $(document).ready(function(){
 			"dataType":"json", //응답데이터 타입 지정. text는 default
 			"success":function(list){
 				$("tbody tr.dummy").remove(); //먼저 dummy class의 tr을 지워주고
-				$('<tr class="dummy"><td colspan="7" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
-				var txt = "번호 : "+list[0].lectureNo +" 제목 : "+list[0].lectureTitle+"<br>세부내용 : "+list[0].lectureDescription+"<br>";
-				//if(tmp.next().children().eq(0).text()==""){
+				$('<tr class="dummy"><td colspan="8" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
+				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : \\"+list[0].lecturePrice+"<br>";
 					tmp.next().children().eq(0).append(txt);
 					if(list[1]=="student"){
 						var txt = tmp.children().eq(0).text();
-						var temp = "<a href="+"/UspaceAcademy/lecture/applyLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureApply'>수강신청</button></a>"+
-								   "<a id='zzim' href="+"/UspaceAcademy/lecture/zzimLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureZzim'>찜하기</button></a>";
+						var temp="<span id='error'><font color='red'><b>수강 인원이 가득찼습니다</b></font></span>";
+						if(list[0].lectureCurrentStudent<list[0].lectureTotalStudent){
+							temp = "<a href="+"/UspaceAcademy/lecture/applyLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureApply'>수강신청</button></a>"+
+								   	   "<a id='zzim' href="+"/UspaceAcademy/lecture/zzimLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureZzim'>찜하기</button></a>";
+						}
 						tmp.next().children().eq(0).append($(temp));
 					}
 					if(list[1]=="administrator"){
@@ -35,7 +39,6 @@ $(document).ready(function(){
 								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+"><button class='lectureRemove'>강의삭제</button></a>";
 						tmp.next().children().eq(0).append($(temp2));
 					}
-				//}
 			},
 			"error":function(xhr, status, errorMsg){
 				alert("오류가 발생했습니다."+status+", "+errorMsg);
@@ -49,26 +52,64 @@ $(document).ready(function(){
 			}
 		})
 		
-	})//강의목록 클릭했을 때 세부정보 표시
+	});//강의목록 클릭했을 때 세부정보 표시
+	
+	$(".lectureList").on("mouseover", function(){
+		this.style.cursor = 'pointer';
+        this.style.backgroundColor = '#dcfac9';
+	});
+	
+	$(".lectureList").on("mouseout", function(){
+        this.style.backgroundColor = 'white';
+	});
+	var ids="";
+	var temp=$(".teacherId");
+	for(var i=0;i<$(".teacherId").length;i++){
+		if(i==$(".teacherId").length-1){
+			ids += $(".teacherId").eq(i).text();
+		}else{
+			ids += $(".teacherId").eq(i).text()+",";
+		}
+	}
+	$.ajax({
+		"url":"/UspaceAcademy/lecture/convertTeacherIdToTeacherName.do", //요청 URL
+		"type":"POST", //HTTP 요청방식
+		"data":"teacherIds="+ids, //요청 파라미터 설정 - queryString(n=v&n=v) /  Javascript 객체{n:v,n:v}
+		"dataType":"json", //응답데이터 타입 지정. text는 default
+		"success":function(list){
+				for(var i=0; i<list.length; i++){
+					temp.eq(i).text(list[i]);
+				}
+		},
+		"error":function(xhr, status, errorMsg){
+			alert("아이디 이름으로 바꾸는 곳에서 오류");
+			alert("오류가 발생했습니다."+status+", "+errorMsg);
+		},
+		"beforeSend":function(){
+		}
+	});
 	
 })
 </script>
-
+<font color="red" size="5">${requestScope.errorMessage}</font>
 <table border="1">
+
 <thead>
 <tr>
-	<th>강의번호</th><th>강의과목</th><th>강의명</th><th>강의기간</th><th>수강요일</th><th>강의시간</th>
+	<th>강의번호</th><th>강의과목</th><th>강의명</th><th>강사</th><th>강의기간</th><th>수강요일</th><th>강의시간</th>
 	<th>수강인원</th>
 </tr>
 </thead>
 <tbody>
-<form><input id="page" type="hidden" value="${param.page }"></form>
+<form>
+<input id="page" type="hidden" value="${param.page }">
+</form>
 <c:forEach items="${requestScope.lectureList }" var="lectureList">
 		<tr class="lectureList">
 			<td>${lectureList.lectureNo }</td><td>${lectureList.lectureSubject }</td><td>${lectureList.lectureTitle }</td>
-			<td>${lectureList.lectureStartDate } ~ ${lectureList.lectureEndDate }</td><td>${lectureList.lectureDay }</td>
-			<td>${lectureList.lectureStartTime } ~ ${lectureList.lectureEndTime }</td>
-			<td>${lectureList.lectureCurrentStudent } / ${lectureList.lectureTotalStudent }</td>
+			<td class="teacherId">${lectureList.teacherId2 }</td><td>${lectureList.lectureStartDate } ~ ${lectureList.lectureEndDate }</td>
+			<td>${lectureList.lectureDay }</td><td>${lectureList.lectureStartTime }시 ~ ${lectureList.lectureEndTime }시</td>
+			<td><span class="current">${lectureList.lectureCurrentStudent }</span> / <span class="total">${lectureList.lectureTotalStudent }</span></td>
 		</tr>
 </c:forEach>
 </tbody>
@@ -78,7 +119,7 @@ $(document).ready(function(){
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.paging.beginPage - 1}">
+			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.beginPage - 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
 			◀
 			</a>
 		</c:when>
@@ -91,7 +132,7 @@ $(document).ready(function(){
 			 [${page }]
 			</c:when>
 			<c:otherwise>
-				<a href="/UspaceAcademy/lecture/lectureList.do?page=${page }">
+				<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${page }&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
 					${page }
 				</a>
 			</c:otherwise>
@@ -101,13 +142,26 @@ $(document).ready(function(){
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/lecture/lectureList.do?&page=${requestScope.paging.endPage + 1}">
+			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.endPage + 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
 			▶
 			</a>
 		</c:when>
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
+<br>
+<!-- 검색관련 -->
+<form action="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${param.page }" method="post">
+<select name="searchType">
+	<option value="lectureTitle">강의명</option>
+	<option value="teacherSubject">과목</option>
+	<option value="teacherName">강사</option>
+</select>
+<input type="text" name="keyword">
+<input type="submit" value="검색">
+</form>
+	
 <p>
+
 
 
 <!-- 관리자용 강의 등록 버튼 -->

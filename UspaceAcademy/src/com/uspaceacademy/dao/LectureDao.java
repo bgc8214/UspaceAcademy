@@ -92,5 +92,49 @@ public class LectureDao {
 	public int selectCountContents() {
 		return session.selectOne("lecture.selectCountContents");
 	}
+	//강의명에 매개변수로 넘어온 값이 포함되어있으면 모두 조회
+	public List selectLectureListByLectureTitle(String lectureTitle, int page) {
+		Map map = new HashMap();
+		map.put("lectureTitle", lectureTitle);
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		return session.selectList("lecture.selectLectureListByLectureTitle", map);
+	}
+	//강의명으로 검색한 것 페이징 처리 도와줌
+	public int selectCountContentsByLectureTitle(String lectureTitle) {
+		return session.selectOne("lecture.selectCountContentsByLectureTitle",lectureTitle);
+	}
+	
+	//강의과목으로 검색한 것 페이징 처리
+	public Object selectLectureListByLectureSubject(String lectureSubject, int page) {
+		Map map = new HashMap();
+		map.put("lectureSubject", lectureSubject);
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		return session.selectList("lecture.selectLectureListByLectureSubject", map);
+	}
+	//강의과목으로 검색한 것 페이징 처리 도와줌
+	public int selectCountContentsByLectureSubject(String lectureSubject) {
+		return session.selectOne("lecture.selectCountContentsBylectureSubject",lectureSubject);
+	}
+	//선생ID로 lectureList를 조회함
+	public List selectLectureListByTeacherId(String teacherId2, int page) {
+		Map map = new HashMap();
+		map.put("teacherId2", teacherId2);
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		return session.selectList("lecture.selectLectureListByTeacherId", map);
+	}
+	//선생ID로 검색한 것 페이징 처리 도와줌
+	public int selectCountContentsByTeacherId(String teacherId2) {
+		return session.selectOne("lecture.selectCountContentsByTeacherId", teacherId2);
+	}
+	//학생 강의 조인 테이블에서 강의 한개 삭제
+	public int deleteLectureFromApplyListByLectureNo(String studentId, int lectureNo) {
+		Map map = new HashMap();
+		map.put("studentId", studentId);
+		map.put("lectureNo", lectureNo);
+		return session.delete("lecture.deleteLectureFromApplyListByLectureNo", map);
+	}
 	
 }

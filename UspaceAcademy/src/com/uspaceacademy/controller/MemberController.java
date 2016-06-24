@@ -113,8 +113,8 @@ public class MemberController
 
 		Student student = service.findStudentById(id);
 		Teacher teacher = service.findTeacherById(id);
-		System.out.println(student);
-		System.out.println(teacher);
+		//System.out.println(student);
+		//System.out.println(teacher);
 		if (id.equals("admin")) // 관리자 로그인
 		{
 			if (password.equals("1234"))

@@ -12,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,17 +38,19 @@ public class LectureController {
 	@Autowired
 	private MemberService memberService;
 	
-	//강의 목록 전체조회
+	//강의 목록 전체조회(페이징)
 	@RequestMapping("/lectureList.do")
 	public ModelAndView getLectureList(@RequestParam(defaultValue="1") int page){
 		//원래 방식
 		//List lectureList = lectureService.getLectureList();
 		Map map = lectureService.getLectureList(page);
+		List codeList = lectureService.searchCode("teacherSubject");
 		map.put("page", page);
+		map.put("codeList", codeList); 
 		return new ModelAndView("lecture/lecture_list.tiles", map);
 	}
 	
-	//수강번호로 강의 조회
+	//수강번호로 강의 조회(상세보기)
 	@RequestMapping("/findLectureByNo.do")
 	@ResponseBody
 	public List getLectureByNo(int lectureNo, HttpSession session){
@@ -193,6 +196,11 @@ public class LectureController {
 	public ModelAndView getChargeForm(@RequestParam(defaultValue="1") int page, int lectureNo){
 		
 		Lecture lecture = lectureService.getLectureByNo(lectureNo);
+		if(lecture.getLectureCurrentStudent()>=lecture.getLectureTotalStudent()){
+			//현재수강인원이 가득 찬 경우
+			String errorMessage = "수강 인원이 가득 찼습니다!!";
+			return new ModelAndView("/lecture/lectureList.do?page="+page,"errorMessage", errorMessage);
+		}
 		Teacher teacher = memberService.findTeacherById(lecture.getTeacherId2());
 		Map map = new HashMap();
 		map.put("lecture", lecture);
@@ -220,10 +228,15 @@ public class LectureController {
 			//2. 찜목록에 있는 것인가
 			System.out.println("이미 찜목록에 있는 것을 결제하려고함 -대영-");
 			String zzimOption = "0";
-			lectureService.chargeFromZzimList(student.getStudentId(), lectureNo, zzimOption);
+			try {
+				lectureService.chargeFromZzimList(student.getStudentId(), lectureNo, zzimOption);
+			} catch (Exception e) {
+				return ":/lecture/applyList.do?errorMessage="+e.getMessage()+"&page="+page;
+			}
 			return "redirect:/lecture/applyList.do?page="+page;
 		
 		}else{
+			//3. 찜목록에도 없고 결제목록에도 없는 새로운 강의를 결제하는 경우
 			//찜 여부는 결제를 직접하므로 false("0")로들어감.
 			int flag = lectureService.chargeLecture(student.getStudentId(), lectureNo, "0");
 			System.out.println(flag+"개의 강의를 결제하였습니다 - 대영 -");
@@ -263,8 +276,8 @@ public class LectureController {
 	
 	
 	//찜을 하기 위한 컨트롤러
-	@Transactional(rollbackFor=Exception.class)
 	@RequestMapping("/zzimLecture.do")
+	@Transactional(rollbackFor=Exception.class)
 	public String zzimLecture(@RequestParam(defaultValue="1") int page, int lectureNo, HttpSession session){
 		Student student = (Student) session.getAttribute("login_info");
 		
@@ -283,8 +296,7 @@ public class LectureController {
 			return "/lecture/zzimLectureByNo.do?page="+page+"&errorMessage=이미 찜 목록에 있는 대상입니다&lectureNo="+lectureNo;
 		
 		}else{
-		
-		
+			
 			//찜 여부는 결제를 직접하므로 true("1")로들어감.
 			int flag = lectureService.chargeLecture(student.getStudentId(), lectureNo, "1");
 			System.out.println(flag+"개의 강의를 찜하였습니다 - 대영 -");
@@ -296,7 +308,7 @@ public class LectureController {
 	
 	//리다이렉트로 받아서 찜 리스트를 실제로 보여주는 컨트롤러
 	@RequestMapping("/zzimList.do")
-	public ModelAndView zzimList(@RequestParam(defaultValue="1") int page, HttpSession session){
+	public ModelAndView zzimList(@RequestParam(defaultValue="1") int page, HttpSession session, String errorMessage){
 		Student student = (Student) session.getAttribute("login_info");
 		String zzimOption = "1";//찜한 목록조회
 		List studentLectureJoinList = lectureService.getStudentLectureJoinList(student.getStudentId(),zzimOption);
@@ -307,6 +319,7 @@ public class LectureController {
 		Map map = new HashMap();
 		map.put("zzimList", zzimList);
 		map.put("page", page);
+		map.put("errorMessage", errorMessage);
 		return new ModelAndView("lecture/zzim_list.tiles", map);
 	
 	}
@@ -320,13 +333,73 @@ public class LectureController {
 			return "/lecture/zzimList.do?page="+page;
 		}else{
 			//체크한 목록이 있는 경우
+			List tmpList = new ArrayList();
 			for(Object o : applyList){
 				int lectureNo = Integer.parseInt(o+"");
-				System.out.println(lectureNo);
-				lectureService.chargeFromZzimList(student.getStudentId(), lectureNo, "0");
+				try {
+					lectureService.chargeFromZzimList(student.getStudentId(), lectureNo, "0");
+				} catch (Exception e) {
+					return "/lecture/zzimList.do?errorMessage="+e.getMessage()+"&page="+page;
+				}
 			}
-			return "redirect:/lecture/applyList.do?page="+page;
+			return "redirect:/lecture/zzimList.do?page="+page;
 		}
+	}
+	
+	//키워드로 강의리스트 가져오기
+	@RequestMapping("/searchLectureByKeyword.do")
+	public ModelAndView searchLectureBy(@RequestParam(defaultValue="1") int page, @RequestParam(defaultValue="") String searchType, @RequestParam(defaultValue="") String keyword){
+		Map map = new HashMap();
+		if(searchType.equals("lectureTitle")){
+		   map = lectureService.getLectureByTitle(keyword, page);
+		   map.put("searchType", searchType);
+		   map.put("keyword", keyword);
+		   //if(((List)map.get("lectureList")).size()==0){
+		   //map = lectureService.getLectureList(page);
+			 //  map.put("searchType", searchType);
+		  // map.put("keyword", keyword);
+		   //}
+		}else if(searchType.equals("teacherSubject")){
+			map = lectureService.getLectureByLectureSubject(keyword, page);
+			map.put("searchType", searchType);
+			map.put("keyword", keyword);
+			
+		}else if(searchType.equals("teacherName")){
+			map = lectureService.getLectureByTeacherName(keyword, page);
+			map.put("searchType", searchType);
+			map.put("keyword", keyword);
+		}else{
+			map = lectureService.getLectureList(page);
+			List codeList = lectureService.searchCode("teacherSubject");
+			map.put("page", page);
+			map.put("codeList", codeList); 
+			map.put("searchType", searchType);
+			map.put("keyword", keyword);
+		}
+		return new ModelAndView("lecture/lecture_list.tiles", map);
+	}
+	//강사ID를 강사이름으로 변경해서 보여주는 ajax요청을 받음
+	@RequestMapping("/convertTeacherIdToTeacherName.do")
+	@ResponseBody
+	public List	converTeacherIdToTeacherName(@RequestParam(required=false) String teacherIds){
+		List teacherNameList = new ArrayList();
+		System.out.println(teacherIds);
+		if(teacherIds!=null&& (!teacherIds.trim().isEmpty())){
+		String[] teacherIdArray = teacherIds.split(",");
+			for(int i=0;i<teacherIdArray.length;i++){
+				String teacherName = memberService.findTeacherById(teacherIdArray[i]).getTeacherName();
+				teacherNameList.add(teacherName);
+			}
+		}
+		return teacherNameList;
+	}
+	
+	//학생 회원이 자신이 결제한 강의를 결제취소하기 위한 핸들러(결제목록에서 삭제), 해당 강의의 현재 학생수 -1
+	@RequestMapping("/removeLectureFromApplyList.do")
+	public String removeLectureFromApplyList(@RequestParam(defaultValue="1") int page, int lectureNo, HttpSession session){
+		Student student = (Student) session.getAttribute("login_info");
+		System.out.println(lectureService.removeLectureFromApplyListByLectureNo(student.getStudentId(),lectureNo)+"개의 강의 삭제");
+		return "/lecture/applyList.do?page="+page;
 	}
 	
 }

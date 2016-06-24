@@ -6,6 +6,36 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	//버튼에 마우스 모양 손가락 써주기
+	$("button").on("mouseover",function(){
+		this.style.cursor = 'pointer';
+	});
+	$("input[type='button']").on("mouseover",function(){
+		this.style.cursor = 'pointer';
+	});
+	$("input[type='submit']").on("mouseover",function(){
+		this.style.cursor = 'pointer';
+	});
+	$("input[type='reset']").on("mouseover",function(){
+		this.style.cursor = 'pointer';
+	});
+	$("input[type='checkbox']").on("mouseover",function(){
+		this.style.cursor = 'pointer';
+	});
+	$("html").on("mouseover","button",function(){
+		this.style.cursor = 'pointer';
+	});
+	
+	
+	
+})
+
+</script>
+
 <style type="text/css">
 header{
 	background-color:skyblue;

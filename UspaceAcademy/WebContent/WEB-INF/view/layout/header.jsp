@@ -93,7 +93,7 @@ $(document).ready(function(){ // 마우스를 올렸을 때 하위 메뉴 나온
 <a href="/UspaceAcademy/academyIntroduce.do"><button id="introduce">학원소개</button></a>
 </td>
 <td>
-<a href="/UspaceAcademy/lecture/lectureList.do"><button id="lecture">개설강좌</button></a>
+<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page="+${param.page }><button id="lecture">개설강좌</button></a>
 </td>
 <td>
 <a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button id="lectureReview">수강후기</button></a>

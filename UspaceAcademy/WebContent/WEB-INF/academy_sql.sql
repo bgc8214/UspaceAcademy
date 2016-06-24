@@ -1,7 +1,6 @@
 
 -- 코드테이블
 drop table code_table;
-select * from code_table;
 create table code_table(
 	code_id varchar2(1) primary key,
 	code_name varchar2(30) not null,
@@ -193,11 +192,10 @@ select * from CODE_TABLE;
 	from code_table
 	where code_type = 'basic_board'
 
-
-INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
-INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
+INSERT INTO lecture VALUES(-13, '국어1', '고급영어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '수학', 'asdf');
+INSERT INTO lecture VALUES(-14, '국어2', '곡브영어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '영어', 'asbbw');
+INSERT INTO lecture VALUES(-15, '국어3', '영어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '영어', 'bgc8214');
+INSERT INTO lecture VALUES(-16, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '수학', 'asdf');
 
 --수강후기
 insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
@@ -208,3 +206,5 @@ INSERT INTO administrator values('admin', '1234');
 SELECT * FROM student_lecture_join;
 DELETE FROM student_lecture_join;
 select  * from review_board where review_no=75;
+
+delete from lecture where lecture_no=-1 cascade constraint;
