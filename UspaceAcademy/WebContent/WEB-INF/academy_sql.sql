@@ -30,7 +30,8 @@ create table teacher(
 	teacher_subject varchar2(50) not null,
 	teacher_salary number not null
 );
-
+insert into teacher values('id-10', '1111', '홍길동', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
+insert into teacher values('id-11', '1111', '홍길동', 'asd@naver.com', '010-6366-5153', '서울시 서초구', '영어', 1000000);
 insert into teacher values('id-12', '1111', '홍길동', 'a@naver.com', '010-6666-5153', '서울시 서초구', '수학', 1000000);
 
 -- 학생
@@ -102,6 +103,17 @@ CREATE TABLE lecture(
 );
 
 insert into lecture values(5, '수학고등3', '설명', '0515', '0516', '0820', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+insert into lecture values(1, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+insert into lecture values(2, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+insert into lecture values(3, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+insert into lecture values(4, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+insert into lecture values(6, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+
+
+
+select * from lecture;
+
+
 
 -- 1:1문의, 질문게시판
 drop table advanced_board cascade constraint;
@@ -124,6 +136,11 @@ select * from ADVANCED_BOARD;
 
 drop sequence advanced_board_seq;
 create sequence advanced_board_seq nocache;
+
+
+
+
+
 
 -- 코멘트
 DROP table comment_table cascade constraint;
@@ -180,6 +197,7 @@ CREATE TABLE attendance(
 
 insert into code_table values('6', '1:1문의', 'advanced_board');
 
+---------------------------------------------------------------------
 -- code_table insert하는 구문     //영주1
 insert into CODE_TABLE values('1', '공지사항', 'basic_board');
 insert into CODE_TABLE values('2', 'FAQ', 'basic_board');
@@ -192,7 +210,7 @@ select * from CODE_TABLE;
 	SELECT *
 	from code_table
 	where code_type = 'basic_board'
-
+---------------------------------------------------------------------
 
 INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
@@ -202,9 +220,13 @@ INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,�
 --수강후기
 insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
 insert into REVIEW_BOARD values(review_board_seq.nextval,'김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
 
 INSERT INTO administrator values('admin', '1234');
 
 SELECT * FROM student_lecture_join;
 DELETE FROM student_lecture_join;
-select  * from review_board where review_no=75;
+--select  * from review_board where review_no=75;

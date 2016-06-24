@@ -1,11 +1,15 @@
 package com.uspaceacademy.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.uspaceacademy.dao.LectureReviewDao;
+import com.uspaceacademy.util.PagingBean;
 import com.uspaceacademy.vo.LectureReview;
 
 @Service
@@ -47,8 +51,7 @@ public class LectureReviewService{
 		return dao.selectNo(reviewNo);
 	}
 	
-	
-//--------------------------------------------------------------------------------------------------------------------	
+		
 	
 	
 	//코드 영주1
@@ -66,27 +69,39 @@ public class LectureReviewService{
 	
 	
 	
+	// 페이징처리   8.paging + 9.count
+	public Map selectPagingCount(int page){
+		Map map = new HashMap();
+		map.put("lectureListReview", dao.selectPaging(page));													//여기이름도 잘보기!			
+		map.put("paging", new PagingBean(dao.selectCount(), page));//PagingBean 임폴트.				//오류났던거 적기 : lectureReview_list.jsp 에 이름 같아야함!!!
+		return map;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 //--------------------------------------------------------------------------------------------------------------------		
 
-	
-	
-	
-	
-	
-	
-	//수강후기 페이징처리==============
-	public List selectListPage(int page){
-		return dao.selectListPage(page);
-	}
-	//수강후기 페이지기준 조회=============
-	
-	
-	
-	
-	
-	
+
 	
 	//수강후기 검색 제목+내용==============
 	public List selectTitleContent(String lectureTitle, String reviewContent){ //매개변수 값 넣기*

@@ -96,7 +96,7 @@ $(document).ready(function(){ // 마우스를 올렸을 때 하위 메뉴 나온
 <a href="/UspaceAcademy/lecture/lectureList.do"><button id="lecture">개설강좌</button></a>
 </td>
 <td>
-<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button id="lectureReview">수강후기</button></a>
+<a href="/UspaceAcademy/lectureReview/lecture_review_list.do"><button id="lectureReview">수강후기</button></a> <!--  페이징처리전 reviewNo값넘겨줬는데 , 페이징 처리 하고 지워줌..? -->
 </td>
 <td>
 <a href="/UspaceAcademy/notice/list.do?type=공지사항"><button id="notice">공지사항</button></a>

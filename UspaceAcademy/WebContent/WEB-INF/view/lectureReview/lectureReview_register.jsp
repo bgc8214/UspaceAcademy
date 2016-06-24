@@ -2,6 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><!-- ??????? -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><!-- ??????? -->
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%><!--  밸리 해주려면 이거선언* -->
+
 <title>lectureReview_register.jsp</title>
 
 
@@ -14,7 +16,7 @@
 
 
 <hr/>
-	<!-- 	<table border="2"> -->
+	<table border="1">
 		<thead>
 			<tr>
 <!-- 				<td>글번호</td>
@@ -36,12 +38,12 @@
 					<c:forEach items="${requestScope.codeType }" var="code"> <!--  컨트롤러* -->
 					<option value="${code.codeId }">${code.codeName }</option> <!--  vo ??* -->
 					</c:forEach>
+					<span class="error"><form:errors path="lectureReview.lectureSubject"/></span>
 					</select>
 					
-					<!-- <td><select name="lectureSubject"><option>국어</option><option>영어</option><option>수학</option></select></td> -->
-					<td><select name="lectureTitle"><option value="국어 고등1">국어 고등1</option><option value="영어 고등1">영어 고등1</option><option value="수학 고등1">수학 고등1</option></select></td>
-					<td><input type="text" name="title" size="70" placeholder="제목을 입력하세요" required="required"></td><!-- 작성  -->
-					<td><textarea rows="20" cols="100" name="content" placeholder="입력하세요"></textarea></td><!-- 작성  -->
+					<td><select name="lectureTitle"><option value="국어 고등1">국어 고등1</option><option value="영어 고등1">영어 고등1</option><option value="수학 고등1">수학 고등1</option></select><span class="error"><form:errors path="lectureReview.lectureTitle" delimiter="//"/></span></td>
+					<td><input type="text" name="reviewTitle" size="70" placeholder="제목을 입력하세요" required="required"><span class="error"><form:errors path="lectureReview.reviewTitle" delimiter="//"/></span></td><!-- 작성  -->
+					<td><textarea rows="20" cols="100" name="reviewContent" placeholder="입력하세요"></textarea><span class="error"><form:errors path="lectureReview.reviewContent" delimiter="//"/></span></td><!-- 작성  -->
 				</tr>
 
 		</tbody>	
