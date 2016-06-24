@@ -47,7 +47,7 @@ form {
 											var td = $(this).text();
 											$("#td5")
 													.html(
-															'<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button style="width:76px">FAQ</button></a><button>1대1문의</button>');
+															'<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button style="width:76px">FAQ</button></a><a href="/UspaceAcademy/inquiry/inquiryList.do"><button>1대1문의</button></a>');
 											$("#td1").html("");
 											$("#td6").html("");
 										});
