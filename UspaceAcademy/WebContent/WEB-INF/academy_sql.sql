@@ -33,6 +33,7 @@ create table teacher(
 insert into teacher values('id-10', '1111', '홍길동', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
 insert into teacher values('id-11', '1111', '홍길동', 'asd@naver.com', '010-6366-5153', '서울시 서초구', '영어', 1000000);
 insert into teacher values('id-12', '1111', '홍길동', 'a@naver.com', '010-6666-5153', '서울시 서초구', '수학', 1000000);
+select * from teacher;
 
 -- 학생
 DROP table student cascade constraint;
@@ -80,8 +81,7 @@ create table review_board(
 
 DROP SEQUENCE review_board_seq;
 CREATE SEQUENCE review_board_seq nocache;
-drop sequence review_board_seq;
-create sequence review_board_seq nocache;
+
 
 -- 강의
 DROP table lecture cascade constraint;
@@ -102,6 +102,14 @@ CREATE TABLE lecture(
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+drop sequence lecture_seq;
+create sequence lecture_seq
+nocache;
+
+insert into lecture values(5, '수학', '설명', '0515', '0516', '0820', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+=======
 insert into lecture values(5, '수학고등3', '설명', '0515', '0516', '0820', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 insert into lecture values(1, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 insert into lecture values(2, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
@@ -114,6 +122,7 @@ insert into lecture values(6, '수학고등3', '설ㅇ', '0515', '0516', '0420',
 select * from lecture;
 
 
+>>>>>>> branch 'master' of https://github.com/bgc8214/UspaceAcademy.git
 
 -- 1:1문의, 질문게시판
 drop table advanced_board cascade constraint;
@@ -129,9 +138,9 @@ create table advanced_board(
 	constraint fk_advanced_lecture foreign key(lecture_no2) references lecture(lecture_no)
 );
 
-insert into advanced_board values(1, 1, '제목', '내용', '2016-05-22', 1, 'id-11', 1);
-insert into advanced_board values(2, 1, '제목2', '내용2', '2016-05-23', 1, 'id-13', 1);
-insert into advanced_board values(3, 1, '제목3', '내용3', '2016-05-24', 1, 'id-14', 1);
+insert into advanced_board values(4, 1, '제목', '내용', '2016-05-22', 1, 'id-11', 5);
+insert into advanced_board values(5, 1, '제목2', '내용2', '2016-05-23', 1, 'id-13', null);
+insert into advanced_board values(6, 1, '제목3', '내용3', '2016-05-24', 1, 'id-14', null);
 select * from ADVANCED_BOARD;
 
 drop sequence advanced_board_seq;
@@ -152,6 +161,9 @@ CREATE TABLE comment_table(
 	advanced_no2 number not null,
 	constraint fk_comment_advanced foreign key (advanced_no2) references advanced_board(advanced_no)
 );
+
+drop sequence comment_board_seq;
+create sequence comment_board_seq nocache;
 
 -- 과제
 drop table assignment_board;
@@ -196,6 +208,8 @@ CREATE TABLE attendance(
 
 
 insert into code_table values('6', '1:1문의', 'advanced_board');
+insert into code_table values('7', '1:1문의댓글', 'comment_board');
+insert into code_table values('8', '강의질문하기', 'advanced_board');
 
 ---------------------------------------------------------------------
 -- code_table insert하는 구문     //영주1

@@ -12,11 +12,12 @@ public class Inquiry implements Serializable
 	
 	public Inquiry(){}
 	
-	public Inquiry(int advancedNo, String advancedTitle, String advancedContent) {
+	public Inquiry(int advancedNo, String advancedTitle, String advancedContent, String advancedDate) {
 		super();
 		this.advancedNo = advancedNo;
 		this.advancedTitle = advancedTitle;
 		this.advancedContent = advancedContent;
+		this.advancedDate = advancedDate;
 	}
 	
 	public Inquiry(int advancedNo, int advancedSecret, String advancedTitle, String advancedContent,
@@ -30,7 +31,7 @@ public class Inquiry implements Serializable
 		this.advancedHit = advancedHit;
 		this.advancedId = advancedId;
 	}
-	
+
 	public Inquiry(int advancedNo, int advancedSecret, String advancedTitle, String advancedContent,
 			String advancedDate, int advancedHit, String advancedId, int lectureNo2) {
 		super();
@@ -168,6 +169,6 @@ public class Inquiry implements Serializable
 		if (lectureNo2 != other.lectureNo2)
 			return false;
 		return true;
-	}	
+	}
 	
 }

@@ -33,7 +33,7 @@ public class LectureDao {
 	
 	//lecture시퀀스 조회
 	public int selectLectureSequence() {
-		return session.selectOne("lecture.selectLectureSequence");
+		return session.selectOne("inquiryMapper.selectLectureSequence");
 	}
 	
 	//lecture 등록
