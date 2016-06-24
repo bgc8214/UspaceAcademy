@@ -30,6 +30,7 @@ $(document).ready(function(){ // 마우스를 올렸을 때 하위 메뉴 나온
 		$("#td1").html("");
 		$("#td6").html("");
 	});
+
 	
 	$("#myPage").on("mouseover",function(){
 		if($("#memberType").val()=="teacher"){ // 마이페이지 강사 로그인

@@ -14,7 +14,7 @@ span {
 	color: red;
 }
 </style>
-<form action="/UspaceAcademy/FAQ/FAQUpdate.do" method="post">
+<form action="/UspaceAcademy/FAQ/FAQUpdate.do?page=${page}" method="post">
 <input type="hidden" name="basicNo" value="${requestScope.faq.basicNo}">
 <input type="hidden" name="basicDate" value="${requestScope.faq.basicDate}">
 <input type="hidden" name="basicHit" value="${requestScope.faq.basicHit}">
@@ -22,6 +22,6 @@ span {
 <input type="hidden" name="basicWriter" value="${requestScope.faq.basicWriter}">
 FAQ제목  <input type="text" name="basicTitle" value="${requestScope.faq.basicTitle}"><span class="error"><form:errors path="FAQForm.basicTitle" /></span><br>
 FQA내용 <br>
-<textarea rows="45" cols="100" name="basicContent">${requestScope.faq.basicContent}</textarea><span class="error"><form:errors path="FAQForm.basicContent" /></span><br>
+<textarea rows="30" cols="50" name="basicContent">${requestScope.faq.basicContent}</textarea><span class="error"><form:errors path="FAQForm.basicContent" /></span><br>
 <input type="submit" value="수정">
 </form>
