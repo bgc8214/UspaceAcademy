@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><!-- ??????? -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><!-- ??????? -->
 
-<h5>수강후기|상세보기</h5>
+<h3>수강후기|상세보기</h3>
 
 
 <hr/>
@@ -35,9 +35,21 @@
 
 		</tbody>	
 	</table>
+<!-- --------------------------------------------------------------------------------------------------------- -->
 
-<a href="/UspaceAcademy/lectureReview/lecture_review_delete.do?reviewNo=${lectureListReview.reviewNo}">삭제버튼</a><!-- 삭제할때 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}">수정버튼</a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<!-- 관리자랑 학생일 경우만    -    삭제버튼,수정버튼 클릭가능 -->
+<span class="lectureRegister">
+	<c:if test="${sessionScope.memberType=='administrator'}">
+<a href="/UspaceAcademy/lectureReview/lecture_review_delete.do?reviewNo=${lectureListReview.reviewNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}&codeType=teacherSubject"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<%-- <a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}&codeType=teacherSubject"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->            --%> 
+	</c:if>																																											
+	<c:if test="${sessionScope.memberType=='student'}">
+<a href="/UspaceAcademy/lectureReview/lecture_review_delete.do?reviewNo=${lectureListReview.reviewNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
 
+	</c:if>
+</span>
 
+<!-- --------------------------------------------------------------------------------------------------------- -->
 

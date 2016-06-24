@@ -167,7 +167,7 @@ $(document).ready(function(){
 <!-- 관리자용 강의 등록 버튼 -->
 <span class="lectureRegister">
 	<c:if test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button>강의 등록</button></a>
+		<a href="/UspaceAcademy/lecture/registerForm.do?codeType=subject"><button>강의 등록</button></a>
 	</c:if>
 	<c:if test="${sessionScope.memberType=='student'}">
 		<a href="/UspaceAcademy/lecture/zzimList.do?page=${param.page }"><button>찜 목록</button></a>

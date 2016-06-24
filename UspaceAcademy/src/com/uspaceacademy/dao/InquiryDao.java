@@ -1,11 +1,14 @@
 package com.uspaceacademy.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.uspaceacademy.util.Constants;
 import com.uspaceacademy.vo.Inquiry;
 
 @Repository
@@ -20,34 +23,39 @@ public class InquiryDao
 		this.session = session;
 	}
 	
-	public int inquiryAdvancedNo(){		
-		return session.selectOne("inquiryMapper.inquiryAdvancedNo");	
-	}
-	
-	//등록하기
-	public int insertInquiry(Inquiry inquiry){		
-		return session.insert("inquiryMapper.insertInquiry", inquiry);
-		
-	}
-	
-	//삭제하기
-	public int deleteInquiryByAdvancedNo(int advancedNo){
-		return session.delete("inquiryMapper.deleteInquiryByAdvancedNo", advancedNo);
-	}	
-	
-	//수정하기
-	public int updateInquiryByAdvancedNo(int advancedNo){
-		return session.update("inquiryMapper.updateInquiryByAdvancedNo", advancedNo);
-	}
-	
 	//전체 조회
 	public List<Inquiry> selectAllInquirys(){
 		return session.selectList("inquiryMapper.selectAllInquirys");
 	}
 	
+	//등록하기
+	public int insertInquiry(Inquiry inquiry){		
+		return session.insert("inquiryMapper.insertInquiry", inquiry);
+	}
+	
 	//상세 조회
-	public Inquiry selectInquiryByAdvancedNo(int advancedNo){
-		return session.selectOne("inquiryMapper.selectInquiryByAdvancedNo", advancedNo);
+	public Inquiry selectByAdvancedNo(int advancedNo){
+		return session.selectOne("inquiryMapper.selectByAdvancedNo", advancedNo);
+	}
+	
+	//조회수
+	public int updateHit(Inquiry inquiry) {
+		return session.update("inquiryMapper.updateHit", inquiry);
+	}
+	
+	//수정하기
+	public int updateInquiry(Inquiry inquiry){
+		return session.update("inquiryMapper.updateInquiry", inquiry);
+	}
+	
+	//삭제하기
+	public int deleteByAdvancedNo(int advancedNo){
+		return session.delete("inquiryMapper.deleteByAdvancedNo", advancedNo);
+	}	
+		
+	//글 번호 sequence
+	public int increaseAdvancedNo(){
+		return session.selectOne("inquiryMapper.increaseAdvancedNo");
 	}
 	
 	//코드 조회
@@ -55,8 +63,17 @@ public class InquiryDao
 		return session.selectList("codeTable.selectCodeName", codeName);
 	}
 	
-	//글번호sequence
-	public int increaseAdvancedNo(){
-		return session.selectOne("inquiryMapper.increaseAdvancedNo");
+	//페이징 처리
+	public List selectList(int page) {
+		Map map = new HashMap();
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		return session.selectList("inquiryMapper.selectListByPaging", map);
 	}
+	
+	//페이징 처리
+	public int selectCountContents() {
+		return session.selectOne("inquiryMapper.selectCountContents");
+	}
+
 }

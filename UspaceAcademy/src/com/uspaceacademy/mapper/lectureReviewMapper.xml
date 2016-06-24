@@ -6,6 +6,19 @@
 	 -->
 	 
 	 
+	 <!--  오류났던거 적기 :  이거 resultMap 꼭 해주기!! 안그럼 vo에서 set으로 된 이름 찾으려고해서 안됨,    조인하는거 아니더라도 해야함!!! -->
+	 <resultMap type="LectureReview" id="lectureReview-basic">
+ 		<id column="review_no" property="reviewNo"/>
+		<result column="review_writer" property="reviewWriter"/>
+		<result column="lecture_title" property="lectureTitle"/>
+		<result column="lecture_subject" property="lectureSubject"/>
+		<result column="review_title" property="reviewTitle"/>
+		<result column="review_content" property="reviewContent"/>
+		<result column="review_date" property="reviewDate"/>
+		<result column="review_hit" property="reviewHit"/>
+ 	</resultMap>
+	 
+	 
 	 
 	 
 	 <sql id="lecture-review-columns">
@@ -20,11 +33,20 @@
 
 <!-- ************************************************************************************************************************************************ -->
 
+
+
+
+
 	<!-- 1.삽입 -->
 	<insert id="insert" parameterType="LectureReview"><!--  mybatis-config에 타입알리야스 지정 -->
 	INSERT INTO review_board VALUES (#{reviewNo},#{reviewWriter},#{lectureTitle},#{lectureSubject},#{reviewTitle},#{reviewContent},#{reviewDate},#{reviewHit})   <!-- VO값넣기 -->                          
 	</insert>
 	
+
+
+
+
+
 
 
 
@@ -35,7 +57,11 @@
 	
 	
 	
-	<!--  3.전체조회 -->
+	
+	
+	
+	
+	<!--  3.전체조회 (이건 - 그냥 전체조회할때) -->
 	<select id="select" resultType="LectureReview">
 	SELECT 	review_no reviewNo,
 				review_writer reviewWriter,
@@ -47,6 +73,10 @@
 				review_hit reviewHit   
 	FROM 	review_board
 	</select>
+	
+	
+	
+	
 	
 	
 	
@@ -66,6 +96,10 @@
 	
 	
 	
+	
+	
+	
+	
 	<!-- 5.삭제 -->
 	<delete id="deleteByNo" parameterType="_int">
 	DELETE FROM review_board WHERE review_no=#{reviewNo}   <!--    쿼리이름 => VO이름    -->
@@ -77,8 +111,8 @@
 	
 	
 	
-	<!--  6.전체조회(no로) (수강신청-세부조회할때) -->
-	<select id="selectNo" resultType="LectureReview" parameterType="_int">
+	<!--  6.전체조회(no로) (이건 - 세부조회할때) -->
+	<select id="selectNo" parameterType="_int" resultType="LectureReview" >
 	SELECT 	review_no reviewNo,
 				review_writer reviewWriter,
 				lecture_title lectureTitle,
@@ -95,6 +129,7 @@
 	
 	
 	
+	
 	<!-- 7.조회수 처리  -->
 	<select id="updateHit" parameterType="LectureReview" > <!--  _int -->
 	UPDATE  review_board
@@ -103,6 +138,32 @@
 	</select>
 	
 	
+
+
+
+
+
+	<!--    8.   select 페이징 처리!!    -->
+	<select id="selectPaging" parameterType="map" resultMap="lectureReview-basic">
+	SELECT <include refid="lecture-review-columns"/>
+	FROM(SELECT CEIL (rownum/#{itemsPerPage}) page, <include refid="lecture-review-columns"/>
+	FROM(SELECT <include refid="lecture-review-columns"/>
+			FROM review_board      order by review_no desc
+		)
+	)
+	WHERE page=#{page}
+	</select>
+	
+	<!--   9.페이징처리에 필요함 (이건 - 수강후기 전체 리스트 (갯수) 세어줌 )   -->
+	<select id="selectCount" resultType="_int" >
+	SELECT  count(review_no)
+	FROM    review_board
+	</select>
+
+
+
+
+
 
 	
 	
@@ -172,16 +233,19 @@
 	</select>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
-	<!--  select 페이징 처리!! -->
-	<select id="selectList" parameterType="map" resultType="LectureReview">
-	SELECT <include refid="lecture-review-columns"/>
-	FROM(SELECT CEIL (rownum/#{itemPerPage})page,<include refid="lecture-review-columns"/>
-	FROM(SELECT <include refid="lecture-review-columns"/>
-			FROM review_board order by review_no desc
-		)
-	)
-	WHERE page=#{page}
-	</select>
+
+	
+	
+	
 	
 </mapper>

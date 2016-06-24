@@ -1,9 +1,13 @@
 package com.uspaceacademy.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.uspaceacademy.dao.FAQDao;
+import com.uspaceacademy.util.PagingBean;
 import com.uspaceacademy.vo.FAQ;
 
 @Service
@@ -49,5 +53,30 @@ public class FAQService
 	public int selectHit(int no) {
 		return dao.selectHit(no);
 	}
-
+	
+	// FAQ 페이징 처리
+	public Map FAQPagingList(int page, String type) {
+		Map map = new HashMap();
+		map.put("FAQList", dao.selectListPage(page, type));
+		map.put("paging", new PagingBean(dao.selectCountContents(type), page));
+		return map;
+	}
+	
+	// FAQ 제목으로 찾은 목록 페이징 처리
+	public Map FAQTitleSearch(String title, String type, int page) {
+		Map map = new HashMap<>();
+		map.put("FAQTitleList", dao.selectFAQTitle(title, type, page));
+		map.put("paging", new PagingBean(dao.selectFAQCountContents(title, type), page));
+		
+		System.out.println("paging - "+dao.selectFAQCountContents(title, type));
+		return map;
+	}
+	
+/*	// FAQ 제목으로 찾은 목록 페이징 처리
+	public Map FAQTitleSearch(String title, String type, int page) {
+		Map map = new HashMap<>();
+		map.put("FAQTitleList", dao.selectFAQTitle(title, type, page));
+		map.put("paging", new PagingBean(dao.selectFAQCountContents(type), page));
+		return map;
+	}*/
 }
