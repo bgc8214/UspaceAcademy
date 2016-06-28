@@ -21,7 +21,9 @@
 
 
 		<mapper resource="com/uspaceacademy/mapper/lectureReviewMapper.xml" /><!--  영주 -->
-
+		<mapper resource="com/uspaceacademy/mapper/assignmentMapper.xml" /><!--  영주 -->	
+	
+	
 		<mapper resource="com/uspaceacademy/mapper/MemberMapper.xml" /> <!-- 이름바꾸기 -->
 
 		<mapper resource="com/uspaceacademy/mapper/LectureMapper.xml"/> <!-- 이름바꾸기 -->

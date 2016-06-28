@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="assignmentMapper">
+
+
+	<sql id ="assignment-columns">
+	assignment_no, assignment_secret, assignment_title, assignment_content,
+	assignment_date, assignment_hit, assignment_password, assignment_re_family,
+	assignment_re_step, assignment_re_level, assignment_writer, assignment_deadline,
+	lecture_no
+	</sql>
+
+
+	<resultMap type="Assignment" id="assignment-basic">
+	<id column="assignment_no" property="assignmentNo"/>
+	<result column="assignment_secret" property="assignmentSecret"/>
+	<result column="assignment_title" property="assignmentTitle"/>
+	<result column="assignment_content" property="assignmentContent"/>
+	<result column="assignment_date" property="assignmentDate"/>
+	<result column="assignment_hit" property="assignmentHit"/>
+	<result column="assignment_password" property="assignmentPassword"/>
+	<result column="assignment_re_family" property="replyFamily"/>
+	<result column="assignment_re_step" property="replyStep"/>
+	<result column="assignment_re_level" property="replyLevel"/>
+	<result column="assignment_writer" property="assignmentWriter"/>
+	<result column="assignment_deadline" property="assignmentDeadline"/>
+	<result column="lecture_no" property="lectureNo"/>
+	</resultMap>
+
+
+
+
+	<!--  *************************************************************************  -->
+
+
+
+	<!--  1.삽입  -->
+	<insert id="insert" parameterType="Assignment">
+	INSERT INTO assignment_board VALUES (#{assignmentNo},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep},#{replyLevel},#{assignmentWriter},#{assignmentDeadline},#{lectureNo})
+	</insert>
+
+
+
+	<!-- 2.시퀀스 -->
+	<select id="selectNextNo" resultType="_int">
+	SELECT assignment_board_seq.nextval FROM dual
+	</select>
+
+
+	<!-- 3.전체조회(이건그냥 - 전체조회할때) -->
+ 	<select id="select" resultType="Assignment">
+	SELECT   assignment_no  assignmentNo,
+				assignment_secret   assignmentSecret,
+				assignment_title   assignmentTitle,
+				assignment_content   assignmentContent,
+				assignment_date   assignmentDate,
+				assignment_hit   assignmentHit,
+				assignment_password   assignmentPassword,
+				assignment_re_family   replyFamily,
+				assignment_re_step   replyStep,
+				assignment_re_level   replyLevel,
+				assignment_writer   assignmentWriter,
+				assignment_deadline    assignmentDeadline,
+				lecture_no    lectureNo
+	FROM 	assignment_board
+	</select> 
+
+
+
+
+
+	<!-- 4.수정  -->
+<!-- 	<update id="update" parameterType="Assignment">
+	UPDATE  assignment_board
+	SET		assignment_secret   assignmentSecret,
+				assignment_title   assignmentTitle,
+				assignment_content   assignmentContent,
+				assignment_date   assignmentDate,
+				assignment_hit   assignmentHit,
+				assignment_password   assignmentPassword,
+				assignment_re_family   replyFamily,
+				assignment_re_step   replyStep,
+				assignment_re_level   replyLevel,
+				assignment_writer   assignmentWriter,
+				assignment_deadline   assignmentDeadline   , 쉼표 찍어 주는거 주의!
+				lecture_no   lectureNo
+	
+	WHERE assignment_no=#{assignmentNo}
+	</update>
+	 -->
+	
+	
+	
+	<!-- 5.삭제 -->
+	<delete id="deleteByNo" parameterType="_int">
+	DELETE FROM assignment_board  WHERE assignment_no=#{assignmentNo}
+	</delete>
+
+
+
+	<!-- 6.전체조회(NO로) (이건 - 세부조회할때)  -->
+	<select id="selectNo" parameterType="_int"	resultType="Assignment">
+	SELECT 	assignment_no   assignmentNo,
+				assignment_secret   assignmentSecret,
+				assignment_title   assignmentTitle,
+				assignment_content   assignmentContent,
+				assignment_date   assignmentDate,
+				assignment_hit   assignmentHit,
+				assignment_password   assignmentPassword,
+				assignment_re_family   replyFamily,
+				assignment_re_step   replyStep,
+				assignment_re_level   replyLevel,
+				assignment_writer   assignmentWriter,
+				assignment_deadline   assignmentDeadline,  
+				lecture_no   lectureNo
+	FROM		assignment_board
+	WHERE	assignment_no=#{assignmentNo}
+	</select>
+
+
+
+	<!--  7.조회수처리  -->
+	<select id="updateHit" parameterType="Assignment">
+	UPDATE assignment_board
+	SET		assignment_hit=#{assignmentHit}
+	WHERE	assignment_no=#{assignmentNo}
+	</select>
+
+
+
+
+
+
+
+	<!-- 아래 페이징처리............................................................................................................................ -->
+
+	<!--    8.   select 페이징 처리!!   (과제게시판) -->
+	<select id="selectPaging" parameterType="map" resultMap="assignment-basic">
+	SELECT <include refid="assignment-columns"/>
+	FROM(SELECT CEIL (rownum/#{itemsPerPage}) page, <include refid="assignment-columns"/>
+	FROM(SELECT <include refid="assignment-columns"/>
+			FROM assignment_board      order by   assignment_no   desc
+		)
+	)
+	WHERE page=#{page}
+	</select>
+	
+	
+	<!--   9.페이징처리에 필요함 ((과제게시판)이건 -  전체 리스트 (갯수) 세어줌 )   -->
+	<select id="selectCount" resultType="_int">
+	SELECT  count(assignment_no)
+	FROM    assignment_board
+	</select>
+
+
+	<!-- 위에 페이징처리............................................................................................................................ -->
+
+
+	<!--   10.답글달기  -->
+
+
+<!-- 
+String sql = " select * from  
+(select seq, name , passwd, "+ "title, content, filename, regdate, "+ " readcount, reply, reply_step, "
+                              + "reply_level , rownum r "
+                              + "from board "
+                              + " order by reply desc , reply_step asc)";  
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

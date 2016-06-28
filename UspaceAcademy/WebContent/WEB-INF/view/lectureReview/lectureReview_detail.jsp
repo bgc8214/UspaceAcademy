@@ -21,12 +21,11 @@
 			</tr>
 		</thead>
 		<tbody>
-
 				<tr>
 					<td>${requestScope.lectureListReview.reviewNo}</td><!--  오류난거메모 : 상세페이지니까 반복문 돌리면 안됨 -->
  					<td>${requestScope.lectureListReview.reviewWriter}</td>
-					<td>${requestScope.lectureListReview.lectureTitle}</td>
 					<td>${requestScope.lectureListReview.lectureSubject}</td>
+					<td>${requestScope.lectureListReview.lectureTitle}</td>
 					<td>${requestScope.lectureListReview.reviewTitle}</td>
 					<td>${requestScope.lectureListReview.reviewContent}</td>
 					<td>${requestScope.lectureListReview.reviewDate}</td>
