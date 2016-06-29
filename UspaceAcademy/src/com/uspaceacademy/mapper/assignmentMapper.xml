@@ -64,9 +64,16 @@
 				lecture_no    lectureNo
 	FROM 	assignment_board
 	</select> 
+<!-- 	  └글목록보기
+	SELECT <include refid="assignment-columns"/>
+	FROM(SELECT  rownum rnum, assignment_no, assignment_title, assignment_content, assignment_date, assignment_hit, assignment_re_family,assignment_re_step, assignment_re_level,assignment_writer,assignment_deadline
+	FROM(SELECT  <include refid="assignment-columns"/> 
+			FROM assignment_board  order  by  assignment_re_family    desc,assignment_re_level   asc
+		)
+	)
+	WHERE rnum>=?  and  rnum<=?
 
-
-
+-->
 
 
 	<!-- 4.수정  -->
