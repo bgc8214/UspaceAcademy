@@ -19,8 +19,8 @@ $(document).ready(function() {
 				tmp.children().eq(3).text(faq.basicHit); 
 				tmp.next().children().eq(0).append("<br>"); 
 				if("${sessionScope.memberType}"=='administrator') {
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+$("#page").val()+"><input type='button' value='FAQ수정'></a>"));
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+$("#page").val()+"><input type='button' value='FAQ삭제' id='deleteFAQ'></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+$("#page").val()+"><button class='updateFAQ'>FAQ수정</button></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+$("#page").val()+"><button class='deleteFAQ'>FAQ삭제</button></a>"));
 				}
 			},
 			"error":function(xhr, status, errorMsg) {
@@ -33,14 +33,24 @@ $(document).ready(function() {
 	});
 	$(".faqList").on("mouseover", function() {
 		$(this).css("background-color", "hotpink");
+		this.style.cursor = 'pointer';
 
 	});
 
 	$(".faqList").on("mouseout", function() {
 		$(this).css("background-color", "white");
 	});
-	
+	$("#btn").on("click", function() {
+		if(!$("input[name=title]").val()) {
+			alert("키워드를 입력하세요.");
+			return false;
+		}
+	})
 })
+	$(document).ready(effect);
+	function effect() {
+		$("tr:eq(2)").css("background-color", "#EAEAEA");
+	}
 
 </script>
 
@@ -105,14 +115,13 @@ $(document).ready(function() {
 <p>
 
 <form action="/UspaceAcademy/FAQ/FAQTitleSearch.do">
-	<input type="text" name="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="제목으로 검색">
+	<input type="text" name="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="제목으로 검색">
 </form><br>
 
 <!-- 관리자용 FAQ 등록 버튼 -->
 <span class="FAQRegister"> 
 	<c:if test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/FAQ/codeList.do?codeNames=FAQ"><input type="button" value="FAQ등록"></a>
-		<p>
+		<a href="/UspaceAcademy/FAQ/codeList.do?codeNames=FAQ"><button class="registerBtn">FAQ등록</button></a>
 	</c:if>
 </span>	
 

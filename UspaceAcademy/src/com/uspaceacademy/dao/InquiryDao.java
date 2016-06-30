@@ -59,21 +59,48 @@ public class InquiryDao
 	}
 	
 	//코드 조회
-	public List selectCodeName(String codeName) {
-		return session.selectList("codeTable.selectCodeName", codeName);
+	public List selectByCodeName(String codeName) {
+		return session.selectList("codeTable.selectByCodeName", codeName);
 	}
 	
 	//페이징 처리
-	public List selectList(int page) {
+	public List selectList(int page, String advancedType) {
 		Map map = new HashMap();
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("advancedType", advancedType);
 		return session.selectList("inquiryMapper.selectListByPaging", map);
 	}
 	
 	//페이징 처리
-	public int selectCountContents() {
-		return session.selectOne("inquiryMapper.selectCountContents");
+	public int selectCountContents(String advancedType) {
+		return session.selectOne("inquiryMapper.selectCountContents", advancedType);
 	}
+	
+	//제목으로 검색 페이징 조회
+	public List selectByTitle(String title, int page) {
+		Map map = new HashMap();
+		map.put("title", title);
+		map.put("page", page);		
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		return session.selectList("inquiryMapper.selectByTitle", map);
+	}
+	
+	//제목으로 검색 페이징 조회 헬퍼
+	public int selectByTitleCountContents(String title) {
+		System.out.println(title);
+		Map map = new HashMap();
+		map.put("title", title);
+		return session.selectOne("inquiryMapper.selectByTitleCountContents", map);
+	}
+	
+	public List searchByTitle(String title){
+		return session.selectList("inquiryMapper.searchByTitle", title);
+	}
+	
+	
+//	public int selectByCommentNo(String advancedNo){
+//		return 
+//	}
 
 }

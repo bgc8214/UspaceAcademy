@@ -55,15 +55,31 @@ public class InquiryService
 	}
 	
 	//코드
-	public List selectCodeName(String codeName) {
-		return dao.selectCodeName(codeName);
+	public List selectByCodeName(String codeName) {
+		return dao.selectByCodeName(codeName);
 	}
 	
 	//강의 목록 페이징 처리
-	public Map getInquiryList(int page) {
+	public Map getInquiryList(int page, String advancedType) {
 		Map map = new HashMap();
-		map.put("inquiryList", dao.selectList(page));
-		map.put("paging", new PagingBean(dao.selectCountContents(), page));
+		map.put("inquiryList", dao.selectList(page, advancedType));
+		map.put("paging", new PagingBean(dao.selectCountContents(advancedType), page));
+		return map;
+	}
+	
+	//제목으로 검색 페이징 처리
+	public Map selectByTitle(String title, int page) {
+		Map map = new HashMap();
+		map.put("selectByTitle", dao.selectByTitle(title, page));
+		map.put("paging", new PagingBean(page, dao.selectByTitleCountContents(title)));
+		return map;
+	}
+	
+	public Map searchByTitle(String title){
+		Map map = new HashMap();
+		map.put("inquiryList", dao.searchByTitle(title));
+		map.put("title", title);
+		
 		return map;
 	}
 }

@@ -1,5 +1,6 @@
 package com.uspaceacademy.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -46,8 +47,8 @@ public class NoticeController
 	
 	// 공시사항 게시물 등록
 	@RequestMapping("/noticeWrite.do")
-	public String noticeAdd(@RequestParam(defaultValue="1") int page, @ModelAttribute Notice notice, BindingResult errors) {
-
+	public String noticeAdd(@RequestParam(defaultValue="1") int page, @ModelAttribute Notice notice, BindingResult errors) throws ParseException {
+		
 		// 검증 - NoticeValidator	
 		NoticeValidator validator = new NoticeValidator();
 		validator.validate(notice, errors);
@@ -62,7 +63,6 @@ public class NoticeController
 		Notice notice1 = new Notice(service.selectSeq(), "administrator", notice.getBasicTitle(), notice.getBasicContent(), new SimpleDateFormat("yyyy-MM-dd kk:mm").format(new Date()), 0, notice.getBasicType());
 		service.register(notice1);
 		return "redirect:/notice/noticeRedirect.do?no="+notice1.getBasicNo()+"&page="+page;
-
 	}
 	
 	@RequestMapping("/noticeRegisterForm.do")
@@ -139,6 +139,15 @@ public class NoticeController
 	@RequestMapping("/noticeRedirect.do")
 	public String noticeRedirectRegister(int no, @RequestParam(defaultValue="1") int page) {// 새로고침 시 더 등록 안되도록 redirect 처리
 		return "redirect:/notice/noticeDetail.do?no="+no+"&page="+page;
+	}
+	
+	// 공지사항 제목 내용으로 검색 List
+	@RequestMapping("/noticeSearch.do")
+	public ModelAndView noticeSearch(@RequestParam(defaultValue="1") int page, String keyword) {
+		Map map = service.getSearchList(keyword, page);
+		map.put("page", page);
+		map.put("keyword", keyword);
+		return new ModelAndView("notice/notice_search.tiles", map);
 	}
 	
 }

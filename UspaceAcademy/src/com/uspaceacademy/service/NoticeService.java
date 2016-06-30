@@ -64,4 +64,12 @@ public class NoticeService
 		return map;
 	}
 	
+	// 공지사항 제목+내용으로 찾은 목록 페이징 처리
+	public Map getSearchList(String keyword, int page) {
+		Map map = new HashMap<>();
+		map.put("noticeSearch", dao.noticeSearch(keyword, page));
+		map.put("paging", new PagingBean(dao.selectNoticeCountContents(keyword), page));
+		return map;
+	}
+	
 }

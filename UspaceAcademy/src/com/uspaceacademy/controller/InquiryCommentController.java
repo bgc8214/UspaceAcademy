@@ -52,7 +52,7 @@ public class InquiryCommentController {
 	
 	@RequestMapping("/exInsertComment")
 	@ResponseBody
-	public String exInsertComment(String commentContent){
+	public String exInsertComment(String commentContent, String inquiryNo, String commentNo){
 		
 		
 		return commentContent;

@@ -98,4 +98,22 @@
     WHERE  teacher_name like '%'||#{teacherName}||'%'
    </select>
    
+   <!-- 강사 개인정보 수정 -->
+   <update id="update_teacher" parameterType="teacher">
+   	update teacher
+   	set teacher_password = #{teacherPassword},
+   		teacher_name = #{teacherName},
+   		teacher_email = #{teacherEmail},
+   		teacher_phone_no = #{teacherPhoneNo},
+   		teacher_address = #{teacherAddress},
+   		teacher_subject = #{teacherSubject}
+   	where teacher_id = #{teacherId}
+   </update>
+   
+   <!-- 강사 회원 탈퇴 -->
+   <delete id="delete_teacher" parameterType="string">
+   		delete from TEACHER 
+   		where teacher_id = #{teacherId} 
+   </delete>
+  
 </mapper>

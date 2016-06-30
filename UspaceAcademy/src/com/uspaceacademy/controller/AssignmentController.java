@@ -131,7 +131,7 @@ public class AssignmentController {
 			int num = service.selectNextNo();
 			
 			//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 x																																									//안되서 맨끝에 lectureNo 우선 개설강좌에있는 no넣어놓고함*
-			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),teacherName,assignment.getAssignmentDeadline(),3);
+			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),teacherName,assignment.getAssignmentDeadline(), 5);
 			assignment.setReplyFamily(num); 
 			//└오류났던거 적기:  강사가 새로 과제글 등록한글에 학생이 답글쓴거 안달림(db에서 확인해보면 replyFamily값이 0으로 박혀서그럼, 새로운글 등록할때(여기)도 replyFamily,replyStep,replyLevel 넘겨줘야됨  -> 해결: assignment.setReplyFamily(num); 해주고 replyStep,replyLevel도 넘겨줘야함
 			
@@ -309,7 +309,7 @@ public class AssignmentController {
 			int num = service.selectNextNo();
 			
 			//13개있는거
-			assignment= new Assignment(num,0,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),0,assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),student,assignment.getAssignmentDeadline(),6);
+			assignment= new Assignment(num,0,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),0,assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),student,assignment.getAssignmentDeadline(),5);
 		
 			//11개있는거
 			//assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),student,assignment.getAssignmentDeadline(),2);

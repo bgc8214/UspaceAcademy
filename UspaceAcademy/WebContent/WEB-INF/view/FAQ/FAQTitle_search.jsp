@@ -19,8 +19,8 @@ $(document).ready(function() {
 				tmp.children().eq(3).text(faq.basicHit); 
 				tmp.next().children().eq(0).append("<br>"); 
 				if("${sessionScope.memberType}"=='administrator') {
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+${requestScope.page}+"><input type='button' value='FAQ수정'></a>"));
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+${requestScope.page}+"><input type='button' value='FAQ삭제' id='deleteFAQ'></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+${requestScope.page}+"><button class='updateFAQ'>FAQ수정</button></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+${requestScope.page}+"><button class='deleteFAQ'>FAQ삭제</button></a>"));
 				}
 			},
 			"error":function(xhr, status, errorMsg) {
@@ -39,8 +39,13 @@ $(document).ready(function() {
 	$(".faqList").on("mouseout", function() {
 		$(this).css("background-color", "white");
 	});
+	$(document).ready(effect);
+	function effect() {
+		$("tr:eq(2)").css("background-color", "#EAEAEA");
+	}
 	
 })
+
 
 </script>
 
@@ -62,15 +67,23 @@ $(document).ready(function() {
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="faq" items="${requestScope.FAQTitleList}">
-				<tr class="faqList">
-					<td>${faq.basicNo}</td>
-					<td>${faq.basicTitle}</td>
-					<td>${faq.basicDate}</td>
-					<td>${faq.basicHit}</td>
-					<td>${faq.basicType}</td>
-				</tr>
-			</c:forEach>
+			<c:if test="${requestScope.FAQTitleList.size()==0}">
+					<tr class="faqList">
+						<td colspan="5" align="center">검색 결과가 존재하지 않습니다.</td>
+					</tr>
+			</c:if>
+			<c:if test="${requestScope.FAQTitleList != null}">
+				<c:forEach var="faq" items="${requestScope.FAQTitleList}">
+					<tr class="faqList">
+						<td>${faq.basicNo}</td>
+						<td>${faq.basicTitle}</td>
+						<td>${faq.basicDate}</td>
+						<td>${faq.basicHit}</td>
+						<td>${faq.basicType}</td>
+					</tr>
+				</c:forEach>
+			</c:if>
+				
 		</tbody>	
 	</table><p>
 	
@@ -110,4 +123,4 @@ $(document).ready(function() {
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
 <p>
-<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><input type="button" value="FAQ 리스트"></a>
+<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button class="listBtn">FAQ리스트</button></a>

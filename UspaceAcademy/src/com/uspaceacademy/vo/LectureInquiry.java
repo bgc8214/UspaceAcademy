@@ -3,15 +3,42 @@ package com.uspaceacademy.vo;
 import java.io.Serializable;
 
 public class LectureInquiry implements Serializable{
-	private int advancedNo, advancedSecret;
-	private String advancedTitle, advancedContent, advancedDate;
+	private int advancedNo;
+	private String advancedSecret, advancedTitle, advancedContent, advancedDate;
 	private int advancedHit;
-	private String advancedId;
+	private String advancedId, advancedType;
 	private int lectureNo2;
 	
 	public LectureInquiry(){}
 
-	public LectureInquiry(int advancedNo, int advancedSecret, String advancedTitle, String advancedContent,
+	public LectureInquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
+			String advancedDate, int advancedHit, String advancedId, String advancedType, int lectureNo2) {
+		super();
+		this.advancedNo = advancedNo;
+		this.advancedSecret = advancedSecret;
+		this.advancedTitle = advancedTitle;
+		this.advancedContent = advancedContent;
+		this.advancedDate = advancedDate;
+		this.advancedHit = advancedHit;
+		this.advancedId = advancedId;
+		this.advancedType = advancedType;
+		this.lectureNo2 = lectureNo2;
+	}
+
+	public LectureInquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
+			String advancedDate, int advancedHit, String advancedId, String advancedType) {
+		super();
+		this.advancedNo = advancedNo;
+		this.advancedSecret = advancedSecret;
+		this.advancedTitle = advancedTitle;
+		this.advancedContent = advancedContent;
+		this.advancedDate = advancedDate;
+		this.advancedHit = advancedHit;
+		this.advancedId = advancedId;
+		this.advancedType = advancedType;
+	}
+
+	public LectureInquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
 			String advancedDate, int advancedHit, String advancedId) {
 		super();
 		this.advancedNo = advancedNo;
@@ -23,18 +50,76 @@ public class LectureInquiry implements Serializable{
 		this.advancedId = advancedId;
 	}
 
+	@Override
+	public String toString() {
+		return "LectureInquiry [advancedNo=" + advancedNo + ", advancedSecret=" + advancedSecret + ", advancedTitle="
+				+ advancedTitle + ", advancedContent=" + advancedContent + ", advancedDate=" + advancedDate
+				+ ", advancedHit=" + advancedHit + ", advancedId=" + advancedId + ", advancedType=" + advancedType
+				+ ", lectureNo2=" + lectureNo2 + "]";
+	}
 
-	public LectureInquiry(int advancedNo, int advancedSecret, String advancedTitle, String advancedContent,
-			String advancedDate, int advancedHit, String advancedId, int lectureNo2) {
-		super();
-		this.advancedNo = advancedNo;
-		this.advancedSecret = advancedSecret;
-		this.advancedTitle = advancedTitle;
-		this.advancedContent = advancedContent;
-		this.advancedDate = advancedDate;
-		this.advancedHit = advancedHit;
-		this.advancedId = advancedId;
-		this.lectureNo2 = lectureNo2;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((advancedContent == null) ? 0 : advancedContent.hashCode());
+		result = prime * result + ((advancedDate == null) ? 0 : advancedDate.hashCode());
+		result = prime * result + advancedHit;
+		result = prime * result + ((advancedId == null) ? 0 : advancedId.hashCode());
+		result = prime * result + advancedNo;
+		result = prime * result + ((advancedSecret == null) ? 0 : advancedSecret.hashCode());
+		result = prime * result + ((advancedTitle == null) ? 0 : advancedTitle.hashCode());
+		result = prime * result + ((advancedType == null) ? 0 : advancedType.hashCode());
+		result = prime * result + lectureNo2;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LectureInquiry other = (LectureInquiry) obj;
+		if (advancedContent == null) {
+			if (other.advancedContent != null)
+				return false;
+		} else if (!advancedContent.equals(other.advancedContent))
+			return false;
+		if (advancedDate == null) {
+			if (other.advancedDate != null)
+				return false;
+		} else if (!advancedDate.equals(other.advancedDate))
+			return false;
+		if (advancedHit != other.advancedHit)
+			return false;
+		if (advancedId == null) {
+			if (other.advancedId != null)
+				return false;
+		} else if (!advancedId.equals(other.advancedId))
+			return false;
+		if (advancedNo != other.advancedNo)
+			return false;
+		if (advancedSecret == null) {
+			if (other.advancedSecret != null)
+				return false;
+		} else if (!advancedSecret.equals(other.advancedSecret))
+			return false;
+		if (advancedTitle == null) {
+			if (other.advancedTitle != null)
+				return false;
+		} else if (!advancedTitle.equals(other.advancedTitle))
+			return false;
+		if (advancedType == null) {
+			if (other.advancedType != null)
+				return false;
+		} else if (!advancedType.equals(other.advancedType))
+			return false;
+		if (lectureNo2 != other.lectureNo2)
+			return false;
+		return true;
 	}
 
 	public int getAdvancedNo() {
@@ -45,11 +130,11 @@ public class LectureInquiry implements Serializable{
 		this.advancedNo = advancedNo;
 	}
 
-	public int getAdvancedSecret() {
+	public String getAdvancedSecret() {
 		return advancedSecret;
 	}
 
-	public void setAdvancedSecret(int advancedSecret) {
+	public void setAdvancedSecret(String advancedSecret) {
 		this.advancedSecret = advancedSecret;
 	}
 
@@ -93,6 +178,14 @@ public class LectureInquiry implements Serializable{
 		this.advancedId = advancedId;
 	}
 
+	public String getAdvancedType() {
+		return advancedType;
+	}
+
+	public void setAdvancedType(String advancedType) {
+		this.advancedType = advancedType;
+	}
+
 	public int getLectureNo2() {
 		return lectureNo2;
 	}
@@ -101,66 +194,6 @@ public class LectureInquiry implements Serializable{
 		this.lectureNo2 = lectureNo2;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((advancedContent == null) ? 0 : advancedContent.hashCode());
-		result = prime * result + ((advancedDate == null) ? 0 : advancedDate.hashCode());
-		result = prime * result + advancedHit;
-		result = prime * result + ((advancedId == null) ? 0 : advancedId.hashCode());
-		result = prime * result + advancedNo;
-		result = prime * result + advancedSecret;
-		result = prime * result + ((advancedTitle == null) ? 0 : advancedTitle.hashCode());
-		result = prime * result + lectureNo2;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		LectureInquiry other = (LectureInquiry) obj;
-		if (advancedContent == null) {
-			if (other.advancedContent != null)
-				return false;
-		} else if (!advancedContent.equals(other.advancedContent))
-			return false;
-		if (advancedDate == null) {
-			if (other.advancedDate != null)
-				return false;
-		} else if (!advancedDate.equals(other.advancedDate))
-			return false;
-		if (advancedHit != other.advancedHit)
-			return false;
-		if (advancedId == null) {
-			if (other.advancedId != null)
-				return false;
-		} else if (!advancedId.equals(other.advancedId))
-			return false;
-		if (advancedNo != other.advancedNo)
-			return false;
-		if (advancedSecret != other.advancedSecret)
-			return false;
-		if (advancedTitle == null) {
-			if (other.advancedTitle != null)
-				return false;
-		} else if (!advancedTitle.equals(other.advancedTitle))
-			return false;
-		if (lectureNo2 != other.lectureNo2)
-			return false;
-		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "LectureInquiry [advancedNo=" + advancedNo + ", advancedSecret=" + advancedSecret + ", advancedTitle="
-				+ advancedTitle + ", advancedContent=" + advancedContent + ", advancedDate=" + advancedDate
-				+ ", advancedHit=" + advancedHit + ", advancedId=" + advancedId + ", lectureNo2=" + lectureNo2 + "]";
-	}	
+	
 	
 }

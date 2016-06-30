@@ -74,5 +74,16 @@ public class MemberDao
 	public List selectTeacherListByTeacherName(String teacherName){
 		return session.selectList("memberMapper.selectTeacherListByTeacherName", teacherName);
 	}
+	
+	// 강사가 자신의 정보 수정 - 아이디와 월급 제외!
+	public int updateTeacher(Teacher teacher) {
+		return session.update("memberMapper.update_teacher", teacher);
+	}
+	
+	// 강사 탈퇴
+	public int deleteTeacher(String teacherId) {
+		System.out.println("DAO - "+teacherId);
+		return session.delete("memberMapper.delete_teacher", teacherId);
+	}
 
 }
