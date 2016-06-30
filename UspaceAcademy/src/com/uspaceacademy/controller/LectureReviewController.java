@@ -228,12 +228,9 @@ public class LectureReviewController{
 	@RequestMapping("/lecture_review_modify") //lectureReview_modify.jsp에서
 	public ModelAndView modify(@ModelAttribute("lec") @Valid LectureReview lectureReview, BindingResult errors) {  //오류:여기에서6개 넘겨줌, 매매 mapper에서도 6개 쿼리적어줘야함!!!*
 		
-		/*SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd");
+		/*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date date1 = new Date();
 		String uDate = sdf.format(date1);*/	
-		
-		System.out.println(lectureReview);
-		
 		boolean error = errors.hasErrors();
 		int errorCount = errors.getErrorCount();
 		if(errors.hasErrors()){																			//

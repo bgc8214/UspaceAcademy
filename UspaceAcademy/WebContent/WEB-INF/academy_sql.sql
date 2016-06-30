@@ -30,6 +30,7 @@ create table teacher(
 	teacher_salary number not null
 );
 insert into teacher values('11111', '11111', '강사1111', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
+insert into teacher values('111111', '111111', '강사1-6개', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
 insert into teacher values('teacher', '1234', '강사2222', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
 insert into teacher values('id-10', '1111', '홍길동', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
 insert into teacher values('id-11', '1111', '홍일일', 'asd@naver.com', '010-6366-5153', '서울시 서초구', '영어', 1000000);
@@ -297,3 +298,6 @@ select  * from review_board where review_no=75;
 
 delete from lecture where lecture_no=-1 cascade constraint;
 --select  * from review_board where review_no=75;
+
+
+select * from assignment_board where assignment_no in(161, 170)

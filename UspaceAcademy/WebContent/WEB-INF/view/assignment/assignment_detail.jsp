@@ -6,6 +6,15 @@
 
 <h3>내정보 | 과제게시판 | 상세보기</h3>
 <hr/>
+<!--    -->
+<input type="hidden" name="replyStep"  value="${assignment.replyStep}">
+<input type="hidden" name="replyLevel"  value="${assignment.replyLevel}">
+<input type="hidden" name="replyFamily"  value="${assignment.replyFamily}">
+
+<%-- <input type="hidden" name="assignmentWriter"  value="${assignment.assignmentWriter}"> --%>
+<%-- <input type="hidden" name="teacherName" value="${sessionScope.login_info.teacherName}"> --%> <!--  안되면 위아래 지우기 -->
+<!--    -->
+
 
 
 <div class="boardList">

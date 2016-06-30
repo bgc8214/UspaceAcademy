@@ -34,6 +34,7 @@ import com.uspaceacademy.vo.Assignment;
 import com.uspaceacademy.vo.Board;
 import com.uspaceacademy.vo.LectureReview;
 import com.uspaceacademy.vo.Student;
+import com.uspaceacademy.vo.Teacher;
 
 @Controller
 @RequestMapping("/assignment")
@@ -131,6 +132,9 @@ public class AssignmentController {
 			
 			//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 x																																									//안되서 맨끝에 lectureNo 우선 개설강좌에있는 no넣어놓고함*
 			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),teacherName,assignment.getAssignmentDeadline(),3);
+			assignment.setReplyFamily(num); 
+			//└오류났던거 적기:  강사가 새로 과제글 등록한글에 학생이 답글쓴거 안달림(db에서 확인해보면 replyFamily값이 0으로 박혀서그럼, 새로운글 등록할때(여기)도 replyFamily,replyStep,replyLevel 넘겨줘야됨  -> 해결: assignment.setReplyFamily(num); 해주고 replyStep,replyLevel도 넘겨줘야함
+			
 			service.insert(assignment);
 			
 			System.out.println("과제글 작성하고 등록ok");
@@ -167,15 +171,18 @@ public class AssignmentController {
 		
 		
 
-		//과제글 수정폼(수강상세조회에서 수정하기 눌렀을때 - modify폼으로감)
+		//과제글 수정폼(과제글상세조회에서 수정하기 눌렀을때 - modify폼으로감)
 		@RequestMapping("/assignment_modifyForm")  
-		public ModelAndView modifyForm(){
-
+		public ModelAndView modifyForm(int assignmentNo){
 			
+			Assignment assignment = service.selectNo(assignmentNo);
+			
+			HashMap map = new HashMap<>();
+			map.put("assignment", assignment);
 			
 			
 			System.out.println("과제글 수정 폼 ok");
-			return new ModelAndView("assignment/assignment_modify.tiles"); 
+			return new ModelAndView("assignment/assignment_modify.tiles",map); 
 		}
 		
 
@@ -184,33 +191,79 @@ public class AssignmentController {
 		
 		
 		
-		
-		
+/*		HttpSession session){
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			//로그인한 학생아이디에 학생이름
+			Student s = (Student)session.getAttribute("login_info");//
+			String student = s.getStudentName();//
+*/		
 		//과제글 수정완료하기 (수정폼에서 과제글 수정완료 눌렀을때)
 		@RequestMapping("/assignment_modify") //assignment_modify.jsp에서
-		public ModelAndView modify(@ModelAttribute("lec") @Valid LectureReview lectureReview, BindingResult errors) { 
+		public ModelAndView modify(Assignment assignment,HttpSession session) { 
+			HashMap<String,Object> map = new HashMap<String,Object>();
 			
-
+			Teacher t = (Teacher)session.getAttribute("login_info");
+			String teacher = t.getTeacherName(); //오류났던거 적기 : getAssignmentWriter안돼서 session에서 getTeacherName가져옴.
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			String sdfDate = sdf.format(date);
+			
+			
+			assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),teacher,assignment.getAssignmentDeadline(),5);
+			//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),5);
+			//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),3);
+			service.update(assignment);
+			
+		
 			System.out.println("과제글 수정 ok");
-			return new ModelAndView("assignment/assignment_detail.tiles"); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
+			return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
 		}
 
+		/*		public ModelAndView modify(Assignment assignment,String teacherName) { 
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String sdfDate = sdf.format(date);
+		
+		assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),assignment.getAssignmentWriter(),teacherName,assignment.getAssignmentDeadline(),5);
+		//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),3);
+		service.update(assignment);
+		
+	
+		System.out.println("과제글 수정 ok");
+		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
+	}*/
 
-
-
+/*		//과제글 수정완료하기 (수정폼에서 과제글 수정완료 눌렀을때)
+	@RequestMapping("/assignment_modify") //assignment_modify.jsp에서
+	public ModelAndView modify(Assignment assignment) { 
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String sdfDate = sdf.format(date);
+		
+		assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),5);
+		//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),3);
+		service.update(assignment);
+		
+	
+		System.out.println("과제글 수정 ok");
+		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
+	}*/
+		
+		
 	//위에강사******************************************************************************************************************
 
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
+
 		
 		
 		

@@ -148,7 +148,23 @@
 
 
 	<!-- 4.수정  -->
-<!-- 	<update id="update" parameterType="Assignment">
+<update id="update" parameterType="Assignment">
+	UPDATE  assignment_board
+	SET		assignment_secret=#{assignmentSecret},
+				assignment_title=#{assignmentTitle},
+				assignment_content=#{assignmentContent},
+				assignment_date=#{assignmentDate},
+				assignment_hit=#{assignmentHit},
+				assignment_password=#{assignmentPassword},
+				assignment_re_family=#{replyFamily},
+				assignment_re_step=#{replyStep},
+				assignment_re_level=#{replyLevel},
+				assignment_writer=#{assignmentWriter},
+				assignment_deadline=#{assignmentDeadline}, 
+				lecture_no=#{lectureNo}
+	WHERE assignment_no=#{assignmentNo}
+	</update>
+	<!-- <update id="update" parameterType="Assignment">
 	UPDATE  assignment_board
 	SET		assignment_secret   assignmentSecret,
 				assignment_title   assignmentTitle,
@@ -160,12 +176,10 @@
 				assignment_re_step   replyStep,
 				assignment_re_level   replyLevel,
 				assignment_writer   assignmentWriter,
-				assignment_deadline   assignmentDeadline   , 쉼표 찍어 주는거 주의!
+				assignment_deadline   assignmentDeadline, 
 				lecture_no   lectureNo
-	
 	WHERE assignment_no=#{assignmentNo}
-	</update>
-	 -->
+	</update> -->
 	
 	
 	

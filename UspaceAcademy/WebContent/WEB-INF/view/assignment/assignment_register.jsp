@@ -27,9 +27,9 @@
 <tr>
 <td><%-- ${assignment.lectureNo} --%></td><!--  강의명 (db에서) -->
 <td>${sessionScope.login_info.teacherName}</td>
-<td><input type="text" name="assignmentDeadline" size="70" placeholder="제목을 입력하세요" required="required"></td>
+<td><input type="text" name="assignmentDeadline" size="70" placeholder="ex)2016-06-30" required="required"></td>
 <td><input type="text" name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"></td>
-<td><textarea rows="15" cols="80" name="assignmentContent" placeholder="입력하세요"></textarea></td>
+<td><textarea rows="15" cols="80" name="assignmentContent" placeholder="내용을 입력하세요"></textarea></td>
 </tr>
 
 </table>
