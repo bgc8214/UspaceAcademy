@@ -5,11 +5,12 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class LectureReview{
 	
 	private int reviewNo;//글번호
-	private String reviewWriter;//글쓴이
 	
+	private String reviewWriter;//글쓴이
+	private String lectureSubject;//강의과목
 	private String lectureTitle;//강의명
 	
-	private String lectureSubject;//강의과목
+	
 	
 	@NotEmpty(message="제목을 입력해주세요")
 	private String reviewTitle;//글제목
@@ -18,6 +19,7 @@ public class LectureReview{
 	private String reviewContent;//글내용
 	
 	private String reviewDate;//글등록일
+	
 	private int reviewHit;//글조회
 	
 	
@@ -27,7 +29,7 @@ public class LectureReview{
 	}
 	
 	//객체생성 밸리 (lectureReview_register.jsp 에서 컨트롤러로 보내는  4개의 값에 대한 생성자)*
-	public LectureReview(String lectureTitle, String lectureSubject, String reviewTitle, String reviewContent) {
+	public LectureReview(String lectureSubject, String lectureTitle,  String reviewTitle, String reviewContent) {
 		super();
 		this.lectureTitle = lectureTitle;
 		this.lectureSubject = lectureSubject;
@@ -37,7 +39,7 @@ public class LectureReview{
 
 
 	//date없는 생성자
-	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject,
+	public LectureReview(int reviewNo, String reviewWriter, String lectureSubject,String lectureTitle, 
 			String reviewTitle, String reviewContent, int reviewHit) {
 		super();
 		this.reviewNo = reviewNo;
@@ -51,7 +53,7 @@ public class LectureReview{
 
 
 
-	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject,
+	public LectureReview(int reviewNo, String reviewWriter, String lectureSubject,String lectureTitle, 
 			String reviewTitle, String reviewContent, String reviewDate, int reviewHit) {
 		this.reviewNo = reviewNo;
 		this.reviewWriter = reviewWriter;
@@ -66,7 +68,7 @@ public class LectureReview{
 	
 	
 	//수정시  (6개)
-	public LectureReview(int reviewNo, String reviewWriter, String lectureTitle, String lectureSubject, String reviewTitle, String reviewContent) {
+	public LectureReview(int reviewNo, String reviewWriter,  String lectureSubject, String lectureTitle,String reviewTitle, String reviewContent) {
 		super();
 		this.reviewNo=reviewNo; //오류:이거빠져있었음....
 		this.reviewWriter=reviewWriter;
