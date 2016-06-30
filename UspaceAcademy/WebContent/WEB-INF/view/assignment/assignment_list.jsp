@@ -21,6 +21,35 @@ background: #494949;
 color: #ffff;
 font-weght: bold; 
 }
+table_ list tbody tr td{
+line-height: 35px;
+border-bottom: 1px solid #c3c3c3;
+text-align: center;
+}
+table_ list tbody tr td .num{
+font-famliy: Tahoma;
+font-size: 11px;
+color: #737373;
+}
+table_ list tbody tr td .title{ 
+text-align: left;
+}
+table_ list tbody tr td .title a{ 
+display: block;
+float: left;
+text-decoration: none;
+color: #191919;
+max-width: 320px; 
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+table_list tbody tr td .title a:hover{
+text-decoration: underline;
+}
+
+
+
 </style>
 
 
