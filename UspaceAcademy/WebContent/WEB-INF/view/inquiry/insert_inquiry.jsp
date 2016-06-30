@@ -5,14 +5,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <form action="/UspaceAcademy/inquiry/insertInquiry.do" method="post" name="insertInquiry">
-<input type="hidden" name="codeName" value="${requestScope.codeName}">
+<input type="hidden" name="advancedType" value="${requestScope.advancedType}">
 <table>
 	<tr>
 		<td>
 			제목: <input type="text" name="advancedTitle" size="70" value="${requestScope.inquiryValidate.advancedTitle }">
 			<span class="error"> <form:errors path="inquiry.advancedTitle" delimiter="//" /></span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	<label>비밀글 : <input type="radio" name="secret" value="true"></label>
+			<span class="error"><form:errors path="inquiry.advancedSecret" delimiter="//"/></span>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	<label>공개글 : <input type="radio" name="secret" value="false"></label>
+			<span class="error"><form:errors path="inquiry.advancedSecret" delimiter="//"/></span>
+			
 		</td>
-	</tr>
+	</tr>	
 	<tr>
 		<td>
 			내용: <textarea rows="20" cols="100" name="advancedContent">${requestScope.inquiryValidate.advancedContent }</textarea>
@@ -25,5 +30,5 @@
 </table>
 </form>
 
-<a href="/UspaceAcademy/inquiry/inquiryList.do">1:1문의 목록보기</a>
+<a href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의">1:1문의 목록보기</a>
 <%-- ${requestScope.insertInquiry} --%>

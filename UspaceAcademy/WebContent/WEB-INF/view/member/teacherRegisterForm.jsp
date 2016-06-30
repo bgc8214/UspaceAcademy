@@ -56,13 +56,12 @@ $(document).ready(function(){
 })
 </script>
 <h2>강사 가입폼</h2>
- <button onclick="idCheck();">아이디 중복체크</button>
 <form action="/UspaceAcademy/member/teacherRegister.do" method="post" name="join_form">
 <table>
 	<tr>
 		<th>ID</th>
 		
-		<td><input type="text" name="teacherId" readonly="readonly" value="${requestScope.teacher.teacherId }"><span class="error">
+		<td><input type="text" name="teacherId" onclick="idCheck();" value="${requestScope.teacher.teacherId }"><span class="error">
 		<form:errors path="teacher.teacherId" delimiter="//"/> <!-- BindingResult의 에러메세지 출력 -->
 		
 		</span></td>

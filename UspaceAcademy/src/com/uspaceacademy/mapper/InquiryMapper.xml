@@ -10,6 +10,7 @@
 				advanced_date,
 				advanced_hit,
 				advanced_id,
+				advanced_type,
 				lecture_no2
 		from	advanced_board		
 	</sql>
@@ -22,6 +23,7 @@
 		advanced_date,
 		advanced_hit,
 		advanced_id,
+		advanced_type,
 		lecture_no2
 	</sql>
 	
@@ -30,20 +32,11 @@
 		<result column="advanced_secret" property="advancedSecret"/>
 		<result column="advanced_title" property="advancedTitle"/>
 		<result column="advanced_content" property="advancedContent"/>
-		<result column="advanced_Date" property="advancedDate"/>
+		<result column="advanced_date" property="advancedDate"/>
 		<result column="advanced_hit" property="advancedHit"/>
 		<result column="advanced_id" property="advancedId"/>
+		<result column="advanced_type" property="advancedType"/>
 		<result column="lecture_no2" property="lectureNo2"/>
-	</resultMap>
-	
-	<resultMap type="inquiry" id="inquiry-resultmap2">
-		<result column="advanced_no" property="advancedNo"/>
-		<result column="advanced_secret" property="advancedSecret"/>
-		<result column="advanced_title" property="advancedTitle"/>
-		<result column="advanced_content" property="advancedContent"/>
-		<result column="advanced_Date" property="advancedDate"/>
-		<result column="advanced_hit" property="advancedHit"/>
-		<result column="advanced_id" property="advancedId"/>
 	</resultMap>
 		
 	<!-- 전체 조회 -->
@@ -53,7 +46,7 @@
 	
 	<!-- 등록하기 -->
  	<insert id="insertInquiry" parameterType="inquiry">
-		insert into advanced_board values(#{advancedNo}, #{advancedSecret}, #{advancedTitle}, #{advancedContent}, #{advancedDate}, #{advancedHit}, #{advancedId}, null)
+		insert into advanced_board values(#{advancedNo}, #{advancedSecret}, #{advancedTitle}, #{advancedContent}, #{advancedDate}, #{advancedHit}, #{advancedId}, #{advancedType}, null)
 	</insert>
 	
 	<!-- 상세조회 -->
@@ -73,10 +66,7 @@
 		set advanced_secret = #{advancedSecret},
 			advanced_title = #{advancedTitle},
 			advanced_content = #{advancedContent},
-			advanced_date = #{advancedDate},
-			advanced_hit = #{advancedHit},
-			advanced_id = #{advancedId},
-			lecture_no2 = #{lectureNo2}
+			advanced_date = #{advancedDate}
 		where advanced_no = #{advancedNo}	
 	</update>
 	
@@ -97,7 +87,7 @@
  			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
  			FROM   (
  				SELECT <include refid="column-basic"/>
- 				FROM   advanced_board
+ 				FROM   advanced_board where advanced_type = #{advancedType}
 <!--  				where code_name = #{codeName} -->
  				ORDER BY advanced_no DESC  
  			)
@@ -106,9 +96,41 @@
  	</select>
 	
 	<!-- 강의 리스트 페이징 헬퍼 -->
- 	<select id="selectCountContents" resultType="_int">
+ 	<select id="selectCountContents" resultType="_int" parameterType="String">
  		SELECT count(advanced_no) 
  		FROM   advanced_board 
+ 		where advanced_type = #{advancedType}
  	</select>
+ 	
+ 	<!-- 제목으로 검색 페이징 조회 -->
+ 	<select id="selectByTitle" parameterType="map" resultMap="inquiry-resultmap">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   (
+ 			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   advanced_board
+ 				where advanced_title like '%'||#{advancedTitle}||'%'
+ 				ORDER BY advanced_no DESC  
+ 			)
+ 		)
+ 		WHERE  page = #{page}
+ 	</select>
+	
+	<!-- 제목으로 검색 페이징 헬퍼 -->
+ 	<select id="selectByTitleCountContents" resultType="_int" parameterType="map">
+ 		SELECT count(advanced_no) 
+ 		FROM   advanced_board
+ 		where advanced_title like '%'||#{advancedTitle}||'%'
+ 	</select>
+ 	
+ 	<!-- 실험 제목 조회 -->
+	<select id="seachByTitle" resultMap="inquiry-resultmap" parameterType="String">
+		 				SELECT <include refid="column-basic"/>
+ 				FROM   advanced_board
+		where advanced_title like '%'||#{advancedTitle}||'%'
+	</select>
+	
+	
 	
 </mapper>
