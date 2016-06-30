@@ -10,11 +10,29 @@
 첨부파일기능 넣어야함
 <hr/>
 
+<!--  	private int assignmentNo;	o				//1.글번호-
+		private int assignmentSecret;				//4.비밀여부 
+		private String assignmentTitle;		o		//3.글제목-
+		private String assignmentContent;	o	//    글내용 - 					리스트세부
+		private String assignmentDate;			//7.글 등록일-
+		private int assignmentHit;					//9.글 조회수-
+		private int assignmentPassword;			//    글 비밀번호				리스트세부
+		private int replyFamily;			o			//    답글 묶음
+		private int replyStep;			o				//    답글 순서
+		private int replyLevel;			o			//    답글 단계
+		private String assignmentWriter;			//6.글쓴이-
+		private String assignmentDeadline;	o	//8.글 마감일-
+		private int lectureNo;
+-->
+<form method="POST" action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
 
-<form method="POST" action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do"> <!--  폼으로 묶기* -->
+<input type="hidden" name="replyStep"  value="${assignment.replyStep}">
+<input type="hidden" name="replyLevel"  value="${assignment.replyLevel}">
+<input type="hidden" name="replyFamily"  value="${assignment.replyFamily}">
+
 
 <div class="boardList">
-<table border="1" summary"">
+<table border="1">
 <tr>
 <th>강의명(디비)</th>
 <th>작성자</th>
@@ -27,9 +45,9 @@
 <td><%-- ${assignment.lectureNo} --%></td><!--  강의명 (db에서) -->
 <td>${sessionScope.login_info.studentName}</td>
 <%-- <td>${requestScope.assignmentWriter}</td><!-- ??????????? --> --%>
-<td><input type="text" name="assignmentDeadline" size="70" placeholder="제목을 입력하세요" required="required"></td>
-<td><input type="text" name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"></td>
-<td><textarea rows="15" cols="80" name="assignmentContent" placeholder="입력하세요"></textarea></td>
+<td><input type="text" value="${requestScope.assignment.assignmentDeadline}" name="assignmentDeadline" size="70" placeholder="제목을 입력하세요" required="required"></td>
+<td><input type="text" value="${requestScope.assignment.assignmentTitle }"  name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"></td>
+<td><textarea rows="15" cols="80"  name="assignmentContent"   placeholder="입력하세요">${requestScope.assignment.assignmentContent}</textarea></td>
 </tr>
 
 </table>

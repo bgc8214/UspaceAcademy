@@ -41,12 +41,14 @@
 	
 	
 	<!-- 2.ㄷ답글등록  -->
-	<insert id="replyReply" parameterType="Assignment">
-	INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep}+1,#{replyLevel}+1,#{assignmentWriter},#{assignmentDeadline},#{lectureNo})
+	<insert id="replyReply" parameterType="Assignment" >
+	 <!-- INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep},#{replyLevel},#{assignmentWriter},#{assignmentDeadline},#{lectureNo}) -->
+	INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep}+1,#{replyLevel}+1,#{assignmentWriter},#{assignmentDeadline},#{lectureNo})<!--  스텝하고 레벨에 1씩 +해야 답글달림 -->-->
 	</insert>
 	<!-- 3.ㄷ업데이트 -->
 	<update id="replyAddStep" parameterType="Assignment">
-	UPDATE assignment_board  SET   assignment_re_step = assignment_re_step +1
+	UPDATE assignment_board  
+	SET   assignment_re_step = assignment_re_step +1
 	WHERE  assignment_re_family=#{replyFamily}   AND  assignment_re_step > #{replyStep}
 	</update>
 

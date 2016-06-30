@@ -33,9 +33,10 @@ public class AssignmentService {
 		//2.ㄷ답글등록  insert id="replyReply" 3.ㄷ업데이트 update id="replyAddStep"
 		public HashMap<String,Object> replyReplyReplyAddStep(Assignment assignment){
 			HashMap<String,Object> map = new HashMap<String,Object>();
-			map.put("replyReply",dao.replyReply(assignment));
-			map.put("replyAddStep", dao.replyAddStep(assignment));
-			
+	/*		map.put("replyReply",dao.replyReply(assignment));
+			map.put("replyAddStep", dao.replyAddStep(assignment));*/
+			map.put("assignment",dao.replyReply(assignment));
+			map.put("assignment", dao.replyAddStep(assignment));
 			return map;
 		}
 		

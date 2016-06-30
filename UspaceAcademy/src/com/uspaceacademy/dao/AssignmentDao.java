@@ -30,12 +30,12 @@ public class AssignmentDao {
 	//----------------------------------------------------------
 	
 	
-	
+			
 	
 			//1.ㄷ조회  select id="replyGetList"
 			public List<Assignment> replyGetList(){
-				System.out.println("dao----------------"+ session.selectList(namespace+"replyGetList"));
 				return session.selectList(namespace+"replyGetList");
+				//오류났던거 적기 : System.out.println("dao0====================="+session.selectList(namespace+"replyGetList")); 이렇게하는것도 이클립스가 인식해서!!!!!!!!!!!!!!! 두번 작동되서 안된다
 			}
 	
 	
@@ -111,7 +111,6 @@ public class AssignmentDao {
 		
 		//6. no로 조회 ( 세부조회할때) ㅇ
 		public Assignment selectNo(int assignmentNo){
-//			System.out.printf("DAO - "+session.selectOne(namespace+"selectNo", assignmentNo));
 			return session.selectOne(namespace+"selectNo", assignmentNo); 
 		}
 		
@@ -124,7 +123,6 @@ public class AssignmentDao {
 		//7.조회수 처리
 		public Assignment selectHit(Assignment assignment){
 			assignment.setAssignmentHit(assignment.getAssignmentHit()+1); //dao - 여기서 1증가 시키기
-			System.out.printf("DAo - "+session.selectOne(namespace+"updateHit",assignment));
 			return session.selectOne(namespace+"updateHit",assignment);
 		}
 

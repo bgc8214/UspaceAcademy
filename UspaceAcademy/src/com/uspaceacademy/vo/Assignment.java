@@ -101,8 +101,41 @@ public Assignment(int assignmentNo, String assignmentTitle, String assignmentCon
 	this.assignmentDeadline = assignmentDeadline;
 	this.lectureNo = lectureNo;
 }
+	//11개
+public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
+		int assignmentHit, int replyFamily, int replyStep, int replyLevel, String assignmentWriter,
+		String assignmentDeadline, int lectureNo) {
+	super();
+	this.assignmentNo = assignmentNo;
+	this.assignmentTitle = assignmentTitle;
+	this.assignmentContent = assignmentContent;
+	this.assignmentDate = assignmentDate;
+	this.assignmentHit = assignmentHit;
+	this.replyFamily = replyFamily;
+	this.replyStep = replyStep;
+	this.replyLevel = replyLevel;
+	this.assignmentWriter = assignmentWriter;
+	this.assignmentDeadline = assignmentDeadline;
+	this.lectureNo = lectureNo;
+}
 
+//10개
 
+public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
+		int assignmentHit, int replyFamily, int replyStep, int replyLevel, String assignmentWriter,
+		String assignmentDeadline) {
+	super();
+	this.assignmentNo = assignmentNo;
+	this.assignmentTitle = assignmentTitle;
+	this.assignmentContent = assignmentContent;
+	this.assignmentDate = assignmentDate;
+	this.assignmentHit = assignmentHit;
+	this.replyFamily = replyFamily;
+	this.replyStep = replyStep;
+	this.replyLevel = replyLevel;
+	this.assignmentWriter = assignmentWriter;
+	this.assignmentDeadline = assignmentDeadline;
+}
 
 
 
@@ -137,6 +170,14 @@ public String toString() {
 			+ replyFamily + ", replyStep=" + replyStep + ", replyLevel=" + replyLevel + ", assignmentWriter="
 			+ assignmentWriter + ", assignmentDeadline=" + assignmentDeadline + ", lectureNo=" + lectureNo + "]";
 }
+
+
+
+
+
+
+
+
 
 
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -54,7 +55,6 @@ public class AssignmentController {
 		@RequestMapping("/assignment_list.do")
 		public ModelAndView list(@RequestParam(defaultValue="1") int page){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
 			
-			System.out.println("controller-------------------"+service.replyGetList());
 			Map map = new HashMap();
 			map.put("page", service.selectPagingCount(page));
 			map.put("assignment", service.replyGetList());
@@ -224,12 +224,14 @@ public class AssignmentController {
 	
 		//답글 작성 폼 (assignment_detail.jsp ->assignment_replyRegister.jsp)글상세페이지에서 답변하기버튼클릭 -> 답변폼으로 온다
 		@RequestMapping("/assignment_replyRegister")
-		public ModelAndView replyRegister(){
+		public ModelAndView replyRegister(int assignmentNo){
 			
+			//오류났던거 적기 : 여기에서도 정보 넘겨줘야함(여기에 아무것도 안적어 줬었음), 새글+수정 합친 개념 - 글번호랑 다른것들 가져와야됨 - 가져와서 뿌려주고 이거 같이 넘겨야됨
 			
+			Assignment assignment = service.selectNo(assignmentNo);
 			
 			System.out.println("답글 작성폼 ok");	
-			return new ModelAndView("assignment/assignment_replyRegister.tiles");
+			return new ModelAndView("assignment/assignment_replyRegister.tiles","assignment",assignment);
 		}
 
 		
@@ -240,50 +242,61 @@ public class AssignmentController {
 		
 		//답변폼에서   ->  답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때) assignment_replyRegister.jsp 에서 assignment_list.jsp로감
 		@RequestMapping("/assignment_replyRegisterSuccess")// 
-		public ModelAndView reply(Assignment assignment, HttpServletRequest request){
+		public ModelAndView reply(Assignment assignment, HttpSession session){
+			HashMap<String, Object> map = new HashMap<String, Object>();
 			
-			HttpSession session = request.getSession();//
+			//로그인한 학생아이디에 학생이름
 			Student s = (Student)session.getAttribute("login_info");//
 			String student = s.getStudentName();//
-			
+			//date
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			String sdfDate = sdf.format(date);
-			
-	
-			
 			//글번호
 			int num = service.selectNextNo();
 			
-			//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 x																																									//안되서 맨끝에 lectureNo 우선 개설강좌에있는 no넣어놓고함*
+			//13개있는거
+			assignment= new Assignment(num,0,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),0,assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),student,assignment.getAssignmentDeadline(),6);
+		
+			//11개있는거
+			//assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),student,assignment.getAssignmentDeadline(),2);
+			
+			
+//			map.put("assignment",service.insert(assignment));
+			map.put("assignment",service.replyReplyReplyAddStep(assignment));
+			
+			
+			
+			System.out.println("답글  작성하고 등록ok");
+		return new ModelAndView("assignment/assignment_detail.tiles",map); //답글작성완료하면 상세페이지로 돌아가기*
+		}
+		
+		/*
+		 *답변처리전 코드
+		 * //답변폼에서   ->  답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때) assignment_replyRegister.jsp 에서 assignment_list.jsp로감
+		@RequestMapping("/assignment_replyRegisterSuccess")// 
+		public ModelAndView reply(Assignment assignment, HttpServletRequest request){
+			
+			//로그인한 학생아이디에 학생이름
+			HttpSession session = request.getSession();//
+			Student s = (Student)session.getAttribute("login_info");//
+			String student = s.getStudentName();//
+			//date
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			String sdfDate = sdf.format(date);
+			//글번호
+			int num = service.selectNextNo();
+			
+			
 			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),student,assignment.getAssignmentDeadline(),3);
 			service.insert(assignment);
 			
 			
 			
+			
 			System.out.println("답글  작성하고 등록ok");
 		return new ModelAndView("assignment/assignment_list.tiles","assignment",assignment); //답글작성완료하면 상세페이지로 돌아가기*
-		}
-		
-		/*//과제등록할거 작성하고 등록(과제작성완료 눌렀을때)
-		@RequestMapping("/assignment_registerSuccess")//assignment_register.jsp 에서  
-		public ModelAndView register(Assignment assignment, String teacherName){
-			
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = new Date();
-			String sdfDate = sdf.format(date);
-			
-	
-			
-			//글번호
-			int num = service.selectNextNo();
-			
-			//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 x																																									//안되서 맨끝에 lectureNo 우선 개설강좌에있는 no넣어놓고함*
-			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),teacherName,assignment.getAssignmentDeadline(),3);
-			service.insert(assignment);
-			
-			System.out.println("과제글 작성하고 등록ok");
-		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment);
 		}
 		*/
       //위에 학생 답글-----------------------------------------------------------------------------------------------------------------
