@@ -4,68 +4,67 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style type="text/css">
-table{
-border-right 1px solid #e3e3e3;
-font-weight normal;
-
-
-
+caption{
+font-family: 궁서;
+color: #00F;
+font-weight: bold;
+font-size: 30px;
+margin-bottom: 10px;
 }
-th, td{
-border 0;
-vertical-align top;
-border-top 1px solid #e3e3e3;
-border-right 1px solid #e3e3e3;
-vertical-align middle;
+table_list{
+width:100%;
+font-size: 12px;
 }
+table_list thead tr th{ 
+height :35px;
+background: #494949;
+color: #ffff;
+font-weght: bold; 
 }
-
 </style>
 
 
 <h3>내정보 | 과제게시판</h3>
 <hr/>
 
-<div class="boardList">
-	<table border="1" summary="">
+
+<table class="table_list" summary="영주" cellpacing="0">
+	<caption></caption>
+	<thead>
 		<tr>
-			<th>번호</th>
-			<th>강의명</th>
-			<th>제목</th>
-			<th>강사명</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			<th>마감일</th>
-			<th>조회수</th>
+			<th scope="col">번호</th>
+			<th scope="col">강의명</th>
+			<th scope="col">제목</th>
+			<th scope="col">강사명</th>
+			<th scope="col">작성자</th>
+			<th scope="col">작성일</th>
+			<th scope="col">마감일</th>
+			<th scope="col">조회수</th>
 		</tr>
-		
+	<thead>
+
 		<c:forEach var="assignment" items="${requestScope.assignment}">
-		<tr>
-			<td>${assignment.assignmentNo}</td>
-			
-			<td><%-- ${assignment.lectureNo} --%></td>
-			
-			<td>
-				<c:if test="${assignment.replyLevel>1}">
-					<c:forEach begin="1" end="${assignment.replyLevel-1}">
+			<tr>
+				<td class="num">${assignment.assignmentNo}</td>
+
+				<td></td>
+
+				<td class="title"><c:if test="${assignment.replyLevel>1}">
+						<c:forEach begin="1" end="${assignment.replyLevel-1}">
 						&nbsp;&nbsp;
 					</c:forEach>
 					└
-				</c:if>
-				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
-			</td>
-<%-- 			<td><a href="/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}">
-					${assignment.assignmentTitle}</a></td> --%>
-			
-			
-			<td><%-- ${assignment.} --%>강사명</td>
-			<td>${assignment.assignmentWriter}</td>
-			<td>${assignment.assignmentDate}</td>
-			<td>${assignment.assignmentDeadline}</td>
-			<td>${assignment.assignmentHit}</td>
-		</tr>
+				</c:if> <a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+				</td>
+
+				<td class="title"><%-- ${assignment.} --%>강사명</td>
+				<td class="title">${assignment.assignmentWriter}</td>
+				<td class="num">${assignment.assignmentDate}</td>
+				<td class="num">${assignment.assignmentDeadline}</td>
+				<td class="num">${assignment.assignmentHit}</td>
+			</tr>
 		</c:forEach>
-	</table>
+</table>
 </div>
 
 
