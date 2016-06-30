@@ -16,4 +16,10 @@
 	from code_table
 	where code_type = #{codeType}
 </select>
+
+<select id="selectByCodeName" resultMap="code-resultMap" parameterType="string">
+	SELECT <include refid="code_colums"/>
+	from code_table
+	where code_name = #{codeName}
+</select>
 </mapper> 

@@ -4,23 +4,15 @@ import java.io.Serializable;
 
 public class Inquiry implements Serializable
 {
-	private int advancedNo, advancedSecret;
-	private String advancedTitle, advancedContent, advancedDate;
+	private int advancedNo;
+	private String advancedSecret, advancedTitle, advancedContent, advancedDate;
 	private int advancedHit;
-	private String advancedId;
+	private String advancedId, advancedType;
 	private int lectureNo2;
 	
-	public Inquiry(){}
-	
-	public Inquiry(int advancedNo, String advancedTitle, String advancedContent, String advancedDate) {
-		super();
-		this.advancedNo = advancedNo;
-		this.advancedTitle = advancedTitle;
-		this.advancedContent = advancedContent;
-		this.advancedDate = advancedDate;
-	}
-	
-	public Inquiry(int advancedNo, int advancedSecret, String advancedTitle, String advancedContent,
+	public Inquiry(){}	
+
+	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
 			String advancedDate, int advancedHit, String advancedId) {
 		super();
 		this.advancedNo = advancedNo;
@@ -32,8 +24,9 @@ public class Inquiry implements Serializable
 		this.advancedId = advancedId;
 	}
 
-	public Inquiry(int advancedNo, int advancedSecret, String advancedTitle, String advancedContent,
-			String advancedDate, int advancedHit, String advancedId, int lectureNo2) {
+
+	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
+			String advancedDate, int advancedHit, String advancedId, String advancedType) {
 		super();
 		this.advancedNo = advancedNo;
 		this.advancedSecret = advancedSecret;
@@ -42,15 +35,24 @@ public class Inquiry implements Serializable
 		this.advancedDate = advancedDate;
 		this.advancedHit = advancedHit;
 		this.advancedId = advancedId;
+		this.advancedType = advancedType;
+	}
+
+
+	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
+			String advancedDate, int advancedHit, String advancedId, String advancedType, int lectureNo2) {
+		super();
+		this.advancedNo = advancedNo;
+		this.advancedSecret = advancedSecret;
+		this.advancedTitle = advancedTitle;
+		this.advancedContent = advancedContent;
+		this.advancedDate = advancedDate;
+		this.advancedHit = advancedHit;
+		this.advancedId = advancedId;
+		this.advancedType = advancedType;
 		this.lectureNo2 = lectureNo2;
 	}
 
-	@Override
-	public String toString() {
-		return "Inquiry [advancedNo=" + advancedNo + ", advancedSecret=" + advancedSecret + ", advancedTitle="
-				+ advancedTitle + ", advancedContent=" + advancedContent + ", advancedDate=" + advancedDate
-				+ ", advancedHit=" + advancedHit + ", advancedId=" + advancedId + ", lectureNo2=" + lectureNo2 + "]";
-	}
 
 	public int getAdvancedNo() {
 		return advancedNo;
@@ -60,11 +62,11 @@ public class Inquiry implements Serializable
 		this.advancedNo = advancedNo;
 	}
 
-	public int getAdvancedSecret() {
+	public String getAdvancedSecret() {
 		return advancedSecret;
 	}
 
-	public void setAdvancedSecret(int advancedSecret) {
+	public void setAdvancedSecret(String advancedSecret) {
 		this.advancedSecret = advancedSecret;
 	}
 
@@ -108,6 +110,14 @@ public class Inquiry implements Serializable
 		this.advancedId = advancedId;
 	}
 
+	public String getAdvancedType() {
+		return advancedType;
+	}
+
+	public void setAdvancedType(String advancedType) {
+		this.advancedType = advancedType;
+	}
+
 	public int getLectureNo2() {
 		return lectureNo2;
 	}
@@ -125,8 +135,9 @@ public class Inquiry implements Serializable
 		result = prime * result + advancedHit;
 		result = prime * result + ((advancedId == null) ? 0 : advancedId.hashCode());
 		result = prime * result + advancedNo;
-		result = prime * result + advancedSecret;
+		result = prime * result + ((advancedSecret == null) ? 0 : advancedSecret.hashCode());
 		result = prime * result + ((advancedTitle == null) ? 0 : advancedTitle.hashCode());
+		result = prime * result + ((advancedType == null) ? 0 : advancedType.hashCode());
 		result = prime * result + lectureNo2;
 		return result;
 	}
@@ -159,16 +170,31 @@ public class Inquiry implements Serializable
 			return false;
 		if (advancedNo != other.advancedNo)
 			return false;
-		if (advancedSecret != other.advancedSecret)
+		if (advancedSecret == null) {
+			if (other.advancedSecret != null)
+				return false;
+		} else if (!advancedSecret.equals(other.advancedSecret))
 			return false;
 		if (advancedTitle == null) {
 			if (other.advancedTitle != null)
 				return false;
 		} else if (!advancedTitle.equals(other.advancedTitle))
 			return false;
+		if (advancedType == null) {
+			if (other.advancedType != null)
+				return false;
+		} else if (!advancedType.equals(other.advancedType))
+			return false;
 		if (lectureNo2 != other.lectureNo2)
 			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Inquiry [advancedNo=" + advancedNo + ", advancedSecret=" + advancedSecret + ", advancedTitle="
+				+ advancedTitle + ", advancedContent=" + advancedContent + ", advancedDate=" + advancedDate
+				+ ", advancedHit=" + advancedHit + ", advancedId=" + advancedId + ", advancedType=" + advancedType
+				+ ", lectureNo2=" + lectureNo2 + "]";
+	}		
 }

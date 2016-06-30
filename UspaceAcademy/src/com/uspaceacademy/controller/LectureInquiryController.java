@@ -29,10 +29,10 @@ public class LectureInquiryController {
 	//1:1문의 전체 목록
 	@RequestMapping("/lectureInquiryList")
 	public ModelAndView lectureInquiryList(@RequestParam(defaultValue="1") int page){	
-		return new ModelAndView("lectureInquiry/lectureInquiry_list.tiles", "lectureInquiryList", service.selectAllInquirys());
-//		Map map = service.getInquiryList(page);
-//		map.put("page", page);
-//		return new ModelAndView("lectureInquiry/lectureInquiry_list.tiles", map);
+//		return new ModelAndView("lectureInquiry/lectureInquiry_list.tiles", "lectureInquiryList", service.selectAllInquirys());
+		Map map = service.getInquiryList(page);
+		map.put("page", page);
+		return new ModelAndView("lectureInquiry/lectureInquiry_list.tiles", map);
 	}
 	
 	//1:1문의 전체목록에서 조회할 글을 눌렀을 때 상세페이지 조회하기. 
@@ -64,7 +64,7 @@ public class LectureInquiryController {
 	public String insertInquiry(String codeName, @ModelAttribute LectureInquiry lectureInquiry, BindingResult errors){
 		int advancedNo = service.increaseAdvancedNo();
 		String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-		lectureInquiry = new LectureInquiry(advancedNo, 1, lectureInquiry.getAdvancedTitle(), lectureInquiry.getAdvancedContent(), advancedDate, 0, "admin");
+//		lectureInquiry = new LectureInquiry(advancedNo, 1, lectureInquiry.getAdvancedTitle(), lectureInquiry.getAdvancedContent(), advancedDate, 0, "admin");
 		
 		InquiryValidator validator = new InquiryValidator();
 		validator.validate(lectureInquiry, errors);
@@ -115,4 +115,6 @@ public class LectureInquiryController {
 //		return "inquiry/inquiry_list.tiles";
 		return "/lectureInquiry/lectureInquiryList.do";
 	}
+	
+	
 }

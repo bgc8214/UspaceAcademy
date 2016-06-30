@@ -47,7 +47,7 @@ form {
 											var td = $(this).text();
 											$("#td5")
 													.html(
-															'<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button style="width:76px">FAQ</button></a><a href="/UspaceAcademy/inquiry/inquiryList.do"><button>1대1문의</button></a>');
+															'<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button style="width:76px">FAQ</button></a><a href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의"><button>1대1문의</button></a>');
 											$("#td1").html("");
 											$("#td6").html("");
 										});
@@ -60,14 +60,14 @@ form {
 											if ($("#memberType").val() == "teacher") { // 마이페이지 강사 로그인
 												$("#td6")
 														.html(
-																"<button>내 정보</button><button>내 강좌</button>");
+																'<button>내 정보</button><button>내 강좌</button><button>과제 게시판</button><a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do"><button>강의 질문 게시판</button></a><button>출결 관리</button>');
 												$("#td1").html("");
 												$("#td5").html("");
 											} else if ($("#memberType").val() == "student") // 마이페이지 학생 로그인
 											{
 												$("#td6")
 														.html(
-																"<button>내 정보</button><button>내 강좌</button>");
+																'<button>내 정보</button><button>내 강좌</button><button>과제 게시판</button><a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do"><button>강의 질문 게시판</button></a>');
 												$("#td1").html("");
 												$("#td5").html("");
 											} else //마이페이지 관리자 로그인

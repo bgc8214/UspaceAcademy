@@ -26,12 +26,11 @@ function idCheck()
 }
 </script>
 <h2>학생 가입폼</h2>
- <button onclick="idCheck();">아이디 중복체크</button>
 <form action="/UspaceAcademy/member/studentRegister.do" method="post" name="join_form">
 	<table>
 		<tr>
 			<th>ID</th>
-			<td><input type="text" name="studentId" readonly="readonly"
+			<td><input type="text" name="studentId" onclick="idCheck();"
 				value="${requestScope.student.studentId }"><span
 				class="error"> <form:errors path="student.studentId"
 						delimiter="//" /> <!-- BindingResult의 에러메세지 출력 -->

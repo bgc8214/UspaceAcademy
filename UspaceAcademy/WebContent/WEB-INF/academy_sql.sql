@@ -7,6 +7,8 @@ create table code_table(
 	code_type varchar2(30) not null
 );
 
+
+
 -- 관리자
 drop table administrator;
 create table administrator(
@@ -123,23 +125,27 @@ select * from lecture;
 drop table advanced_board cascade constraint;
 create table advanced_board(
 	advanced_no number primary key,
-	advanced_secret number not null,
+	advanced_secret varchar2(20) not null,
 	advanced_title varchar2(100) not null,
 	advanced_content clob not null,
 	advanced_date varchar2(50) not null,
 	advanced_hit number not null,
 	advanced_id varchar2(50) not null,
+	advanced_type varchar2(50),
 	lecture_no2 number,
 	constraint fk_advanced_lecture foreign key(lecture_no2) references lecture(lecture_no)
 );
 
 insert into advanced_board values(4, 1, '제목', '내용', '2016-05-22', 1, 'id-11', 5);
-insert into advanced_board values(5, 1, '제목2', '내용2', '2016-05-23', 1, 'id-13', null);
-insert into advanced_board values(6, 1, '제목3', '내용3', '2016-05-24', 1, 'id-14', null);
+insert into advanced_board values(5, 1, '제목2', '내용2', '2016-05-23', 1, 'id-13', null, null);
+insert into advanced_board values(6, 1, '제목3', '내용3', '2016-05-24', 1, 'id-14', null, null);
 select * from ADVANCED_BOARD;
 
 drop sequence advanced_board_seq;
 create sequence advanced_board_seq nocache;
+
+drop sequence advanced_board2_seq;
+create sequence advanced_board2_seq nocache;
 
 
 
@@ -240,6 +246,15 @@ DELETE FROM student_lecture_join;
 
 select  * from review_board where review_no=75;
 
+ 		SELECT *
+ 		FROM   advanced_board
+ 		where advanced_title like '%3%'
+
 
 delete from lecture where lecture_no=-1 cascade constraint;
 --select  * from review_board where review_no=75;
+
+drop table secret_table;
+create table secret_table(
+	secret varchar2(20) primary key
+);

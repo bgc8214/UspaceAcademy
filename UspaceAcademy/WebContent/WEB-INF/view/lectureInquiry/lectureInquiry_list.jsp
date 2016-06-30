@@ -30,4 +30,4 @@
 
 <p>
 
-<a href="/UspaceAcademy/lectureInquiry/selectLICodeName.do?codeName=강의질문하기">강의 질문하기 등록</a>
+<a href="/UspaceAcademy/lectureInquiry/selectLICodeName.do">강의 질문하기 등록</a>

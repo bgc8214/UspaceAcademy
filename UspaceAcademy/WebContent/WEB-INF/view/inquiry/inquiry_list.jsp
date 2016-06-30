@@ -18,7 +18,8 @@
 			<c:forEach items="${requestScope.inquiryList}" var="list" >
 				<tr>
 					<td>${list.advancedNo }</td>
-					<td><a href="/UspaceAcademy/inquiry/selectByAdvancedNo.do?advancedNo=${list.advancedNo }">${list.advancedTitle }</a></td>
+					<td><a href="/UspaceAcademy/inquiry/selectByAdvancedNo.do?advancedNo=${list.advancedNo }&advancedSecret=${list.advancedSecret}
+					&advancedType=1:1문의">${list.advancedTitle }</a></td>
 					<td>${list.advancedId }</td>
 					<td>${list.advancedDate }</td>
 					<td>${list.advancedHit }</td>
@@ -32,7 +33,7 @@
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/inquiry/inquiryList.do?page=${requestScope.paging.beginPage - 1}">
+			<a href="/UspaceAcademy/inquiry/inquiryList.do?page=${requestScope.paging.beginPage - 1}&advancedType=1:1문의">
 			◀
 			</a>
 		</c:when>
@@ -45,7 +46,7 @@
 			 [${page }]
 			</c:when>
 			<c:otherwise>
-				<a href="/UspaceAcademy/inquiry/inquiryList.do?page=${page }">
+				<a href="/UspaceAcademy/inquiry/inquiryList.do?page=${page }&advancedType=1:1문의">
 					${page }
 				</a>
 			</c:otherwise>
@@ -55,7 +56,7 @@
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/inquiry/inquiryList.do?&page=${requestScope.paging.endPage + 1}">
+			<a href="/UspaceAcademy/inquiry/inquiryList.do?&page=${requestScope.paging.endPage + 1}&advancedType=1:1문의">
 			▶
 			</a>
 		</c:when>
@@ -63,7 +64,11 @@
 	</c:choose>
 <p>
 
-<a href="/UspaceAcademy/inquiry/codeList.do?codeName=1:1문의">1:1문의 등록</a>
+<form action="/UspaceAcademy/inquiry/selectByTitle.do">
+	<input type="text" name="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="제목으로 검색">
+</form><br>
+
+<a href="/UspaceAcademy/inquiry/codeList.do?advancedType=1:1문의">1:1문의 등록</a>
 	
 	<%-- ${requestScope.list} --%>
 	
