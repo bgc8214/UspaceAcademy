@@ -63,7 +63,7 @@ public class NoticeDao
 		return session.selectOne(namespace+"select_hit", no);
 	}
 	
-	// 페이징 처리
+	// 공지 게시판 페이징 처리
 	public List selectListPage(int page, String type) {
 		Map map = new HashMap<>();
 		map.put("page", page);
@@ -72,9 +72,25 @@ public class NoticeDao
 		return session.selectList(namespace+"selectListByPaing", map);
 	}
 	
-	// 페이징 처리
+	// 공지 게시판 페이징 처리
 	public int selectCountContents(String type) {
 		return session.selectOne(namespace+"selectCountContents", type);
 	}
 	
+	public List noticeSearch(String keyword, int page) {
+		Map map = new HashMap<>();
+		map.put("basicType", "공지사항");
+		map.put("keyword", keyword);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("page", page);
+		return session.selectList(namespace+"noticeSearch", map);
+	}
+	
+	// 공지사항 게시판에서 제목+내용으로 찾은 공통된 게시글의 총 개수 검색
+	public int selectNoticeCountContents(String keyword) {
+		Map map = new HashMap<>();
+		map.put("keyword", keyword);
+		map.put("basicType", "공지사항");
+		return session.selectOne(namespace+"selectNoticeCountContents", map);
+	}
 }

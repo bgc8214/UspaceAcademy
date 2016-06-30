@@ -16,6 +16,15 @@ span.errors{
 <link href="/UspaceAcademy/jQuery/jquery-ui.theme.min.css" rel="stylesheet">
 <script type="text/javascript">
 	$(document).ready(function(){
+		// 자바에서 현재날짜 가져오기
+		var dt = new Date();
+		var yy = dt.getFullYear();
+		var mm = dt.getMonth()+1;
+		var dd = dt.getDate();
+		var h = dt.getHours();
+		if(h>=15) dd++;
+		mindt=yy+"/"+mm+"/"+dd;
+		
 		$("#subject").on("change",function(){
 			var tmp = $(this);
 			$.ajax({
@@ -42,18 +51,26 @@ span.errors{
 		
 		$(function(){
 			$("#bt1").datepicker({
+				changeYear: true,
+				changeMonth: true,
+				showMonthAfterYear:true,
 				dateFormat:'yy/mm/dd',
-				dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
-		        dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
+				dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+		        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
 		        monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-		        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+				minDate : mindt
 		  	});
 			$("#bt2").datepicker({
+				changeYear: true,
+				changeMonth: true,
+				showMonthAfterYear:true,
 				dateFormat:'yy/mm/dd',
-				dayNames: ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일'],
-		        dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
+				dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+		        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
 		        monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-		        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월']
+		        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		        minDate : mindt
 			});
 		});
 		

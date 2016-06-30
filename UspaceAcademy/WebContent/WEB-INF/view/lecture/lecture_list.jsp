@@ -8,10 +8,6 @@ tr.dummy, td.dummy{
 <script type="text/javascript">
 var tmp;//이벤트소스를 저장하기 위한 변수
 $(document).ready(function(){
-	
-		
-	
-	
 	$(".lectureList").on("click",function(){
 		tmp = $(this);
 		$.ajax({
@@ -30,6 +26,7 @@ $(document).ready(function(){
 						if(list[0].lectureCurrentStudent<list[0].lectureTotalStudent){
 							temp = "<a href="+"/UspaceAcademy/lecture/applyLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureApply'>수강신청</button></a>"+
 								   	   "<a id='zzim' href="+"/UspaceAcademy/lecture/zzimLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureZzim'>찜하기</button></a>";
+						
 						}
 						tmp.next().children().eq(0).append($(temp));
 					}
@@ -39,6 +36,17 @@ $(document).ready(function(){
 								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+"><button class='lectureRemove'>강의삭제</button></a>";
 						tmp.next().children().eq(0).append($(temp2));
 					}
+				
+/*	정훈 - 강의일수 확인을 위해서...
+				var start_String = list[0].lectureStartDate;
+				var end_String = list[0].lectureEndDate;
+				var start_Array = start_String.split("/");
+				var end_Array = end_String.split("/");
+				var start_date = new Date(start_Array[0], Number(start_Array[1])-1, start_Array[2]);
+				var end_date = new Date(end_Array[0], Number(end_Array[1])-1, end_Array[2]);
+				var between_day = (end_date.getTime() - start_date.getTime())/1000/60/60/24;
+				alert("강의일수 - " +(between_day+1));		
+ */	 
 			},
 			"error":function(xhr, status, errorMsg){
 				alert("오류가 발생했습니다."+status+", "+errorMsg);
@@ -91,6 +99,9 @@ $(document).ready(function(){
 	
 })
 </script>
+<form>
+<input id="page" type="hidden" value="${param.page }">
+</form>
 <font color="red" size="5">${requestScope.errorMessage}</font>
 <table border="1">
 
@@ -101,9 +112,7 @@ $(document).ready(function(){
 </tr>
 </thead>
 <tbody>
-<form>
-<input id="page" type="hidden" value="${param.page }">
-</form>
+
 <c:forEach items="${requestScope.lectureList }" var="lectureList">
 		<tr class="lectureList">
 			<td>${lectureList.lectureNo }</td><td>${lectureList.lectureSubject }</td><td>${lectureList.lectureTitle }</td>

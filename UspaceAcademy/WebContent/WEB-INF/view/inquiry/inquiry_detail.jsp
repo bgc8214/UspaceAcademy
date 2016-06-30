@@ -1,4 +1,4 @@
-<%-- <%@ page contentType="text/html;charset=utf-8"%>
+<%@ page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -71,4 +71,3 @@ $(document).ready(function(){
 <a href="/UspaceAcademy/inquiry/updateByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">1:1문의 수정</a>
 <a href="/UspaceAcademy/inquiry/deleteByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">1:1문의 삭제</a>
 <a href="/UspaceAcademy/inquiry/inquiryList.do">1:1문의 목록</a>
- --%>

@@ -74,5 +74,16 @@ public class MemberService
 	public List getTeacherBySubject(String teacherSubject) {
 		return dao.selectTeacherBySubject(teacherSubject);
 	}
+	
+	// 강사 개인정보 수정
+	public int modifyTeacher(Teacher teacher) {
+		System.out.println("Service : "+teacher);
+		return dao.updateTeacher(teacher);
+	}
+	
+	// 강사 탈퇴
+	public int removeTeacher(String teacherId) {
+		return dao.deleteTeacher(teacherId);
+	}
 
 }

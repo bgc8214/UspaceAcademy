@@ -40,8 +40,16 @@ public class Lecture implements Serializable{
 		
 	}
 
-	
-	
+	// 강사가 선택한 강좌의 학생들의 정보를 조회할 때 사용.
+	public Lecture(int lectureNo, String lectureStartDate, String lectureEndDate) {
+		super();
+		this.lectureNo = lectureNo;
+		this.lectureStartDate = lectureStartDate;
+		this.lectureEndDate = lectureEndDate;
+	}
+
+
+
 	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, int lectureStartTime,
 			int lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
 			int lectureTotalStudent, String lectureSubject, String teacherId2) {

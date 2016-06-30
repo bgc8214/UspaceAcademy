@@ -392,7 +392,46 @@ public class MemberController
 		{
 			return "main.tiles";
 		}
-		
 	}
+	// 강사의 회원정보 수정을 위한 폼으로 이동하기
+	@RequestMapping("/updateTeacherForm.do")
+	public ModelAndView updateTeacherForm() {
+	/*	List codeList = service.searchCode("teacherSubject"); // 코드타입 정보를 리스트로 받는다.
+		System.out.println("확인 - "+ codeList);
+	
+		HashMap map = new HashMap<>(); // 코드테이블을 넘기기 위한 맵
+		map.put("codeType", codeList);*/
+		
+		return new ModelAndView("member/teacher_updateForm.tiles");
+	}
+	
+	@RequestMapping("/updateTeacher.do")
+	public String updateAfterDetail(@ModelAttribute("updateForm") Teacher teacher, HttpSession session, BindingResult errors) {
 
+		TeacherValidator validator = new TeacherValidator();
+		validator.validate(teacher, errors);
+		boolean error = errors.hasErrors();
+		int errorCount = errors.getErrorCount();
+		System.out.printf("강사 가입 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n", error, errorCount);
+		if (errors.hasErrors())
+		{
+			// 에러 응답 페이지로 이동
+			return "/member/updateTeacherForm.do";
+		}
+			service.modifyTeacher(teacher);	// 수정 ok
+
+			session.setAttribute("login_info", teacher);	// 세션에 수정된 강사정보 재 설정
+		
+			return "/teacherInfo.do";
+	}
+	
+	// 강사 탈퇴
+	@RequestMapping("/deleteTeacher.do")
+	public String deleteTeacher(String teacherId, HttpServletRequest request) {
+		System.out.println("삭제할 ID " + teacherId);
+		service.removeTeacher(teacherId);
+		HttpSession session = request.getSession();
+		session.invalidate();
+		return "main.tiles";
+	}
 }

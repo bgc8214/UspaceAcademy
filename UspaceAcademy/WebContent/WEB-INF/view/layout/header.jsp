@@ -60,7 +60,7 @@ form {
 											if ($("#memberType").val() == "teacher") { // 마이페이지 강사 로그인
 												$("#td6")
 														.html(
-																"<button>내 정보</button><button>내 강좌</button>");
+																"<a href='/UspaceAcademy/teacherInfo.do'><button>내 정보</button></a><a href='/UspaceAcademy/attendance/attendanceList.do'><button>내 강좌</button></a>");
 												$("#td1").html("");
 												$("#td5").html("");
 											} else if ($("#memberType").val() == "student") // 마이페이지 학생 로그인

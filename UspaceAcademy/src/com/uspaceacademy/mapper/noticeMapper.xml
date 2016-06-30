@@ -65,6 +65,23 @@ FROM basic_board WHERE basic_type = #{basicType} ORDER BY basic_no DESC ) ) WHER
  FROM basic_board 
  WHERE basic_type = #{type} 
  </select>
+ 
+<!-- 제목+내용으로 검색 -->
+<select id="noticeSearch" parameterType="map" resultMap="notice-resultMap">
+SELECT 
+<include refid="notice-columns"/>
+FROM(SELECT ceil(rownum/#{itemsPerPage}) page, 
+<include refid="notice-columns"/>
+FROM (SELECT 
+<include refid="notice-columns"/>
+FROM basic_board WHERE basic_type=#{basicType} and (basic_content like '%'||#{keyword}||'%' or basic_title like '%'||#{keyword}||'%') ORDER BY basic_no DESC)) WHERE page = #{page} 
+<!-- SELECT * FROM basic_board WHERE basic_type = #{basicType} and (basic_content like '%'||#{keyword}||'%' or basic_title like '%'||#{keyword}||'%') -->
+</select>
 
+<select id="selectNoticeCountContents" parameterType="map" resultType="_int"> 
+SELECT count(basic_no) 
+FROM basic_board 
+WHERE basic_type = #{basicType} and 
+(basic_content like '%'||#{keyword}||'%' or basic_title like '%'||#{keyword}||'%') </select>
 
 </mapper> 

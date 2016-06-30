@@ -1,6 +1,9 @@
 package com.uspaceacademy.validaotor;
 
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -41,6 +44,14 @@ public class StudentValidator implements Validator
 		}*/
 		
 		
+		// 이메일 형식 검증
+		boolean err = false;
+		String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(student.getStudentEmail());
+		if(m.matches()) 
+			err = true;
+		
 		if(student.getStudentPassword()==null || student.getStudentPassword().trim().isEmpty())
 		{
 			errors.rejectValue("studentPassword", "","비밀번호를 입력하세요");
@@ -61,7 +72,7 @@ public class StudentValidator implements Validator
 		{
 			errors.rejectValue("studentAddress", "","주소를 입력하세요");
 		}
-		if(student.getStudentEmail()==null || student.getStudentEmail().trim().isEmpty())
+		if(student.getStudentEmail()==null || student.getStudentEmail().trim().isEmpty() || err==false)
 		{
 			errors.rejectValue("studentEmail", "","이메일을 입력하세요");
 		}

@@ -22,6 +22,38 @@ function idCheck()
 {
 	window.open("/UspaceAcademy/teacherIdCheck.do","아이디 중복 확인","width=400,height=200,resizable=no");
 }
+$(document).ready(function(){
+	$("#btn").on("click", function(){
+		if(!$("input[name=teacherId]").val()) {
+			alert("PW는 필수 입력사항");
+			return false;
+		}
+		if(!$("input[name=teacherPassword]").val()) {
+			alert("PW는 필수 입력사항");
+			return false;
+		}
+		if(!$("input[name=teacherName]").val()) {
+			alert("이름은 필수 입력사항");
+			return false;
+		}
+		if(!$("input[name=teacherEmail]").val()) {
+			alert("email는 필수 입력사항");
+			return false;
+		}
+		if(!$("input[name=teacherPhoneNo]").val()) {
+			alert("전화번호는 필수 입력사항");
+			return false;
+		}
+		if(!$("input[name=teacherAddress]").val()) {
+			alert("주소는 필수 입력사항");
+			return false;
+		}
+		if(!$("input[name=teacherSubject]").val()) {
+			alert("과목은 필수 선택사항");
+			return false;
+		}
+	})
+})
 </script>
 <h2>강사 가입폼</h2>
  <button onclick="idCheck();">아이디 중복체크</button>
@@ -68,7 +100,7 @@ function idCheck()
 	</tr>
 	<tr>
 		<td colspan="2">
-			<input type="submit" value="가입">
+			<input id="btn" type="submit" value="가입">
 		</td>
 	</tr>
 </table>
