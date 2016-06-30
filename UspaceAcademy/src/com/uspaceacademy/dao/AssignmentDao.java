@@ -27,6 +27,42 @@ public class AssignmentDao {
 		this.session = session;
 	}
 
+	//----------------------------------------------------------
+	
+	
+	
+	
+			//1.ㄷ조회  select id="replyGetList"
+			public List<Assignment> replyGetList(){
+				System.out.println("dao----------------"+ session.selectList(namespace+"replyGetList"));
+				return session.selectList(namespace+"replyGetList");
+			}
+	
+	
+			//2.ㄷ답글등록  insert id="replyReply"  
+			public int replyReply(Assignment assignment){
+				//insert
+				return session.insert(namespace+"replyReply",assignment);
+			}
+			
+			//3.ㄷ업데이트 update id="replyAddStep"
+			public int replyAddStep(Assignment assignment){
+				//update step+1  (원본글 보다 큰건 모두 +1)
+				return session.update(namespace+"replyAddStep",assignment);
+				
+			}
+			
+			/*//2.ㄷ답글등록  insert id="replyReply"  3.ㄷ업데이트 update id="replyAddStep"
+			public void replyReply(Assignment assignment){
+				//update step+1  (원본글 보다 큰건 모두 +1)
+				session.update(namespace+"replyAddStep",assignment);
+				//insert
+				session.insert(namespace+"replyReply",assignment);
+			}
+			*/
+			
+			
+
 	
 	//----------------------------------------------------------
 	
@@ -51,7 +87,6 @@ public class AssignmentDao {
 		return session.selectList(namespace+"select",type);
 		}
 /*public List<Assignment> selectList(){
-			
 			System.out.println("AssignmentDao  +  selectList ");
 			List<Assignment> list = session.selectList(namespace+"select");
 			System.out.println(list);
@@ -114,20 +149,6 @@ public class AssignmentDao {
 		//--------------------------------------------------------------------
 	
 
-		//10.답글 달기 dao
-		public int reply(Assignment assignment){
-			return (int) session.selectOne(namespace+"reply");
-		}
-		
-
-		
-		
-		
-		
-		
-		
-		
-	
 	
 }
 

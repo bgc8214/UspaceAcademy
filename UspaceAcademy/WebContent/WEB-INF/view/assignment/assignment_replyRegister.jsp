@@ -43,24 +43,26 @@
 
 
 
-
-<!--   upload_files.jsp**************************************** -->
+<!-- ............................................................................................................................................................................................................................ -->
+<!-- 
+   upload_files.jsp****************************************
 <form action="/UspaceAcademy/writeBoard.do" method="post" enctype="multipart/form-data">
-<!-- 제목<input type="text" name="title"> --><br>
+제목<input type="text" name="title"><br>
 첨부파일
 <input type="file" name="upfile">
-<!-- <textarea name="content" rows="15" cols="70"></textarea> -->
+<textarea name="content" rows="15" cols="70"></textarea>
 <input type="submit" value="저장">
 </form>
-<!--   **************************************** -->
+  ****************************************
  <form method="post" enctype="multipart/form-data" action="/UspaceAcademy/imageUpload.do">
  전송할사진<input type="file" name="upImage">
-<!--  사진설명<br>
- <textarea rows="10" cols="50" name="comment"></textarea> -->
+ 사진설명<br>
+ <textarea rows="10" cols="50" name="comment"></textarea>
  <input type="submit" value="전송">
  </form>
-<!--   **************************************** -->
-
+  ****************************************
+ -->
+<!-- ............................................................................................................................................................................................................................ -->
 
 
 

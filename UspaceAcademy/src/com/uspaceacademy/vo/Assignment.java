@@ -11,9 +11,9 @@ public class Assignment implements Serializable{
 	private String assignmentDate;			//7.글 등록일-
 	private int assignmentHit;					//9.글 조회수-
 	private int assignmentPassword;			//    글 비밀번호				리스트세부
-	private int replyFamily;						//    답글 그룹
-	private int replyStep;							//    답글 레벨
-	private int replyLevel;						//    답글 스텝(순서)
+	private int replyFamily;						//    답글 묶음
+	private int replyStep;							//    답글 순서
+	private int replyLevel;						//    답글 단계
 	private String assignmentWriter;			//6.글쓴이-
 	private String assignmentDeadline;		//8.글 마감일-
 	private int lectureNo; //F키 , 강의번호	2.강의명	5.강사명

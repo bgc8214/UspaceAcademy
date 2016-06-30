@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -48,20 +49,29 @@ public class AssignmentController {
 	
 	//아래 강사******************************************************************************************************************
 	
-	
+	//오류났던거 적기 : 답글게시판으로 변경하는 과정에서 - mapper에 replyGetList -  where절에 ,콤마안찍어줬고, resultMap안적어줬음 그리고 아래 map.put("assignment")로했는데 jsp에서 이름다르게 뿌려줘서 그랬음.
+	//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때) //답글기능생긴후 변경 - ok
+		@RequestMapping("/assignment_list.do")
+		public ModelAndView list(@RequestParam(defaultValue="1") int page){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
+			
+			System.out.println("controller-------------------"+service.replyGetList());
+			Map map = new HashMap();
+			map.put("page", service.selectPagingCount(page));
+			map.put("assignment", service.replyGetList());
+			
+			System.out.println("과제게시판ok");
+			return new ModelAndView("assignment/assignment_list.tiles", map) ;
+		}
+/*		//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때) //답글기능 생기기전
+		@RequestMapping("/assignment_list.do")
+		public ModelAndView list(@RequestParam(defaultValue="1") int page){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
+			
+			Map map = service.selectPagingCount(page);
+			map.put("page", page);
 
-	//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때)
-	@RequestMapping("/assignment_list.do")
-	public ModelAndView list(@RequestParam(defaultValue="1") int page){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
-		
-		Map map = service.selectPagingCount(page);
-		map.put("page", page);
-
-		System.out.println("과제게시판ok");
-		return new ModelAndView("assignment/assignment_list.tiles", map) ;
-	}
-
-	
+			System.out.println("과제게시판ok");
+			return new ModelAndView("assignment/assignment_list.tiles", map) ;
+		}*/
 	
 
 
@@ -201,9 +211,18 @@ public class AssignmentController {
 		
 		
 		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	//아래 학생 답글-----------------------------------------------------------------------------------------------------------------
 	
-		//답글 작성 폼 (assignment_detail.jsp ->assignment_replyRegister.jsp)
+		//답글 작성 폼 (assignment_detail.jsp ->assignment_replyRegister.jsp)글상세페이지에서 답변하기버튼클릭 -> 답변폼으로 온다
 		@RequestMapping("/assignment_replyRegister")
 		public ModelAndView replyRegister(){
 			
@@ -219,9 +238,9 @@ public class AssignmentController {
 		
 		
 		
-		//(과제에)답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때)
-		@RequestMapping("/assignment_replyRegisterSuccess")//assignment_replyRegister.jsp 에서  
-		public ModelAndView reply(Assignment assignment,String teacherName, HttpServletRequest request){
+		//답변폼에서   ->  답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때) assignment_replyRegister.jsp 에서 assignment_list.jsp로감
+		@RequestMapping("/assignment_replyRegisterSuccess")// 
+		public ModelAndView reply(Assignment assignment, HttpServletRequest request){
 			
 			HttpSession session = request.getSession();//
 			Student s = (Student)session.getAttribute("login_info");//
@@ -243,52 +262,30 @@ public class AssignmentController {
 			
 			
 			System.out.println("답글  작성하고 등록ok");
-		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //답글작성완료하면 상세페이지로 돌아가기*
+		return new ModelAndView("assignment/assignment_list.tiles","assignment",assignment); //답글작성완료하면 상세페이지로 돌아가기*
 		}
 		
-		
-		/*//*************************************************************************************************삭제
-		 // 게시물상세보기에서 답변 클릭시 호출되어 답변을 달 reply.jsp로 연결
-        public ModelAndView reply(HttpServletRequest req, HttpServletResponse res) throws Exception {
-
-                  String seq = req.getParameter("seq");
-
-                  // 답변달 게시물 내용을 reply.jsp 넘긴다.
-                  ModelAndView mav = new ModelAndView("reply",   //view이름
-                                                                   "reply",   //readContent가 넘기는 boardDTO의 이름, reply.jsp에서 사용
-                                                                   boardService.readContent(seq));
-                 
-                  return mav;
-        }
-
-        // 답글 저장
-        public ModelAndView replyok(HttpServletRequest req, HttpServletResponse res)
-                             throws Exception {
-
-                  String seq = req.getParameter("seq");
-                  String name = req.getParameter("name");
-                  String passwd = req.getParameter("passwd");
-                  String title = req.getParameter("title");
-                  String content = req.getParameter("content");
-                  String fileName = "";
-                  String reply = req.getParameter("reply");
-                  String reply_step = req.getParameter("reply_step");
-                  String reply_level = req.getParameter("reply_level");
-
-                  BoardDTO boardDTO = new BoardDTO(name, passwd, title, content, fileName);
-
-                  boardDTO.setSeq(Integer.parseInt(seq));
-                  boardDTO.setReply(Integer.parseInt(reply));
-                  boardDTO.setReply_level(Integer.parseInt(reply_level));
-                  boardDTO.setReply_step(Integer.parseInt(reply_step));
-
-                  boardService.replyBoard(boardDTO);
-
-                  return new ModelAndView("redirect:/list.html");
-        }
-      //*************************************************************************************************삭제
+		/*//과제등록할거 작성하고 등록(과제작성완료 눌렀을때)
+		@RequestMapping("/assignment_registerSuccess")//assignment_register.jsp 에서  
+		public ModelAndView register(Assignment assignment, String teacherName){
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			String sdfDate = sdf.format(date);
+			
+	
+			
+			//글번호
+			int num = service.selectNextNo();
+			
+			//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 x																																									//안되서 맨끝에 lectureNo 우선 개설강좌에있는 no넣어놓고함*
+			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),teacherName,assignment.getAssignmentDeadline(),3);
+			service.insert(assignment);
+			
+			System.out.println("과제글 작성하고 등록ok");
+		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment);
+		}
 		*/
-		
       //위에 학생 답글-----------------------------------------------------------------------------------------------------------------
 		
 		
@@ -297,7 +294,27 @@ public class AssignmentController {
 		
 		
 		
-		//>>>>>>>>>>>>>>>파일 업로드 (학생이 답글달기에서 파일 업로드 할때)
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		/*//>>>>>>>>>>>>>>>파일 업로드 (학생이 답글달기에서 파일 업로드 할때)
 		@RequestMapping("/imageUpload")
 		public String imageUpload(@RequestParam MultipartFile upImage, @RequestParam String comment, HttpServletRequest request, ModelMap map) throws IllegalStateException, IOException{
 
@@ -364,10 +381,10 @@ public class AssignmentController {
 		//>>>>>>>>>>>>>>>다운로드 처리 handler메소드
 		@RequestMapping("/download")
 		public ModelAndView download(@RequestParam String fileName){
-		 /*
+		 
 		 * 	 View-Name : downloadView
 		 * 	 Model(View에 전달할 값) : "downFile" - 파일명 downFile-abc.txt
-		 */
+		 
 		return new ModelAndView("downloadView", "downFile", fileName);
 		}
 		
@@ -382,9 +399,9 @@ public class AssignmentController {
 			}
 			
 			
-			/* 	응답처리 구현 메소드
+			 	응답처리 구현 메소드
 			 * 		매개변수 : 1.Map model - handler에서 전달한 Model 값(ModelAndView의 Model)
-			 */
+			 
 			public void renderMergedOutputModel(Map model, HttpServletRequest request, HttpServletResponse response) throws Exception{
 				
 				String fileName = (String)model.get("downFile");
@@ -406,7 +423,7 @@ public class AssignmentController {
 				
 			}
 		}
-		
+		*/
 		
 		//-----------------------
 		

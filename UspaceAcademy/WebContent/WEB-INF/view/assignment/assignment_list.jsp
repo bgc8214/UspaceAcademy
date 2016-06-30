@@ -26,7 +26,6 @@ vertical-align middle;
 <h3>내정보 | 과제게시판</h3>
 <hr/>
 
-
 <div class="boardList">
 	<table border="1" summary="">
 		<tr>
@@ -46,9 +45,17 @@ vertical-align middle;
 			
 			<td><%-- ${assignment.lectureNo} --%></td>
 			
-			
-			<td><a href="/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}">
-					${assignment.assignmentTitle}</a></td>
+			<td>
+				<c:if test="${assignment.replyLevel>1}">
+					<c:forEach begin="1" end="${assignment.replyLevel-1}">
+						&nbsp;&nbsp;
+					</c:forEach>
+					└
+				</c:if>
+				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+			</td>
+<%-- 			<td><a href="/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}">
+					${assignment.assignmentTitle}</a></td> --%>
 			
 			
 			<td><%-- ${assignment.} --%>강사명</td>
@@ -139,6 +146,129 @@ vertical-align middle;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<%-- <%@ page contentType="text/html;charset=utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<style type="text/css">
+table{
+border-right 1px solid #e3e3e3;
+font-weight normal;
+
+
+
+}
+th, td{
+border 0;
+vertical-align top;
+border-top 1px solid #e3e3e3;
+border-right 1px solid #e3e3e3;
+vertical-align middle;
+}
+}
+
+</style>
+
+
+<h3>내정보 | 과제게시판</h3>
+<hr/>
+
+
+<div class="boardList">
+	<table border="1" summary="">
+		<tr>
+			<th>번호</th>
+			<th>강의명</th>
+			<th>제목</th>
+			<th>강사명</th>
+			<th>작성자</th>
+			<th>작성일</th>
+			<th>마감일</th>
+			<th>조회수</th>
+		</tr>
+		
+		<c:forEach var="assignment" items="${requestScope.assignment}">
+		<tr>
+			<td>${assignment.assignmentNo}</td>
+			
+			<td>${assignment.lectureNo}</td>
+			
+			
+			<td><a href="/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}">
+					${assignment.assignmentTitle}</a></td>
+			
+			
+			<td>${assignment.}강사명</td>
+			<td>${assignment.assignmentWriter}</td>
+			<td>${assignment.assignmentDate}</td>
+			<td>${assignment.assignmentDeadline}</td>
+			<td>${assignment.assignmentHit}</td>
+		</tr>
+		</c:forEach>
+	</table>
+</div> --%>
 
 
 

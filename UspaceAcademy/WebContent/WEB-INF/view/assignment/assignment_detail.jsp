@@ -86,6 +86,20 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- --------------------------------------------------------------------------------------------------------- -->
+<%-- 
 사진 파일명 ${requestScope.imageName }
 사진 크기 ${requsetScope.imageSize }byte
 사진설명 ${requestScope.comment }
@@ -118,3 +132,5 @@
 <c:forEach items="${requestScope.fileNames}" var="fileName">
 <a href="/UspaceAcademy/download.do?fileName=${fileName }">${fileName }</a><!--  링크가 download.do로 걸림* -->
 </c:forEach>
+ --%>
+<!-- --------------------------------------------------------------------------------------------------------- -->

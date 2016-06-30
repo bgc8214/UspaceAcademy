@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=utf-8"%>
+<%-- <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -9,7 +9,7 @@
 <body>
 
 
-<%-- 사진 파일명 ${requestScope.imageName }
+사진 파일명 ${requestScope.imageName }
 사진 크기 ${requsetScope.imageSize }byte
 사진설명 ${requestScope.comment }
 <p>
@@ -40,7 +40,7 @@
 <h3>DownloadView를 이용해 다운처리</h3>
 <c:forEach items="${requestScope.fileNames}" var="fileName">
 <a href="/UspaceAcademy/download.do?fileName=${fileName }">${fileName }</a><!--  링크가 download.do로 걸림* -->
-</c:forEach> --%>
+</c:forEach>
 
 
 
@@ -68,3 +68,4 @@
 
 
 
+ --%>

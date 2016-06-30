@@ -28,6 +28,63 @@
 	</resultMap>
 
 
+<!--  답글.................................................................................................................................................................................................................... -->
+
+
+	<!--  1.ㄷ조회   ,기존LIST대신이거             -->
+	<select id="replyGetList"  resultType="Assignment" resultMap="assignment-basic">
+	SELECT	*
+	FROM    	assignment_board   
+	ORDER BY 	assignment_re_family DESC, assignment_re_step ASC <!--  콤마 안찍으면 오류남 -->
+	</select>
+	
+	
+	
+	<!-- 2.ㄷ답글등록  -->
+	<insert id="replyReply" parameterType="Assignment">
+	INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep}+1,#{replyLevel}+1,#{assignmentWriter},#{assignmentDeadline},#{lectureNo})
+	</insert>
+	<!-- 3.ㄷ업데이트 -->
+	<update id="replyAddStep" parameterType="Assignment">
+	UPDATE assignment_board  SET   assignment_re_step = assignment_re_step +1
+	WHERE  assignment_re_family=#{replyFamily}   AND  assignment_re_step > #{replyStep}
+	</update>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  답글.................................................................................................................................................................................................................... -->
+
+
+
+
+
+
+
+
+
 
 
 	<!--  *************************************************************************  -->
@@ -74,6 +131,18 @@
 	WHERE rnum>=?  and  rnum<=?
 
 -->
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	<!-- 4.수정  -->
@@ -161,19 +230,6 @@
 
 
 	<!-- 위에 페이징처리............................................................................................................................ -->
-
-
-	<!--   10.답글달기  -->
-
-
-<!-- 
-String sql = " select * from  
-(select seq, name , passwd, "+ "title, content, filename, regdate, "+ " readcount, reply, reply_step, "
-                              + "reply_level , rownum r "
-                              + "from board "
-                              + " order by reply desc , reply_step asc)";  
-
- -->
 
 
 
