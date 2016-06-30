@@ -31,9 +31,12 @@ create table teacher(
 	teacher_subject varchar2(50) not null,
 	teacher_salary number not null
 );
+insert into teacher values('11111', '11111', '강사1111', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
+insert into teacher values('111111', '111111', '강사1-6개', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
+insert into teacher values('teacher', '1234', '강사2222', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
 insert into teacher values('id-10', '1111', '홍길동', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
-insert into teacher values('id-11', '1111', '홍길동', 'asd@naver.com', '010-6366-5153', '서울시 서초구', '영어', 1000000);
-insert into teacher values('id-12', '1111', '홍길동', 'a@naver.com', '010-6666-5153', '서울시 서초구', '수학', 1000000);
+insert into teacher values('id-11', '1111', '홍일일', 'asd@naver.com', '010-6366-5153', '서울시 서초구', '영어', 1000000);
+insert into teacher values('id-12', '1111', '홍이이', 'a@naver.com', '010-6666-5153', '서울시 서초구', '수학', 1000000);
 select * from teacher;
 
 -- 학생
@@ -51,7 +54,7 @@ insert into STUDENT values('id-1','1111','이영주','iidd1@kosta.com','010-1111
 insert into STUDENT values('id-2','2222','김수진','iidd2@kosta.com','010-1111-2222','경기도 수원시 장안구 파장동');
 insert into STUDENT values('id-3','3333','황경희','iidd3@kosta.com','010-1111-3333','경기도 안산시 상록구 본오동');
 insert into STUDENT values('id-4','4444','김세은','iidd4@kosta.com','010-1111-4444','서울시 서대문구 은평동');
-
+insert into STUDENT values('22222','22222','학생입니다','iidd4@kosta.com','010-1111-4444','서울시 서대문구 은평동');
 -- FAQ, 공지사항
 drop table basic_board;
 create table basic_board(
@@ -166,24 +169,75 @@ CREATE TABLE comment_table(
 drop sequence comment_board_seq;
 create sequence comment_board_seq nocache;
 
+
+
+
+
+
+
+
+
+drop sequence assignment_board_seq;
+create sequence assignment_board_seq nocache;
+
 -- 과제
-drop table assignment_board;
+select * from assignment_board;
+drop table assignment_board cascade constraint;
 create table assignment_board(
 	assignment_no number primary key,
 	assignment_secret number not null,
 	assignment_title varchar2(100) not null,
 	assignment_content clob not null,
-	assingment_date varchar2(50) not null,
-	assingment_hit number not null,
-	assingment_password number null,
-	assingment_re_family number not null,
-	assingment_re_step number not null,
-	assingment_re_level number not null,
-	assingment_writer varchar2(50) not null,
-	assingment_deadline varchar2(10) not null,
-	lecture_no number not null,
+	assignment_date varchar2(50) not null,
+	assignment_hit number not null,
+	assignment_password number null,
+	assignment_re_family number not null,
+	assignment_re_step number not null,
+	assignment_re_level number not null,
+	assignment_writer varchar2(50) not null,
+	assignment_deadline varchar2(10) not null,
+	lecture_no number null, -- n o t null 로바꾸기 영주
 	constraint fk_assignment_lecture foreign key (lecture_no) references lecture(lecture_no)
 );
+insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,0,0,'1이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,1,'11이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'111이름','20160627',1);
+
+insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,1,1,'2이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,2,'22이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,3,'222이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,1,'2!이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,2,'22@이름','20160627',1);
+
+--영주 : 지우지마세요~!
+--	assignment_no number primary key,					--1.글번호
+--	assignment_title varchar2(100) not null,				--3.글제목
+--	assignment_secret number not null,					--4.비밀여부
+--	assignment_writer varchar2(50) not null,				--6.글쓴이
+--	assignment_date varchar2(50) not null,				--7.글 등록일
+--	assignment_deadline varchar2(10) not null,			--8.글 마감일
+--	assignment_hit number not null,						--9.글 조회수
+--	
+--	assignment_password number null,					--글 비밀번호
+--	assignment_content clob not null,					--글내용
+--	reply          number not null,							--답글 그룹reply
+--	reply_step   number not null,							--답글 레벨reply_step
+--	reply_level   number not null,							--답글 스텝 (순서)reply_level
+--	
+--	lecture_no number not null							--F키 , 강의번호	2.강의명	5.강사명
+	
+--
+
+
+
+
+
+
+
+
+
+
+
 
 -- 학생 강의 조인
 DROP table student_lecture_join cascade constraint;
@@ -226,6 +280,7 @@ select * from CODE_TABLE;
 	from code_table
 	where code_type = 'basic_board'
 
+select * from LECTURE;
 INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
@@ -254,7 +309,12 @@ select  * from review_board where review_no=75;
 delete from lecture where lecture_no=-1 cascade constraint;
 --select  * from review_board where review_no=75;
 
+
 drop table secret_table;
 create table secret_table(
 	secret varchar2(20) primary key
 );
+
+
+select * from assignment_board where assignment_no in(161, 170)
+
