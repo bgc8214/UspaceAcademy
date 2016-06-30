@@ -60,15 +60,16 @@ form {
 											if ($("#memberType").val() == "teacher") { // 마이페이지 강사 로그인
 												$("#td6")
 														.html(
-																"<a href='/UspaceAcademy/teacherInfo.do'><button>내 정보</button></a><a href='/UspaceAcademy/attendance/attendanceList.do'><button>내 강좌</button></a>");
+																'<a href="/UspaceAcademy/teacherInfo.do"><button>내 정보</button></a><a href="/UspaceAcademy/attendance/attendanceList.do"><button>내 강좌</button></a><a href="/UspaceAcademy/assignment/assignment_list.do"><button id="assignment">과제게시판</button></a>');
+
 												$("#td1").html("");
 												$("#td5").html("");
 											} else if ($("#memberType").val() == "student") // 마이페이지 학생 로그인
 											{
 												$("#td6")
 														.html(
-																"<button>내 정보</button><button>내 강좌</button>");
-												$("#td1").html("");
+																'<button>내 정보</button><button>내 강좌</button><a href="/UspaceAcademy/assignment/assignment_list.do"><button id="assignment">과제게시판</button></a>');
+												$("#td1").html(""); 
 												$("#td5").html("");
 											} else //마이페이지 관리자 로그인
 											{
@@ -92,7 +93,7 @@ form {
 				<td><a href="/UspaceAcademy/lecture/lectureList.do"><button
 							id="lecture">개설강좌</button></a></td>
 				<td><a
-					href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button
+					href="/UspaceAcademy/lectureReview/lecture_review_list.do"><button
 							id="lectureReview">수강후기</button></a></td>
 				<td><a href="/UspaceAcademy/notice/list.do?type=공지사항"><button
 							id="notice">공지사항</button></a></td>
@@ -131,6 +132,8 @@ form {
 							id="customerCenter">고객센터</button></a></td>
 				<td><a href="/UspaceAcademy/lecture/lectureList.do"><button
 							id="myPage">마이페이지</button></a></td>
+							
+							
 			</tr>
 
 			<tr>

@@ -141,7 +141,7 @@
 
 
 
-
+	<!-- 아래 페이징처리............................................................................................................................ -->
 
 	<!--    8.   select 페이징 처리!!    -->
 	<select id="selectPaging" parameterType="map" resultMap="lectureReview-basic">
@@ -161,32 +161,124 @@
 	</select>
 
 
+	<!-- 위에 페이징처리............................................................................................................................ -->
 
 
 
-
 	
 	
 	
-<!-- ************************************************************************************************************************************************ -->
-	
-	
-
-	
-	
-	
-	
+<!-- 아래 검색처리************************************************************************************************************************************************ -->
+	<!--  강의과목으로 검색 lectureSubject / 강의리스트페이징-->
+	<!--  강의과목으로 검색 lectureSubject / 강의리스트페이징헬퍼 -->
+	<!--  내용으로 검색 reviewContent / 강의리스트페이징-->
+	<!--  내용으로 검색 reviewContent / 강의리스트페이징헬퍼 -->
 	
 	
 	
 	
+	<!--  10.강의과목으로 검색 lectureSubject / 강의리스트페이징-->
+			<select id="selectPagingLectureSubject" parameterType="map" resultMap="lectureReview-basic">
+			SELECT <include refid="lecture-review-columns"/>
+			FROM(
+				SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="lecture-review-columns"/>
+				FROM(
+						SELECT <include refid="lecture-review-columns"/>
+						FROM review_board
+						WHERE lecture_subject like '%'||#{lectureSubject}||'%'
+						ORDER BY review_no DESC
+						)
+					)	
+			WHERE page=#{page}
+			</select>
+			
+	<!--  11.강의과목으로 검색 lectureSubject / 강의리스트페이징헬퍼 -->
+			<select id="selectCountLectureSubject" resultType="_int" >
+				SELECT count(review_no)
+				FROM review_board
+				WHERE lecture_subject like '%'||#{lectureSubject}||'%'
+				</select>			
+			
+			<!-- ***************************************************************************************************** -->
+			
+	<!--  12.제목으로 검색 reviewContent / 강의리스트페이징-->
+			<select id="selectPagingReviewTitle" parameterType="map" resultMap="lectureReview-basic">
+			SELECT <include refid="lecture-review-columns"/>
+			FROM(
+				SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="lecture-review-columns"/>
+				FROM(
+						SELECT <include refid="lecture-review-columns"/>
+						FROM review_board
+						WHERE review_title like '%'||#{reviewTitle}||'%'
+						ORDER BY review_no DESC
+						)
+					)	
+			WHERE page=#{page}
+			</select>
+			
+			
+	<!--  13.제목으로 검색 reviewTitle / 강의리스트페이징헬퍼 -->
+			<select id="selectCountReviewTitle" resultType="_int" >
+			SELECT count(review_no)
+				FROM review_board
+				WHERE review_title like '%'||#{reviewTitle}||'%'
+				</select>		
+			
+			
+			
+<!-- 위에 검색처리************************************************************************************************************************************************ -->	
 	
 	
 	
 	
 	
 	
-	<!--  전체조회(제목+내용) --> 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx************************************************************************************************************************************************ -->
+	<!--  전체조회(제목+내용) 
 	<select id="selectTitleContent" resultType="LectureReview" parameterType="string">
 	SELECT 	review_no reviewNo,
 				review_writer reviewWriter,
@@ -197,12 +289,12 @@
 				review_date reviewDate,
 				review_hit reviewHit   
 	FROM 	review_board
-	WHERE lecture_title=#{lectureTitle} , review_content=#{reviewContent}     <!--  쿼리 => VO -->
+	WHERE lecture_title=#{lectureTitle} , review_content=#{reviewContent}      쿼리 => VO
 	</select>
 	
 
 	
-	<!--  전체조회(제목) -->
+	 전체조회(제목)
 	<select id="selectTitle" resultType="LectureReview" parameterType="string">
 	SELECT 	review_no reviewNo,
 				review_writer reviewWriter,
@@ -213,12 +305,12 @@
 				review_date reviewDate,
 				review_hit reviewHit   
 	FROM 	review_board
-	WHERE lecture_title=#{lectureTitle}   <!--  쿼리 => VO -->
+	WHERE lecture_title=#{lectureTitle}    쿼리 => VO
 	</select>
 	
 
 	
-	<!--  전체조회(내용) -->
+	 전체조회(내용)
 	<select id="selectContent" resultType="LectureReview" parameterType="string">
 	SELECT 	review_no reviewNo,
 				review_writer reviewWriter,
@@ -229,23 +321,7 @@
 				review_date reviewDate,
 				review_hit reviewHit   
 	FROM 	review_board
-	WHERE review_content=#{reviewContent} <!--  쿼리 => VO -->
+	WHERE review_content=#{reviewContent}  쿼리 => VO
 	</select>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-	
-	
-	
-	
+	 -->
 </mapper>

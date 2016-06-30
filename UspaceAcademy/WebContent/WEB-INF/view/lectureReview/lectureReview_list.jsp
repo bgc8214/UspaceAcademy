@@ -28,10 +28,10 @@
 				<tr>
 					<td>${lectureListReview.reviewNo}</td>
 					<td>${lectureListReview.reviewWriter}</td>
-					<td>${lectureListReview.lectureTitle}</td>
-					<td>${lectureListReview.lectureSubject}</td>
 					
-					<td><a href="/UspaceAcademy/lectureReview/lecture_review_detail.do?reviewNo=${lectureListReview.reviewNo} "> <!--  한개값넘겨줄때 ? 물음표,  여러개 넘겨줄때 & 앤드.   -->
+					<td>${lectureListReview.lectureSubject}</td>
+					<td>${lectureListReview.lectureTitle}</td>
+					<td><a href="/UspaceAcademy/lectureReview/lecture_review_detail.do?reviewNo=${lectureListReview.reviewNo}"> <!--  한개값넘겨줄때 ? 물음표,  여러개 넘겨줄때 & 앤드.   -->
 							${lectureListReview.reviewTitle}</a></td>
 					
 					<td>${lectureListReview.reviewDate}</td>
@@ -89,7 +89,16 @@
 </span>
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
-
+<p>
+<!--  검색 기능 -->
+<form action="/UspaceAcademy/lectureReview/lecture_review_search.do?page=${param.page}" method="post">
+<select name="searchType">
+	<option value="lectureSubject">강의과목</option>
+	<option value="reviewTitle">제목</option>
+</select>
+<input type="text" name="keyword">
+<input type="submit" value="검색">
+</form>
 
 
 

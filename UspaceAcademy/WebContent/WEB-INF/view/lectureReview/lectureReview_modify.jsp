@@ -35,7 +35,7 @@
 				<tr>
 				<select name="lectureSubject">
 					<c:forEach items="${requestScope.codeType }" var="code"> <!--  컨트롤러* -->
-					<option value="${code.codeId }">${code.codeName }</option> <!--  vo ??* -->
+					<option value="${code.codeName }">${code.codeName }</option> <!--  vo ??* -->
 					</c:forEach>
 					<span class="error"><form:errors path="lec.lectureSubject"/></span>
 					</select>

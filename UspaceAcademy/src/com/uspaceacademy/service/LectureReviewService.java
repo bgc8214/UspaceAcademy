@@ -79,6 +79,49 @@ public class LectureReviewService{
 	
 	
 	
+	//--------------------------------------------------------------------------------------------------------------------	
+	
+	
+	//10.11.   강의과목으로 검색 lectureSubject
+	//12.13.   리뷰제목으로 검색 reviewTitle
+	
+	
+	
+	
+	//10.11.   강의과목으로 검색 (수강후기 리스트에서)lectureSubject
+	public Map searchLectureSubject(String lectureSubject, int page){
+		Map map = new HashMap();
+		map.put("lectureList",dao.selectPagingLectureSubject(lectureSubject, page));
+		map.put("paging", new PagingBean(dao.selectCountLectureSubject(lectureSubject),page));
+		System.out.println(lectureSubject+"111111111111111111111111111");
+		return map;
+	}
+	
+	
+	
+	
+	
+	//12.13.   리뷰제목으로 (수강후기 리스트에서)검색 reviewTitle
+	public Map searchReviewTitle(String reviewTitle, int page){
+		Map map = new HashMap();
+		map.put("lectureList", dao.selectPagingReviewTitle(reviewTitle, page));
+		map.put("paging", new PagingBean(dao.selectCountReviewTitle(reviewTitle),page));
+		return map;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -101,7 +144,7 @@ public class LectureReviewService{
 	
 //--------------------------------------------------------------------------------------------------------------------		
 
-
+/*
 	
 	//수강후기 검색 제목+내용==============
 	public List selectTitleContent(String lectureTitle, String reviewContent){ //매개변수 값 넣기*
@@ -116,7 +159,7 @@ public class LectureReviewService{
 		return dao.selectContent(reviewContent);
 	}
 	
-	
+	*/
 	
 	
 	
