@@ -1,40 +1,23 @@
-package com.uspaceacademy.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Serializable;
+package com.uspaceacademy.controller;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.util.FileCopyUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.AbstractView;
-
 import com.uspaceacademy.service.AssignmentService;
+import com.uspaceacademy.service.MemberService;
 import com.uspaceacademy.vo.Assignment;
-import com.uspaceacademy.vo.Board;
-import com.uspaceacademy.vo.LectureReview;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
+//mybatis.config.xml에 mapper꼭 등록하기
 
 @Controller
 @RequestMapping("/assignment")
@@ -42,17 +25,17 @@ public class AssignmentController {
 
 	@Autowired
 	private AssignmentService service;
-	
+	private MemberService memberService;//
 
-	//mybatis.config.xml에 mapper꼭 등록하기
 	
 	
 	
 	
-	//아래 강사******************************************************************************************************************
 	
-	//오류났던거 적기 : 답글게시판으로 변경하는 과정에서 - mapper에 replyGetList -  where절에 ,콤마안찍어줬고, resultMap안적어줬음 그리고 아래 map.put("assignment")로했는데 jsp에서 이름다르게 뿌려줘서 그랬음.
-	//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때) //답글기능생긴후 변경 - ok
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	
+	//●오류났던거 적기 : 답글게시판으로 변경하는 과정에서 - mapper에 replyGetList -  where절에 ,콤마안찍어줬고, resultMap안적어줬음 그리고 아래 map.put("assignment")로했는데 jsp에서 이름다르게 뿌려줘서 그랬음.
+	//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때)
 		@RequestMapping("/assignment_list.do")
 		public ModelAndView list(@RequestParam(defaultValue="1") int page){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
 			
@@ -60,39 +43,48 @@ public class AssignmentController {
 			map.put("page", service.selectPagingCount(page));
 			map.put("assignment", service.replyGetList());
 			
+			
+			//  //지워!
+			//map.put("studentId",memberService.findStudentById(id));
+			
+			
 			System.out.println("과제게시판ok");
 			return new ModelAndView("assignment/assignment_list.tiles", map) ;
 		}
-/*		//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때) //답글기능 생기기전
-		@RequestMapping("/assignment_list.do")
-		public ModelAndView list(@RequestParam(defaultValue="1") int page){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
-			
-			Map map = service.selectPagingCount(page);
-			map.put("page", page);
 
-			System.out.println("과제게시판ok");
-			return new ModelAndView("assignment/assignment_list.tiles", map) ;
-		}*/
-	
-
-
-
-
-	//과제게시판 -  상세조회(assignment_list.jsp -> assignment_detail.jsp)
-	@RequestMapping("/assignment_detail")
-	public ModelAndView detail(String assignmentNo){
-		int num = Integer.parseInt(assignmentNo);
-		Assignment assignment = service.selectNo(num);//no값으로 게시물 찾아옴
-		service.selectHit(assignment); //조회수 증가시키기
 		
-		System.out.println("과제게시판 상세조회ok");
-		return new ModelAndView("assignment/assignment_detail.tiles","assignment", assignment);
-	}
+
+		
+		
 
 
 
+		// 과제게시판 - 상세조회(assignment_list.jsp -> assignment_detail.jsp)
+		@RequestMapping("/assignment_detail")
+		public ModelAndView detail(String assignmentNo, HttpSession session, HttpRequest request) {
+			int num = Integer.parseInt(assignmentNo);
+			Assignment assignment = service.selectNo(num);// no값으로 게시물 찾아옴
+			service.selectHit(assignment); // 조회수 증가시키기
+			
+
+		
+			System.out.println("과제게시판 상세조회ok");
+			return new ModelAndView("assignment/assignment_detail.tiles", "assignment", assignment);
+		}
+		/*// 과제게시판 - 상세조회(assignment_list.jsp -> assignment_detail.jsp)
+				@RequestMapping("/assignment_detail")
+				public ModelAndView detail(String assignmentNo) {
+					int num = Integer.parseInt(assignmentNo);
+					Assignment assignment = service.selectNo(num);// no값으로 게시물 찾아옴
+					service.selectHit(assignment); // 조회수 증가시키기
+					
+					
+					System.out.println("과제게시판 상세조회ok");
+					return new ModelAndView("assignment/assignment_detail.tiles", "assignment", assignment);
+				}
 
 
+*///안되면이걸로
 
 
 
@@ -101,8 +93,6 @@ public class AssignmentController {
 		//과제글 작성 폼 (assignment_list.jsp ->assignment_register.jsp)
 		@RequestMapping("/assignment_register")
 		public ModelAndView registerForm(){
-			
-			
 			
 			System.out.println("과제게시판 작성폼ok");	
 			return new ModelAndView("assignment/assignment_register.tiles");//등록폼으로 온다*
@@ -117,32 +107,36 @@ public class AssignmentController {
 		
 		
 		
+		
 		//과제등록할거 작성하고 등록(과제작성완료 눌렀을때)
 		@RequestMapping("/assignment_registerSuccess")//assignment_register.jsp 에서  
 		public ModelAndView register(Assignment assignment, String teacherName){
 			
+			//Date
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			String sdfDate = sdf.format(date);
 			
-	
-			
 			//글번호
 			int num = service.selectNextNo();
 			
-			//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 x																																									//안되서 맨끝에 lectureNo 우선 개설강좌에있는 no넣어놓고함*
-			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),teacherName,assignment.getAssignmentDeadline(), 5);
+																																										//안되서 맨끝에 lectureNo 우선 개설강좌에있는 no넣어놓고함*
+			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),teacherName,assignment.getAssignmentDeadline(), 1);
 			assignment.setReplyFamily(num); 
-			//└오류났던거 적기:  강사가 새로 과제글 등록한글에 학생이 답글쓴거 안달림(db에서 확인해보면 replyFamily값이 0으로 박혀서그럼, 새로운글 등록할때(여기)도 replyFamily,replyStep,replyLevel 넘겨줘야됨  -> 해결: assignment.setReplyFamily(num); 해주고 replyStep,replyLevel도 넘겨줘야함
+
 			
 			service.insert(assignment);
 			
 			System.out.println("과제글 작성하고 등록ok");
 		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment);
 		}
+		//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 이상 x		
+		/*	assignment.setReplyStep(num);//??
+			assignment.setReplyLevel(num);//??
+			└●오류났던거 적기:  강사가 새로 과제글 등록한글에 학생이 답글쓴거 안달림(db에서 확인해보면 replyFamily값이 0으로 박혀서그럼, 새로운글 등록할때(여기)도 replyFamily,replyStep,replyLevel 넘겨줘야됨  -> 해결: assignment.setReplyFamily(num); 해주고 replyStep,replyLevel도 넘겨줘야함*/
+
 		
-
-
+		
 		
 		
 		
@@ -154,13 +148,15 @@ public class AssignmentController {
 		//과제출제글 삭제(과제글 상세조회에서 삭제 눌렀을때)
 		@RequestMapping("/assignment_delete")//assignment_detail.jsp 에서  
 		public ModelAndView delete(int assignmentNo, String type){
-			//int list =  service.delete(assignmentNo);
 			service.delete(assignmentNo);
 			List list = service.selectList(type);
 				
 			System.out.println("과제글 삭제 ok");
 		return new ModelAndView("assignment/assignment_list.tiles","assignment",list);
 		}
+		
+		
+		
 		
 		
 		
@@ -180,7 +176,6 @@ public class AssignmentController {
 			HashMap map = new HashMap<>();
 			map.put("assignment", assignment);
 			
-			
 			System.out.println("과제글 수정 폼 ok");
 			return new ModelAndView("assignment/assignment_modify.tiles",map); 
 		}
@@ -191,14 +186,13 @@ public class AssignmentController {
 		
 		
 		
-/*		HttpSession session){
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			
-			//로그인한 학생아이디에 학생이름
-			Student s = (Student)session.getAttribute("login_info");//
-			String student = s.getStudentName();//
-*/		
-		//과제글 수정완료하기 (수정폼에서 과제글 수정완료 눌렀을때)
+		
+		
+		
+		
+		
+		
+		
 		@RequestMapping("/assignment_modify") //assignment_modify.jsp에서
 		public ModelAndView modify(Assignment assignment,HttpSession session) { 
 			HashMap<String,Object> map = new HashMap<String,Object>();
@@ -210,8 +204,8 @@ public class AssignmentController {
 			Date date = new Date();
 			String sdfDate = sdf.format(date);
 			
-			
-			assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),teacher,assignment.getAssignmentDeadline(),5);
+			//조인관계 오류남 -------------------------------------------------
+			assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),teacher,assignment.getAssignmentDeadline(),1);
 			//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),5);
 			//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),3);
 			service.update(assignment);
@@ -221,45 +215,12 @@ public class AssignmentController {
 			return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
 		}
 
-		/*		public ModelAndView modify(Assignment assignment,String teacherName) { 
-		
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String sdfDate = sdf.format(date);
-		
-		assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),assignment.getAssignmentWriter(),teacherName,assignment.getAssignmentDeadline(),5);
-		//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),3);
-		service.update(assignment);
-		
-	
-		System.out.println("과제글 수정 ok");
-		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
-	}*/
-
-/*		//과제글 수정완료하기 (수정폼에서 과제글 수정완료 눌렀을때)
-	@RequestMapping("/assignment_modify") //assignment_modify.jsp에서
-	public ModelAndView modify(Assignment assignment) { 
-		
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String sdfDate = sdf.format(date);
-		
-		assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),5);
-		//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),3);
-		service.update(assignment);
-		
-	
-		System.out.println("과제글 수정 ok");
-		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
-	}*/
 		
 		
-	//위에강사******************************************************************************************************************
-
+		
+		
+		
+		
 		
 		
 		
@@ -273,86 +234,64 @@ public class AssignmentController {
 		
 		
 		
-	//아래 학생 답글-----------------------------------------------------------------------------------------------------------------
-	
-		//답글 작성 폼 (assignment_detail.jsp ->assignment_replyRegister.jsp)글상세페이지에서 답변하기버튼클릭 -> 답변폼으로 온다
-		@RequestMapping("/assignment_replyRegister")
-		public ModelAndView replyRegister(int assignmentNo){
+		//아래 학생 답글-----------------------------------------------------------------------------------------------------------------
+		
+			//답글 작성 폼 (assignment_detail.jsp ->assignment_replyRegister.jsp)글상세페이지에서 답변하기버튼클릭 -> 답변폼으로 온다
+			@RequestMapping("/assignment_replyRegister")
+			public ModelAndView replyRegister(int assignmentNo){
+				
+				Assignment assignment = service.selectNo(assignmentNo);
+				
+				System.out.println("답글 작성폼 ok");	
+				return new ModelAndView("assignment/assignment_replyRegister.tiles","assignment",assignment);
+			}
+			//●오류났던거 적기 : 여기에서도 정보 넘겨줘야함(여기에 아무것도 안적어 줬었음), 새글+수정 합친 개념 - 글번호랑 다른것들 가져와야됨 - 가져와서 뿌려주고 이거 같이 넘겨야됨	
+		
+		
+		
 			
-			//오류났던거 적기 : 여기에서도 정보 넘겨줘야함(여기에 아무것도 안적어 줬었음), 새글+수정 합친 개념 - 글번호랑 다른것들 가져와야됨 - 가져와서 뿌려주고 이거 같이 넘겨야됨
 			
-			Assignment assignment = service.selectNo(assignmentNo);
 			
-			System.out.println("답글 작성폼 ok");	
-			return new ModelAndView("assignment/assignment_replyRegister.tiles","assignment",assignment);
-		}
+			
+		
+		
+		
+			//답변폼에서   ->  답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때) assignment_replyRegister.jsp 에서 assignment_list.jsp로감
+			@RequestMapping("/assignment_replyRegisterSuccess")// 
+			public ModelAndView reply(Assignment assignment, HttpSession session){
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				
+				//로그인한 학생아이디에 학생이름
+				Student s = (Student)session.getAttribute("login_info");//
+				String student = s.getStudentName();//
+				//Date
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = new Date();
+				String sdfDate = sdf.format(date);
+				//글번호
+				int num = service.selectNextNo();
+				//필요한것만 받아서 넘겨주기
+				assignment.setAssignmentNo(num);
+				assignment.setAssignmentDate(sdfDate);
+				assignment.setAssignmentWriter(student);
+				assignment.setReplyLevel(+1); //레벨이 +1되어야 들여쓰기 하는데 안돼서 해줌.
+				
+				assignment.setLectureNo(1);//-----------------------------------조인관계이거 문제됨
+				
+				service.replyReplyReplyAddStep(assignment);
+				
+				
+				System.out.println("답글  작성하고 등록ok");
+				return new ModelAndView("assignment/assignment_detail.tiles","assignment", assignment); //답글작성완료하면 상세페이지로 돌아가기*
+			}
+			//=잘못된것 : 아래꺼 지워주기 어짜피 위에서Assignment assignment, 넘겨받기때문에 다시 new생성해서 보낼필요없음
+			//=●오류났던거 적기 : 답글로 등록되야 하는데 새글로등록됨 ->해결: no값 그대로 넘겨야 하는데 new생성해서 num값 넣어줘서 새글이 되니까 답글이 안달렸던것.
+			//=assignment= new Assignment(num,0,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),0,assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),student,assignment.getAssignmentDeadline(),5);
+			//>●오류났던거 적기 :  답글등록하고 상세페이지뿌려줘야하는데 안나왔었음 -> 해결 : service에 replyReplyReplyAddStep메서드 내가 map에 넣어서 리턴! 해줬었는데 - 이렇게하면 assignment가 넘어가는게 아니라 숫자1이 넘어감 -> 해결 : replyReplyReplyAddStep메서드 void 로 바꿔주고 리턴없앰, 여기 컨트롤러에서도 맵지워주고 "assignment"로 넘겨줌.
+			
 
-		
-		
-		
-		
-		
-		
-		//답변폼에서   ->  답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때) assignment_replyRegister.jsp 에서 assignment_list.jsp로감
-		@RequestMapping("/assignment_replyRegisterSuccess")// 
-		public ModelAndView reply(Assignment assignment, HttpSession session){
-			HashMap<String, Object> map = new HashMap<String, Object>();
 			
-			//로그인한 학생아이디에 학생이름
-			Student s = (Student)session.getAttribute("login_info");//
-			String student = s.getStudentName();//
-			//date
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = new Date();
-			String sdfDate = sdf.format(date);
-			//글번호
-			int num = service.selectNextNo();
-			
-			//13개있는거
-			assignment= new Assignment(num,0,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),0,assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),student,assignment.getAssignmentDeadline(),5);
-		
-			//11개있는거
-			//assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),student,assignment.getAssignmentDeadline(),2);
-			
-			
-//			map.put("assignment",service.insert(assignment));
-			map.put("assignment",service.replyReplyReplyAddStep(assignment));
-			
-			
-			
-			System.out.println("답글  작성하고 등록ok");
-		return new ModelAndView("assignment/assignment_detail.tiles",map); //답글작성완료하면 상세페이지로 돌아가기*
-		}
-		
-		/*
-		 *답변처리전 코드
-		 * //답변폼에서   ->  답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때) assignment_replyRegister.jsp 에서 assignment_list.jsp로감
-		@RequestMapping("/assignment_replyRegisterSuccess")// 
-		public ModelAndView reply(Assignment assignment, HttpServletRequest request){
-			
-			//로그인한 학생아이디에 학생이름
-			HttpSession session = request.getSession();//
-			Student s = (Student)session.getAttribute("login_info");//
-			String student = s.getStudentName();//
-			//date
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			Date date = new Date();
-			String sdfDate = sdf.format(date);
-			//글번호
-			int num = service.selectNextNo();
-			
-			
-			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),student,assignment.getAssignmentDeadline(),3);
-			service.insert(assignment);
-			
-			
-			
-			
-			System.out.println("답글  작성하고 등록ok");
-		return new ModelAndView("assignment/assignment_list.tiles","assignment",assignment); //답글작성완료하면 상세페이지로 돌아가기*
-		}
-		*/
-      //위에 학생 답글-----------------------------------------------------------------------------------------------------------------
+		//위에 학생 답글-----------------------------------------------------------------------------------------------------------------
 		
 		
 		
@@ -376,7 +315,7 @@ public class AssignmentController {
 		
 		
 		
-		
+		// 아래 부터 파일-----------------------------------------------------------------------------------------------------------------------------------------------
 		
 		
 		
@@ -493,13 +432,7 @@ public class AssignmentController {
 		
 		//-----------------------
 		
-		
-		
-		
-		
-		
-		
-		
+	
 }
 
 

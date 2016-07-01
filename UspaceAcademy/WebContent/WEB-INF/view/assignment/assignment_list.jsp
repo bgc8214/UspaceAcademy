@@ -76,17 +76,36 @@ text-decoration: underline;
 			<tr>
 				<td class="num">${assignment.assignmentNo}</td>
 
-				<td></td>
+				<td class="title">강의명db</td>
 
-				<td class="title"><c:if test="${assignment.replyLevel>1}">
+				<!--  -->
+				<td class="title">
+				<c:if test="${assignment.replyLevel>1}">
 						<c:forEach begin="1" end="${assignment.replyLevel-1}">
-						&nbsp;&nbsp;
-					</c:forEach>
-					└
-				</c:if> <a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+						 &nbsp;&nbsp;
+						 </c:forEach>
+					     └
+				</c:if> 
+				<!--  학생이고 , 내가 쓴글(로그인한 아이디랑 글쓴이의 아이디 비교)이라면 - 볼수있다 -->
+				<!-- 학생은 자기가 쓴글&강사가 쓴글 만 볼 수 있게 하기 (강사는 모든글 볼수 있음) -->
+				<c:choose>
+				<c:when test="${sessionScope.memberType=='teacher'}"><!--  (강사는 모든글 볼수 있음) -->
+				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+				</c:when>
+  				<c:when test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentName==assignment.assignmentWriter}"><!-- eq -->
+				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+				</c:when> 
+				<c:otherwise> <!--  위에 경우가 모두 아니라면 -->
+				${assignment.assignmentTitle}
+				</c:otherwise>
+				</c:choose>
+				
+				
+				
 				</td>
-
-				<td class="title"><%-- ${assignment.} --%>강사명</td>
+				<!--  -->
+			
+				<td class="title"><%-- ${assignment.} --%>강사명db</td>
 				<td class="title">${assignment.assignmentWriter}</td>
 				<td class="num">${assignment.assignmentDate}</td>
 				<td class="num">${assignment.assignmentDeadline}</td>

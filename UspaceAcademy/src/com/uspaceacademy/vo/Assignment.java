@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class Assignment implements Serializable{
 	//
 	private int assignmentNo;					//1.글번호-
+	private String assignmentWriterId;        //추가:작성자 아이디 
 	private int assignmentSecret;				//4.비밀여부 
 	private String assignmentTitle;				//3.글제목-
 	private String assignmentContent;		//    글내용 - 					리스트세부
@@ -19,123 +20,93 @@ public class Assignment implements Serializable{
 	private int lectureNo; //F키 , 강의번호	2.강의명	5.강사명
 	
 	
-	
-/*	private int assignmentNo;					//1.글번호	   
-	private String assignmentTitle;				//3.글제목
-	private int assignmentSecret;				//4.비밀여부 				
-	private String assignmentWriter;			//6.글쓴이				
-	private String assignmentDate;			//7.글 등록일
-	private String assignmentDeadline;		//8.글 마감일
-	private int assignmentHit;					//9.글 조회수
-	
-	private int assignmentPassword;			//    글 비밀번호				리스트세부
-	private String assignmentContent;		//    글내용  					리스트세부
-	private int reply;								//    답글 그룹
-	private int replyStep;							//    답글 레벨
-	private int replyLevel;						//    답글 스텝(순서)
-					
-			
-	
-	private int lectureNo; //F키 , 강의번호	2.강의명	5.강사명
-*/	
+	//모두있는 생성자.//14
+	public Assignment(int assignmentNo, String assignmentWriterId, int assignmentSecret, String assignmentTitle,
+			String assignmentContent, String assignmentDate, int assignmentHit, int assignmentPassword, int replyFamily,
+			int replyStep, int replyLevel, String assignmentWriter, String assignmentDeadline, int lectureNo) {
+		super();
+		this.assignmentNo = assignmentNo;
+		this.assignmentWriterId = assignmentWriterId;
+		this.assignmentSecret = assignmentSecret;
+		this.assignmentTitle = assignmentTitle;
+		this.assignmentContent = assignmentContent;
+		this.assignmentDate = assignmentDate;
+		this.assignmentHit = assignmentHit;
+		this.assignmentPassword = assignmentPassword;
+		this.replyFamily = replyFamily;
+		this.replyStep = replyStep;
+		this.replyLevel = replyLevel;
+		this.assignmentWriter = assignmentWriter;
+		this.assignmentDeadline = assignmentDeadline;
+		this.lectureNo = lectureNo;
+	}
+
+
+
+
 	//
 	public Assignment(){}
 
 	
 	
+	//writerId추가후*****************
+	//추가후 9개
+	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
+			String assignmentDate, int assignmentHit, String assignmentWriter, String assignmentDeadline,
+			int lectureNo) {
+		super();
+		this.assignmentNo = assignmentNo;
+		this.assignmentWriterId = assignmentWriterId;
+		this.assignmentTitle = assignmentTitle;
+		this.assignmentContent = assignmentContent;
+		this.assignmentDate = assignmentDate;
+		this.assignmentHit = assignmentHit;
+		this.assignmentWriter = assignmentWriter;
+		this.assignmentDeadline = assignmentDeadline;
+		this.lectureNo = lectureNo;
+	}
+
+	//추가후12
+
+	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
+			String assignmentDate, int assignmentHit, int replyFamily, int replyStep, int replyLevel,
+			String assignmentWriter, String assignmentDeadline, int lectureNo) {
+		super();
+		this.assignmentNo = assignmentNo;
+		this.assignmentWriterId = assignmentWriterId;
+		this.assignmentTitle = assignmentTitle;
+		this.assignmentContent = assignmentContent;
+		this.assignmentDate = assignmentDate;
+		this.assignmentHit = assignmentHit;
+		this.replyFamily = replyFamily;
+		this.replyStep = replyStep;
+		this.replyLevel = replyLevel;
+		this.assignmentWriter = assignmentWriter;
+		this.assignmentDeadline = assignmentDeadline;
+		this.lectureNo = lectureNo;
+	}
+
 	
-	//생성자 중요!-----------------------------------------------------------------
 	
-	//다있는 생성자 (13개)
-public Assignment(int assignmentNo, int assignmentSecret, String assignmentTitle, String assignmentContent,
-		String assignmentDate, int assignmentHit, int assignmentPassword, int replyFamily, int replyStep,
-		int replyLevel, String assignmentWriter, String assignmentDeadline, int lectureNo) {
-	super();
-	this.assignmentNo = assignmentNo;
-	this.assignmentSecret = assignmentSecret;
-	this.assignmentTitle = assignmentTitle;
-	this.assignmentContent = assignmentContent;
-	this.assignmentDate = assignmentDate;
-	this.assignmentHit = assignmentHit;
-	this.assignmentPassword = assignmentPassword;
-	this.replyFamily = replyFamily;
-	this.replyStep = replyStep;
-	this.replyLevel = replyLevel;
-	this.assignmentWriter = assignmentWriter;
-	this.assignmentDeadline = assignmentDeadline;
-	this.lectureNo = lectureNo;
-}
-
-
-
-
-
-//----------------------------------------------------------------------------------------------
-
-
-
-
-//7개
-public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
-		int assignmentHit, String assignmentWriter, String assignmentDeadline) {
-	super();
-	this.assignmentNo = assignmentNo;
-	this.assignmentTitle = assignmentTitle;
-	this.assignmentContent = assignmentContent;
-	this.assignmentDate = assignmentDate;
-	this.assignmentHit = assignmentHit;
-	this.assignmentWriter = assignmentWriter;
-	this.assignmentDeadline = assignmentDeadline;
-}
-
-//8개  
-public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
-		int assignmentHit, String assignmentWriter, String assignmentDeadline, int lectureNo) {
-	super();
-	this.assignmentNo = assignmentNo;
-	this.assignmentTitle = assignmentTitle;
-	this.assignmentContent = assignmentContent;
-	this.assignmentDate = assignmentDate;
-	this.assignmentHit = assignmentHit;
-	this.assignmentWriter = assignmentWriter;
-	this.assignmentDeadline = assignmentDeadline;
-	this.lectureNo = lectureNo;
-}
-	//11개
-public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
-		int assignmentHit, int replyFamily, int replyStep, int replyLevel, String assignmentWriter,
-		String assignmentDeadline, int lectureNo) {
-	super();
-	this.assignmentNo = assignmentNo;
-	this.assignmentTitle = assignmentTitle;
-	this.assignmentContent = assignmentContent;
-	this.assignmentDate = assignmentDate;
-	this.assignmentHit = assignmentHit;
-	this.replyFamily = replyFamily;
-	this.replyStep = replyStep;
-	this.replyLevel = replyLevel;
-	this.assignmentWriter = assignmentWriter;
-	this.assignmentDeadline = assignmentDeadline;
-	this.lectureNo = lectureNo;
-}
-
-//10개
-
-public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
-		int assignmentHit, int replyFamily, int replyStep, int replyLevel, String assignmentWriter,
-		String assignmentDeadline) {
-	super();
-	this.assignmentNo = assignmentNo;
-	this.assignmentTitle = assignmentTitle;
-	this.assignmentContent = assignmentContent;
-	this.assignmentDate = assignmentDate;
-	this.assignmentHit = assignmentHit;
-	this.replyFamily = replyFamily;
-	this.replyStep = replyStep;
-	this.replyLevel = replyLevel;
-	this.assignmentWriter = assignmentWriter;
-	this.assignmentDeadline = assignmentDeadline;
-}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 
@@ -145,31 +116,92 @@ public Assignment(int assignmentNo, String assignmentTitle, String assignmentCon
 
 
 
+	//추가전-------------------------------------------------------------------------------------------------------------------------
+
+													//(13개)
+													public Assignment(int assignmentNo, int assignmentSecret, String assignmentTitle, String assignmentContent,
+															String assignmentDate, int assignmentHit, int assignmentPassword, int replyFamily, int replyStep,
+															int replyLevel, String assignmentWriter, String assignmentDeadline, int lectureNo) {
+														super();
+														this.assignmentNo = assignmentNo;
+														this.assignmentSecret = assignmentSecret;
+														this.assignmentTitle = assignmentTitle;
+														this.assignmentContent = assignmentContent;
+														this.assignmentDate = assignmentDate;
+														this.assignmentHit = assignmentHit;
+														this.assignmentPassword = assignmentPassword;
+														this.replyFamily = replyFamily;
+														this.replyStep = replyStep;
+														this.replyLevel = replyLevel;
+														this.assignmentWriter = assignmentWriter;
+														this.assignmentDeadline = assignmentDeadline;
+														this.lectureNo = lectureNo;
+													}
+												//7개
+												public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
+														int assignmentHit, String assignmentWriter, String assignmentDeadline) {
+													super();
+													this.assignmentNo = assignmentNo;
+													this.assignmentTitle = assignmentTitle;
+													this.assignmentContent = assignmentContent;
+													this.assignmentDate = assignmentDate;
+													this.assignmentHit = assignmentHit;
+													this.assignmentWriter = assignmentWriter;
+													this.assignmentDeadline = assignmentDeadline;
+												}
+												
+												//8개  
+												public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
+														int assignmentHit, String assignmentWriter, String assignmentDeadline, int lectureNo) {
+													super();
+													this.assignmentNo = assignmentNo;
+													this.assignmentTitle = assignmentTitle;
+													this.assignmentContent = assignmentContent;
+													this.assignmentDate = assignmentDate;
+													this.assignmentHit = assignmentHit;
+													this.assignmentWriter = assignmentWriter;
+													this.assignmentDeadline = assignmentDeadline;
+													this.lectureNo = lectureNo;
+												}
+													//11개
+												public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
+														int assignmentHit, int replyFamily, int replyStep, int replyLevel, String assignmentWriter,
+														String assignmentDeadline, int lectureNo) {
+													super();
+													this.assignmentNo = assignmentNo;
+													this.assignmentTitle = assignmentTitle;
+													this.assignmentContent = assignmentContent;
+													this.assignmentDate = assignmentDate;
+													this.assignmentHit = assignmentHit;
+													this.replyFamily = replyFamily;
+													this.replyStep = replyStep;
+													this.replyLevel = replyLevel;
+													this.assignmentWriter = assignmentWriter;
+													this.assignmentDeadline = assignmentDeadline;
+													this.lectureNo = lectureNo;
+												}
+												
+												//10개
+												
+												public Assignment(int assignmentNo, String assignmentTitle, String assignmentContent, String assignmentDate,
+														int assignmentHit, int replyFamily, int replyStep, int replyLevel, String assignmentWriter,
+														String assignmentDeadline) {
+													super();
+													this.assignmentNo = assignmentNo;
+													this.assignmentTitle = assignmentTitle;
+													this.assignmentContent = assignmentContent;
+													this.assignmentDate = assignmentDate;
+													this.assignmentHit = assignmentHit;
+													this.replyFamily = replyFamily;
+													this.replyStep = replyStep;
+													this.replyLevel = replyLevel;
+													this.assignmentWriter = assignmentWriter;
+													this.assignmentDeadline = assignmentDeadline;
+												}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-//----------------------------------------------------------
-
-
-@Override
-public String toString() {
-	return "Assignment [assignmentNo=" + assignmentNo + ", assignmentSecret=" + assignmentSecret + ", assignmentTitle="
-			+ assignmentTitle + ", assignmentContent=" + assignmentContent + ", assignmentDate=" + assignmentDate
-			+ ", assignmentHit=" + assignmentHit + ", assignmentPassword=" + assignmentPassword + ", replyFamily="
-			+ replyFamily + ", replyStep=" + replyStep + ", replyLevel=" + replyLevel + ", assignmentWriter="
-			+ assignmentWriter + ", assignmentDeadline=" + assignmentDeadline + ", lectureNo=" + lectureNo + "]";
-}
+//------------------------------------------------------------------------------------------------------------------------
 
 
 
@@ -180,92 +212,6 @@ public String toString() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-@Override
-public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((assignmentContent == null) ? 0 : assignmentContent.hashCode());
-	result = prime * result + ((assignmentDate == null) ? 0 : assignmentDate.hashCode());
-	result = prime * result + ((assignmentDeadline == null) ? 0 : assignmentDeadline.hashCode());
-	result = prime * result + assignmentHit;
-	result = prime * result + assignmentNo;
-	result = prime * result + assignmentPassword;
-	result = prime * result + assignmentSecret;
-	result = prime * result + ((assignmentTitle == null) ? 0 : assignmentTitle.hashCode());
-	result = prime * result + ((assignmentWriter == null) ? 0 : assignmentWriter.hashCode());
-	result = prime * result + lectureNo;
-	result = prime * result + replyFamily;
-	result = prime * result + replyLevel;
-	result = prime * result + replyStep;
-	return result;
-}
-
-
-
-
-@Override
-public boolean equals(Object obj) {
-	if (this == obj)
-		return true;
-	if (obj == null)
-		return false;
-	if (getClass() != obj.getClass())
-		return false;
-	Assignment other = (Assignment) obj;
-	if (assignmentContent == null) {
-		if (other.assignmentContent != null)
-			return false;
-	} else if (!assignmentContent.equals(other.assignmentContent))
-		return false;
-	if (assignmentDate == null) {
-		if (other.assignmentDate != null)
-			return false;
-	} else if (!assignmentDate.equals(other.assignmentDate))
-		return false;
-	if (assignmentDeadline == null) {
-		if (other.assignmentDeadline != null)
-			return false;
-	} else if (!assignmentDeadline.equals(other.assignmentDeadline))
-		return false;
-	if (assignmentHit != other.assignmentHit)
-		return false;
-	if (assignmentNo != other.assignmentNo)
-		return false;
-	if (assignmentPassword != other.assignmentPassword)
-		return false;
-	if (assignmentSecret != other.assignmentSecret)
-		return false;
-	if (assignmentTitle == null) {
-		if (other.assignmentTitle != null)
-			return false;
-	} else if (!assignmentTitle.equals(other.assignmentTitle))
-		return false;
-	if (assignmentWriter == null) {
-		if (other.assignmentWriter != null)
-			return false;
-	} else if (!assignmentWriter.equals(other.assignmentWriter))
-		return false;
-	if (lectureNo != other.lectureNo)
-		return false;
-	if (replyFamily != other.replyFamily)
-		return false;
-	if (replyLevel != other.replyLevel)
-		return false;
-	if (replyStep != other.replyStep)
-		return false;
-	return true;
-}
 
 
 
@@ -279,6 +225,20 @@ public int getAssignmentNo() {
 
 public void setAssignmentNo(int assignmentNo) {
 	this.assignmentNo = assignmentNo;
+}
+
+
+
+
+public String getAssignmentWriterId() {
+	return assignmentWriterId;
+}
+
+
+
+
+public void setAssignmentWriterId(String assignmentWriterId) {
+	this.assignmentWriterId = assignmentWriterId;
 }
 
 
@@ -448,9 +408,111 @@ public int getLectureNo() {
 public void setLectureNo(int lectureNo) {
 	this.lectureNo = lectureNo;
 }
-}	
 
 
+
+
+@Override
+public String toString() {
+	return "Assignment [assignmentNo=" + assignmentNo + ", assignmentWriterId=" + assignmentWriterId
+			+ ", assignmentSecret=" + assignmentSecret + ", assignmentTitle=" + assignmentTitle + ", assignmentContent="
+			+ assignmentContent + ", assignmentDate=" + assignmentDate + ", assignmentHit=" + assignmentHit
+			+ ", assignmentPassword=" + assignmentPassword + ", replyFamily=" + replyFamily + ", replyStep=" + replyStep
+			+ ", replyLevel=" + replyLevel + ", assignmentWriter=" + assignmentWriter + ", assignmentDeadline="
+			+ assignmentDeadline + ", lectureNo=" + lectureNo + "]";
+}
+
+
+
+
+@Override
+public int hashCode() {
+	final int prime = 31;
+	int result = 1;
+	result = prime * result + ((assignmentContent == null) ? 0 : assignmentContent.hashCode());
+	result = prime * result + ((assignmentDate == null) ? 0 : assignmentDate.hashCode());
+	result = prime * result + ((assignmentDeadline == null) ? 0 : assignmentDeadline.hashCode());
+	result = prime * result + assignmentHit;
+	result = prime * result + assignmentNo;
+	result = prime * result + assignmentPassword;
+	result = prime * result + assignmentSecret;
+	result = prime * result + ((assignmentTitle == null) ? 0 : assignmentTitle.hashCode());
+	result = prime * result + ((assignmentWriter == null) ? 0 : assignmentWriter.hashCode());
+	result = prime * result + ((assignmentWriterId == null) ? 0 : assignmentWriterId.hashCode());
+	result = prime * result + lectureNo;
+	result = prime * result + replyFamily;
+	result = prime * result + replyLevel;
+	result = prime * result + replyStep;
+	return result;
+}
+
+
+
+
+@Override
+public boolean equals(Object obj) {
+	if (this == obj)
+		return true;
+	if (obj == null)
+		return false;
+	if (getClass() != obj.getClass())
+		return false;
+	Assignment other = (Assignment) obj;
+	if (assignmentContent == null) {
+		if (other.assignmentContent != null)
+			return false;
+	} else if (!assignmentContent.equals(other.assignmentContent))
+		return false;
+	if (assignmentDate == null) {
+		if (other.assignmentDate != null)
+			return false;
+	} else if (!assignmentDate.equals(other.assignmentDate))
+		return false;
+	if (assignmentDeadline == null) {
+		if (other.assignmentDeadline != null)
+			return false;
+	} else if (!assignmentDeadline.equals(other.assignmentDeadline))
+		return false;
+	if (assignmentHit != other.assignmentHit)
+		return false;
+	if (assignmentNo != other.assignmentNo)
+		return false;
+	if (assignmentPassword != other.assignmentPassword)
+		return false;
+	if (assignmentSecret != other.assignmentSecret)
+		return false;
+	if (assignmentTitle == null) {
+		if (other.assignmentTitle != null)
+			return false;
+	} else if (!assignmentTitle.equals(other.assignmentTitle))
+		return false;
+	if (assignmentWriter == null) {
+		if (other.assignmentWriter != null)
+			return false;
+	} else if (!assignmentWriter.equals(other.assignmentWriter))
+		return false;
+	if (assignmentWriterId == null) {
+		if (other.assignmentWriterId != null)
+			return false;
+	} else if (!assignmentWriterId.equals(other.assignmentWriterId))
+		return false;
+	if (lectureNo != other.lectureNo)
+		return false;
+	if (replyFamily != other.replyFamily)
+		return false;
+	if (replyLevel != other.replyLevel)
+		return false;
+	if (replyStep != other.replyStep)
+		return false;
+	return true;
+}
+
+
+	
+
+
+
+	}
 
 
 

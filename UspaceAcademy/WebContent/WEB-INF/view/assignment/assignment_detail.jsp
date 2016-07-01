@@ -45,13 +45,7 @@
 			<td>${assignment.assignmentContent}</td>
 			<td><%-- ${assignment.} --%>강사명</td>
 			
-			<c:if test="${sessionScope.memberType=='teacher'}">
-			<td>${sessionScope.login_info.teacherName}</td>
-			</c:if>
-			<c:if test="${sessionScope.memberType=='student'}">
-			<%-- <td>${assignment.assignmentWriter}</td> --%>
-			<td>${sessionScope.login_info.studentName}</td>
-			</c:if>
+			<td>${assignment.assignmentWriter}</td>
 			
 			<td>${assignment.assignmentDate}</td>
 			<td>${assignment.assignmentDeadline}</td>
@@ -75,22 +69,6 @@
 	</c:if>																																											
 </span>
 
-
-<!-- --------------------------------------------------------------------------------------------------------- -->
-<%-- <!--  강사랑  학생일 경우만  -  삭제,수정 버튼클릭가능 -->
-<span class="assignmentRegister">
-	<c:if test="${sessionScope.memberType=='teacher'}">
-<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/assignment/assignment_modifyForm.do?assignmentNo=${assignment.assignmentNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
-	</c:if>																																											
-	<c:if test="${sessionScope.memberType=='student'}">
-<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/assignment/assignment_modifyForm.do?assignmentNo=${assignment.assignmentNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/assignment/assignment_modifyForm.do?assignmentNo=${assignment.assignmentNo}&codeType=teacherSubject"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->	
-	</c:if>
-</span>
- --%>
-<!-- --------------------------------------------------------------------------------------------------------- -->
 
 
 
@@ -143,3 +121,42 @@
 </c:forEach>
  --%>
 <!-- --------------------------------------------------------------------------------------------------------- -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

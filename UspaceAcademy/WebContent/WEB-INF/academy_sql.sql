@@ -179,12 +179,12 @@ create sequence comment_board_seq nocache;
 
 drop sequence assignment_board_seq;
 create sequence assignment_board_seq nocache;
-
 -- 과제
 select * from assignment_board;
 drop table assignment_board cascade constraint;
 create table assignment_board(
 	assignment_no number primary key,
+	assignment_writer_id varchar2(50) not null,
 	assignment_secret number not null,
 	assignment_title varchar2(100) not null,
 	assignment_content clob not null,
@@ -199,15 +199,15 @@ create table assignment_board(
 	lecture_no number null, -- n o t null 로바꾸기 영주
 	constraint fk_assignment_lecture foreign key (lecture_no) references lecture(lecture_no)
 );
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,0,0,'1이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,1,'11이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'111이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,'1',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,0,0,'1이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,'2',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,1,'11이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,'3',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'111이름','20160627',1);
 
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,1,1,'2이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,2,'22이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,3,'222이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,1,'2!이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,2,'22@이름','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,1,1,'2이름','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,2,'22이름','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,3,'222이름','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,1,'2!이름','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,2,'22@이름','20160627',1);
 
 --영주 : 지우지마세요~!
 --	assignment_no number primary key,					--1.글번호
