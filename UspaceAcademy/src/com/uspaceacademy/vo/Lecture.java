@@ -1,10 +1,10 @@
 package com.uspaceacademy.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
@@ -33,6 +33,11 @@ public class Lecture implements Serializable{
 	private int lectureCurrentStudent;
 	private String lectureSubject;
 	private String teacherId2;//외래키(teacher table)
+	
+	
+	//private Assignment assignment;//영주
+	
+	
 	
 	
 	//생성자 3개(null 허용인 컬럼은 각각 생성자를 다 만들어 준다)
