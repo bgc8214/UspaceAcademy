@@ -2,6 +2,7 @@ package com.uspaceacademy.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -166,7 +168,7 @@ public class MemberController
 		{
 			if (student.getStudentPassword().equals(password))
 			{
-				System.out.println("학생으로로 로그인 성공");
+				System.out.println("학생으로 로그인 성공");
 				session.setAttribute("login_info", student);
 				System.out.println(student);
 				session.setAttribute("memberType", "student");
@@ -394,18 +396,13 @@ public class MemberController
 			return "main.tiles";
 		}
 	}
-	// 강사의 회원정보 수정을 위한 폼으로 이동하기
+	// 강사의 회원정보 수정을 위한 폼으로 이동
 	@RequestMapping("/updateTeacherForm.do")
 	public ModelAndView updateTeacherForm() {
-	/*	List codeList = service.searchCode("teacherSubject"); // 코드타입 정보를 리스트로 받는다.
-		System.out.println("확인 - "+ codeList);
-	
-		HashMap map = new HashMap<>(); // 코드테이블을 넘기기 위한 맵
-		map.put("codeType", codeList);*/
-		
 		return new ModelAndView("member/teacher_updateForm.tiles");
 	}
 	
+	// 강사 정보 수정
 	@RequestMapping("/updateTeacher.do")
 	public String updateAfterDetail(@ModelAttribute("updateForm") Teacher teacher, HttpSession session, BindingResult errors) {
 
@@ -426,13 +423,81 @@ public class MemberController
 			return "/teacherInfo.do";
 	}
 	
+	// 학생의 회원정보 수정을 위한 폼으로 이동
+	@RequestMapping("/updateStudentForm.do")
+	public ModelAndView updateStudentForm() {
+		return new ModelAndView("member/student_updateForm.tiles");
+	}
+	
+	// 학생의 회원정보 수정
+	@RequestMapping("/updateStudent.do")
+	public String updateStudent(@ModelAttribute("updateForm") Student student, HttpSession session, BindingResult errors) {
+		StudentValidator validator = new StudentValidator();
+		validator.validate(student, errors);
+		boolean error = errors.hasErrors();
+		int errorCount = errors.getErrorCount();
+		System.out.printf("학생 수정 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n", error, errorCount);
+		
+		if(errors.hasErrors()) {
+			return "/student/updateStudentForm.do";
+		}
+		
+		service.modifyStudent(student);
+		session.setAttribute("login_info", student);
+		System.out.println(session.getAttribute("login_info"));
+		return "/studentInfo.do";
+	}
+	
+	// 학생 탈퇴
+	@RequestMapping("/deleteStudent.do")
+	public String deleteStudent(HttpSession session) {
+		Student student = (Student)session.getAttribute("login_info");
+		service.deleteStudent(student.getStudentId());
+		session.invalidate();
+				return "main.tiles";
+	}
+
 	// 강사 탈퇴
 	@RequestMapping("/deleteTeacher.do")
-	public String deleteTeacher(String teacherId, HttpServletRequest request) {
-		System.out.println("삭제할 ID " + teacherId);
-		service.removeTeacher(teacherId);
-		HttpSession session = request.getSession();
+	public String deleteTeacher(HttpSession session) {
+		Teacher teacher = (Teacher)session.getAttribute("login_info");
+		service.removeTeacher(teacher.getTeacherId());
 		session.invalidate();
 		return "main.tiles";
 	}
+	
+	// 모든 학생 조회
+	@RequestMapping("/studentAll.do")
+	public ModelAndView studentAll(@RequestParam(defaultValue="1") int page) {
+		Map map = service.searchAllStudent(page);
+		map.put("page", page);
+		return new ModelAndView("member/studentAllInfo.tiles", map);
+	}
+	
+	// 학생이름으로 검색
+	@RequestMapping("/searchBystudentName.do")
+	public ModelAndView searchBystudentName(@RequestParam(defaultValue="1") int page, String name) {
+		Map map = service.searchBystudentNameService(name, page);
+		map.put("page", page);
+		map.put("name", name);
+		return new ModelAndView("member/search_studentName.tiles", map);
+	}
+	
+	// 모든 강사 조회
+	@RequestMapping("/teacherAll.do")
+	public ModelAndView teacherAll(@RequestParam(defaultValue="1") int page) {
+		Map map = service.searchAllTeacher(page);
+		map.put("page", page);
+		return new ModelAndView("member/teacherAllInfo.tiles", map);
+	}
+	
+	// 강사이름으로 검색
+	@RequestMapping("/searchByteacherName.do")
+	public ModelAndView searchByteacherName(@RequestParam(defaultValue="1") int page, String name) {
+		Map map = service.searchByteacherNameService(name, page);
+		map.put("page", page);
+		map.put("name", name);
+		return new ModelAndView("member/search_teacherName.tiles", map);
+	}
+	
 }

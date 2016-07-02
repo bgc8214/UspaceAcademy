@@ -44,27 +44,46 @@ public class AttendanceService {
 	
 	// 출결 조회
 	public List attendanceStateService(int lectureNo) {
-		int max = dao.maxDay(lectureNo);		// DB에 등록된 출결의 최종날짜
+		int max = dao.maxDay(lectureNo);		// DB에 등록된 출결의 최종날짜 -> 추가된 인원에 대한 날짜 구별시에도 사용
 		
+		List studentList = dao.selectLectureStudentInfo(lectureNo);		// 강의 수강 중인 학생 정보 정렬된  ASC
+				
+//		int studentSize = studentList.size();
 		
 		ArrayList<List> list = new ArrayList();
 
-		
-		for(int i=1; i<=max; i++) {
+		for(int i=1; i<=max; i++) 
 			 list.add(dao.attendanceStateDao(lectureNo, i));
-		}
-		return list;
+/*	
+ * 	// 학생 추가시 확인 을 위해서 하는 것 - 일단 보류
+		for(int i=0; i<list.size()-1; i++) {			
+			if(list.get(i).size() != list.get(i+1).size()) {
+				int num = list.get(i+1).size() - list.get(i).size();		// 학생 추가 인원
+				for(int j=0; j<num; j++) {
+					list.get(i).add("결석");
+				}
 
-		
+			}
+		}*/
+		return list;
 	}
 	
 	// 일차별(하루) 출석 수정
 	public int attendanceStateModify(int lectureNo, int lectureDay, String attendanceState, List list) {
-		for(int i=0; i<list.size(); i++) {
+		for(int i=0; i<list.size(); i++) 
 			dao.attendanceUpdateDao(lectureNo, lectureDay, attendanceState.split(",")[i], ((Student) list.get(i)).getStudentId());
-		}
+		
 		return 1;
 	}
 	
+	// 학생이 수강중인 강의 정보
+	public List  studentLectureInfoService(String studentId3) {
+		return dao.studentLectureDao(studentId3);
+	}
+	
+	// 학생이 수강중인 강의중 선택한 강의의 출결 상태 조회
+	public List studentAttendanceStateService(int lectureNo2, String studentId2) {
+		return dao.studentAttendanceStateDao(lectureNo2, studentId2);
+	}
 
 }

@@ -41,7 +41,6 @@ public class NoticeDao
 	
 	// codeTable에서 name값 가져오기
 	public List selectCode(String code) {
-//		System.out.println(session.selectList("codeTable.selectCodeName", code));
 		return session.selectList("codeTable.selectCodeName", code);
 	}
 	
@@ -77,6 +76,7 @@ public class NoticeDao
 		return session.selectOne(namespace+"selectCountContents", type);
 	}
 	
+	// 검색엔진 페이징 처리
 	public List noticeSearch(String keyword, int page) {
 		Map map = new HashMap<>();
 		map.put("basicType", "공지사항");

@@ -45,6 +45,17 @@ public class LectureDao {
 	public int updateLectureByNo(Lecture lecture) {
 		return session.update("lecture.updateLectureByNo", lecture);
 	}
+	
+	// 강의 삭제하기 위해 참조관계 있는 출석테이블 컬럼부터 삭제
+	public int deleteAttendance(int lectureNo) {
+		return session.delete("attendanceMapper.deleteAttendance", lectureNo);
+	}
+	
+	// 강의 삭제하기 위해 참조관계 있는 학생_강의_조인 테이블 컬럼부터 삭제
+	public int deleteStudentLectureJoin(int lectureNo) {
+		return session.delete("lecture.deleteJointable", lectureNo);
+	}
+	
 	//lecture 삭제
 	public int deleteLectureByNo(int lectureNo) {
 		return session.delete("lecture.deleteLectureByNo", lectureNo);
@@ -136,5 +147,5 @@ public class LectureDao {
 		map.put("lectureNo", lectureNo);
 		return session.delete("lecture.deleteLectureFromApplyListByLectureNo", map);
 	}
-	
 }
+
