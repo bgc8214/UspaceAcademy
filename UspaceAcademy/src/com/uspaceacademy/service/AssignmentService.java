@@ -67,6 +67,7 @@ public class AssignmentService {
 		
 		//1.게시물등록 ㅇ
 		public int insert(Assignment assignment){
+			System.out.println("인설트 서비스--------------" + assignment);
 			return dao.insert(assignment);
 		}
 		

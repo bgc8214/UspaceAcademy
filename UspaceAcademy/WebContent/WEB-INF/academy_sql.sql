@@ -202,7 +202,7 @@ create table assignment_board(
 insert into assignment_board values(assignment_board_seq.nextval,'1',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,0,0,'1이름','20160627',1);
 insert into assignment_board values(assignment_board_seq.nextval,'2',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,1,'11이름','20160627',1);
 insert into assignment_board values(assignment_board_seq.nextval,'3',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'111이름','20160627',1);
-
+insert into assignment_board values(assignment_board_seq.nextval,'3',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'이영주','20160627',1);
 --insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,1,1,'2이름','20160627',1);
 --insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,2,'22이름','20160627',1);
 --insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,3,'222이름','20160627',1);

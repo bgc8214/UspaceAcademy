@@ -62,21 +62,19 @@ text-decoration: underline;
 	<thead>
 		<tr>
 			<th scope="col">번호</th>
-			<th scope="col">강의명</th>
 			<th scope="col">제목</th>
-			<th scope="col">강사명</th>
-			<th scope="col">작성자</th>
-			<th scope="col">작성일</th>
-			<th scope="col">마감일</th>
-			<th scope="col">조회수</th>
+			<th scope="col">아이디</th>
+			<th scope="col">이름</th><!--    -->
+			<th scope="col">작성일</th><!--    -->
+			<th scope="col">마감일</th><!--    -->
+			<th scope="col">조회수</th><!--    -->
 		</tr>
 	<thead>
-
+		
+		
 		<c:forEach var="assignment" items="${requestScope.assignment}">
 			<tr>
-				<td class="num">${assignment.assignmentNo}</td>
-
-				<td class="title">강의명db</td>
+				<td class="num">${assignment.assignmentNo}</td><!--  번호  -->
 
 				<!--  -->
 				<td class="title">
@@ -104,8 +102,7 @@ text-decoration: underline;
 				
 				</td>
 				<!--  -->
-			
-				<td class="title"><%-- ${assignment.} --%>강사명db</td>
+				<td class="title">${assignment.assignmentWriterId}</td>
 				<td class="title">${assignment.assignmentWriter}</td>
 				<td class="num">${assignment.assignmentDate}</td>
 				<td class="num">${assignment.assignmentDeadline}</td>

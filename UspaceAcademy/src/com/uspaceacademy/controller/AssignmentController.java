@@ -42,14 +42,9 @@ public class AssignmentController {
 			Map map = new HashMap();
 			map.put("page", service.selectPagingCount(page));
 			map.put("assignment", service.replyGetList());
-			
-			
-			//  //지워!
-			//map.put("studentId",memberService.findStudentById(id));
-			
-			
+
 			System.out.println("과제게시판ok");
-			return new ModelAndView("assignment/assignment_list.tiles", map) ;
+			return new ModelAndView("assignment/assignment_list.tiles", map) ;         //ok
 		}
 
 		
@@ -59,9 +54,9 @@ public class AssignmentController {
 
 
 
-		// 과제게시판 - 상세조회(assignment_list.jsp -> assignment_detail.jsp)
+		// 과제게시판 - 상세조회(assignment_list.jsp -> assignment_detail.jsp)         ok
 		@RequestMapping("/assignment_detail")
-		public ModelAndView detail(String assignmentNo, HttpSession session, HttpRequest request) {
+		public ModelAndView detail(String assignmentNo){
 			int num = Integer.parseInt(assignmentNo);
 			Assignment assignment = service.selectNo(num);// no값으로 게시물 찾아옴
 			service.selectHit(assignment); // 조회수 증가시키기
@@ -71,6 +66,8 @@ public class AssignmentController {
 			System.out.println("과제게시판 상세조회ok");
 			return new ModelAndView("assignment/assignment_detail.tiles", "assignment", assignment);
 		}
+		//●오류났던거 적기 :  생성자?(detail(){가로안)에 이거 넣어 줘서 HttpSession session, HttpRequest request
+		
 		/*// 과제게시판 - 상세조회(assignment_list.jsp -> assignment_detail.jsp)
 				@RequestMapping("/assignment_detail")
 				public ModelAndView detail(String assignmentNo) {
@@ -90,7 +87,7 @@ public class AssignmentController {
 
 
 
-		//과제글 작성 폼 (assignment_list.jsp ->assignment_register.jsp)
+		//과제글 작성 폼 (assignment_list.jsp ->assignment_register.jsp)                     //ok
 		@RequestMapping("/assignment_register")
 		public ModelAndView registerForm(){
 			
@@ -108,9 +105,9 @@ public class AssignmentController {
 		
 		
 		
-		//과제등록할거 작성하고 등록(과제작성완료 눌렀을때)
+		//과제등록할거 작성하고 등록(과제작성완료 눌렀을때)                    //ok
 		@RequestMapping("/assignment_registerSuccess")//assignment_register.jsp 에서  
-		public ModelAndView register(Assignment assignment, String teacherName){
+		public ModelAndView register(Assignment assignment){
 			
 			//Date
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -120,11 +117,9 @@ public class AssignmentController {
 			//글번호
 			int num = service.selectNextNo();
 			
-																																										//안되서 맨끝에 lectureNo 우선 개설강좌에있는 no넣어놓고함*
-			assignment= new Assignment(num,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),teacherName,assignment.getAssignmentDeadline(), 1);
+			assignment= new Assignment(num,assignment.getAssignmentWriterId(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(), 1);
 			assignment.setReplyFamily(num); 
 
-			
 			service.insert(assignment);
 			
 			System.out.println("과제글 작성하고 등록ok");
@@ -145,7 +140,7 @@ public class AssignmentController {
 		
 		
 		
-		//과제출제글 삭제(과제글 상세조회에서 삭제 눌렀을때)
+		//과제출제글 삭제(과제글 상세조회에서 삭제 눌렀을때)                //ok
 		@RequestMapping("/assignment_delete")//assignment_detail.jsp 에서  
 		public ModelAndView delete(int assignmentNo, String type){
 			service.delete(assignmentNo);
@@ -169,7 +164,7 @@ public class AssignmentController {
 
 		//과제글 수정폼(과제글상세조회에서 수정하기 눌렀을때 - modify폼으로감)
 		@RequestMapping("/assignment_modifyForm")  
-		public ModelAndView modifyForm(int assignmentNo){
+		public ModelAndView modifyForm(int assignmentNo){             //ok
 			
 			Assignment assignment = service.selectNo(assignmentNo);
 			
@@ -192,22 +187,21 @@ public class AssignmentController {
 		
 		
 		
-		
-		@RequestMapping("/assignment_modify") //assignment_modify.jsp에서
+		 
+		@RequestMapping("/assignment_modify") //assignment_modify.jsp에서                              //ok
 		public ModelAndView modify(Assignment assignment,HttpSession session) { 
 			HashMap<String,Object> map = new HashMap<String,Object>();
 			
 			Teacher t = (Teacher)session.getAttribute("login_info");
 			String teacher = t.getTeacherName(); //오류났던거 적기 : getAssignmentWriter안돼서 session에서 getTeacherName가져옴.
+			String teacherId = t.getTeacherId();
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			String sdfDate = sdf.format(date);
 			
 			//조인관계 오류남 -------------------------------------------------
-			assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),teacher,assignment.getAssignmentDeadline(),1);
-			//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),5);
-			//assignment= new Assignment(assignment.getAssignmentNo(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),3);
+			assignment= new Assignment(assignment.getAssignmentNo(),teacherId,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),teacher,assignment.getAssignmentDeadline(),1);
 			service.update(assignment);
 			
 		

@@ -17,17 +17,16 @@
 <div class="boardList">
 <table border="1">
 <tr>
-<th>강의명(디비)</th>
-<th>작성자</th>
+<th>아이디</th>
+<th>이름</th>
 <th>마감일</th>
 <th>제목</th>
 <th>내용</th>
 </tr>
 
 <tr>
-<td><%-- ${assignment.lectureNo} --%></td><!--  강의명 (db에서) -->
-<td>${sessionScope.login_info.teacherName}</td>
-<%-- <td>${requestScope.assignmentWriter}</td><!-- ??????????? --> --%>
+<td><input type="text" name="assignmentWriterId" value="${sessionScope.login_info.teacherId}"  readonly="readonly"></td>
+<td><input type="text" name="assignmentWriter" value="${sessionScope.login_info.teacherName}"  readonly="readonly"></td>
 <td><input type="text" value="${requestScope.assignment.assignmentDeadline}" name="assignmentDeadline" size="70" placeholder="ex)2016/07/30"required="required"></td>
 <td><input type="text" value="${requestScope.assignment.assignmentTitle }"  name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"></td>
 <td><textarea rows="15" cols="80"  name="assignmentContent"   placeholder="입력하세요">${requestScope.assignment.assignmentContent}</textarea></td>

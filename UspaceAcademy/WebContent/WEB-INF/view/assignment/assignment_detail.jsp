@@ -11,42 +11,25 @@
 <input type="hidden" name="replyLevel"  value="${assignment.replyLevel}">
 <input type="hidden" name="replyFamily"  value="${assignment.replyFamily}">
 
-<%-- <input type="hidden" name="assignmentWriter"  value="${assignment.assignmentWriter}"> --%>
-<%-- <input type="hidden" name="teacherName" value="${sessionScope.login_info.teacherName}"> --%> <!--  안되면 위아래 지우기 -->
-<!--    -->
-
-
 
 <div class="boardList">
 	<table border="1" summary="">
 		<tr>
 			<th>번호</th>
-			
-			
-			<th>강의명</th>
-			
-			
+			<th>아이디</th>
+			<th>이름</th>
 			<th>제목</th>
 			<th>내용</th>
-			<th>강사명</th>
-			<th>작성자</th>
 			<th>작성일</th>
 			<th>마감일</th>
 			<th>조회수</th>
 		</tr>
-	
 		<tr>
 			<td>${assignment.assignmentNo}</td>
-			
-			
-			<td><%-- ${assignment.lectureNo} --%></td>
-			
+			<td>${assignment.assignmentWriterId}</td>
+			<td>${assignment.assignmentWriter}</td>
 			<td>${assignment.assignmentTitle}</td>
 			<td>${assignment.assignmentContent}</td>
-			<td><%-- ${assignment.} --%>강사명</td>
-			
-			<td>${assignment.assignmentWriter}</td>
-			
 			<td>${assignment.assignmentDate}</td>
 			<td>${assignment.assignmentDeadline}</td>
 			<td>${assignment.assignmentHit}</td>
@@ -68,23 +51,6 @@
 	
 	</c:if>																																											
 </span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!-- --------------------------------------------------------------------------------------------------------- -->
 <%-- 
 사진 파일명 ${requestScope.imageName }
@@ -121,42 +87,6 @@
 </c:forEach>
  --%>
 <!-- --------------------------------------------------------------------------------------------------------- -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

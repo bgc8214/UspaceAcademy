@@ -1,5 +1,4 @@
 package com.uspaceacademy.vo;
-//publisher가  나 , book이 lecture로 보고 하기x
 import java.io.Serializable;
 import java.util.List;
 
@@ -47,11 +46,11 @@ public class Assignment implements Serializable{
 
 
 	//
-	public Assignment(){}
+	public Assignment(){} 
 
 	
 	
-	//writerId추가후*****************
+	//writerId추가후************************************************************************************************************************
 	//추가후 9개
 	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
 			String assignmentDate, int assignmentHit, String assignmentWriter, String assignmentDeadline,
@@ -69,7 +68,6 @@ public class Assignment implements Serializable{
 	}
 
 	//추가후12
-
 	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
 			String assignmentDate, int assignmentHit, int replyFamily, int replyStep, int replyLevel,
 			String assignmentWriter, String assignmentDeadline, int lectureNo) {
@@ -87,7 +85,7 @@ public class Assignment implements Serializable{
 		this.assignmentDeadline = assignmentDeadline;
 		this.lectureNo = lectureNo;
 	}
-
+	//****************************************************************************************************************************************
 	
 	
 	

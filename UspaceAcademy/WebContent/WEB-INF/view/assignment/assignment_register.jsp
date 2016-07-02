@@ -12,21 +12,20 @@
 
 
 <form method="POST" action="/UspaceAcademy/assignment/assignment_registerSuccess.do"> <!--  폼으로 묶기* -->
-<input type="hidden" name="teacherName" value="${sessionScope.login_info.teacherName}">
 
 <div class="boardList">
-<table border="1" summary"">
+<table border="1">
 <tr>
-<th>강의명(디비)</th>
-<th>작성자</th>
+<th>아이디</th>
+<th>이름</th>
 <th>마감일</th>
 <th>제목</th>
 <th>내용</th>
 </tr>
-
 <tr>
-<td><%-- ${assignment.lectureNo} --%></td><!--  강의명 (db에서) -->
-<td>${sessionScope.login_info.teacherName}</td>
+
+<td><input type="text" name="assignmentWriterId" value="${sessionScope.login_info.teacherId}"  readonly="readonly"></td>
+<td><input type="text" name="assignmentWriter" value="${sessionScope.login_info.teacherName}"  readonly="readonly"></td>
 <td><input type="text" name="assignmentDeadline" size="70" placeholder="ex)2016/07/30" required="required"></td>
 <td><input type="text" name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"></td>
 <td><textarea rows="15" cols="80" name="assignmentContent" placeholder="내용을 입력하세요"></textarea></td>
