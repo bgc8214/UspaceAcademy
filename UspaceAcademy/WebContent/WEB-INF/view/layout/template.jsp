@@ -39,7 +39,7 @@ $(document).ready(function(){
 <style type="text/css">
 header{
 	min-width : 1080px;
-	background-color:skyblue;
+	background-color:white;
 	text-align:center;
 	padding: 5px;
 }
@@ -56,14 +56,18 @@ section{
 	min-height:400px;
 	float:left;
 	min-width : 1080px;
+	color: #191919; /* 글자색거의모든 */ 
 }
 footer{
-	background-color:skyblue;
+	font: 13px 맑은고딕;
+	color: #8C8C8C;
+	background-color:#F8F8F8;
 	padding-top:20px;
 	text-align:center;
-	height:50px;
+	height:100px;
 	min-width : 1080px;
 	clear:both;
+	text-align:center;
 }
 </style>
 </head>

@@ -4,37 +4,38 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style type="text/css">
-caption{
-font-family: 궁서;
+caption{/* 안됨 */
+font-family: 맑은고딕;
 color: #00F;
 font-weight: bold;
-font-size: 30px;
+font-size: 50px;
 margin-bottom: 10px;
 }
-table_list{
+.table_list{/* table_list전체적용 */
 width:100%;
-font-size: 12px;
+font-size: 16px;
+/* text-align: center; */
 }
-table_list thead tr th{ 
+.table_list thead tr th{ 
 height :35px;
-background: #494949;
+background: #F5F5F5;
 color: #ffff;
 font-weght: bold; 
 }
-table_ list tbody tr td{
+.table_ list tbody tr td{
 line-height: 35px;
 border-bottom: 1px solid #c3c3c3;
 text-align: center;
 }
-table_ list tbody tr td .num{
+.table_ list tbody tr td .num{
 font-famliy: Tahoma;
-font-size: 11px;
+font-size: 20px;
 color: #737373;
 }
-table_ list tbody tr td .title{ 
-text-align: left;
+.table_ list tbody tr td .title{ 
+text-align: center;
 }
-table_ list tbody tr td .title a{ 
+.table_ list tbody tr td .title a{ 
 display: block;
 float: left;
 text-decoration: none;
@@ -44,7 +45,7 @@ white-space: nowrap;
 overflow: hidden;
 text-overflow: ellipsis;
 }
-table_list tbody tr td .title a:hover{
+.table_list tbody tr td .title a:hover{
 text-decoration: underline;
 }
 
@@ -70,11 +71,11 @@ text-decoration: underline;
 			<th scope="col">조회수</th><!--    -->
 		</tr>
 	<thead>
-		
-		
+
 		<c:forEach var="assignment" items="${requestScope.assignment}">
 			<tr>
-				<td class="num">${assignment.assignmentNo}</td><!--  번호  -->
+				<td class="num">${assignment.assignmentNo}</td>
+
 
 				<!--  -->
 				<td class="title">
@@ -90,18 +91,18 @@ text-decoration: underline;
 				<c:when test="${sessionScope.memberType=='teacher'}"><!--  (강사는 모든글 볼수 있음) -->
 				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
 				</c:when>
-  				<c:when test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentName==assignment.assignmentWriter}"><!-- eq -->
+  				<c:when test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentId==assignment.assignmentWriterId}"><!-- eq -->
 				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
 				</c:when> 
 				<c:otherwise> <!--  위에 경우가 모두 아니라면 -->
-				${assignment.assignmentTitle}
+				<%-- ${assignment.assignmentTitle} --%>
+				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
 				</c:otherwise>
 				</c:choose>
 				
 				
 				
 				</td>
-				<!--  -->
 				<td class="title">${assignment.assignmentWriterId}</td>
 				<td class="title">${assignment.assignmentWriter}</td>
 				<td class="num">${assignment.assignmentDate}</td>
@@ -110,7 +111,6 @@ text-decoration: underline;
 			</tr>
 		</c:forEach>
 </table>
-</div>
 
 
 

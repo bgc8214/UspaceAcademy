@@ -111,7 +111,6 @@ public class LectureReviewController{
 		Student s = (Student)session.getAttribute("login_info");//
 		String student = s.getStudentName();//
 		
-		System.out.println("111111111111111111111111리뷰라이터가안넘어감"+lectureReview.getReviewWriter());///////////
 		boolean error = errors.hasErrors();
 		int errorCount = errors.getErrorCount();
 		if(errors.hasErrors()){																			//
@@ -234,7 +233,6 @@ public class LectureReviewController{
 		boolean error = errors.hasErrors();
 		int errorCount = errors.getErrorCount();
 		if(errors.hasErrors()){																			//
-			System.out.println("수정폼,validator됨");															//
 			return new ModelAndView("/lectureReview//lecture_review_modifyForm.do?codeType=teacherSubject&reviewNo="+lectureReview.getReviewNo());   //여기 3줄 해주기
 		}
 																																												

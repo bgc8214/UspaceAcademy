@@ -6,9 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -68,24 +72,16 @@ public class AssignmentController {
 		}
 		//●오류났던거 적기 :  생성자?(detail(){가로안)에 이거 넣어 줘서 HttpSession session, HttpRequest request
 		
-		/*// 과제게시판 - 상세조회(assignment_list.jsp -> assignment_detail.jsp)
-				@RequestMapping("/assignment_detail")
-				public ModelAndView detail(String assignmentNo) {
-					int num = Integer.parseInt(assignmentNo);
-					Assignment assignment = service.selectNo(num);// no값으로 게시물 찾아옴
-					service.selectHit(assignment); // 조회수 증가시키기
-					
-					
-					System.out.println("과제게시판 상세조회ok");
-					return new ModelAndView("assignment/assignment_detail.tiles", "assignment", assignment);
-				}
-
-
-*///안되면이걸로
 
 
 
 
+
+		
+		
+		
+		
+		
 
 		//과제글 작성 폼 (assignment_list.jsp ->assignment_register.jsp)                     //ok
 		@RequestMapping("/assignment_register")
@@ -107,13 +103,20 @@ public class AssignmentController {
 		
 		//과제등록할거 작성하고 등록(과제작성완료 눌렀을때)                    //ok
 		@RequestMapping("/assignment_registerSuccess")//assignment_register.jsp 에서  
-		public ModelAndView register(Assignment assignment){
+		public ModelAndView register(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors){
 			
 			//Date
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
 			String sdfDate = sdf.format(date);
 			
+			//validator
+			boolean error = errors.hasErrors();
+			int errorCount = errors.getErrorCount();
+			if(errors.hasErrors()){
+				return new ModelAndView("assignment/assignment_register.tiles");
+			}
+
 			//글번호
 			int num = service.selectNextNo();
 			
@@ -189,8 +192,15 @@ public class AssignmentController {
 		
 		 
 		@RequestMapping("/assignment_modify") //assignment_modify.jsp에서                              //ok
-		public ModelAndView modify(Assignment assignment,HttpSession session) { 
+		public ModelAndView modify(@ModelAttribute("lec") @Valid Assignment assignment,BindingResult errors, HttpSession session) { 
 			HashMap<String,Object> map = new HashMap<String,Object>();
+			
+			//validator
+			boolean error = errors.hasErrors();
+			int errorCount = errors.getErrorCount();
+			if(errors.hasErrors()){
+			return new ModelAndView("assignment/assignment_modify.tiles");
+			}
 			
 			Teacher t = (Teacher)session.getAttribute("login_info");
 			String teacher = t.getTeacherName(); //오류났던거 적기 : getAssignmentWriter안돼서 session에서 getTeacherName가져옴.
@@ -252,8 +262,16 @@ public class AssignmentController {
 		
 			//답변폼에서   ->  답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때) assignment_replyRegister.jsp 에서 assignment_list.jsp로감
 			@RequestMapping("/assignment_replyRegisterSuccess")// 
-			public ModelAndView reply(Assignment assignment, HttpSession session){
+			public ModelAndView reply(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors,   HttpSession session){
+				
 				HashMap<String, Object> map = new HashMap<String, Object>();
+				
+				//validator
+				boolean error = errors.hasErrors();
+				int errorCount = errors.getErrorCount();
+				if(errors.hasErrors()){	
+					return new ModelAndView("assignment/assignment_replyRegister.tiles");
+				}
 				
 				//로그인한 학생아이디에 학생이름
 				Student s = (Student)session.getAttribute("login_info");//

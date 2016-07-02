@@ -2,13 +2,15 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 button {
-	border: 1x solid #ff0080; /*---테두리 정의---*/
-	background-Color: #ffe6f2; /*--백그라운드 정의---*/
-	font: 12px 굴림; /*--폰트 정의---*/
+	border: /* 1x */ /* solid */ #FFFFFF; /*---테두리 정의---*/
+	background-Color: #FFFFFF; /*--백그라운드 정의---*/
+	font: 17px 맑은고딕; /*--폰트 정의---*/
 	font-weight: bold; /*--폰트 굵기---*/
-	color: #ff0080; /*--폰트 색깔---*/
-	width: 130;
-	height: 30; /*--버튼 크기---*/
+	color: #DB0000; /*--폰트 색깔---*/
+	width: 400;
+	height: 100; /*--버튼 크기---*/
+	margin-left: 15px;
+	margin-right: 15px;
 }
 
 table {

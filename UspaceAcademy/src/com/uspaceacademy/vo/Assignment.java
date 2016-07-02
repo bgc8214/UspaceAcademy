@@ -2,13 +2,19 @@ package com.uspaceacademy.vo;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Assignment implements Serializable{
 
 	//
 	private int assignmentNo;					//1.글번호-
 	private String assignmentWriterId;        //추가:작성자 아이디 
 	private int assignmentSecret;				//4.비밀여부 
+	
+	@NotEmpty(message="제목을 입력해주세요")
 	private String assignmentTitle;				//3.글제목-
+	
+	@NotEmpty(message="내용을 입력해주세요")
 	private String assignmentContent;		//    글내용 - 					리스트세부
 	private String assignmentDate;			//7.글 등록일-
 	private int assignmentHit;					//9.글 조회수-
@@ -17,8 +23,15 @@ public class Assignment implements Serializable{
 	private int replyStep;							//    답글 순서
 	private int replyLevel;						//    답글 단계
 	private String assignmentWriter;			//6.글쓴이-
+	
+	@NotEmpty(message="마감일을 입력해주세요")
 	private String assignmentDeadline;		//8.글 마감일-
 	private int lectureNo; //F키 , 강의번호	2.강의명	5.강사명
+	
+	
+	
+	
+	
 	
 	
 	//모두있는 생성자.//14
