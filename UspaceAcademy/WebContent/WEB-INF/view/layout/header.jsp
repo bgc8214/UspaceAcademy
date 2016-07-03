@@ -2,8 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 button {
-	border: 1x solid #ff0080; /*---테두리 정의---*/
-	background-Color: #ffe6f2; /*--백그라운드 정의---*/
+/* 	border: 1x solid #ff0080; ---테두리 정의--- */
+/* 	background-Color: #ffe6f2; --백그라운드 정의--- */
 	font: 12px 굴림; /*--폰트 정의---*/
 	font-weight: bold; /*--폰트 굵기---*/
 	color: #ff0080; /*--폰트 색깔---*/
@@ -20,10 +20,6 @@ form {
 	margin-right: auto;
 }
 </style>
-
-
-
-
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 	$(document)

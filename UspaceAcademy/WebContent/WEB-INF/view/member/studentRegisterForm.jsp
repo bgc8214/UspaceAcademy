@@ -72,9 +72,11 @@ function idCheck()
 }
 </script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<h2>학생 가입폼</h2>
+<h3 class="pageTlt">학생 가입폼</h3>
+<hr>
 <form action="/UspaceAcademy/member/studentRegister.do" method="post" name="join_form" onsubmit="return checkValue();">
-	<table>
+	<table class="table table-board form-talbe">
+	<tbody>
 		<tr>
 			<th>ID</th>
 			<td><input type="text" name="studentId" onclick="idCheck();"
@@ -125,8 +127,7 @@ function idCheck()
 				<input id="addr2" name="addr2" type="text" placeholder="상세주소"/>
 			</td>
 		</tr>
-		<tr>
-			<td colspan="2"><input id="btn" type="submit" value="가입"></td>
-		</tr>
+	</tbody>
 	</table>
+	<p class="text-right"><input id="btn" type="submit" value="가입" class="btn btn-primary"></p>
 </form>

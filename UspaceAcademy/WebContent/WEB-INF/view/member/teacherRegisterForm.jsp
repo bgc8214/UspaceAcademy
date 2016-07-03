@@ -66,19 +66,18 @@ function checkValue() {
 	
 }
 
-
 function idCheck()
 {
 	window.open("/UspaceAcademy/teacherIdCheck.do","아이디 중복 확인","width=400,height=200,resizable=no");
 }
 </script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<h2>강사 가입폼</h2>
+<h3 class="pageTlt">강사 가입폼</h3>
+<hr>
 <form action="/UspaceAcademy/member/teacherRegister.do" method="post" name="join_form" onsubmit="return checkValue();">
-<table>
+<table class="table table-bordered form-table">
 	<tr>
 		<th>ID</th>
-		
 		<td><input type="text" name="teacherId" onclick="idCheck();" value="${requestScope.teacher.teacherId }"><span class="error">
 		<form:errors path="teacher.teacherId" delimiter="//"/> <!-- BindingResult의 에러메세지 출력 -->
 		
@@ -127,10 +126,6 @@ function idCheck()
 			</select>
 		</th>
 	</tr>
-	<tr>
-		<td colspan="2">
-			<input id="btn" type="submit" value="가입">
-		</td>
-	</tr>
 </table>
+<p class="text-right"><input id="btn" type="submit" value="가입" class="btn btn-primary"></p>
 </form>
