@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -51,8 +53,10 @@ public class MemberController
 	 */
 
 	@RequestMapping("/studentRegister.do")
-	public String studentRegister(@ModelAttribute Student student, BindingResult errors)
+	public String studentRegister(@ModelAttribute Student student, String addr1, String addr2, BindingResult errors)
 	{
+		student.setStudentAddress(addr1+addr2);
+
 		// 검증 - StudentValidator
 		StudentValidator validator = new StudentValidator();
 		validator.validate(student, errors);
@@ -64,7 +68,7 @@ public class MemberController
 			// 에러 응답 페이지로 이동
 			return "/member/studentRegisterForm.do";
 		}
-
+		
 		service.insertStudent(student);
 
 		return "redirect:/member/studentRedirect.do";
@@ -78,8 +82,10 @@ public class MemberController
 	}
 
 	@RequestMapping("/teacherRegister.do")
-	public String teacherRegister(@ModelAttribute Teacher teacher, BindingResult errors)
+	public String teacherRegister(@ModelAttribute Teacher teacher, String addr1, String addr2, BindingResult errors)
 	{
+		teacher.setTeacherAddress(addr1+addr2);
+		
 		TeacherValidator validator = new TeacherValidator();
 		validator.validate(teacher, errors);
 		boolean error = errors.hasErrors();
@@ -215,12 +221,27 @@ public class MemberController
 			return "/WEB-INF/view/member/studentDuplicationCheck.jsp";
 		}
 
-		if (id.length() < 5)
+/*		if (id.length() < 5)
 		{
 			request.setAttribute("idError", "아이디는 5글자보다 길어야합니다");
 
 			return "/WEB-INF/view/member/studentDuplicationCheck.jsp";
+		}*/
+		
+		// ID 정규식 체크
+		boolean err = false;
+		String regex = "^[a-zA-Z]{1}[a-zA-Z0-9_]{5,11}$";
+
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(id);
+		if(m.matches())
+			err = true;
+		if(err == false) {
+			System.out.println("형식에 맞지 않는 아이디가 입력되었습니다.");
+			request.setAttribute("idError", "영문대소문자로 시작하고 특수문자 _포함이 가능하며 6~12글자로 입력하세요");
+			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
 		}
+		
 
 		if (service.findStudentById(id) != null || service.findTeacherById(id) != null || id.equals("admin"))
 		{
@@ -246,12 +267,27 @@ public class MemberController
 			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
 		}
 
-		if (id.length() < 5)
+/*		if (id.length() < 5)
 		{
 			request.setAttribute("idError", "아이디는 5글자보다 길어야합니다");
 
 			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
+		}*/
+		
+		// ID 정규식 체크
+		boolean err = false;
+		String regex = "^[a-zA-Z]{1}[a-zA-Z0-9_]{5,11}$";
+
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(id);
+		if(m.matches())
+			err = true;
+		if(err == false) {
+			System.out.println("형식에 맞지 않는 아이디가 입력되었습니다.");
+			request.setAttribute("idError", "영문대소문자로 시작하고 특수문자 _포함이 가능하며 6~12글자로 입력하세요");
+			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
 		}
+		
 
 		if (service.findStudentById(id) != null || service.findTeacherById(id) != null || id.equals("admin"))
 		{
@@ -402,10 +438,16 @@ public class MemberController
 		return new ModelAndView("member/teacher_updateForm.tiles");
 	}
 	
-	// 강사 정보 수정
+	// 강사 회원정보 수정
 	@RequestMapping("/updateTeacher.do")
-	public String updateAfterDetail(@ModelAttribute("updateForm") Teacher teacher, HttpSession session, BindingResult errors) {
-
+	public String updateAfterDetail(@ModelAttribute("updateForm") Teacher teacher, String baseAddress, String addr1, String addr2, HttpSession session, BindingResult errors) {
+		
+		if(addr1!=null && addr2!=null)
+			teacher.setTeacherAddress(addr1+addr2);
+		else
+			teacher.setTeacherAddress(baseAddress);
+		
+		
 		TeacherValidator validator = new TeacherValidator();
 		validator.validate(teacher, errors);
 		boolean error = errors.hasErrors();
@@ -431,7 +473,13 @@ public class MemberController
 	
 	// 학생의 회원정보 수정
 	@RequestMapping("/updateStudent.do")
-	public String updateStudent(@ModelAttribute("updateForm") Student student, HttpSession session, BindingResult errors) {
+	public String updateStudent(@ModelAttribute("updateForm") Student student, String baseAddress, String addr1, String addr2, HttpSession session, BindingResult errors) {
+		
+		if(addr1!=null && addr2!=null)
+			student.setStudentAddress(addr1+addr2);
+		else
+			student.setStudentAddress(baseAddress);
+		
 		StudentValidator validator = new StudentValidator();
 		validator.validate(student, errors);
 		boolean error = errors.hasErrors();

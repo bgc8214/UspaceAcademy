@@ -9,11 +9,18 @@
 				return false;
 			}
 		})
+		$("#ex").on("click", "tr", function() {
+			alert("상세페이지로 이동합니다");
+		})
 	});
+	
 	$(document).ready(effect);
 	function effect() {
+		var message = $
 		$("tr:eq(2)").css("background-color", "#EAEAEA");
+	
 	}
+
 </script>
 <hr>
 	<table border="2">
@@ -25,11 +32,12 @@
 				<td>조회수</td>
 			</tr>
 		</thead>
-		<tbody>	
+		<tbody id="ex">	
 			<c:forEach var="notice" items="${requestScope.noticeList}">
-				<tr id="tb">
+				<tr onclick="location.href='/UspaceAcademy/notice/noticeDetail.do?no=${notice.basicNo}&page=${page}'" style="cursor:pointer;">
 					<td>${notice.basicNo}</td>
-					<td><a href="/UspaceAcademy/notice/noticeDetail.do?no=${notice.basicNo}&page=${page}">${notice.basicTitle}</a></td>
+<%-- 					<td><a href="/UspaceAcademy/notice/noticeDetail.do?no=${notice.basicNo}&page=${page}">${notice.basicTitle}</a></td> --%>
+										<td>${notice.basicTitle}</td>
 					<td>${notice.basicDate}</td>
 					<td>${notice.basicHit}</td>
 				</tr>

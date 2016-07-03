@@ -6,7 +6,7 @@
 조회수 <input type="text" value="${requestScope.notice.basicHit}" readonly="readonly"><br>
 <textarea rows="45" cols="100" readonly="readonly">${requestScope.notice.basicContent}</textarea>
 <p>
-<a href="/UspaceAcademy/notice/list.do?type=${requestScope.notice.basicType}&page=${param.page}"><button class="listBtn">공지사항 전체</button></a>
+<a href="/UspaceAcademy/notice/list.do?type=${requestScope.notice.basicType}"><button class="listBtn">공지사항 전체</button></a>
 <!-- 관리자용 공지사항 등록 버튼 -->
 <span class="lectureRegister">
 	<c:if test="${sessionScope.memberType=='administrator'}">
