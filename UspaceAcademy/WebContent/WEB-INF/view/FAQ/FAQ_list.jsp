@@ -113,7 +113,7 @@ $(document).ready(function() {
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
 <p>
-
+<!-- 제목으로 검색 -->
 <form action="/UspaceAcademy/FAQ/FAQTitleSearch.do">
 	<input type="text" name="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="제목으로 검색">
 </form><br>

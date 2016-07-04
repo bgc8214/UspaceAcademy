@@ -2,6 +2,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
+	$("#btn").on("click", function() {
+		if(!$("input[name=keyword]").val()){
+			alert("키워드를 입력하세요.");
+			return false;
+		}
+	})
+});
 	$(document).ready(effect);
 	function effect() {
 		$("tr:eq(2)").css("background-color", "#EAEAEA");
@@ -72,5 +80,12 @@
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
 <p>
+<!-- 공지사항 제목+내용으로 검색 -->
+<form action="/UspaceAcademy/notice/noticeSearch.do" method="post">
+	<input type="text" name="keyword">&nbsp;&nbsp;&nbsp;
+	<input id="btn" type="submit" value="제목+내용으로 검색">
+</form>
+<p>
 
-<a href="/UspaceAcademy/notice/list.do?type=${requestScope.noticeSearch[0].basicType}"><button>공지사항리스트</button></a>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="/UspaceAcademy/notice/list.do?type=공지사항"><button>공지사항리스트</button></a>

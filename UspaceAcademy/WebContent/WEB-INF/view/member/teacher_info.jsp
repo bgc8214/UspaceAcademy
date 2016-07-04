@@ -11,4 +11,5 @@
 	</select>
 <p>
 <a href="/UspaceAcademy/member/updateTeacherForm.do"><button>수정</button></a>
+<a href="/UspaceAcademy/member/deleteTeacher.do"><button>탈퇴</button></a>
 <%-- <a href="/UspaceAcademy/member/deleteTeacher.do?teacherId=${sessionScope.login_info.teacherId}"><button>탈퇴</button></a> --%>

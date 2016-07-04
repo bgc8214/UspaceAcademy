@@ -110,10 +110,101 @@
    	where teacher_id = #{teacherId}
    </update>
    
-   <!-- 강사 회원 탈퇴 -->
+<!--     강사 회원 탈퇴 
    <delete id="delete_teacher" parameterType="string">
    		delete from TEACHER 
    		where teacher_id = #{teacherId} 
-   </delete>
+   </delete> -->
   
+  <update id="update_student" parameterType="student">
+  	update student
+  	set student_password = #{studentPassword},
+  	    student_name = #{studentName},
+  	    student_email = #{studentEmail},
+  	    student_phone_no = #{studentPhoneNo},
+  	    student_address = #{studentAddress}
+  	where student_id = #{studentId}
+  </update>
+  
+  <!-- 학생 회원 탈퇴 -->
+  <delete id="deleteStudent" parameterType="string">
+  	delete from student where student_id = #{value}
+  </delete>
+  
+  <!-- 강사 탈퇴 -->
+  <delete id="deleteTeacher" parameterType="string">
+  	delete from teacher where teacher_id = #{value}
+  </delete>
+  
+  <!-- 모든 학생 조회 -->
+  <select id="studentAll" parameterType="map" resultMap="student-basic">
+  	select <include refid="column-basic-student"/> 
+  	from (select ceil(rownum/#{itemsPerPage}) page,
+  		<include refid="column-basic-student"/>
+  		from (select
+		<include refid="column-basic-student"/>
+		from student order by student_name
+  		) )
+  	where page = #{page}
+  </select>
+  
+  <select id="selectStudent" resultType="_int">
+  select count(student_id)
+  from student
+  </select>
+  
+   <!-- 모든 강사 조회 -->
+  <select id="teacherAll" parameterType="map" resultMap="teacher-basic">
+  	select <include refid="column-basic-teacher"/> 
+  	from (select ceil(rownum/#{itemsPerPage}) page,
+  		<include refid="column-basic-teacher"/>
+  		from (select
+		<include refid="column-basic-teacher"/>
+		from teacher order by teacher_name
+  		) )
+  	where page = #{page}
+  </select>
+  
+  <select id="selectTeacher" resultType="_int">
+  select count(teacher_id)
+  from teacher
+  </select>
+
+ <!-- 학생이름으로 검색 -->
+ <select id="searchStudentByName" resultMap="student-basic" parameterType="map">
+ 	SELECT <include refid="column-basic-student"/> 
+ 	FROM (SELECT ceil(rownum/#{itemsPerPage}) page,
+ 	<include refid="column-basic-student"/> 
+ 	FROM (SELECT
+ 	<include refid="column-basic-student"/> 
+ 	FROM student WHERE student_name = #{name}
+ 	ORDER BY student_name))
+ 	WHERE page= #{page}
+ </select>
+
+ <select id="selectStudentByNameCountContents" resultType="_int" parameterType="string">
+ 	select count(student_id)
+ 	from student
+ 	where student_name = #{name}
+ </select>
+ 
+ <!-- 강사 이름으로 검색 -->
+  <select id="searchTeacherByName" resultMap="teacher-basic" parameterType="map">
+ 	SELECT <include refid="column-basic-teacher"/> 
+ 	FROM (SELECT ceil(rownum/#{itemsPerPage}) page,
+ 	<include refid="column-basic-teacher"/> 
+ 	FROM (SELECT
+ 	<include refid="column-basic-teacher"/> 
+ 	FROM teacher WHERE teacher_name = #{name}
+ 	ORDER BY teacher_name))
+ 	WHERE page= #{page}
+ </select>
+ 
+  <select id="selectTeacherByNameCountContents" resultType="_int" parameterType="string">
+ 	select count(teacher_id)
+ 	from teacher
+ 	where teacher_name = #{name}
+ </select>
+ 
+ 
 </mapper>

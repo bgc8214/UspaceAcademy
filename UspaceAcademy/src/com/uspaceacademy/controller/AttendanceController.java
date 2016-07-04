@@ -32,10 +32,10 @@ public class AttendanceController {
 	@RequestMapping("/attendanceList.do")
 	public ModelAndView lectureList(HttpSession session) {
 		Teacher teacher = (Teacher)session.getAttribute("login_info");
-
 		List list = service.selectTeachLectureService(teacher.getTeacherId());
 		Map map = new HashMap<>();
 		map.put("list", list);
+		System.out.println("강의 목록 조회 " +list);
 		return new ModelAndView("attendance/lecture_list.tiles", map);
 		
 	}
@@ -48,16 +48,6 @@ public class AttendanceController {
 		List studentInfoList = service.selectLectureStudentInfoService(lecture.getLectureNo());	// 강사가 선택한 강좌의 학생 정보
 		List attendanceList = service.attendanceStateService(lecture.getLectureNo());			// 출석 상태 조회		
 		
-/*		String startDate = lecture.getLectureStartDate();
-		String endDate = lecture.getLectureEndDate();
-		String day1 = startDate.split("/")[0]+startDate.split("/")[1]+startDate.split("/")[2];
-		String day2 = endDate.split("/")[0]+endDate.split("/")[1]+endDate.split("/")[2];
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", java.util.Locale.getDefault());
-		Date date = dateFormat.parse(startDate);
-		Date date1 = dateFormat.parse(endDate);
-		long diff = date1.getTime() - date.getTime();		
-		long diffDays = (diff/(24*60*60*1000))+1;		// 일차수 
-*/		
 		long diffDays = diffDaysMethod(lecture.getLectureStartDate(), lecture.getLectureEndDate());
 		
 		Map map = new HashMap<>();
@@ -81,14 +71,6 @@ public class AttendanceController {
 	// 출석등록 redirect 처리!
 	@RequestMapping("attendanceRedirect.do")
 	public ModelAndView attendanceRegisterRedirect(String startDate, String endDate, int lectureNo) throws ParseException {
-/*		String day1 = startDate.split("/")[0]+startDate.split("/")[1]+startDate.split("/")[2];
-		String day2 = endDate.split("/")[0]+endDate.split("/")[1]+endDate.split("/")[2];
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", java.util.Locale.getDefault());
-		Date date = dateFormat.parse(startDate);
-		Date date1 = dateFormat.parse(endDate);
-		long diff = date1.getTime() - date.getTime();		
-		long diffDays = (diff/(24*60*60*1000))+1;		// 일차수 
-*/		
 		long diffDays = diffDaysMethod(startDate, endDate);
 		
 		List studentInfoList = service.selectLectureStudentInfoService(lectureNo);	// 강사가 선택한 강좌의 학생 정보
@@ -116,18 +98,7 @@ public class AttendanceController {
 	// 수정 Redirect - 출결 수정 후 조회 & 수정 페이지로 이동
 	@RequestMapping("/attendanceUpdateRedirect.do")
 	public ModelAndView modifyRedirect(String startDate, String endDate, int lectureNo) throws ParseException {
-		/*String day1 = startDate.split("/")[0]+startDate.split("/")[1]+startDate.split("/")[2];
-		String day2 = endDate.split("/")[0]+endDate.split("/")[1]+endDate.split("/")[2];
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", java.util.Locale.getDefault());
-		Date date = dateFormat.parse(startDate);
-		Date date1 = dateFormat.parse(endDate);
-		long diff = date1.getTime() - date.getTime();		
-		long diffDays = (diff/(24*60*60*1000))+1;		// 일차수 
-*/		
-		
-		
 		long diffDays = diffDaysMethod(startDate, endDate);
-		
 		
 		List studentInfoList = service.selectLectureStudentInfoService(lectureNo);	// 강사가 선택한 강좌의 학생 정보
 		List attendanceList = service.attendanceStateService(lectureNo);			// 출석 상태 조회
@@ -154,5 +125,21 @@ public class AttendanceController {
 		return diffDays;
 	}
 	
+	// 학생이 수강중인 강의 정보
+	@RequestMapping("/studentLectureInfo.do")
+	public ModelAndView studentLectInfo(HttpSession session) {
+		
+		Student student = (Student)session.getAttribute("login_info");
+		List studentLectureInfo =  service.studentLectureInfoService(student.getStudentId());
+		return new ModelAndView("member/student_lectureInfo.tiles", "studentLectureInfo", studentLectureInfo);
+	}
+	
+	// 자신이 수강 중인 강의의 출결 상태
+	@RequestMapping("/attendanceInfo.do")
+	public ModelAndView studentAttendance(int lectureNo2, HttpSession session) {
+		Student student = (Student)session.getAttribute("login_info");
+		List attendanceStateList = service.studentAttendanceStateService(lectureNo2, student.getStudentId());
+		return new ModelAndView("member/student_attendanceState.tiles",	"attendanceStateList", attendanceStateList);
+	}	
 }
 	

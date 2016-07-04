@@ -56,6 +56,7 @@ public class AttendanceDao {
 		return session.selectList(namespace+"lectureAttendanceState", map);
 	}
 	
+	// 일차(하루씩) 출결상태 수정 - 수강중인 학생들...
 	public int attendanceUpdateDao(int lectureNo, int lectureDay, String attendanceState, String studentId2){
 		Map map = new HashMap<>();
 		map.put("lectureNo", lectureNo);
@@ -65,5 +66,17 @@ public class AttendanceDao {
 		return session.update(namespace+"attendanceUpdate", map);
 	}
 	
+	// 학생이 수강중인 강의 조회
+	public List studentLectureDao(String studentId3) {
+		return session.selectList(namespace+"studentLectureInfo", studentId3);
+	}
+	
+	// 학생이 수강중인 강의중 선택한 강의의 출결 상태 조회
+	public List studentAttendanceStateDao(int lectureNo2, String studentId2) {
+		Map map = new HashMap<>();
+		map.put("lectureNo2", lectureNo2);
+		map.put("studentId2", studentId2);
+		return session.selectList(namespace+"studentAttendance", map);
+	}
 	
 }

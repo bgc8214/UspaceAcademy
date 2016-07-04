@@ -1,20 +1,24 @@
 
 package com.uspaceacademy.controller;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.uspaceacademy.service.AssignmentService;
 import com.uspaceacademy.service.MemberService;
@@ -98,12 +102,9 @@ public class AssignmentController {
 		
 		
 		
-		
-		
-		
 		//과제등록할거 작성하고 등록(과제작성완료 눌렀을때)                    //ok
 		@RequestMapping("/assignment_registerSuccess")//assignment_register.jsp 에서  
-		public ModelAndView register(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors){
+		public ModelAndView register(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors,    @ModelAttribute com.uspaceacademy.vo.Board board,ModelMap map, HttpServletRequest request) throws IOException{
 			
 			//Date
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -124,7 +125,35 @@ public class AssignmentController {
 			assignment.setReplyFamily(num); 
 
 			service.insert(assignment);
+
 			
+			//파일-------------------------------------
+			System.out.println(board);
+			
+			ArrayList fileNames = new ArrayList(); //~~
+			
+			List upfile = board.getUpfile();
+			if( upfile != null ){ //null인 경우는 upfile이름으로 넘어온 요청파라미터가 없는 경우.
+				
+				String saveDir = request.getServletContext().getRealPath("/uploadFile"); //파일저장디렉토리
+				//String saveDir = "C:\\java\\temp"; //파일저장디렉토리
+				
+				for(Object f : upfile){
+					MultipartFile file = (MultipartFile)f; //업로드된 파일 정보 하나씩 조회 -> 이동
+					
+					if( ! file.isEmpty()){//업로드된 파일이 있으면 -> 이동
+						String fileName = file.getOriginalFilename(); //업로드된 파일명 조회.
+						File dest = new File(saveDir, fileName);
+						file.transferTo(dest); //이동처리 
+						fileNames.add(fileName); //~~
+					}
+				}
+			}
+			map.addAttribute("fileNames",fileNames);             //~~
+			map.addAttribute("title", board.getTitle());             //~~
+			map.addAttribute("content", board.getContent());   //~~
+			
+
 			System.out.println("과제글 작성하고 등록ok");
 		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment);
 		}
@@ -307,7 +336,16 @@ public class AssignmentController {
 		
 		
 		
-		
+			//파일-다운로드처리
+			@RequestMapping("/download")
+			public ModelAndView download(@RequestParam String fileName){
+			 /*
+			 * 	 View-Name : downloadView
+			 * 	 Model(View에 전달할 값) : "downFile" - 파일명 downFile-abc.txt
+			 */
+
+			return new ModelAndView("downloadView", "downFile", fileName);
+			}
 		
 		
 		

@@ -184,8 +184,8 @@
 				SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="lecture-review-columns"/>
 				FROM(
 						SELECT <include refid="lecture-review-columns"/>
-						FROM review_board
-						WHERE lecture_subject like '%'||#{lectureSubject}||'%'
+						FROM  review_board
+						WHERE  lecture_subject like '%'||#{lectureSubject}||'%'
 						ORDER BY review_no DESC
 						)
 					)	

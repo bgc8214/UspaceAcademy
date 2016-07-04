@@ -40,7 +40,6 @@ public class FAQDao
 	
 	// codeTable에서 name값 가져오기
 	public List selectCode(String code) {
-//		System.out.println(session.selectList("codeTable.selectCodeName", code));
 		return session.selectList("codeTable.selectCodeName", code);
 	}
 	
@@ -85,7 +84,7 @@ public class FAQDao
 		map.put("page", page);
 		return session.selectList(namespace+"selectFAQTitle", map);
 	}
-	
+	// 검색엔진 페이징
 	public int selectFAQCountContents(String title, String type) {
 		Map map = new HashMap<>();
 		map.put("basicTitle", title);

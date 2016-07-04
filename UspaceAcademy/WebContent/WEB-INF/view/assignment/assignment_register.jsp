@@ -6,11 +6,9 @@
 
 
 <h3>내정보 | 과제게시판 | 등록하기</h3>
-
 <hr/>
+<form method="POST"       <%-- file --%>enctype="multipart/form-data"     action="/UspaceAcademy/assignment/assignment_registerSuccess.do"> <!--  폼으로 묶기* -->
 
-
-<form method="POST" action="/UspaceAcademy/assignment/assignment_registerSuccess.do"> <!--  폼으로 묶기* -->
 
 <table class="table_list" summary="영주" cellpacing="0">
 	<caption></caption>
@@ -49,26 +47,23 @@
 </tr>
 
 
-<tr><!--   3   -->
+<tr><!--   4   -->
 <th scope="col">내용</th>
 <td class="title"><textarea rows="15" cols="72" name="assignmentContent" placeholder="내용을 입력하세요"></textarea><span class="error"><form:errors path="lec.assignmentContent" delimiter="//"/></span>
 </td>
 </tr>
 
 
+<tr><!--   file, 5   -->
+<th scope="col">파일첨부</th>
+<td><input type="file" name="upfile"></td>
+</tr>
 
 
 
-<tr>
 <!--  ●오류났던거적기 : assingmentWriterId 없다고 오류남 - 해결 :  name="assignmentWriterId"네임으로 받고 , 밸류(실제받을값으로 바꿔받으면)받으면됨               -->
-<%-- <td><input type="text" name="assignmentWriterId" value="${sessionScope.login_info.teacherId}"  readonly="readonly"></td>
-<td><input type="text" name="assignmentWriter" value="${sessionScope.login_info.teacherName}"  readonly="readonly"></td> --%>
 <input type="hidden" name="assignmentWriterId" value="${sessionScope.login_info.teacherId}">
 <input type="hidden" name="assignmentWriter" value="${sessionScope.login_info.teacherName}">
-
-
-
-
 
 
 

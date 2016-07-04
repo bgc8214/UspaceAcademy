@@ -1,12 +1,17 @@
 package com.uspaceacademy.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.uspaceacademy.dao.MemberDao;
+import com.uspaceacademy.util.PagingBean;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
 
@@ -81,9 +86,71 @@ public class MemberService
 		return dao.updateTeacher(teacher);
 	}
 	
-	// 강사 탈퇴
+/*	// 강사 탈퇴
 	public int removeTeacher(String teacherId) {
 		return dao.deleteTeacher(teacherId);
+	}*/
+	
+	// 학생 개인정보 수정
+	public int modifyStudent(Student student) {
+		return dao.updateStudent(student);
 	}
-
+	
+	// 학생 탈퇴
+	public int deleteStudent(String studentId) {
+		dao.deleteAttendance(studentId);
+		dao.deleteJoinTable(studentId);
+		return dao.deleteStudent(studentId);
+	}
+	
+	/* 순서
+	 * 1. lecture 테이블에서 강사가 강의하고 있는 강의 번호 조회
+	 * 2. student_lecture_join 테이블에서 강의번호로 삭제
+	 * 3. lecture 테이블 - 강사 아이디로 삭제
+	 * 4. teacher 테이블에서 삭제
+	 * -> 탈퇴
+	 */
+	public int removeTeacher(String teacherId) {
+		
+		List list = dao.selectLectureNo(teacherId);
+		
+		for(int i=0; i<list.size(); i++) {
+			dao.deleteByLectureNo((int)list.get(i));
+		}
+		
+		dao.deleteByTeacherId(teacherId);
+		
+		return dao.deleteTeacher(teacherId);
+	}
+	
+	// 모든 학생 조회(페이징)
+	public Map searchAllStudent(int page) {
+		Map map = new HashMap<>();
+		map.put("studentAllList", dao.studentAllDao(page));
+		map.put("paging", new PagingBean(dao.selectCountents(), page));
+		return map;
+	}
+	
+	// 모든 강사 조회(페이징)
+	public Map searchAllTeacher(int page) {
+		Map map = new HashMap<>();
+		map.put("teacherAllList", dao.teacherAllDao(page));
+		map.put("paging", new PagingBean(dao.selectCountents1(), page));
+		return map;
+	}
+	// 학생이름으로 조회
+	public Map searchBystudentNameService(String name, int page) {
+		Map map = new HashMap<>();
+		map.put("nameList", dao.searchStudentByNameDao(name, page));
+		map.put("paging", new PagingBean(dao.selectStudentCountContents(name), page));
+		return map;
+	}
+	
+	// 강사이름으로 조회
+	public Map searchByteacherNameService(String name, int page) {
+		Map map = new HashMap<>();
+		map.put("nameList", dao.searchTeacherByNameDao(name, page));
+		map.put("paging", new PagingBean(dao.selectTeacherCountContents(name), page));
+		return map;
+	}
 }

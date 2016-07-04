@@ -22,14 +22,12 @@
 <input type="hidden" name="reviewHit" value="${requestScope.lectureListReview.reviewHit }">
  
 <hr/>
-		<thead>
 			<tr>
 				<td><!-- 강의과목 --></td>
 				<td><!-- 강의명 --></td>
 				<td><!-- 제목 --></td>
 				<td><!-- 글내용 --></td>
 			</tr>
-		</thead>
 		<tbody>
 
 				<tr>
@@ -48,7 +46,7 @@
 
 		</tbody>	
 	</table> 
-	<input type="submit" value="수강후기수정완료">
+	<input type="submit" value="후기 수정 완료">
 	<input type="reset" value="초기화"/> 
 </form>
 

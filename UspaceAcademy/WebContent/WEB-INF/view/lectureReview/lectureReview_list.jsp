@@ -80,11 +80,11 @@
 
 <!-- 관리자랑 학생일 경우만, 강의등록버튼클릭가능 -->
 <span class="lectureRegister">
-	<c:if test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>수강후기 등록</button></a><!--  수강후기 등록폼으로 이동 -->
-	</c:if>																																											<!-- 코드타입 여기서 넘겨줌!!!!!!!!!!!!!, 이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
+<%-- 	<c:if test="${sessionScope.memberType=='administrator'}">
+		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>후기 등록</button></a><!--  수강후기 등록폼으로 이동 -->
+	</c:if>	 --%>																																										<!-- 코드타입 여기서 넘겨줌!!!!!!!!!!!!!, 이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
 	<c:if test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>수강후기 등록</button></a>
+		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>후기 등록</button></a>
 	</c:if>
 </span>
 
@@ -93,7 +93,7 @@
 <!--  검색 기능 -->
 <form action="/UspaceAcademy/lectureReview/lecture_review_search.do?page=${param.page}" method="post">
 <select name="searchType">
-	<option value="lectureSubject">강의과목</option>
+	<option value="reviewSubject">강의과목</option>
 	<option value="reviewTitle">제목</option>
 </select>
 <input type="text" name="keyword">

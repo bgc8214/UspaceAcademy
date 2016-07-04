@@ -51,9 +51,11 @@ public class LectureService {
 	public int modifyLectureByNo(Lecture lecture) {
 		return lectureDao.updateLectureByNo(lecture);
 	}
-	//강의 삭제하기 위한 서비스
+	//강의 삭제하기 위한 서비스(출석, 학생_강의_조인테이블, 강의)
 	public int removeLectureByNo(int lectureNo) {
-		return lectureDao.deleteLectureByNo(lectureNo);
+		lectureDao.deleteAttendance(lectureNo);				// 참조관계 있는 출석 컬럼부터 삭제
+		lectureDao.deleteStudentLectureJoin(lectureNo);		// 참조관계 있는 학생_강의_조인테이블 컬럼 삭제
+		return lectureDao.deleteLectureByNo(lectureNo);		// 마지막으로 강의 테이블에서 삭제
 	}
 	//강의 결제하기 위한 서비스(강의 현재인원 +1)
 	@Transactional(rollbackFor=Exception.class)

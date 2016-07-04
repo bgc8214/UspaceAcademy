@@ -34,6 +34,9 @@
 
 		</tbody>	
 	</table>
+	
+
+	
 <!-- --------------------------------------------------------------------------------------------------------- -->
 
 <!-- 관리자랑 학생일 경우만    -    삭제버튼,수정버튼 클릭가능 -->
@@ -45,7 +48,7 @@
 	</c:if>																																											
 	<c:if test="${sessionScope.memberType=='student'}">
 <a href="/UspaceAcademy/lectureReview/lecture_review_delete.do?reviewNo=${lectureListReview.reviewNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}&codeType=teacherSubject"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
 
 	</c:if>
 </span>
