@@ -1,5 +1,20 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#btn").on("click", function() {
+			if(!$("input[name=keyword]").val()){
+				alert("키워드를 입력하세요.");
+				return false;
+			}
+		})
+	});
+	$(document).ready(effect);
+	function effect() {
+		$("tr:eq(2)").css("background-color", "#EAEAEA");
+	}
+</script>
 <hr>
 	<table border="2">
 		<thead>
@@ -58,11 +73,18 @@
 	</c:choose>
 <p>
 
+<!-- 공지사항 제목+내용으로 검색 -->
+<form action="/UspaceAcademy/notice/noticeSearch.do" method="post">
+	<input type="text" name="keyword">&nbsp;&nbsp;&nbsp;
+	<input id="btn" type="submit" value="제목+내용으로 검색">
+</form>
+<p>
+
 
 <!-- 관리자용 공지사항 등록 버튼 -->
-<span class="lectureRegister">
+<span class="notciceRegister">
 	<c:if test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><input type="button" value="공지사항등록"></a>
+		<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button class="registerBtn">공지사항 등록</button></a>
 	</c:if>
 </span>
 	

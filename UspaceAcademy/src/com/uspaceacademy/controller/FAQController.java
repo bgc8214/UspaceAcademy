@@ -93,7 +93,7 @@ public class FAQController
 
 		FAQ faq1 = new FAQ(faq.getBasicNo(), faq.getBasicTitle(), faq.getBasicContent(), new SimpleDateFormat("yyyy-MM-dd kk:mm").format(new Date()), faq.getBasicHit());
 		service.modifyFAQ(faq1);
-		System.out.println(faq1.getBasicType());
+//		System.out.println(faq1.getBasicType());
 		
 		Map map = service.FAQPagingList(page, "FAQ");
 		return new ModelAndView("FAQ/FAQ_list.tiles", map);

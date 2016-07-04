@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<mapper namespace= "attendanceMapper">
+
+  <sql id="column-basic">
+  		attandance_state, lecture_day, student_id2, lecture_no2  
+  </sql>
+  <resultMap type="Lecture" id="lecture-teach">
+  		<id column="lecture_no" property="lectureNo"/>
+  		<result column="lecture_title" property="lectureTitle"/>
+  		<result column="lecture_description" property="lectureDescription"/>
+  		<result column="lecture_start_time" property="lectureStartTime"/>
+  		<result column="lecture_end_time" property="lectureEndTime"/>
+  		<result column="lecture_day" property="lectureDay"/>
+  		<result column="lecture_start_date" property="lectureStartDate"/>
+  		<result column="lecture_end_date" property="lectureEndDate"/>
+  		<result column="lecture_price" property="lecturePrice"/>
+  		<result column="lecture_total_student" property="lectureTotalStudent"/>
+  		<result column="lecture_current_student" property="lectureCurrentStudent"/>
+  		<result column="lecture_subject" property="lectureSubject"/>
+  		<result column="teacher_id2" property="teacherId2"/>
+   </resultMap>
+   <resultMap id="student-info" type="student">
+   		<id column="student_id" property="studentId"/>
+   		<result column="student_name" property="studentName"/>
+   </resultMap>
+   <resultMap id="attendance" type="attendance">
+   		<result column="attandance_state" property="attendanceState"/>
+   		<result column="lecture_day" property="lectureDay"/>
+   		<result column="student_id2" property="studentId2"/>
+   		<result column="lecture_no2" property="lectureNo"/>
+   </resultMap>
+	<!-- 강사가 강의 중인 강의 정보 -->
+	<select id="selectTeachLecture" parameterType="string" resultMap="lecture-teach">
+		select distinct l.lecture_no, l.lecture_title, l.lecture_start_date, l.lecture_end_date, l.lecture_current_student, l.lecture_total_student
+		from lecture l, student_lecture_join sl
+		where l.teacher_id2 = #{teacherId} and sl.lecture_no3 = l.lecture_no
+		order by l.lecture_no
+	</select>
+	
+	<!-- 강사가  선택한 강의 학생 정보 -->
+	<select id="selectLectureStudentInfo" parameterType="_int" resultMap="student-info">
+		select s.student_id, s.student_name
+		from lecture l, student_lecture_join sl, student s
+		where s.student_id = sl.student_id3 and sl.lecture_no3 = l.lecture_no 
+			and sl.lecture_no3 = #{lectureNo3} and sl.zzim_option='0'
+		order by s.student_id
+	</select>
+	
+	<!-- 일자별 학생들의 출석 등록 -->
+	<insert id="attendanceRegister" parameterType="attendance">
+		insert into attendance 
+		values(#{attendanceState}, #{lectureDay}, #{studentId2}, #{lectureNo})
+	</insert>
+	
+	<!-- 강좌별 출석 조회 -->
+	<select id="attendanceSelect" parameterType="_int" resultMap="attendance">
+		select <include refid="column-basic"/>
+		from attendance
+		where lecture_no2 = #{lectureNo} 
+		order by lecture_day, student_id2
+	</select>
+	
+	<!-- 학생들의 출결이 등록된 마지막 일차수 -->
+	<select id="maxLectureDay" resultType="int" parameterType="_int">
+		select nvl(max(lecture_day),0)
+		from attendance
+		where lecture_no2 = #{lectureNo}
+	</select>
+	
+	<!-- 날짜별 학생들의 출결 상태 조회 -->
+	<select id="lectureAttendanceState" parameterType="map" resultType="string">
+		select attandance_state
+		from attendance
+		where lecture_no2 = #{lectureNo} 
+				and lecture_day = #{lectureDay}
+					order by student_id2
+	</select>
+	
+	<!-- 출석 수정 -->
+	<update id="attendanceUpdate" parameterType="map"> 
+		update attendance
+		set attandance_state = #{attendanceState}
+		where lecture_day = #{lectureDay} and lecture_no2 = #{lectureNo} and student_id2 = #{studentId2}
+	</update>
+</mapper> 

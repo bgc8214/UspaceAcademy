@@ -2,17 +2,24 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="commentMapper">
 	
-	<resultMap type="Comment" id="comment-resultmap">
+	<resultMap type="comment" id="comment-resultmap">
 		<id column="comment_no" property="commentNo"/>
 		<result column="comment_content" property="commentContent"/>
 		<result column="comment_date" property="commentDate"/>
 		<result column="comment_writer" property="commentWriter"/>
+		<result column="comment_type" property="commentType"/>
 		<result column="advanced_no2" property="advancedNo2"/>
 	</resultMap>
 	
-	<!-- 댓글 번호로 조회하기 -->
+<!-- 	<resultMap type="comment" id="comment-inquiry-resultmap" extends="comment-resultmap">
+		<association property="advancedNo2" javaType="inquiry" resultMap="inquiryMapper.inquiry-resultmap"/>
+	</resultMap> -->
+	
+	
+	<!-- 글번호로 조회하기(조인) -->
 	<select id="selectByCommentNo" parameterType="_int" resultMap="comment-resultmap">
-		select comment_no, comment_content, comment_date, comment_writer from comment_table
+		<include refid="inquiryMapper.inquiry-comment-join-select"/>
+		and i.advanced_no = #{advancedNo}
 	</select>
 	
 	<!-- 댓글 등록 -->
@@ -30,7 +37,7 @@
 	</update>
 	
 	<!-- 댓글 삭제 -->
-	<delete id="deleteByCommentNo" parameterType="_int">
+	<delete id="deleteComment" parameterType="_int">
 		delete from comment_table where comment_no = #{commentNo}
 	</delete>
 	

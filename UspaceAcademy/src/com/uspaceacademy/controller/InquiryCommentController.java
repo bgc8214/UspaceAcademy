@@ -25,7 +25,7 @@ public class InquiryCommentController {
 	
 	
 	
-	//댓글 등록 폼
+/*	//댓글 등록 폼
 	@RequestMapping("/insertCommentForm")
 	public ModelAndView insertCommentForm(String codeName){
 		List codeList = service.selectCode("comment_board");
@@ -56,7 +56,7 @@ public class InquiryCommentController {
 		
 		
 		return commentContent;
-	}
+	}*/
 	
 	
 }

@@ -11,6 +11,8 @@ import com.uspaceacademy.vo.Comment;
 @Service
 public class InquiryCommentService {
 	
+	private String value;
+	
 	@Autowired
 	private InquiryCommentDao dao;
 	

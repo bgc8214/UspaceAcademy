@@ -93,7 +93,7 @@ public class LectureController {
 				System.out.println(s);
 				lectureDay +=s;
 			}
-			
+			System.out.println(lecture.getLectureStartDate()+ " " + lecture.getLectureEndDate());
 			
 			LectureValidator validator = new LectureValidator();
 			validator.validate(lecture, errors);
@@ -110,6 +110,7 @@ public class LectureController {
 			/*Lecture lecture = new Lecture(lectureNo, lectureTitle, lectureDescription, lectureStartTime, 
 					lectureEndTime, lectureDay, lectureStartDate, lectureEndDate, lecturePrice, 
 					lectureTotalStudent, lectureCurrentStudent, lectureSubject, teacherId2);*/
+	
 			lecture.setLectureDay(lectureDay);
 			lecture.setLectureNo(lectureNo);
 			lecture.setLectureCurrentStudent(lectureCurrentStudent);
@@ -125,7 +126,6 @@ public class LectureController {
 		return new ModelAndView("lecture/lecture_list.tiles", map);
 		
 	}
-	
 	
 	
 	//수정 폼을 불러오기 위한 핸들러 

@@ -67,8 +67,6 @@ public class FAQService
 		Map map = new HashMap<>();
 		map.put("FAQTitleList", dao.selectFAQTitle(title, type, page));
 		map.put("paging", new PagingBean(dao.selectFAQCountContents(title, type), page));
-		
-		System.out.println("paging - "+dao.selectFAQCountContents(title, type));
 		return map;
 	}
 	

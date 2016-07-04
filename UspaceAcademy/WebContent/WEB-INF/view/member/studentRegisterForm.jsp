@@ -24,6 +24,36 @@ function idCheck()
 {
 	window.open("/UspaceAcademy/studentIdCheck.do","아이디 중복 확인","width=400,height=200,resizable=no");
 }
+$(document).ready(function() {
+	$("#btn").on("click", function() {
+		if(!$("input[name=studentId]").val()) {
+			alert("아이디는 필수입력사항");
+			return false;
+		}
+		if(!$("input[name=studentPassword]").val()) {
+			alert("비밀번호는 필수입력사항");
+			return false;
+		}
+		if(!$("input[name=studentName").val()) {
+			alert("이름은 필수입력사항");
+			return false;
+		}
+		if(!$("input[name=studentEmail]").val()) {
+			alert("이메일은 필수입력사항");
+			return false;
+		}
+		if(!$("input[name=studentPhoneNo]").val()) {
+			alert("전화번호는 필수입력사항");
+			return false;
+		}
+		if(!$("input[name=studentAddress]").val()) {
+			alert("주소는 필수입력사항");
+			return false;
+		}
+		
+	})
+})
+
 </script>
 <h2>학생 가입폼</h2>
 <form action="/UspaceAcademy/member/studentRegister.do" method="post" name="join_form">
@@ -73,7 +103,7 @@ function idCheck()
 		</tr>
 
 		<tr>
-			<td colspan="2"><input type="submit" value="가입"></td>
+			<td colspan="2"><input id="btn" type="submit" value="가입"></td>
 		</tr>
 	</table>
 </form>

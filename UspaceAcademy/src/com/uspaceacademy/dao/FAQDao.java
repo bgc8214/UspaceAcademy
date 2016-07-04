@@ -90,15 +90,7 @@ public class FAQDao
 		Map map = new HashMap<>();
 		map.put("basicTitle", title);
 		map.put("basicType", type);
-		System.out.println("DAO - "+session.selectOne(namespace+"selectFAQCountContents", map));
 		return session.selectOne(namespace+"selectFAQCountContents", map);
 
 	}
-/*	public int selectFAQCountContents(String type) {
-		Map map = new HashMap<>();
-		map.put("basicType", type);
-//		System.out.println("DAO - "+session.selectOne(namespace+"selectFAQCountContents", map));
-		return session.selectOne(namespace+"selectFAQCountContents", map);
-
-	}*/
 }
