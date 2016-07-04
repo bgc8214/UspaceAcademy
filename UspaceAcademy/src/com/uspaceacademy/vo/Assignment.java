@@ -26,14 +26,97 @@ public class Assignment implements Serializable{
 	
 	@NotEmpty(message="마감일을 입력해주세요")
 	private String assignmentDeadline;		//8.글 마감일-
+	private String assignmentFile;
 	private int lectureNo; //F키 , 강의번호	2.강의명	5.강사명
 	
 	
 	
+	/*
+	 * num,
+	 * assignment.getAssignmentWriterId(
+	 * ),assignment.getAssignmentTitle()
+	 * ,assignment.getAssignmentContent(
+	 * ),sdfDate
+	 * ,assignment.getAssignmentHit()
+	 * ,assignment.getAssignmentWriter(),
+	 * assignment.getAssignmentDeadline()
+	 * ,fileName,
+1);
+	 * */
+	 
 	
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
+			String assignmentDate, int assignmentHit, String assignmentWriter, String assignmentDeadline,
+			String assignmentFile, int lectureNo) {
+		super();
+		this.assignmentNo = assignmentNo;
+		this.assignmentWriterId = assignmentWriterId;
+		this.assignmentTitle = assignmentTitle;
+		this.assignmentContent = assignmentContent;
+		this.assignmentDate = assignmentDate;
+		this.assignmentHit = assignmentHit;
+		this.assignmentWriter = assignmentWriter;
+		this.assignmentDeadline = assignmentDeadline;
+		this.assignmentFile = assignmentFile;
+		this.lectureNo = lectureNo;
+	}
+
+
+
+
+	public Assignment(int assignmentNo, String assignmentWriterId, int assignmentSecret, String assignmentTitle,
+			String assignmentContent, String assignmentDate, int assignmentHit, int assignmentPassword, int replyFamily,
+			int replyStep, int replyLevel, String assignmentWriter, String assignmentDeadline, String assignmentFile,
+			int lectureNo) {
+		super();
+		this.assignmentNo = assignmentNo;
+		this.assignmentWriterId = assignmentWriterId;
+		this.assignmentSecret = assignmentSecret;
+		this.assignmentTitle = assignmentTitle;
+		this.assignmentContent = assignmentContent;
+		this.assignmentDate = assignmentDate;
+		this.assignmentHit = assignmentHit;
+		this.assignmentPassword = assignmentPassword;
+		this.replyFamily = replyFamily;
+		this.replyStep = replyStep;
+		this.replyLevel = replyLevel;
+		this.assignmentWriter = assignmentWriter;
+		this.assignmentDeadline = assignmentDeadline;
+		this.assignmentFile = assignmentFile;
+		this.lectureNo = lectureNo;
+	}
+
+
+
+
+	public String getAssignmentFile() {
+		return assignmentFile;
+	}
+
+
+
+
+	public void setAssignmentFile(String assignmentFile) {
+		this.assignmentFile = assignmentFile;
+	}
+
+
+
+/*
 	//모두있는 생성자.//14
 	public Assignment(int assignmentNo, String assignmentWriterId, int assignmentSecret, String assignmentTitle,
 			String assignmentContent, String assignmentDate, int assignmentHit, int assignmentPassword, int replyFamily,
@@ -55,7 +138,7 @@ public class Assignment implements Serializable{
 		this.lectureNo = lectureNo;
 	}
 
-
+*/
 
 
 	//
@@ -65,7 +148,7 @@ public class Assignment implements Serializable{
 	
 	//writerId추가후************************************************************************************************************************
 	//추가후 9개
-	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
+/*	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
 			String assignmentDate, int assignmentHit, String assignmentWriter, String assignmentDeadline,
 			int lectureNo) {
 		super();
@@ -79,7 +162,7 @@ public class Assignment implements Serializable{
 		this.assignmentDeadline = assignmentDeadline;
 		this.lectureNo = lectureNo;
 	}
-
+*/
 	//추가후12
 	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
 			String assignmentDate, int assignmentHit, int replyFamily, int replyStep, int replyLevel,

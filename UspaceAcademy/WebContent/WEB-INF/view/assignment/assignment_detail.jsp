@@ -27,12 +27,11 @@
 <td>${assignment.assignmentDate}</td>
 <th scope="col">마감일</th>	
 <td>${assignment.assignmentDeadline}</td>
-</tr>
-
-<tr>
 <th scope="col">조회수</th>	
 <td>${assignment.assignmentHit}</td>
 </tr>
+
+
 
 <tr>
 <th scope="col">제목</th>	
@@ -47,9 +46,8 @@
 <tr>
 <th scope="col">파일받기</th><!--  jstl 라이브러리 등록하기(pom.xml하고, 위에 taglib-->
 <td>
-<c:forEach items="${requestScope.fileNames }"  var="fileName">
-<a href="/UspaceAcademy/uploadFile/${fileName }">${fileName }</a>
-</c:forEach>
+<a href="/UspaceAcademy/uploadFile/${assignment.assignmentFile }">${assignment.assignmentFile }</a>
+
 </td>
 </tr>
 							<%-- <h4>DownloadView를 이용해 다운처리</h4> com.uspaceacademy.view패키지에있음

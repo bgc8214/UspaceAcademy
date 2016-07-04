@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="fileMapper">
+
+
+		<resultMap type="FileBoard" id="file-basic">
+		<id column="title" property="title"/>
+		<result column="upfile" property="upfile"/>
+		</resultMap>
+		
+		
+	<!--   -->
+	<insert id="uploadFile" parameterType="HashMap">
+		INSERT INTO   file_board   VALUES  (#{title},#{upfile})
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>

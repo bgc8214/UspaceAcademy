@@ -6,7 +6,7 @@
 	<sql id ="assignment-columns">
 	assignment_no, assignment_writer_id, assignment_secret, assignment_title, assignment_content,
 	assignment_date, assignment_hit, assignment_password, assignment_re_family,
-	assignment_re_step, assignment_re_level, assignment_writer, assignment_deadline,
+	assignment_re_step, assignment_re_level, assignment_writer, assignment_deadline, assignment_file,
 	lecture_no
 	</sql>
 
@@ -25,6 +25,7 @@
 	<result column="assignment_re_level" property="replyLevel"/>
 	<result column="assignment_writer" property="assignmentWriter"/>
 	<result column="assignment_deadline" property="assignmentDeadline"/>
+	<result column="assignment_file" property="assignmentFile"/>
 	<result column="lecture_no" property="lectureNo"/>
 	</resultMap>
 
@@ -105,10 +106,8 @@
 
 	<!--  1.삽입  -->
 	<insert id="insert" parameterType="Assignment">
-	INSERT INTO assignment_board VALUES (#{assignmentNo},#{assignmentWriterId},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep},#{replyLevel},#{assignmentWriter},#{assignmentDeadline},#{lectureNo})
+	INSERT INTO assignment_board VALUES (#{assignmentNo},#{assignmentWriterId},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep},#{replyLevel},#{assignmentWriter},#{assignmentDeadline},#{assignmentFile},#{lectureNo})
 	</insert>
-
-
 
 	<!-- 2.시퀀스 -->
 	<select id="selectNextNo" resultType="_int">
@@ -131,6 +130,7 @@
 				assignment_re_level   replyLevel,
 				assignment_writer   assignmentWriter,
 				assignment_deadline    assignmentDeadline,
+				assignment_file   assignmentFile,
 				lecture_no    lectureNo
 	FROM 	assignment_board
 	</select> 
@@ -193,8 +193,8 @@
 
 
 	<!-- 6.전체조회(NO로) (이건 - 세부조회할때)  -->
-	<select id="selectNo" parameterType="_int"	resultType="Assignment">
-	SELECT 	assignment_no   assignmentNo,
+	<select id="selectNo" parameterType="_int"	resultMap="assignment-basic">
+	<!-- SELECT 	assignment_no   assignmentNo,
 				assignment_writer_id  assignmentWriterId,
 				assignment_secret   assignmentSecret,
 				assignment_title   assignmentTitle,
@@ -207,8 +207,13 @@
 				assignment_re_level   replyLevel,
 				assignment_writer   assignmentWriter,
 				assignment_deadline   assignmentDeadline,  
+				assignment_file   assignmentFile,
 				lecture_no   lectureNo
 	FROM		assignment_board
+	WHERE	assignment_no=#{assignmentNo} -->
+	SELECT
+	 <include refid="assignment-columns"></include> 
+	 FROM assignment_board
 	WHERE	assignment_no=#{assignmentNo}
 	</select>
 

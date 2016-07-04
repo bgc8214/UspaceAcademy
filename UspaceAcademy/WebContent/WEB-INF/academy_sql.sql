@@ -177,6 +177,25 @@ create sequence comment_board_seq nocache;
 
 
 
+
+
+select * from file_board;
+drop table file_board cascade constraint;
+--영주 파일업로드할 테이블
+create table file_board(
+title varchar2(1000) null ,
+upfile varchar2(4000)
+);
+
+
+
+
+
+
+
+
+
+
 drop sequence assignment_board_seq;
 create sequence assignment_board_seq nocache;
 -- 과제
@@ -196,6 +215,7 @@ create table assignment_board(
 	assignment_re_level number not null,
 	assignment_writer varchar2(50) not null,
 	assignment_deadline varchar2(10) not null,
+	assignment_file varchar2(100) null,
 	lecture_no number null, -- n o t null 로바꾸기 영주
 	constraint fk_assignment_lecture foreign key (lecture_no) references lecture(lecture_no)
 );
@@ -317,4 +337,11 @@ create table secret_table(
 
 
 select * from assignment_board where assignment_no in(161, 170)
+
+
+
+
+
+
+
 

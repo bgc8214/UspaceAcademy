@@ -94,12 +94,16 @@ text-decoration: underline;
   				<c:when test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentId==assignment.assignmentWriterId}"><!-- eq -->
 				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
 				</c:when> 
+				<c:when test="${assignment.replyLevel>1 == false}">
+				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+				</c:when>
+				
 				<c:otherwise> <!--  위에 경우가 모두 아니라면 -->
 				<%-- ${assignment.assignmentTitle} --%>
-				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+			 <%-- 	<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'> --%>${assignment.assignmentTitle} <!-- </a> -->
 				</c:otherwise>
 				</c:choose>
-				
+			
 				
 				
 				</td>

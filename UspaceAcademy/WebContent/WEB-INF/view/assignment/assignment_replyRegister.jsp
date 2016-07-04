@@ -7,39 +7,42 @@
 
 <h3>내정보 | 과제게시판 | 답글등록</h3>
 <hr/>
-<form method="POST" action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
+<form method="POST"      <%-- file --%>enctype="multipart/form-data"       action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
 
 
 <table class="table_list" summary="영주" cellpacing="0">
 	<caption></caption>
 	<tbody>
 	
-<tr>
+<tr><!-- 1 -->
 <th scope="col">아이디</th>
 <td><input type="text" name="assignmentWriterId" value="${sessionScope.login_info.studentId}"  readonly="readonly">
 </td>
 </tr>
 
 
-<tr>
+<tr><!-- 2 -->
 <th>이름</th>
 <td><input type="text" name="assignmentWriter" value="${sessionScope.login_info.studentName}"  readonly="readonly"></td>
 </td>
 </tr>
 
-<tr>
+<tr><!-- 3 -->
 <th>제목</th>
 <td><input type="text" readonly="readonly" value="RE:${requestScope.assignment.assignmentTitle }"  name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"><span class="error"><form:errors path="lec.assignmentTitle" delimiter="//"/></span>
 </td>
 </tr>
 
 <tr>
-<th></th>
+<th></th><!-- 4 -->
 <td><textarea rows="15" cols="72"  name="assignmentContent"   placeholder="내용을 입력하세요">${requestScope.assignment.assignmentContent}</textarea><span class="error"><form:errors path="lec.assignmentContent" delimiter="//"/></span>
 </td>
 </tr>
 
-
+<tr><!--   file   -->
+<th scope="col">파일첨부</th>
+<td><input type="file" name="upfile"></td>
+</tr>
 
 
 

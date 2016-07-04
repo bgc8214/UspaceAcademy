@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSpinnerUI;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import com.uspaceacademy.service.AssignmentService;
 import com.uspaceacademy.service.MemberService;
+import com.uspaceacademy.service.fileService;
 import com.uspaceacademy.vo.Assignment;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
@@ -33,7 +35,7 @@ public class AssignmentController {
 
 	@Autowired
 	private AssignmentService service;
-	private MemberService memberService;//
+	private fileService fileService;//
 
 	
 	
@@ -67,11 +69,13 @@ public class AssignmentController {
 		public ModelAndView detail(String assignmentNo){
 			int num = Integer.parseInt(assignmentNo);
 			Assignment assignment = service.selectNo(num);// no값으로 게시물 찾아옴
+			System.out.println("file"+assignment.getAssignmentFile());
 			service.selectHit(assignment); // 조회수 증가시키기
 			
-
+			
 		
-			System.out.println("과제게시판 상세조회ok");
+			
+		
 			return new ModelAndView("assignment/assignment_detail.tiles", "assignment", assignment);
 		}
 		//●오류났던거 적기 :  생성자?(detail(){가로안)에 이거 넣어 줘서 HttpSession session, HttpRequest request
@@ -102,9 +106,16 @@ public class AssignmentController {
 		
 		
 		
+		
+		
+		
+		
+		
 		//과제등록할거 작성하고 등록(과제작성완료 눌렀을때)                    //ok
 		@RequestMapping("/assignment_registerSuccess")//assignment_register.jsp 에서  
-		public ModelAndView register(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors,    @ModelAttribute com.uspaceacademy.vo.Board board,ModelMap map, HttpServletRequest request) throws IOException{
+		public ModelAndView register(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors,    @ModelAttribute com.uspaceacademy.vo.FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
+			String fileName = null;
+			
 			
 			//Date
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -118,21 +129,13 @@ public class AssignmentController {
 				return new ModelAndView("assignment/assignment_register.tiles");
 			}
 
-			//글번호
-			int num = service.selectNextNo();
-			
-			assignment= new Assignment(num,assignment.getAssignmentWriterId(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(), 1);
-			assignment.setReplyFamily(num); 
-
-			service.insert(assignment);
-
-			
-			//파일-------------------------------------
-			System.out.println(board);
+	
+			//파일
+			System.out.println("assignment_registerSuccess,board"+fileBoard);
 			
 			ArrayList fileNames = new ArrayList(); //~~
 			
-			List upfile = board.getUpfile();
+			List upfile = fileBoard.getUpfile();
 			if( upfile != null ){ //null인 경우는 upfile이름으로 넘어온 요청파라미터가 없는 경우.
 				
 				String saveDir = request.getServletContext().getRealPath("/uploadFile"); //파일저장디렉토리
@@ -142,19 +145,31 @@ public class AssignmentController {
 					MultipartFile file = (MultipartFile)f; //업로드된 파일 정보 하나씩 조회 -> 이동
 					
 					if( ! file.isEmpty()){//업로드된 파일이 있으면 -> 이동
-						String fileName = file.getOriginalFilename(); //업로드된 파일명 조회.
+						fileName = file.getOriginalFilename(); //업로드된 파일명 조회.
 						File dest = new File(saveDir, fileName);
 						file.transferTo(dest); //이동처리 
 						fileNames.add(fileName); //~~
 					}
 				}
 			}
-			map.addAttribute("fileNames",fileNames);             //~~
-			map.addAttribute("title", board.getTitle());             //~~
-			map.addAttribute("content", board.getContent());   //~~
+			modelMap.addAttribute("fileNames",fileNames);             //~~
+			modelMap.addAttribute("title", fileBoard.getTitle());             //~~
 			
-
 			System.out.println("과제글 작성하고 등록ok");
+			
+			//글번호
+			int num = service.selectNextNo();
+			
+			assignment= new Assignment(num,assignment.getAssignmentWriterId(),assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),fileName, 1);
+			assignment.setReplyFamily(num); 
+			
+			System.out.println(fileName+"파일이름");
+			
+			service.insert(assignment);
+
+			
+			
+			
 		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment);
 		}
 		//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 이상 x		
@@ -162,6 +177,8 @@ public class AssignmentController {
 			assignment.setReplyLevel(num);//??
 			└●오류났던거 적기:  강사가 새로 과제글 등록한글에 학생이 답글쓴거 안달림(db에서 확인해보면 replyFamily값이 0으로 박혀서그럼, 새로운글 등록할때(여기)도 replyFamily,replyStep,replyLevel 넘겨줘야됨  -> 해결: assignment.setReplyFamily(num); 해주고 replyStep,replyLevel도 넘겨줘야함*/
 
+		
+		
 		
 		
 		
@@ -290,8 +307,8 @@ public class AssignmentController {
 		
 		
 			//답변폼에서   ->  답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때) assignment_replyRegister.jsp 에서 assignment_list.jsp로감
-			@RequestMapping("/assignment_replyRegisterSuccess")// 
-			public ModelAndView reply(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors,   HttpSession session){
+			@RequestMapping("/assignment_replyRegisterSuccess")// 																							  //┌파일																							
+			public ModelAndView reply(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors,   HttpSession session, @ModelAttribute com.uspaceacademy.vo.FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
 				
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				
@@ -317,9 +334,35 @@ public class AssignmentController {
 				assignment.setAssignmentWriter(student);
 				assignment.setReplyLevel(+1); //레벨이 +1되어야 들여쓰기 하는데 안돼서 해줌.
 				
-				assignment.setLectureNo(1);//-----------------------------------조인관계이거 문제됨
+				assignment.setLectureNo(1);//-----------------------------------조인관계이거 문제됨!
 				
 				service.replyReplyReplyAddStep(assignment);
+				
+				//파일-----------------------------------------------------------------------
+				System.out.println("assignment_replyRegisterSuccess,board"+fileBoard);
+				
+				ArrayList fileNames = new ArrayList(); //~~
+				
+				List upfile = fileBoard.getUpfile();
+				if( upfile != null ){ //null인 경우는 upfile이름으로 넘어온 요청파라미터가 없는 경우.
+					
+					String saveDir = request.getServletContext().getRealPath("/uploadFile"); //파일저장디렉토리
+					//String saveDir = "C:\\java\\temp"; //파일저장디렉토리
+					
+					for(Object f : upfile){
+						MultipartFile file = (MultipartFile)f; //업로드된 파일 정보 하나씩 조회 -> 이동
+						
+						if( ! file.isEmpty()){//업로드된 파일이 있으면 -> 이동
+							String fileName = file.getOriginalFilename(); //업로드된 파일명 조회.
+							File dest = new File(saveDir, fileName);
+							file.transferTo(dest); //이동처리 
+							fileNames.add(fileName); //~~
+						}
+					}
+				}
+				modelMap.addAttribute("fileNames",fileNames);             //~~
+				modelMap.addAttribute("title", fileBoard.getTitle());             //~~
+				//modelMap.addAttribute("content", fileBoard.getContent());   //~~
 				
 				
 				System.out.println("답글  작성하고 등록ok");
@@ -336,6 +379,8 @@ public class AssignmentController {
 		
 		
 		
+			
+			
 			//파일-다운로드처리
 			@RequestMapping("/download")
 			public ModelAndView download(@RequestParam String fileName){
