@@ -17,7 +17,6 @@
 	
 	$(document).ready(effect);
 	function effect() {
-		var message = $
 		$("tr:eq(2)").css("background-color", "#6CC0FF");
 	
 	}

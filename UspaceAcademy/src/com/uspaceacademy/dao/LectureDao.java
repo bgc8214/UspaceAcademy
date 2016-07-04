@@ -1,5 +1,7 @@
 package com.uspaceacademy.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +98,9 @@ public class LectureDao {
 		Map map = new HashMap();
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
 		return session.selectList("lecture.selectListByPaging", map);
 	}
 	

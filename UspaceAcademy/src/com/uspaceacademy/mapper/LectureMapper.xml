@@ -111,10 +111,11 @@
  			FROM   (
  				SELECT <include refid="column-basic"/>
  				FROM   lecture
+ 				WHERE  lecture_start_Date >= #{currentDate}
  				ORDER BY lecture_no DESC  
  			)
  		)
- 		WHERE  page = #{page}
+ 		WHERE  page = #{page} 
  	</select>
  	
  	<!-- 강의 리스트 페이징 헬퍼 -->

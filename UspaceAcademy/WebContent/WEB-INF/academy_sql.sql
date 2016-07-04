@@ -318,3 +318,4 @@ create table secret_table(
 
 select * from assignment_board where assignment_no in(161, 170)
 
+select * from lecture;

@@ -13,8 +13,11 @@
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="/js/common.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="css/common.css"/> -->
+<link href="/css/common.css" rel="stylesheet" type="text/css">
+
+
 <link rel="stylesheet" type="text/css" href="js/common.js"/>
-<link rel="stylesheet" href="css/common.css">
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 
@@ -49,7 +52,7 @@ $(document).ready(function(){
 <style type="text/css">
 header{
 	min-width : 1080px;
-	background-color:skyblue;
+ 	background-color:yellow;
 	text-align:center;
 	padding: 5px;
 }

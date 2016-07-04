@@ -3,13 +3,14 @@
 <script type="text/javascript">
 var tmp;//이벤트소스를 저장하기 위한 변수
 $(document).ready(function(){
-	$(".remove").on("click", function(){
+	$("#remove").on("click", function(){
 		return confirm("정말 탈퇴 하시겠습니까?");
 	})
 })
 </script>
-
-<table border="3" width="500">
+<h3 class="pageTlt">개인 정보</h3>
+<hr>
+<table border="3" class="table table-bordered">
 <tr>
 	<th>아이디</th><td>${sessionScope.login_info.studentId}</td>
 </tr>
@@ -32,5 +33,7 @@ $(document).ready(function(){
 전화번호 : <input type="text"	value="${sessionScope.login_info.studentPhoneNo}" readonly="readonly"><br>
 주소 : <input type="text"	value="${sessionScope.login_info.studentAddress}" readonly="readonly"><br> --%>
 <p>
-<a href="/UspaceAcademy/member/updateStudentForm.do"><button>수정</button></a>
-<a href="/UspaceAcademy/member/deleteStudent.do"><button class="remove">탈퇴</button></a>
+<div align="right">
+	<a href="/UspaceAcademy/member/updateStudentForm.do"><button class="btn btn-warning">수정</button></a>
+	<a href="/UspaceAcademy/member/deleteStudent.do"><button name="remove" class="btn btn-danger">탈퇴</button></a>
+</div>

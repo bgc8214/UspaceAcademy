@@ -7,6 +7,17 @@
 span.errors{
 	color:red
 }
+
+.ui-datepicker-calendar > tbody td:first-child a { 
+    COLOR: #f00; 
+}
+
+.ui-datepicker-calendar > tbody td:last-child a { 
+
+    COLOR: blue; 
+}
+
+
 </style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
 
@@ -15,6 +26,8 @@ span.errors{
 <link href="/UspaceAcademy/jQuery/jquery-ui.theme.min.css" rel="stylesheet">
 
 <script type="text/javascript">
+
+
 	// 자바에서 현재날짜 가져오기
 	var dt = new Date();
 	var yy = dt.getFullYear();
@@ -124,8 +137,9 @@ span.errors{
 	        monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
 	        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
 	        minDate : mindt
+
 		});
-		$("#bt2").datepicker({
+	 	$("#bt2").datepicker({
 			changeYear: true,
 			changeMonth: true,
 			showMonthAfterYear:true,
@@ -133,11 +147,24 @@ span.errors{
 			dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
 	        dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
 	        monthNamesShort: ['1','2','3','4','5','6','7','8','9','10','11','12'],
-	        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	        minDate : mindt
-		});
+	        monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] ,
+	        minDate : mindt,
+	       	onClose :function(selectedDate) {
+	       		var bt1 = $("#bt1").val();
+	       		if(bt1>selectedDate) {
+	       			alert("강의종료일이 강의시작일보다 이전일 수는 없습니다.");
+	       			$('#bt2').val(bt1);
+	       		}
+	       	}
+		}) 	
 	});
+
+
 </script>
+
+
+
+
 
 <h2>강의 등록폼</h2>
 <form action="/UspaceAcademy/lecture/registerLecture.do" method="post">

@@ -39,7 +39,8 @@ $(document).ready(function() {
 
 	$(".faqList").on("mouseout", function() {
 		$(this).css("background-color", "white");
-	});
+	})
+	
 	$("#btn").on("click", function() {
 		if(!$("input[name=title]").val()) {
 			alert("키워드를 입력하세요.");

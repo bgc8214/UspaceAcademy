@@ -161,7 +161,7 @@ form {
 		<form action="/UspaceAcademy/member/login.do" method="post">
 			ID : <input type="text" name="id"> PASSWORD : <input
 				type="password" name="password"> <input type="submit"
-				value="login">
+				value="login" class="btn btn-success">
 		</form>
 	</c:when>
 	<c:otherwise>
@@ -169,15 +169,15 @@ form {
 		<c:choose>
 			<c:when test="${sessionScope.memberType=='student' }">
 			${sessionScope.login_info.studentName } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do">로그아웃</a>
+			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-info">로그아웃</button></a>
 			</c:when>
 			<c:when test="${sessionScope.memberType=='teacher' }">
 			${sessionScope.login_info.teacherName } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do">로그아웃</a>
+			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-info">로그아웃</button></a>
 			</c:when>
 			<c:when test="${sessionScope.memberType=='administrator' }">
 			${sessionScope.login_info } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do">로그아웃</a>
+			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-info">로그아웃</button></a>
 			</c:when>
 		</c:choose>
 	</c:otherwise>

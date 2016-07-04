@@ -9,9 +9,23 @@
 				return false;
 			}
 		})
+/* 		$(".studentList").on("mouseover", function() {
+			$(this).css("background-color", "#FAF4C0");
+			this.style.cursor = 'pointer';
+		});
+		$(".studentList").on("mouseout", function() {
+			$(this).css("background-color", "white");
+		}) */
 	});
+	
+	$(document).ready(effect);
+	function effect() {
+		$("tr:eq(2)").css("background-color", "#FFD9EC");
+	}
 </script>
-<table border="4" width="1000">
+<h3 class="pageTlt">강사 정보</h3>
+<hr>
+<table border="2" width="1000" class="table">
 	<thead>
 		<tr>
 			<th>강사이름</th>
@@ -28,7 +42,7 @@
 		</c:if>
 		<c:if test="${requestScope.nameList != null}">
 			<c:forEach items="${requestScope.nameList}" var="teacher">
-				<tr>
+				<tr class="teacherList">
 					<td align="center">${teacher.teacherName}</td>
 					<td align="center">${teacher.teacherEmail}</td>
 					<td align="center">${teacher.teacherPhoneNo}</td>
@@ -41,9 +55,10 @@
 </table>
 
 	<%--◀이전 페이지 그룹 처리 --%>
+	<div class="pageNav" align="center">
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/member/searchByteacherName.do?page=${requestScope.paging.beginPage-1}&name=${requestScope.name}">
+			<a href="/UspaceAcademy/member/searchByteacherName.do?page=${requestScope.paging.beginPage-1}&name=${requestScope.name}" class="prevPage">
 			◀
 			</a>
 		</c:when>
@@ -53,11 +68,11 @@
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 [${page }]
+			 <span><strong>${page }</strong></span>
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/member/searchByteacherName.do?page=${page}&name=${requestScope.name}">
-					${page}
+					<span><strong>${page}</strong></span>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -66,16 +81,21 @@
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/member/searchByteacherName.do?&page=${requestScope.paging.endPage + 1}&name=${requestScope.name}">
+			<a href="/UspaceAcademy/member/searchByteacherName.do?&page=${requestScope.paging.endPage + 1}&name=${requestScope.name}" class="nextPage">
 			▶
 			</a>
 		</c:when>
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
+</div>
 <p>
-<a href="/UspaceAcademy/member/teacherAll.do"><button>강사정보목록</button></a><p>
-
+<div align="center">
 <!-- 학생이름으로 검색  -->
 <form action="/UspaceAcademy/member/searchByteacherName.do">
-	<input type="text" name="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="이름으로 검색">
+	<input type="text" name="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="이름으로 검색" class="btn btn-primary">
 </form>
+</div>
+
+<a href="/UspaceAcademy/member/teacherAll.do"><button class="btn btn-success">강사정보목록</button></a><p>
+
+

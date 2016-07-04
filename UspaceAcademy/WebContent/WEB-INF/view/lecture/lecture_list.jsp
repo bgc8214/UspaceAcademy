@@ -16,6 +16,7 @@ $(document).ready(function(){
 			"data":"lectureNo="+tmp.children().eq(0).text(), //요청 파라미터 설정 - queryString(n=v&n=v) /  Javascript 객체{n:v,n:v}
 			"dataType":"json", //응답데이터 타입 지정. text는 default
 			"success":function(list){
+				
 				$("tbody tr.dummy").remove(); //먼저 dummy class의 tr을 지워주고
 				$('<tr class="dummy"><td colspan="8" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
 				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : \\"+list[0].lecturePrice+"<br>";
