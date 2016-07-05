@@ -262,9 +262,9 @@ CREATE TABLE attendance(
 
 
 
-insert into code_table values('6', '1:1문의', 'advanced_board');
-insert into code_table values('7', '1:1문의댓글', 'comment_board');
-insert into code_table values('8', '강의질문하기', 'advanced_board');
+insert into code_table values('7', '1:1문의', 'advanced_board');
+insert into code_table values('8', '1:1문의댓글', 'comment_board');
+insert into code_table values('9', '강의질문하기', 'advanced_board');
 
 ---------------------------------------------------------------------
 -- code_table insert하는 구문     //영주1
@@ -274,6 +274,8 @@ insert into CODE_TABLE values('2', 'FAQ', 'basic_board');
 insert into CODE_TABLE values('3', '국어', 'teacherSubject');
 insert into CODE_TABLE values('4', '영어', 'teacherSubject');
 insert into CODE_TABLE values('5', '수학', 'teacherSubject');
+insert into CODE_TABLE values('6', '한국사', 'teacherSubject');
+
 
 select * from CODE_TABLE;
 	SELECT *

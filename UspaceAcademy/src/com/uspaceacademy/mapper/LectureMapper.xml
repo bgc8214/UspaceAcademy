@@ -28,9 +28,10 @@
  	</resultMap>
  	
  	<!-- 강의 전체 조회 -->
- 	<select id="selectLectureList" resultMap="lecture-basic">
+ 	<select id="selectLectureList" resultMap="lecture-basic" parameterType="map">
  		SELECT <include refid="column-basic"/>
  		FROM   lecture
+ 		WHERE  lecture_start_Date >= #{currentDate}
  	</select>
  	
  	<!-- 강의 번호로 조회(PK로) -->
@@ -119,9 +120,10 @@
  	</select>
  	
  	<!-- 강의 리스트 페이징 헬퍼 -->
- 	<select id="selectCountContents" resultType="_int">
+ 	<select id="selectCountContents" resultType="_int" parameterType="map">
  		SELECT count(lecture_no) 
  		FROM   lecture
+ 		WHERE  lecture_start_Date >= #{currentDate} 
  	</select>
  	
  	<!-- 강의 리스트 페이징(강의명으로 검색) -->
@@ -133,6 +135,7 @@
  				SELECT <include refid="column-basic"/>
  				FROM   lecture
  				WHERE  lecture_title like '%'||#{lectureTitle}||'%'
+ 					and lecture_start_Date >= #{currentDate}
  				ORDER BY lecture_no DESC  
  			)
  		)
@@ -140,10 +143,11 @@
  	</select>
  	
  	<!-- 강의 리스트 페이징 헬퍼(강의명으로 검색) -->
- 	<select id="selectCountContentsByLectureTitle" resultType="_int">
+ 	<select id="selectCountContentsByLectureTitle" resultType="_int" parameterType="map">
  		SELECT count(lecture_no) 
  		FROM   lecture
  		WHERE  lecture_title like '%'||#{lectureTitle}||'%'
+ 			and lecture_start_Date >= #{currentDate}
  	</select>
  	
  	<!-- 강의 리스트 페이징(강의과목으로 검색) -->
@@ -155,6 +159,7 @@
  				SELECT <include refid="column-basic"/>
  				FROM   lecture
  				WHERE  lecture_subject like '%'||#{lectureSubject}||'%'
+ 					and lecture_start_Date >= #{currentDate}
  				ORDER BY lecture_no DESC  
  			)
  		)
@@ -162,10 +167,11 @@
  	</select>
  	
  	<!-- 강의 리스트 페이징 헬퍼(강의과목으로 검색) -->
- 	<select id="selectCountContentsBylectureSubject" resultType="_int">
+ 	<select id="selectCountContentsBylectureSubject" resultType="_int" parameterType="map">
  		SELECT count(lecture_no) 
  		FROM   lecture
  		WHERE  lecture_subject like '%'||#{lectureSubject}||'%'
+ 			and lecture_start_Date >= #{currentDate}
  	</select>
  	
  	
@@ -178,6 +184,7 @@
  				SELECT <include refid="column-basic"/>
  				FROM   lecture
  				WHERE  teacher_id2 = #{teacherId2}
+ 					and lecture_start_Date >= #{currentDate}
  				ORDER BY lecture_no DESC  
  			)
  		)
@@ -185,10 +192,11 @@
  	</select>
  	
  	<!-- 강의 리스트 페이징 헬퍼(강의ID로 검색) -->
- 	<select id="selectCountContentsByTeacherId" resultType="_int">
+ 	<select id="selectCountContentsByTeacherId" resultType="_int" parameterType="map">
  		SELECT count(lecture_no) 
  		FROM   lecture
  		WHERE  teacher_id2 = #{teacherId2}
+ 			and lecture_start_Date >= #{currentDate}
  	</select>
  	
  	<!-- 학생 강의 조인 테이블에서 강의 한개 삭제 -->
@@ -229,4 +237,11 @@
 		from lecture
 		where teacher_id2 = #{value}
 	</delete> 	
+	
+	<!-- 관리자용 강의 리스트 조회 -->
+	<select id="selectAdminLectureList" resultMap="lecture-basic">
+		select * 
+		from lecture
+		order by lecture_no desc
+	</select>
 </mapper>

@@ -5,15 +5,16 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$(".cancel").on("click", function(){
+	$("#cancel").on("click", function(){
 		return confirm("정말 취소하시겠습니까?");
 	})
 
 })
 </script>
 
-<h2>${sessionScope.login_info.studentName }님의 강의 결제목록</h2>
-<table border="1">
+<h3 class="pageTlt">${sessionScope.login_info.studentName }님의 강의 결제목록</h3>
+<hr>
+<table border="1" class="table">
 <thead>
 <tr>
 	<th>강의번호</th><th>강의과목</th><th>강의명</th><th>강의기간</th><th>수강요일</th><th>강의시간</th>
@@ -28,10 +29,10 @@ $(document).ready(function(){
 			<td>${apply.lectureStartDate } ~ ${apply.lectureEndDate }</td><td>${apply.lectureDay }</td>
 			<td>${apply.lectureStartTime } ~ ${apply.lectureEndTime }</td>
 			<td>${apply.lectureCurrentStudent } / ${apply.lectureTotalStudent }</td>
-			<td align="center"><a href="/UspaceAcademy/lecture/removeLectureFromApplyList.do?lectureNo=${apply.lectureNo }"><button class="cancel">결제 취소</button></a></td>
+			<td align="center"><a href="/UspaceAcademy/lecture/removeLectureFromApplyList.do?lectureNo=${apply.lectureNo }"><button id="cancel" class="btn btn-danger">결제 취소</button></a></td>
 		</tr>
 </c:forEach>
 
 </tbody>
 </table>
-<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><button>강의목록</button></a>
+<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><button class="btn btn-info">강의목록</button></a>

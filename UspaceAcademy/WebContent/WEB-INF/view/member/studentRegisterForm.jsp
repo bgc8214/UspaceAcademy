@@ -75,7 +75,7 @@ function idCheck()
 <h3 class="pageTlt">학생 가입폼</h3>
 <hr>
 <form action="/UspaceAcademy/member/studentRegister.do" method="post" name="join_form" onsubmit="return checkValue();">
-	<table class="table table-board form-talbe">
+	<table class="table table-board form-table">
 	<tbody>
 		<tr>
 			<th>ID</th>

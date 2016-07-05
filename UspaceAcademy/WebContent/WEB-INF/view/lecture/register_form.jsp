@@ -16,15 +16,16 @@ span.errors{
 
     COLOR: blue; 
 }
-
-
 </style>
-<script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
+
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+
+<script type="text/javascript" src="jQuery/jquery.timepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="jQuery/jquery.timepicker.css"/>
 
 <link href="/UspaceAcademy/jQuery/jquery-ui.min.css" rel="stylesheet">
 <link href="/UspaceAcademy/jQuery/jquery-ui.structure.min.css" rel="stylesheet">
 <link href="/UspaceAcademy/jQuery/jquery-ui.theme.min.css" rel="stylesheet">
-
 <script type="text/javascript">
 
 
@@ -156,13 +157,16 @@ span.errors{
 	       			$('#bt2').val(bt1);
 	       		}
 	       	}
-		}) 	
+		})
 	});
-
-
 </script>
+<script>
+$(document).ready(function(){
 
+		$('input.timePicker').timepickererwfse();
 
+});
+</script>
 
 
 
@@ -170,9 +174,16 @@ span.errors{
 <form action="/UspaceAcademy/lecture/registerLecture.do" method="post">
 강의명 : <input type="text" name="lectureTitle"><span class="errors"><form:errors path="lecture.lectureTitle" delimiter="//"/></span><br>
 강의 설명 : <textarea rows="10" cols="20" name="lectureDescription"></textarea><span class="errors"><form:errors path="lecture.lectureDescription" delimiter="//"/></span><br>
-강의 시작시간 : <input type="text" name="lectureStartTime"><span class="errors"><form:errors path="lecture.lectureStartTime" delimiter="//"/></span><br>
-강의 끝시간 : <input type="text" name="lectureEndTime"><span class="errors"><form:errors path="lecture.lectureEndTime" delimiter="//"/></span><br>
-<%-- 강의 요일 : <input type="text" name="lectureDay"><span class="errors"><form:errors path="lecture.lectureDay" delimiter="//"/></span><br> --%>
+<%-- 강의 시작시간 : <input type="text" name="lectureStartTime"><span class="errors"><form:errors path="lecture.lectureStartTime" delimiter="//"/></span><br>
+강의 끝시간 : <input type="text" name="lectureEndTime"><span class="errors"><form:errors path="lecture.lectureEndTime" delimiter="//"/></span><br> --%>
+<%-- 강의 요일 : <input type="text" name="lectureDay"><span class="errors"><form:errors path="lecture.lectureDay" delimiter="//"/></span><br>
+ --%>
+
+<div class="input-a margin-t-10"><input type="text" id="lectureStartTime" name="lectureStartTime" value="" class="timePicker" placeholder="00:00 AM"></div>
+<div class="input-a margin-t-10"><input type="text" id="lectureEndTime" name="lectureEndTime" value="" class="timePicker" placeholder="23:00 AM"></div>
+
+
+
 강의 요일 :<label> 월 <input type="checkbox" name="lectureDay2" value='월'></label>
 		   <label> 화 <input type="checkbox" name="lectureDay2" value='화'></label>
 		   <label> 수 <input type="checkbox" name="lectureDay2" value='수'></label>
@@ -204,3 +215,30 @@ span.errors{
 <p>
 <input id="submit1" type="submit" value="강의 등록">
 </form>
+
+
+
+
+
+
+
+
+
+
+
+<!-- 	
+	 $('#lectureStartTime')
+	    .timepicker({timeFormat:'H:i', 'minTime':'06:00','maxTime': '23:00','scrollDefaultNow': true })  //stime 시작 기본 설정
+	    .on('changeTime', function() {                            //stime 을 선택한 후 동작
+	        var from_time = $("input[name='lectureStartTime']").val();  //stime 값을 변수에 저장
+	        $('#lectureEndTime').timepicker('option', 'minTime', from_time); //etime의 mintime 지정
+	        if ($('#lectureEndTime').val() && $('#lectureEndTime').val() < from_time) { 
+	            $('#lectureEndTime').timepicker('setTime', from_time);
+												//etime을 먼저 선택한 경우 그리고 etime시간이 stime시간보다 작은경우 etime시간 변경
+	        }	
+	    });
+
+	$('#lectureEndTime').timepicker({timeFormat:'H:i','minTime':'06:00','maxTime': '23:00'}); //etime 시간 기본 설정 
+ -->
+
+	

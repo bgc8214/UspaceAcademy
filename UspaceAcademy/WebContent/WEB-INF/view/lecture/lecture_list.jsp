@@ -15,11 +15,17 @@ $(document).ready(function(){
 			"type":"POST", //HTTP 요청방식
 			"data":"lectureNo="+tmp.children().eq(0).text(), //요청 파라미터 설정 - queryString(n=v&n=v) /  Javascript 객체{n:v,n:v}
 			"dataType":"json", //응답데이터 타입 지정. text는 default
-			"success":function(list){
-				
+			"success":function(list){	
 				$("tbody tr.dummy").remove(); //먼저 dummy class의 tr을 지워주고
-				$('<tr class="dummy"><td colspan="8" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
-				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : \\"+list[0].lecturePrice+"<br>";
+/* 				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : \\"+list[0].lecturePrice+"<br>";
+				
+				$('<tr class="dummy"><td colspan=8" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">강의제목 '+list[0].lectureTitle+'<br>세부 내용 : '+list[0].lectureDescription+"<br>강의 가격 : "+list[0].lecturePrice+'</textarea></td></tr>').insertAfter(tmp);
+
+				$('<tr class="dummy"><td colspan=8" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">'+txt+'</textarea></td></tr>').insertAfter(tmp);
+
+				 */
+ 				$('<tr class="dummy"><td colspan="8" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
+				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : "+list[0].lecturePrice+"<br>";
 					tmp.next().children().eq(0).append(txt);
 					if(list[1]=="student"){
 						var txt = tmp.children().eq(0).text();
@@ -33,8 +39,8 @@ $(document).ready(function(){
 					}
 					if(list[1]=="administrator"){
 						var txt2 = tmp.children().eq(0).text();
-						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?page="+$("#page").val()+"&lectureNo="+txt2+"&codeType=teacherSubject><button class='lectureModify'>강의수정</button></a>"+
-								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+"><button class='lectureRemove'>강의삭제</button></a>";
+						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?page="+$("#page").val()+"&lectureNo="+txt2+"&codeType=teacherSubject><button class='btn btn-warning'>강의수정</button></a>"+
+								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+">&nbsp;&nbsp;<button class='btn btn-danger'>강의삭제</button></a>";
 						tmp.next().children().eq(0).append($(temp2));
 					}
 				
@@ -97,14 +103,20 @@ $(document).ready(function(){
 		"beforeSend":function(){
 		}
 	});
+	$(document).ready(effect);
+	function effect() {
+		$("tr:eq(2)").css("background-color", "#FFE08C");
+	}
 	
 })
 </script>
+<h3 class="pageTlt">강좌 목록</h3>
+<hr>
 <form>
 <input id="page" type="hidden" value="${param.page }">
 </form>
 <font color="red" size="5">${requestScope.errorMessage}</font>
-<table border="1">
+<table border="1" class="table table-bordered">
 
 <thead>
 <tr>
@@ -126,24 +138,25 @@ $(document).ready(function(){
 </table>
 
 <p>
+<div class="pageNav" align="center">
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.beginPage - 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
-			◀
+			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.beginPage - 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}" class="prevPage">
+			<span><strong>이전</strong></span>
 			</a>
 		</c:when>
-		<c:otherwise>◀</c:otherwise>
+		<c:otherwise><span><strong>이전</strong></span></c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 [${page }]
+			 <span><strong>${page }</strong></span>
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${page }&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
-					${page }
+					<span><strong>${page }</strong></span>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -152,14 +165,16 @@ $(document).ready(function(){
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.endPage + 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
-			▶
+			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.endPage + 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}" class="nextPage">
+			<span><strong>다음</strong></span>
 			</a>
 		</c:when>
-		<c:otherwise>▶</c:otherwise>
+		<c:otherwise><span><strong>다음</strong></span></c:otherwise>
 	</c:choose>
+	</div>
 <br>
 <!-- 검색관련 -->
+<div class="boardBottom" align="center">
 <form action="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${param.page }" method="post">
 <select name="searchType">
 	<option value="lectureTitle">강의명</option>
@@ -167,9 +182,9 @@ $(document).ready(function(){
 	<option value="teacherName">강사</option>
 </select>
 <input type="text" name="keyword">
-<input type="submit" value="검색">
+<input type="submit" value="검색" class="btn btn-info">
 </form>
-	
+</div>	
 <p>
 
 
@@ -177,11 +192,11 @@ $(document).ready(function(){
 <!-- 관리자용 강의 등록 버튼 -->
 <span class="lectureRegister">
 	<c:if test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button>강의 등록</button></a>
+		<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button class="btn btn-success">강의 등록</button></a>
 	</c:if>
 	<c:if test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/lecture/zzimList.do?page=${param.page }"><button>찜 목록</button></a>
-		<a href="/UspaceAcademy/lecture/applyList.do?page=${param.page }"><button>결제 목록</button></a>
+		<a href="/UspaceAcademy/lecture/zzimList.do?page=${param.page }"><button class="btn btn-success">찜 목록</button></a>
+		<a href="/UspaceAcademy/lecture/applyList.do?page=${param.page }"><button class="btn btn-warning">결제 목록</button></a>
 	</c:if>
 </span>
 

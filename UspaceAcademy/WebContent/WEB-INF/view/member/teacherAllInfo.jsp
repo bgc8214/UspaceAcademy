@@ -19,6 +19,7 @@
 			<th>이메일</th>
 			<th>전화번호</th>
 			<th>주소</th>
+			<th>과목</th>
 		<tr>
 	</thead>
 	<tbody>
@@ -28,6 +29,7 @@
 				<td align="center">${teacher.teacherEmail}</td>
 				<td align="center">${teacher.teacherPhoneNo}</td>
 				<td align="center">${teacher.teacherAddress}</td>
+				<td align="center">${teacher.teacherSubject}</td>
 			</tr>	
 		</c:forEach>
 		
