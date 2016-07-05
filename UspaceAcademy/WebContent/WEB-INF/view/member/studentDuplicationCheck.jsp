@@ -2,8 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <form action="/UspaceAcademy/member/studentIdCheck.do">
-아이디 입력 : <input type="text" name="id">
-<input type="submit" value="중복확인"><br>
+<fieldset>
+	<dt>아이디 입력</dt>
+	<dd><input type="text" name="id"></dd>
+	<dd><input type="submit" value="중복확인" class="btn btn-info"></dd>
+</fieldset>
 </form>
 <c:choose>
 	<c:when test="${requestScope.idCheck==true}">

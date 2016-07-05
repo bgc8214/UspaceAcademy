@@ -21,6 +21,10 @@ $(document).ready(function(){
 	$(".checkbox").on("mouseover",function(){
 		this.style.cursor = 'pointer';
 	})
+	$(document).ready(effect);
+	function effect() {
+		$("tr:eq(2)").css("background-color", "#D4F4FA");
+	}
 
 })
 
@@ -29,7 +33,7 @@ $(document).ready(function(){
 <h2>${sessionScope.login_info.studentName }님의 찜 목록</h2>
 <font color="red" size="5">${requestScope.errorMessage}</font>
 <form class="form" method="post" action="/UspaceAcademy/lecture/applyFromZzimList.do?page=${requestScope.page }">
-<table border="1">
+<table border="3" class="table table-hover">
 <thead>
 <tr>
 	<th>강의선택</th><th>강의번호</th><th>강의과목</th><th>강의명</th><th>강의기간</th><th>수강요일</th><th>강의시간</th>
@@ -48,6 +52,8 @@ $(document).ready(function(){
 	</c:forEach>
 </tbody>
 </table>
-<input class="css" id="submit" type="submit" value="일괄신청하기"><a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><input class="css" type="button" value="강의목록"></a>
+<div align="right">
+<input class="btn btn-warning" id="submit" type="submit" value="일괄신청하기">&nbsp;<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><input class="btn btn-info" type="button" value="강의목록"></a>
+</div>
 </form>
 

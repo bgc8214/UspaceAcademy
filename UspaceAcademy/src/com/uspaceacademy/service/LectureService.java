@@ -145,9 +145,18 @@ public class LectureService {
 		return lectureDao.deleteLectureFromApplyListByLectureNo(studentId, lectureNo);
 	}
 	
-	
+
+	//관리자용 강사 관리페이지에서 강사조회
 	public List selectAllByTeacherId(String teacherId) {		
 		return lectureDao.selectAllByTeacherId(teacherId);
+	}
+	
+	// 관리자용 강의목록 조회
+	public Map selectAdminLectureService() {
+		Map map = new HashMap<>();
+		map.put("lectureList", lectureDao.selectAdminLectureDao());
+		return map;
+
 	}
 	
 }

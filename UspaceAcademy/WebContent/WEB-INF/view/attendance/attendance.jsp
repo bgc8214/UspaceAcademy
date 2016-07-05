@@ -18,11 +18,13 @@
 		}
 	}
 </script> 
-<table border="3" width="700" align="center">
+<h3 class="pageTlt">출결</h3>
+<hr>
+<table align="center" class="table table-bordered">
 	<tr>
 		<th>일차 | 학생</th>
 		<c:forEach items="${requestScope.studentInfoList}" var="list">
-			<td align="center">${list.studentName}</td>
+			<th align="center">${list.studentName}</th>
 		</c:forEach>
 		<th>등록</th>
 	<c:set value="1" var="cnt"/>
@@ -57,12 +59,22 @@
 						</td>	
 						<td align="center"><input id="btn" type="submit" value="등록"></td>
 					</c:forEach>
-					
+
+					<c:choose>
+						<c:when test="${requestScope.diff>0}">
+							<td align="center"><input id="btn" type="submit" value="등록" class="btn btn-success"></td>
+				
+						</c:when>
+						<c:otherwise>
+									<td align="center"></td>
+						</c:otherwise>
+					</c:choose>
+
 			</form>
 		</tr>
 		</c:if>
 </table>
 
-<a href="/UspaceAcademy/attendance/attendanceList.do"><button>강의목록</button></a>
+<a href="/UspaceAcademy/attendance/attendanceList.do"><button class="btn btn-info">강의목록</button></a>
 <a href="/UspaceAcademy/attendance/attendanceRedirect.do?startDate=${requestScope.lecture.lectureStartDate}&endDate=${requestScope.lecture.lectureEndDate}&lectureNo=${requestScope.lectureNo}">
-<button>출석수정</button></a>
+<button class="btn btn-warning">출석수정</button></a>

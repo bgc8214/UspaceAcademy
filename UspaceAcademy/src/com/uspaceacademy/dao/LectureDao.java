@@ -1,5 +1,7 @@
 package com.uspaceacademy.dao;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,10 +22,15 @@ public class LectureDao {
 	
 	//강의목록 전체조회
 	public List selectLectureList(){
-		return session.selectList("lecture.selectLectureList");
+		Map map = new HashMap<>();
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
+		return session.selectList("lecture.selectLectureList", map);
 	}
 	//no로 강의 조회
 	public Lecture selectLectureByNo(int lectureNo) {
+		
 		return session.selectOne("lecture.selectLectureByNo", lectureNo);
 	}
 	//code리스트 조회
@@ -96,24 +103,39 @@ public class LectureDao {
 		Map map = new HashMap();
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
 		return session.selectList("lecture.selectListByPaging", map);
 	}
 	
 	//페이징 처리
 	public int selectCountContents() {
-		return session.selectOne("lecture.selectCountContents");
+		Map map = new HashMap<>();
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
+		return session.selectOne("lecture.selectCountContents", map);
 	}
-	//강의명에 매개변수로 넘어온 값이 포함되어있으면 모두 조회
+	//강의명에 매개변수로 넘어온 값이 포함되어있으면 모두 조회 - 강의시작 날짜를 통해 강의가 시작된 강의들을 제외된 상태
 	public List selectLectureListByLectureTitle(String lectureTitle, int page) {
 		Map map = new HashMap();
 		map.put("lectureTitle", lectureTitle);
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
 		return session.selectList("lecture.selectLectureListByLectureTitle", map);
 	}
-	//강의명으로 검색한 것 페이징 처리 도와줌
+	//강의명으로 검색한 것 페이징 처리 도와줌 - 강의시작 날짜를 통해 강의가 시작된 강의들을 제외된 상태
 	public int selectCountContentsByLectureTitle(String lectureTitle) {
-		return session.selectOne("lecture.selectCountContentsByLectureTitle",lectureTitle);
+		Map map = new HashMap<>();
+		map.put("lectureTitle", lectureTitle);
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
+		return session.selectOne("lecture.selectCountContentsByLectureTitle",map);
 	}
 	
 	//강의과목으로 검색한 것 페이징 처리
@@ -122,11 +144,19 @@ public class LectureDao {
 		map.put("lectureSubject", lectureSubject);
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
 		return session.selectList("lecture.selectLectureListByLectureSubject", map);
 	}
 	//강의과목으로 검색한 것 페이징 처리 도와줌
 	public int selectCountContentsByLectureSubject(String lectureSubject) {
-		return session.selectOne("lecture.selectCountContentsBylectureSubject",lectureSubject);
+		Map map = new HashMap<>();
+		map.put("lectureSubject", lectureSubject);
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
+		return session.selectOne("lecture.selectCountContentsBylectureSubject", map);
 	}
 	//선생ID로 lectureList를 조회함
 	public List selectLectureListByTeacherId(String teacherId2, int page) {
@@ -134,10 +164,18 @@ public class LectureDao {
 		map.put("teacherId2", teacherId2);
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
 		return session.selectList("lecture.selectLectureListByTeacherId", map);
 	}
 	//선생ID로 검색한 것 페이징 처리 도와줌
 	public int selectCountContentsByTeacherId(String teacherId2) {
+		Map map = new HashMap<>();
+		map.put("teacherId2", teacherId2);
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
 		return session.selectOne("lecture.selectCountContentsByTeacherId", teacherId2);
 	}
 	//학생 강의 조인 테이블에서 강의 한개 삭제
@@ -147,10 +185,15 @@ public class LectureDao {
 		map.put("lectureNo", lectureNo);
 		return session.delete("lecture.deleteLectureFromApplyListByLectureNo", map);
 	}
-	
-	
+
+	//관리자용 강사 관리페이지에서 강사조회
 	public List selectAllByTeacherId(String teacherId) {
 		return session.selectList("lecture.selectAllByTeacherId", teacherId);
+	}
+
+	// 관리자용 강의 목록 조회
+	public List selectAdminLectureDao() {
+		return session.selectList("lecture.selectAdminLectureList");
 	}
 }
 

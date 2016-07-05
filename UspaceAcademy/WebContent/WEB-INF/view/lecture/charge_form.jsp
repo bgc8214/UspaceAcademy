@@ -12,14 +12,39 @@ $(document).ready(function(){
 </script>
 
 
-<h2>결제하기 폼</h2>
-
-강의 명 : ${requestScope.lecture.lectureTitle }<br>
-강의 강사 : ${requestScope.teacher.teacherName }<br>
-강의 기간 : ${requestScope.lecture.lectureStartDate } ~ ${requestScope.lecture.lectureEndDate }<br>
-강의 시간 : ${requestScope.lecture.lectureStartTime } ~ ${requestScope.lecture.lectureEndTime }<br>
-강의 요일 : ${requestScope.lecture.lectureDay}<br>
-강의 비용 : ${requestScope.lecture.lecturePrice }<br>
-<a id="charge" href="/UspaceAcademy/lecture/chargeLecture.do?page=${param.page }&lectureNo=${requestScope.lecture.lectureNo }"><button id="charge">결제하기</button></a>&emsp;&emsp;&emsp;
-<a href="/UspaceAcademy/lecture/lectureList.do?page=${param.page }"><button id="cancel">강의목록</button></a><br>
+<h3 class="pageTlt">결제하기 폼</h3>
+<hr>
+<table class="table table-bordered form-table">
+	<tbody>
+		<tr>
+			<th>강의명</th>
+			<td>${requestScope.lecture.lectureTitle }</td>
+		</tr>
+		<tr>
+			<th>강사</th>
+			<td>${requestScope.teacher.teacherName }</td>
+		</tr>
+		<tr>
+			<th>강의 기간</th>
+			<td>${requestScope.lecture.lectureStartDate } ~ ${requestScope.lecture.lectureEndDate }</td>
+		</tr>
+		<tr>
+			<th>강의 시간</th>
+			<td>${requestScope.lecture.lectureStartTime } ~ ${requestScope.lecture.lectureEndTime }</td>
+		</tr>
+		<tr>
+			<th>강의 요일</th>
+			<td>${requestScope.lecture.lectureDay}</td>
+		</tr>
+		<tr>
+			<th>강의비용</th>
+			<td>${requestScope.lecture.lecturePrice }</td>
+		</tr>
+	</tbody>
+	
+</table>
+<div align="right">
+<a id="charge" href="/UspaceAcademy/lecture/chargeLecture.do?page=${param.page }&lectureNo=${requestScope.lecture.lectureNo }"><button id="charge" class="btn btn-danger">결제하기</button></a>
+<a href="/UspaceAcademy/lecture/lectureList.do?page=${param.page }"><button id="cancel" class="btn btn-success">강의목록</button></a><br>
 <font color="red">${param.errorMessage }</font>
+</div>

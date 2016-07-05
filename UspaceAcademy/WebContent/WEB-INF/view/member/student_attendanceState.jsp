@@ -1,10 +1,13 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<h3>출결상태</h3><p>
-<table border="3" width="300">
+<h3 class="pageTlt">출결 상태</h3>
+<hr>
+<table class="table table-bordered">
 <thead>
-	<th>일차</th>
-	<th>출결</th>
+	<tr>
+		<th>일차</th>
+		<th>출결</th>
+	</tr>
 </thead>
 <tbody>
 	<c:forEach items="${requestScope.attendanceStateList}" var="attendance">	

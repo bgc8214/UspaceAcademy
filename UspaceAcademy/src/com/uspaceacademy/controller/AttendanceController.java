@@ -44,6 +44,18 @@ public class AttendanceController {
 	@RequestMapping("/attendanceSearch.do")
 	public ModelAndView attendanceList(@ModelAttribute Lecture lecture) throws ParseException {
 		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", java.util.Locale.getDefault());
+		
+		Date currentDate = new Date();	// 현재 날짜
+		String current = new SimpleDateFormat("yyyy/MM/dd").format(currentDate);		// 현재 날짜 변환
+		
+		Date vDate = dateFormat.parse(current);			// 현재 날짜
+		Date sDate = dateFormat.parse(lecture.getLectureStartDate());		// 강의 시작일
+
+		
+		long diff = vDate.getTime() - sDate.getTime() ;	// 현재 날짜 - 강의 시작일
+		
+
 		// 조회 및 상세페이지로 이동하여 이미 등록된 츨결정보를 보여주고 출석등록이 가능하도록!!!
 		List studentInfoList = service.selectLectureStudentInfoService(lecture.getLectureNo());	// 강사가 선택한 강좌의 학생 정보
 		List attendanceList = service.attendanceStateService(lecture.getLectureNo());			// 출석 상태 조회		
@@ -56,7 +68,8 @@ public class AttendanceController {
 		map.put("lectureNo", lecture.getLectureNo());
 		map.put("lecture", lecture);
 		map.put("attendanceList", attendanceList);		// 일자별로 정렬된 학생들의 출결정보 - 출결이 등록된 마지막 날짜까지의....
-	
+		map.put("diff", diff);		// 넘어가면 출결 등록 버튼 숨기기
+		
 		return new ModelAndView("attendance/attendance.tiles", map);	
 	}
 	

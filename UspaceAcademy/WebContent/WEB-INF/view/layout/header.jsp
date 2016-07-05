@@ -70,7 +70,7 @@ form {
 											{
 												$("#td6")
 														.html(
-																'<a href="/UspaceAcademy/member/studentAll.do"><button style="width:88px">학생관리</button></a><a href="/UspaceAcademy/member/teacherAll.do"><button style="width:88px" >강사관리</button></a><button style="width:88px">재정관리</button>');
+																'<a href="/UspaceAcademy/member/studentAll.do"><button style="width:88px">학생관리</button></a><a href="/UspaceAcademy/member/teacherAll.do"><button style="width:88px" >강사관리</button><a href="/UspaceAcademy/lecture/lectureAll.do"><button style="width:88px">강의관리</button></a><button style="width:88px">재정관리</button>');
 												$("#td1").html("");
 												$("#td5").html("");
 											}

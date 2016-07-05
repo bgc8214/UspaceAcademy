@@ -55,10 +55,12 @@ function checkValue() {
 	}  
 }
 </script>
+<h3 class="pageTlt">개인 정보 수정</h3>
+<hr>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <form action="/UspaceAcademy/member/updateTeacher.do" name="update_form" method="post" onsubmit="return checkValue();">
 <input type="hidden" name="baseAddress" value="${sessionScope.login_info.teacherAddress}">
-<table border="3" width="500">
+<table border="3" width="500" class="table table-striped">
 	<tr>
 		<th>아이디</th>
 		<td><input type="text"  name="teacherId" value="${sessionScope.login_info.teacherId}" readonly="readonly"></td>
@@ -96,5 +98,7 @@ function checkValue() {
 	</select><span class="error"><form:errors path="updateForm.teacherSubject" delimiter="," /></span>
 	</tr>
 </table>
-<input id="btn" type="submit" value="수정">
+	<div align="right">
+		<input id="btn" type="submit" value="수정" class="btn btn-warning">
+	</div>	
 </form>

@@ -21,6 +21,7 @@ $(document).ready(function() {
 				if("${sessionScope.memberType}"=='administrator') {
 					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+$("#page").val()+"><button class='btn btn-warning'>FAQ수정</button></a>"));
 					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+$("#page").val()+"><button class='btn btn-danger'>FAQ삭제</button></a>"));
+
 				}
 			},
 			"error":function(xhr, status, errorMsg) {
@@ -39,7 +40,8 @@ $(document).ready(function() {
 
 	$(".faqList").on("mouseout", function() {
 		$(this).css("background-color", "white");
-	});
+	})
+	
 	$("#btn").on("click", function() {
 		if(!$("input[name=title]").val()) {
 			alert("키워드를 입력하세요.");

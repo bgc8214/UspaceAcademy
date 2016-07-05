@@ -3,7 +3,6 @@
 <!-- tiles 설정을 호출할 태그를 제공하는 태그 라이브러리. -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml-transitional.dtd">
 <html xmlns="http://www.w3.org/1991/xhtml">
-<head>
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -13,9 +12,13 @@
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 <script src="/js/common.js"></script>
-<link rel="stylesheet" type="text/css" href="js/common.js"/>
-<link rel="stylesheet" href="css/common.css">
+<!-- <link rel="stylesheet" type="text/css" href="/css/common.css"/> -->
+<link href="/css/common.css" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="jQuery/jquery.timepicker.min.css" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="/js/common.js"/>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -49,7 +52,7 @@ $(document).ready(function(){
 <style type="text/css">
 header{
 	min-width : 1080px;
-	background-color:skyblue;
+ 	background-color:yellow;
 	text-align:center;
 	padding: 5px;
 }
