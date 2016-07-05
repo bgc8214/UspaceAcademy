@@ -26,7 +26,7 @@ public class Assignment implements Serializable{
 	
 	@NotEmpty(message="마감일을 입력해주세요")
 	private String assignmentDeadline;		//8.글 마감일-
-	private String assignmentFile;
+	private String assignmentFile;				//파일이름db에 저장하기 위해.
 	private int lectureNo; //F키 , 강의번호	2.강의명	5.강사명
 	
 	
