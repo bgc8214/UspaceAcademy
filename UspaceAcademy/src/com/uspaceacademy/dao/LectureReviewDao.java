@@ -83,8 +83,6 @@ public class LectureReviewDao{
 	
 	//코드 영주1
 	public List selectCodeName(String code){
-		System.out.println("렉쳐리뷰 다오" + code);
-		System.out.println();
 		return session.selectList(codemapper+"selectCodeName",code);
 	}
 	
@@ -129,31 +127,35 @@ public class LectureReviewDao{
 	
 	
 	//10.강의과목으로 검색 lectureSubject / 강의리스트페이징selectPagingLectureSubject
-	public Object selectPagingLectureSubject(String lectureSubject, int page){
-		Map map = new HashMap();
-		map.put("lectureSubject", lectureSubject);
+	public Object selectPagingLectureSubject(String reviewSubject, int page){ //●오류났던거 적기 : 내꺼랑 lecture꺼랑 이름 겹쳐서 오류남 : 바꿈
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("lectureSubject", reviewSubject);
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
-		
-		return session.selectList(namespace+"selectPagingLectureSubject"+map);
+		System.out.println("영주 디에이오 강의 과목으로 검색1:"+reviewSubject );
+		return session.selectList(namespace+"selectPagingLectureSubject",map);  //●오류 : +map 해서안됐음 ㅜㅜ..
 	}
 	
 	
 	
 	//11.강의과목으로 검색 lectureSubject / 강의리스트페이징헬퍼selectCountLectureSubject
-	public int selectCountLectureSubject(String lectureSubject){
-		return session.selectOne(namespace+"selectCountLectureSubject"+lectureSubject);
+	public int selectCountLectureSubject(String reviewSubject){
+		System.out.println("영주 디에이오 강의 과목으로 검색2:"+reviewSubject );
+		return session.selectOne(namespace+"selectCountLectureSubject",reviewSubject); 
 	}
 	
 	
 	
 	//12.제목으로 검색 reviewTitle / 강의리스트페이징selectPagingReviewContent //제목에 매개변수로 넘어온 값이 포함되어있으면 모두조회
 	public List selectPagingReviewTitle(String reviewTitle, int page){
-		Map map = new HashMap();
+		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("reviewTitle", reviewTitle);
 		map.put("page", page);
-		map.put("itemPerPage", Constants.ITEMS_PER_PAGE);
-		return session.selectList(namespace+"selectPagingReviewTitle", map);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		System.out.println("영주 디에이오 제목으로 검색1:"+map );
+		List list =  session.selectList(namespace+"selectPagingReviewTitle", map);
+		System.out.println(list);
+		return list;
 	}
 
 	
@@ -161,6 +163,7 @@ public class LectureReviewDao{
 	
 	//13.제목으로 검색 reviewTitle / 강의리스트페이징헬퍼selectCountReviewContent //
 	public int selectCountReviewTitle(String reviewTitle){
+		System.out.println("영주 디에이오 제목으로 검색2:"+reviewTitle );
 		return session.selectOne(namespace+"selectCountReviewTitle",reviewTitle);
 	}
 	

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.LectureReviewService;
+import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.vo.LectureReview;
 import com.uspaceacademy.vo.Student;
 
@@ -28,8 +29,9 @@ import com.uspaceacademy.vo.Student;
 public class LectureReviewController{
 	
 	@Autowired
-	private LectureReviewService service;
-	
+	private LectureReviewService service; 
+	@Autowired
+	private LectureService lectureService;
 	
 	//mybatis.config.xml에 mapper꼭 등록하기
 	//---------------------------------------------------------------------
@@ -84,15 +86,29 @@ public class LectureReviewController{
 	public ModelAndView registerForm(String codeType){
 		
 		HashMap map = new HashMap<>();
-		//System.out.println("test"+codeType);
 		List codeList = service.selectCodeName(codeType);
+		List lectureTitle = lectureService.getLectureList(); //lecture 테이블에서 가져옴 - 강의명
 		
+		map.put("lectureTitle", lectureTitle); // lecture테이블에서 가져온 강의명 뿌려줌 lectureTitle라는 이름으로
+		map.put("codeType", codeList); 
+		
+		
+		System.out.println("수강후기 작성폼ok");	
+		return new ModelAndView("lectureReview/lectureReview_register.tiles",map);//등록폼으로 온다*
+	}
+/*	//수강후기 작성 폼 (lectureReview_list.jsp -> lectureReview_register.jsp)
+	@RequestMapping("/lecture_review_register")//lectureReview_detail.jsp에 수강후기등록!버튼에 링크*
+	public ModelAndView registerForm(String codeType){
+		
+		HashMap map = new HashMap<>();
+		List codeList = service.selectCodeName(codeType);
+
 		map.put("codeType", codeList);
 		
 		System.out.println("수강후기 작성폼ok");	
 		return new ModelAndView("lectureReview/lectureReview_register.tiles",map);//등록폼으로 온다*
 	}
-	
+	*/
 
 	
 
@@ -109,9 +125,9 @@ public class LectureReviewController{
 		//글번호,글쓴이,강의과목,강의명,제목,글내용,날짜,조회수		
 		HttpSession session = request.getSession();//
 		Student s = (Student)session.getAttribute("login_info");//
-		String student = s.getStudentName();//
+		String studentName = s.getStudentName();//
+		String studentId = s.getStudentId();
 		
-		System.out.println("111111111111111111111111리뷰라이터가안넘어감"+lectureReview.getReviewWriter());///////////
 		boolean error = errors.hasErrors();
 		int errorCount = errors.getErrorCount();
 		if(errors.hasErrors()){																			//
@@ -126,7 +142,7 @@ public class LectureReviewController{
 		
 		
 		//LectureReview lectureReview1 = new LectureReview(num,"이영주",lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),sdfDate,0);
-		LectureReview lectureReview1 = new LectureReview(num, student,lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),sdfDate,0);
+		LectureReview lectureReview1 = new LectureReview(num,studentId,studentName,lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),sdfDate,0);
 		
 		System.out.println("리뷰라이터가안넘어감"+lectureReview1);/////////////////////////////
 		
@@ -206,8 +222,10 @@ public class LectureReviewController{
 		LectureReview lectureReview = service.selectNo(reviewNo); //글번호     수정폼가기전에 reviewNo로 vo가져온다..
 		List codeList = service.selectCodeName(codeType);//코드타입
 		
+		List lectureTitle = lectureService.getLectureList(); //lecture테이블에서 강의명가져옴.
 		
 		HashMap map = new HashMap<>();
+		map.put("lectureTitle", lectureTitle); //lecture테이블에서 가져온 강의명(lectureTitle)뿌려줄것.
 		map.put("lectureListReview", lectureReview);
 		map.put("codeType", codeList);
 		
@@ -234,11 +252,10 @@ public class LectureReviewController{
 		boolean error = errors.hasErrors();
 		int errorCount = errors.getErrorCount();
 		if(errors.hasErrors()){																			//
-			System.out.println("수정폼,validator됨");															//
 			return new ModelAndView("/lectureReview//lecture_review_modifyForm.do?codeType=teacherSubject&reviewNo="+lectureReview.getReviewNo());   //여기 3줄 해주기
 		}
 																																												
-		LectureReview lectureReview1 = new LectureReview(lectureReview.getReviewNo(),lectureReview.getReviewWriter(),lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),lectureReview.getReviewDate(),lectureReview.getReviewHit());
+		LectureReview lectureReview1 = new LectureReview(lectureReview.getReviewNo(),lectureReview.getReviewWriterId(),lectureReview.getReviewWriter(),lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),lectureReview.getReviewDate(),lectureReview.getReviewHit());
 		service.update(lectureReview1);		//오류났던거 적기 : 생성자 vo랑 여기 순서 다르면 안됨 , 순서 바뀌면 바뀌어서 들어감!
 		//lectureReview.setReviewDate(reviewDate);//reviewDate setter로 넣어줌
 		
@@ -268,19 +285,21 @@ public ModelAndView modify(String reviewNo, String reviewWriter,String lectureSu
 	//검색기능
 	@RequestMapping("lecture_review_search")
 	public ModelAndView search(@RequestParam(defaultValue="1") int page,  @RequestParam(defaultValue="")String searchType, @RequestParam(defaultValue="")String keyword){
-		Map map = new HashMap();
-		System.out.println(searchType+"  "+keyword);
+		Map<String,Object> map = new HashMap<String,Object>();
+		System.out.println(searchType+" ------------컨트롤러---------- "+keyword);
 		
-		if(searchType.equals("lectureSubject")){
+		if(searchType.equals("reviewSubject")){
 			map = service.searchLectureSubject(keyword, page);
 			map.put("searchType", searchType);
 			map.put("keyword",keyword);
-		
+		System.out.println("------------------------과목일경우 영주컨트롤러1 searchType:" + searchType);
+		System.out.println("------------------------과목일경우 영주컨트롤러1 keyword:" + keyword);
 		}else if(searchType.equals("reviewTitle")){
 			map = service.searchReviewTitle(keyword, page);
 			map.put("searchType", searchType);
 			map.put("keyword", keyword);
-			
+			System.out.println("------------------------제목일경우 영주컨트롤러2 searchType:" + searchType);
+			System.out.println("------------------------제목일경우 영주컨트롤러2 keyword:" + keyword);
 		}else{
 			map = service.selectPagingCount(page);
 			List codeList = service.selectCodeName("teacherSubject");
@@ -288,6 +307,10 @@ public ModelAndView modify(String reviewNo, String reviewWriter,String lectureSu
 			map.put("codeList",codeList );
 			map.put("searchType",searchType );
 			map.put("keyword",keyword );
+			System.out.println("------------------------영주컨트롤러3 page:" + page);
+			System.out.println("------------------------영주컨트롤러3 codeList:" + codeList);
+			System.out.println("------------------------영주컨트롤러3 searchType:" + searchType);
+			System.out.println("------------------------영주컨트롤러3 keyword:" + keyword);
 		}
 		
 		return new ModelAndView("lectureReview/lectureReview_list.tiles",map);
@@ -305,38 +328,5 @@ public ModelAndView modify(String reviewNo, String reviewWriter,String lectureSu
 
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

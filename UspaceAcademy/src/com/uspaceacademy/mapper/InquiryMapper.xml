@@ -88,9 +88,9 @@
 		<result column="advanced_no2" property="advancedNo2"/>
 	</resultMap>
 	
-	<resultMap type="inquiry" id="inquiry-comment-resultmap" extends="inquiry-resultmap">
+<!-- 	<resultMap type="inquiry" id="inquiry-comment-resultmap" extends="inquiry-resultmap">
 		<collection property="commentList" ofType="comment" resultMap="comment-resultmap"/>
-	</resultMap>
+	</resultMap> -->
 	
 	<resultMap type="comment" id="comment-inquiry-resultmap" extends="comment-resultmap">
 		<association property="inquiry" javaType="inquiry" resultMap="inquiry-resultmap"/>
@@ -99,10 +99,10 @@
 	
 	
 	<!-- 글번호로 조회하기(조인) -->
-	<select id="selectJoinByAdvancedNo" parameterType="map" resultMap="inquiry-comment-resultmap">
+<!-- 	<select id="selectJoinByAdvancedNo" parameterType="map" resultMap="inquiry-comment-resultmap">
 		<include refid="inquiry-comment-join-select"/>
 		and advanced_type = #{advancedType} and advanced_no = #{advancedNo}
-	</select>
+	</select> -->
 	
 	<!-- 댓글 번호 sequence -->
 	<select id="increaseCommentNo" resultType="_int">

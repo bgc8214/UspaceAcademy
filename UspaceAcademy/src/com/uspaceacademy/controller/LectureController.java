@@ -351,6 +351,8 @@ public class LectureController {
 		   map = lectureService.getLectureByTitle(keyword, page);
 		   map.put("searchType", searchType);
 		   map.put("keyword", keyword);
+		   System.out.println("-----------------------제목일경우 ㄷㅇ컨트롤러1 searchType:" + searchType);
+			System.out.println("-----------------------제목일경우 ㄷㅇ컨트롤러1 keyword:" + keyword);
 		   //if(((List)map.get("lectureList")).size()==0){
 		   //map = lectureService.getLectureList(page);
 			 //  map.put("searchType", searchType);
@@ -360,7 +362,8 @@ public class LectureController {
 			map = lectureService.getLectureByLectureSubject(keyword, page);
 			map.put("searchType", searchType);
 			map.put("keyword", keyword);
-			
+			System.out.println("-----------------------과목일경우 ㄷㅇ컨트롤러2 searchType:" + searchType);
+			System.out.println("-----------------------과목일경우 ㄷㅇ컨트롤러2 keyword:" + keyword);
 		}else if(searchType.equals("teacherName")){
 			map = lectureService.getLectureByTeacherName(keyword, page);
 			map.put("searchType", searchType);
@@ -372,6 +375,11 @@ public class LectureController {
 			map.put("codeList", codeList); 
 			map.put("searchType", searchType);
 			map.put("keyword", keyword);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 page:" + page);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 codeList:" + codeList);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 searchType:" + searchType);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 keyword:" + keyword);
+			
 		}
 		return new ModelAndView("lecture/lecture_list.tiles", map);
 	}

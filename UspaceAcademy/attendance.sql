@@ -17,6 +17,19 @@ for(int i =1; i<=max; i++){
 	list.add(alist)
 }
 
+
+-- 영주 
+--	SELECT   a.assignment_no, a.assignment_writer_id, a.assignment_secret, a.assignment_title, a.assignment_content,
+--			    a.assignment_date, a.assignment_hit, a.assignment_password, a.assignment_re_family,
+--			    a.assignment_re_step, a.assignment_re_level, a.assignment_writer, a.assignment_deadline,
+--				a.lecture_no,
+--				l.lecture_no, l.lecture_title, l.lecture_description, l.lecture_start_time, l.lecture_end_time, l.lecture_day, 
+--				l.lecture_start_date, l.lecture_end_date, l.lecture_price, l.lecture_total_student, l.lecture_current_student, l.lecture_subject, l.teacher_id2   
+--	
+--	FROM  assignment_board a, lecture l
+--	WHERE  a.lecture_no= 1
+
+
 -- 학생이 수강 중인 강의 정보
 select distinct l.lecture_no, l.lecture_title
 from student st, student_lecture_join sl, lecture l
@@ -39,8 +52,5 @@ select s.student_id 학생아이디, s.student_name 학생이름, s.student_emai
 from student s, student_lecture_join sl, lecture l
 where s.student_id = sl.student_id3 and sl.lecture_no3 = l.lecture_no and zzim_option = '0'
 
-
 select *from student
-
-
  	

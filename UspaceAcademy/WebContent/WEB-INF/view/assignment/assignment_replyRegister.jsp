@@ -2,59 +2,88 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%><!--  밸리 해주려면 이거선언* -->
 
 
-<h3>내정보 | 과제게시판 | 답글등록하기</h3>
-강사가작성한 글내용이랑 제목그대로 가져오고 - 지우고 학생이 쓸수있게끔
-비밀글 여부 체크기능 만들어야됨
-첨부파일기능 넣어야함
+<h3>내정보 | 과제게시판 | 답글등록</h3>
 <hr/>
+<form method="POST"      <%-- file --%>enctype="multipart/form-data"       action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
 
-<!--  	private int assignmentNo;	o				//1.글번호-
-		private int assignmentSecret;				//4.비밀여부 
-		private String assignmentTitle;		o		//3.글제목-
-		private String assignmentContent;	o	//    글내용 - 					리스트세부
-		private String assignmentDate;			//7.글 등록일-
-		private int assignmentHit;					//9.글 조회수-
-		private int assignmentPassword;			//    글 비밀번호				리스트세부
-		private int replyFamily;			o			//    답글 묶음
-		private int replyStep;			o				//    답글 순서
-		private int replyLevel;			o			//    답글 단계
-		private String assignmentWriter;			//6.글쓴이-
-		private String assignmentDeadline;	o	//8.글 마감일-
-		private int lectureNo;
--->
-<form method="POST" action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
 
+<table class="table_list" summary="영주" cellpacing="0">
+	<caption></caption>
+	<tbody>
+	
+<tr><!-- 1 -->
+<th scope="col">아이디</th>
+<td><input type="text" name="assignmentWriterId" value="${sessionScope.login_info.studentId}"  readonly="readonly">
+</td>
+</tr>
+
+
+
+<%-- <tr><!-- 0 -->
+<th scope="col">강의명</th>
+<td>
+<select id="lectureTitle" name="lectureTitle"> 
+<c:forEach items="${requestScope.getLectureList}"  var="getLectureList"><!--  컨트롤러에서 보낸값 -->
+<option>${getLectureList.lectureTitle}</option>
+</c:forEach>
+</select>
+</td>
+</tr> --%>
+
+
+
+<tr><!-- 2 -->
+<th>이름</th>
+<td><input type="text" name="assignmentWriter" value="${sessionScope.login_info.studentName}"  readonly="readonly"></td>
+</td>
+</tr>
+
+<tr><!-- 3 -->
+<th>제목</th>
+<td><input type="text" readonly="readonly" value="RE:${requestScope.assignment.assignmentTitle }"  name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"><span class="error"><form:errors path="lec.assignmentTitle" delimiter="//"/></span>
+</td>
+</tr>
+
+<tr>
+<th></th><!-- 4 -->
+<td><textarea rows="15" cols="72"  name="assignmentContent"   placeholder="내용을 입력하세요">${requestScope.assignment.assignmentContent}</textarea><span class="error"><form:errors path="lec.assignmentContent" delimiter="//"/></span>
+</td>
+</tr>
+
+<tr><!--   file,5   -->
+<th scope="col">파일첨부</th>
+<td><input type="file" name="upfile"></td>
+</tr>
+
+
+
+<!--  히든값 -->
 <input type="hidden" name="replyStep"  value="${assignment.replyStep}">
 <input type="hidden" name="replyLevel"  value="${assignment.replyLevel}">
 <input type="hidden" name="replyFamily"  value="${assignment.replyFamily}">
+<input type="hidden" name="assignmentDeadline"  value="${assignment.assignmentDeadline}">
 
-
-<div class="boardList">
-<table border="1">
-<tr>
-<th>강의명(디비)</th>
-<th>작성자</th>
-<th>마감일</th>
-<th>제목</th>
-<th>내용</th>
-</tr>
-
-<tr>
-<td><%-- ${assignment.lectureNo} --%></td><!--  강의명 (db에서) -->
-<td>${sessionScope.login_info.studentName}</td>
-<%-- <td>${requestScope.assignmentWriter}</td><!-- ??????????? --> --%>
-<td><input type="text" value="${requestScope.assignment.assignmentDeadline}" name="assignmentDeadline" size="70" placeholder="제목을 입력하세요" required="required"></td>
-<td><input type="text" value="${requestScope.assignment.assignmentTitle }"  name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"></td>
-<td><textarea rows="15" cols="80"  name="assignmentContent"   placeholder="입력하세요">${requestScope.assignment.assignmentContent}</textarea></td>
-</tr>
-
+</tbody>
 </table>
-</div>
+
 	<input type="submit" value="답글작성완료">
 	<input type="reset" value="초기화"/> 
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
