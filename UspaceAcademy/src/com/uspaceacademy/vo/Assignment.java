@@ -45,12 +45,10 @@ public class Assignment implements Serializable{
 	 * */
 	 
 	
+
 	
 	
-	
-	
-	
-	
+	//
 	
 	
 	
@@ -69,6 +67,28 @@ public class Assignment implements Serializable{
 		this.assignmentContent = assignmentContent;
 		this.assignmentDate = assignmentDate;
 		this.assignmentHit = assignmentHit;
+		this.assignmentWriter = assignmentWriter;
+		this.assignmentDeadline = assignmentDeadline;
+		this.assignmentFile = assignmentFile;
+		this.lectureNo = lectureNo;
+	}
+
+
+
+
+	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
+			String assignmentDate, int assignmentHit, int replyFamily, int replyStep, int replyLevel,
+			String assignmentWriter, String assignmentDeadline, String assignmentFile, int lectureNo) {
+		super();
+		this.assignmentNo = assignmentNo;
+		this.assignmentWriterId = assignmentWriterId;
+		this.assignmentTitle = assignmentTitle;
+		this.assignmentContent = assignmentContent;
+		this.assignmentDate = assignmentDate;
+		this.assignmentHit = assignmentHit;
+		this.replyFamily = replyFamily;
+		this.replyStep = replyStep;
+		this.replyLevel = replyLevel;
 		this.assignmentWriter = assignmentWriter;
 		this.assignmentDeadline = assignmentDeadline;
 		this.assignmentFile = assignmentFile;

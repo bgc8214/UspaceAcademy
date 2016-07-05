@@ -17,6 +17,7 @@
 <form method="POST" action="/UspaceAcademy/lectureReview/lecture_review_modify.do"> <!--  폼으로 묶기* -->
 
  <input type="hidden" name="reviewNo" value="${requestScope.lectureListReview.reviewNo}">
+ <input type="hidden" name="reviewWriterId" value="${requestScope.lectureListReview.reviewWriterId}"><!--  id추가 -->
 <input type="hidden" name="reviewWriter" value="${requestScope.lectureListReview.reviewWriter}">
 <input type="hidden" name="reviewDate" value="${requestScope.lectureListReview.reviewDate }">
 <input type="hidden" name="reviewHit" value="${requestScope.lectureListReview.reviewHit }">

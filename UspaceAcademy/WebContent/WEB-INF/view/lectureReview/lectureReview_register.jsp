@@ -17,8 +17,8 @@
 
 <hr/>
 			<!--글번호,글쓴이,강의과목,강의명,제목,글내용,날짜,조회수 -->
-		
-					글쓴이 : ${sessionScope.login_info.studentName}  <!--  오류났던거 적기 - 글등록할때 회원이름 찍어야하는데 안찍힘 : memberController에 있는거 가져와야함->학생으로로 로그인 성공
+					아이디: ${sessionScope.login_info.studentId} <!--  id추가 -->
+					이름 : ${sessionScope.login_info.studentName}  <!--  오류났던거 적기 - 글등록할때 회원이름 찍어야하는데 안찍힘 : memberController에 있는거 가져와야함->학생으로로 로그인 성공
 																							Student [studentId=id-2, studentPassword=2222, studentName=김수진, studentEmail=iidd2@kosta.com, studentPhoneNo=010-1111-2222, studentAddress=경기도 수원시 장안구 파장동] 
 																							, requestScope가아니고 requestSession임 studentName 이름찍어야함-->
 

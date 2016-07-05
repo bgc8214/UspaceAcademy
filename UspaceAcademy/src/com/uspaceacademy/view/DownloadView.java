@@ -1,4 +1,4 @@
-package com.uspaceacademy.view;
+/*package com.uspaceacademy.view;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
@@ -10,10 +10,10 @@ import org.springframework.web.servlet.view.AbstractView;
 //DownloadView
 //영주 assignment에~
 
-/*
+
  * 		View 클래스 정의
  * 		- 1.implements View , extends AbstractView
- */
+ 
 
 
 public class DownloadView extends AbstractView{
@@ -25,9 +25,9 @@ public class DownloadView extends AbstractView{
 	}
 	
 	
-	/* 	응답처리 구현 메소드
+	 	응답처리 구현 메소드
 	 * 		매개변수 : 1.Map model - handler에서 전달한 Model 값(ModelAndView의 Model)
-	 */
+	 
 	public void renderMergedOutputModel(Map model, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
 		String fileName = (String)model.get("downFile");
@@ -80,3 +80,4 @@ public class DownloadView extends AbstractView{
 
 
 
+*/

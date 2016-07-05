@@ -7,7 +7,7 @@
 <h3>내정보 | 과제게시판 | 수정</h3>
 <hr/>
 
-<form method="POST" action="/UspaceAcademy/assignment/assignment_modify.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
+<form method="POST"       <%-- file --%>enctype="multipart/form-data"               action="/UspaceAcademy/assignment/assignment_modify.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
 
 <table class="table_list" summary="영주" cellpacing="0">
 	<caption></caption>
@@ -19,22 +19,22 @@
 <td><input type="text" name="assignmentWriterId" value="${sessionScope.login_info.teacherId}"  readonly="readonly"></td>
 </tr>
 
-<tr><!--   1   -->
+<tr><!--   2   -->
 <th scope="col">이름</th>
 <td><input type="text" name="assignmentWriter" value="${sessionScope.login_info.teacherName}"  readonly="readonly"></td>
 </tr>
 
-<tr><!--   1   -->
+<tr><!--   3   -->
 <th scope="col">마감일</th>
 <td><input type="text" value="${requestScope.assignment.assignmentDeadline}" name="assignmentDeadline" size="70" placeholder="ex)2016/07/30"required="required"><span class="error"><form:errors path="lec.assignmentDeadline" delimiter="//"/></span></td>
 </tr>
 
-<tr><!--   1   -->
+<tr><!--   4   -->
 <th scope="col">제목</th>
 <td><input type="text" value="${requestScope.assignment.assignmentTitle }"  name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"><span class="error"><form:errors path="lec.assignmentTitle" delimiter="//"/></span></td>
 </tr>
 
-<tr><!--   1   -->
+<tr><!--   5   -->
 <th scope="col">내용</th>
 <td><textarea rows="15" cols="80"  name="assignmentContent"   placeholder="입력하세요">${requestScope.assignment.assignmentContent}</textarea><span class="error"><form:errors path="lec.assignmentContent" delimiter="//"/></span></td>
 </tr>
@@ -42,8 +42,11 @@
 
 
 
-
-
+<tr><!--   6   -->
+<th scope="col">파일첨부</th> <!--  assignment.assignmentFile -> 넘겨준이름.vo이름 으로 받아야됨! -->
+<td><input type="file" name="upfile" >
+</td>
+</tr> 
 
 
 
@@ -57,7 +60,7 @@
 
 </tbody>
 </table>
-	<input type="submit" value="답글작성완료">
+	<input type="submit" value="수정완료">
 	<input type="reset" value="초기화"/> 
 </form>
 

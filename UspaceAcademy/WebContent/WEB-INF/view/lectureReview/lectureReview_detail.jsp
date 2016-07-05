@@ -11,7 +11,8 @@
 		<thead>
 			<tr>
 				<td>글번호</td>
-				<td>글쓴이</td>
+				<td>아이디</td>
+				<td>이름</td>
 				<td>강의과목</td>
 				<td>강의명</td>
 				<td>제목</td>
@@ -23,6 +24,7 @@
 		<tbody>
 				<tr>
 					<td>${requestScope.lectureListReview.reviewNo}</td><!--  오류난거메모 : 상세페이지니까 반복문 돌리면 안됨 -->
+ 					<td>${requestScope.lectureListReview.reviewWriterId}</td>
  					<td>${requestScope.lectureListReview.reviewWriter}</td>
 					<td>${requestScope.lectureListReview.lectureSubject}</td>
 					<td>${requestScope.lectureListReview.lectureTitle}</td>
@@ -39,14 +41,14 @@
 	
 <!-- --------------------------------------------------------------------------------------------------------- -->
 
-<!-- 관리자랑 학생일 경우만    -    삭제버튼,수정버튼 클릭가능 -->
+<!-- 관리자랑 학생(본인글)일 경우만    -    삭제버튼,수정버튼 클릭가능 -->
 <span class="lectureRegister">
 	<c:if test="${sessionScope.memberType=='administrator'}">
 <a href="/UspaceAcademy/lectureReview/lecture_review_delete.do?reviewNo=${lectureListReview.reviewNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
 <a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}&codeType=teacherSubject"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
 <%-- <a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}&codeType=teacherSubject"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->            --%> 
 	</c:if>																																											
-	<c:if test="${sessionScope.memberType=='student'}">
+	<c:if test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentId==lectureListReview.reviewWriterId}">
 <a href="/UspaceAcademy/lectureReview/lecture_review_delete.do?reviewNo=${lectureListReview.reviewNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
 <a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}&codeType=teacherSubject"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
 

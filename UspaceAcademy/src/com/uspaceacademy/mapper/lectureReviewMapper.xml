@@ -9,6 +9,7 @@
 	 <!--  오류났던거 적기 :  이거 resultMap 꼭 해주기!! 안그럼 vo에서 set으로 된 이름 찾으려고해서 안됨,    조인하는거 아니더라도 해야함!!! -->
 	 <resultMap type="LectureReview" id="lectureReview-basic">
  		<id column="review_no" property="reviewNo"/>
+ 		<result column="review_writer_id" property="reviewWriterId"/>
 		<result column="review_writer" property="reviewWriter"/>
 		<result column="lecture_title" property="lectureTitle"/>
 		<result column="lecture_subject" property="lectureSubject"/>
@@ -22,7 +23,7 @@
 	 
 	 
 	 <sql id="lecture-review-columns">
-	 review_no, review_writer, lecture_title, lecture_subject, review_title, review_content, review_date, review_hit
+	 review_no, review_writer_id, review_writer, lecture_title, lecture_subject, review_title, review_content, review_date, review_hit
 	 </sql>
 	 
 	 
@@ -39,7 +40,7 @@
 
 	<!-- 1.삽입 -->
 	<insert id="insert" parameterType="LectureReview"><!--  mybatis-config에 타입알리야스 지정 -->
-	INSERT INTO review_board VALUES (#{reviewNo},#{reviewWriter},#{lectureTitle},#{lectureSubject},#{reviewTitle},#{reviewContent},#{reviewDate},#{reviewHit})   <!-- VO값넣기 -->                          
+	INSERT INTO review_board VALUES (#{reviewNo},#{reviewWriterId},#{reviewWriter},#{lectureTitle},#{lectureSubject},#{reviewTitle},#{reviewContent},#{reviewDate},#{reviewHit})   <!-- VO값넣기 -->                          
 	</insert>
 	
 
@@ -64,6 +65,7 @@
 	<!--  3.전체조회 (이건 - 그냥 전체조회할때) -->
 	<select id="select" resultType="LectureReview">
 	SELECT 	review_no reviewNo,
+				review_writer_id  reviewWriterId,
 				review_writer reviewWriter,
 				lecture_title lectureTitle,
 				lecture_subject lectureSubject,
@@ -84,7 +86,8 @@
 	<!-- 4.수정 -->
 	<update id="update" parameterType="LectureReview">
 	UPDATE review_board
-	SET  	    review_writer=#{reviewWriter}, 
+	SET  	    review_writer_id=#{reviewWriterId},
+				review_writer=#{reviewWriter}, 
 			    lecture_title=#{lectureTitle},
 			    lecture_subject=#{lectureSubject}, 
 			    review_title=#{reviewTitle}, 
@@ -114,6 +117,7 @@
 	<!--  6.전체조회(no로) (이건 - 세부조회할때) -->
 	<select id="selectNo" parameterType="_int" resultType="LectureReview" >
 	SELECT 	review_no reviewNo,
+				review_writer_id  reviewWriterId,
 				review_writer reviewWriter,
 				lecture_title lectureTitle,
 				lecture_subject lectureSubject,
@@ -229,21 +233,7 @@
 <!-- 위에 검색처리************************************************************************************************************************************************ -->	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

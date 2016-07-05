@@ -1,5 +1,5 @@
 package com.uspaceacademy.vo;
-
+//버려 영주.
 import java.util.List;
 
 public class FileBoard {
@@ -7,12 +7,12 @@ public class FileBoard {
 		private String title; //private String fname;
 		//private String content;
 		private List upfile; //upload된 파일들을 저장할 property.  List<MultipartFile> //private MultipartFile uploadFile;
-		/* 
-		각기다른 요청파라미터 이름으로 전송된 경우 MultipartFile 타입 변수로 각각 선언
-		private MultipartFile upfile1;
-		private MultipartFile upfile2;
-		private MultipartFile upfile3;
-		*/
+		 
+//		각기다른 요청파라미터 이름으로 전송된 경우 MultipartFile 타입 변수로 각각 선언
+//		private MultipartFile upfile1;
+//		private MultipartFile upfile2;
+//		private MultipartFile upfile3;
+		
 		
 		
 		public FileBoard(){}

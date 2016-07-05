@@ -12,7 +12,8 @@
 		<thead>
 			<tr>
 				<td>글번호</td>
-				<td>글쓴이</td>
+				<td>아이디</td><!--  id추가  -->
+				<td>이름</td>
 				<td>강의과목</td>
 				<td>강의명</td>
 				<td>제목</td>
@@ -27,6 +28,7 @@
 			<c:forEach var="lectureListReview" items="${requestScope.lectureListReview}">
 				<tr>
 					<td>${lectureListReview.reviewNo}</td>
+					<td>${lectureListReview.reviewWriterId}</td><!--  id추가  -->
 					<td>${lectureListReview.reviewWriter}</td>
 					
 					<td>${lectureListReview.lectureSubject}</td>

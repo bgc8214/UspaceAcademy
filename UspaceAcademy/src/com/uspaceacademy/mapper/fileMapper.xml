@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="fileMapper">
 
@@ -9,7 +9,7 @@
 		</resultMap>
 		
 		
-	<!--   -->
+	 
 	<insert id="uploadFile" parameterType="HashMap">
 		INSERT INTO   file_board   VALUES  (#{title},#{upfile})
 	</insert>
@@ -27,4 +27,4 @@
 
 
 
-</mapper>
+</mapper> -->

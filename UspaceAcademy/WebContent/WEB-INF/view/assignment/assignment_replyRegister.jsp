@@ -39,7 +39,7 @@
 </td>
 </tr>
 
-<tr><!--   file   -->
+<tr><!--   file,5   -->
 <th scope="col">파일첨부</th>
 <td><input type="file" name="upfile"></td>
 </tr>

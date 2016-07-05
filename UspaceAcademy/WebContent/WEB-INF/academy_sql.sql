@@ -1,3 +1,5 @@
+--생성할때 순서있음 영주
+
 
 -- 코드테이블
 drop table code_table;
@@ -70,10 +72,20 @@ create table basic_board(
 drop sequence basic_board_seq; 
 create sequence basic_board_seq nocache;
 
--- 수강 후기
+
+
+
+
+
+
+
+
+
+-- 수강 후기 (영주)
 drop table review_board;
 create table review_board(
 	review_no number primary key,
+	review_writer_id  varchar2(50) not null,
 	review_writer varchar2(50) not null,
 	lecture_title varchar2(100) not null,
 	lecture_subject varchar2(50) not null,
@@ -85,6 +97,17 @@ create table review_board(
 
 DROP SEQUENCE review_board_seq;
 CREATE SEQUENCE review_board_seq nocache;
+
+
+
+
+
+
+
+
+
+
+
 
 
 -- 강의
@@ -307,12 +330,10 @@ INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,�
 INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 
 --수강후기
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'id-1','이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'id-2','김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'id-1','이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+
 
 INSERT INTO administrator values('admin', '1234');
 

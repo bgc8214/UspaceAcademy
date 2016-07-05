@@ -71,7 +71,7 @@
 	<!-- 2.ㄷ답글등록  -->
 	<insert id="replyReply" parameterType="Assignment" >
 	 <!-- INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep},#{replyLevel},#{assignmentWriter},#{assignmentDeadline},#{lectureNo}) -->
-	INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentWriterId},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep}+1,#{replyLevel}+1,#{assignmentWriter},#{assignmentDeadline},#{lectureNo})<!--  스텝하고 레벨에 1씩 +해야 답글달림 -->-->
+	INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentWriterId},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep}+1,#{replyLevel}+1,#{assignmentWriter},#{assignmentDeadline},#{assignmentFile},#{lectureNo})<!--  스텝하고 레벨에 1씩 +해야 답글달림 -->-->
 	</insert>
 	
 	<!-- 3.ㄷ업데이트 -->
@@ -163,6 +163,7 @@
 				assignment_re_level=#{replyLevel},
 				assignment_writer=#{assignmentWriter},
 				assignment_deadline=#{assignmentDeadline}, 
+				assignment_file=#{assignmentFile},
 				lecture_no=#{lectureNo}
 	WHERE assignment_no=#{assignmentNo}
 	</update>
@@ -211,9 +212,8 @@
 				lecture_no   lectureNo
 	FROM		assignment_board
 	WHERE	assignment_no=#{assignmentNo} -->
-	SELECT
-	 <include refid="assignment-columns"></include> 
-	 FROM assignment_board
+	SELECT    <include refid="assignment-columns"></include> 
+	 FROM    assignment_board
 	WHERE	assignment_no=#{assignmentNo}
 	</select>
 
@@ -258,28 +258,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </mapper>
+
+
+
+
+

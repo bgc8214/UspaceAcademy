@@ -109,7 +109,8 @@ public class LectureReviewController{
 		//글번호,글쓴이,강의과목,강의명,제목,글내용,날짜,조회수		
 		HttpSession session = request.getSession();//
 		Student s = (Student)session.getAttribute("login_info");//
-		String student = s.getStudentName();//
+		String studentName = s.getStudentName();//
+		String studentId = s.getStudentId();
 		
 		boolean error = errors.hasErrors();
 		int errorCount = errors.getErrorCount();
@@ -125,7 +126,7 @@ public class LectureReviewController{
 		
 		
 		//LectureReview lectureReview1 = new LectureReview(num,"이영주",lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),sdfDate,0);
-		LectureReview lectureReview1 = new LectureReview(num, student,lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),sdfDate,0);
+		LectureReview lectureReview1 = new LectureReview(num,studentId,studentName,lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),sdfDate,0);
 		
 		System.out.println("리뷰라이터가안넘어감"+lectureReview1);/////////////////////////////
 		
@@ -236,7 +237,7 @@ public class LectureReviewController{
 			return new ModelAndView("/lectureReview//lecture_review_modifyForm.do?codeType=teacherSubject&reviewNo="+lectureReview.getReviewNo());   //여기 3줄 해주기
 		}
 																																												
-		LectureReview lectureReview1 = new LectureReview(lectureReview.getReviewNo(),lectureReview.getReviewWriter(),lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),lectureReview.getReviewDate(),lectureReview.getReviewHit());
+		LectureReview lectureReview1 = new LectureReview(lectureReview.getReviewNo(),lectureReview.getReviewWriterId(),lectureReview.getReviewWriter(),lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),lectureReview.getReviewDate(),lectureReview.getReviewHit());
 		service.update(lectureReview1);		//오류났던거 적기 : 생성자 vo랑 여기 순서 다르면 안됨 , 순서 바뀌면 바뀌어서 들어감!
 		//lectureReview.setReviewDate(reviewDate);//reviewDate setter로 넣어줌
 		
@@ -309,38 +310,5 @@ public ModelAndView modify(String reviewNo, String reviewWriter,String lectureSu
 
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-		
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
