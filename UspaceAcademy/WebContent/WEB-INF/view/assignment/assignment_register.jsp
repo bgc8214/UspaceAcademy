@@ -14,22 +14,17 @@
 	<caption></caption>
 	<tbody>
 	
-	
-<tr><!--  1   -->
+<%-- <tr><!--  1   -->
 <th scope="col">강의명</th>
-<td class="title"><select name="lectureName">
-		<option value="국어고등1">국어고등 코드테이블?</option>
-		<option value="국어고등2">국어고등 코드테이블?</option>
-		<option value="국어고등3">국어고등 코드테이블?</option>
-		<option value="영어고등1">영어고등 코드테이블?</option>
-		<option value="영어고등2">영어고등 코드테이블?</option>
-		<option value="영어고등3">영어고등 코드테이블?</option>
-		<option value="수학고등1">수학고등 코드테이블?</option>
-		<option value="수학고등2">수학고등 코드테이블?</option>
-		<option value="수학고등3">수학고등 코드테이블?</option>		
-		</select>
+<td class="title">
+<select id="lectureTitle" name="lectureTitle"> 
+<c:forEach items="${requestScope.getLectureList}"  var="getLectureList"><!--  컨트롤러에서 보낸값 -->
+<option>${getLectureList.lectureTitle}</option>
+</c:forEach>
+</select>
 </td>
-</tr>
+</tr>	 --%>
+
 
 
 <tr><!--   2   -->

@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.AssignmentService;
+import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.vo.Assignment;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
@@ -35,7 +36,9 @@ public class AssignmentController {
 
 	@Autowired
 	private AssignmentService service;
-
+	
+	@Autowired
+	private LectureService lectureService;
 	
 	
 	
@@ -49,9 +52,13 @@ public class AssignmentController {
 		public ModelAndView list(@RequestParam(defaultValue="1") int page){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
 			
 			Map map = new HashMap();
+			
+			List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
+			map.put("getLectureList",getLectureList);//getLectureList로 넘김
+			
 			map.put("page", service.selectPagingCount(page));
 			map.put("assignment", service.replyGetList());
-
+			
 			System.out.println("과제게시판ok");
 			return new ModelAndView("assignment/assignment_list.tiles", map) ;       
 		}
@@ -90,6 +97,10 @@ public class AssignmentController {
 		@RequestMapping("/assignment_register")
 		public ModelAndView registerForm(){
 			
+			/*Map map = new HashMap();
+			List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
+			map.put("getLectureList",getLectureList);//getLectureList로 넘김
+*/			
 			System.out.println("과제게시판 작성폼ok");	
 			return new ModelAndView("assignment/assignment_register.tiles");//등록폼으로 온다*
 		}
@@ -112,6 +123,7 @@ public class AssignmentController {
 			
 			String fileName = null; //파일
 			
+			
 			//Date
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			Date date = new Date();
@@ -123,7 +135,6 @@ public class AssignmentController {
 			if(errors.hasErrors()){
 				return new ModelAndView("assignment/assignment_register.tiles");
 			}
-
 	
 			//파일 																			-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
 			System.out.println("assignment_registerSuccess,board"+fileBoard);
@@ -210,9 +221,13 @@ public class AssignmentController {
 		@RequestMapping("/assignment_modifyForm")  
 		public ModelAndView modifyForm(int assignmentNo){  
 			Assignment assignment = service.selectNo(assignmentNo);
-			HashMap map = new HashMap<>();
+			//HashMap map = new HashMap<>();
 			
-			map.put("assignment", assignment);
+			Map map = new HashMap();//
+			/*List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
+			map.put("getLectureList",getLectureList);//getLectureList로 넘김
+*/			map.put("assignment", assignment);//
+			
 			System.out.println("과제글 수정 폼 ok");
 			return new ModelAndView("assignment/assignment_modify.tiles",map); 
 		}
@@ -327,10 +342,17 @@ public class AssignmentController {
 			@RequestMapping("/assignment_replyRegister")
 			public ModelAndView replyRegister(int assignmentNo){
 				
-				Assignment assignment = service.selectNo(assignmentNo);
+				Map map = new HashMap();
+				
+				/*List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
+*/				Assignment assignment = service.selectNo(assignmentNo);
+				
+				/*map.put("getLectureList",getLectureList);//getLectureList로 넘김
+*/				map.put("assignment",assignment);
+				
 				
 				System.out.println("답글 작성폼 ok");	
-				return new ModelAndView("assignment/assignment_replyRegister.tiles","assignment",assignment);
+				return new ModelAndView("assignment/assignment_replyRegister.tiles",map);
 			}
 			//●오류났던거 적기 : 여기에서도 정보 넘겨줘야함(여기에 아무것도 안적어 줬었음), 새글+수정 합친 개념 - 글번호랑 다른것들 가져와야됨 - 가져와서 뿌려주고 이거 같이 넘겨야됨	
 		

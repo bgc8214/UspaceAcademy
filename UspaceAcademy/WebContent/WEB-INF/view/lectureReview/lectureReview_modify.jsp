@@ -39,8 +39,15 @@
 					<span class="error"><form:errors path="lec.lectureSubject"/></span>
 					</select>
 					
-					<!-- <td><select name="lectureSubject"><option>국어</option><option>영어</option><option>수학</option></select></td> -->
-					<td><select name="lectureTitle"><option value="국어 고등1">국어 고등1</option><option value="영어 고등1">영어 고등1</option><option value="수학 고등1">수학 고등1</option></select><span class="error"><form:errors path="lec.lectureTitle" delimiter="//"/></span></td>
+					<!--  강의명(lecture(개설강좌)에서 가져옴) -->
+					<select id="lectureTitle" name="lectureTitle">
+					<c:forEach items="${requestScope.lectureTitle}"  var="lectureReviewList">
+					<option>${lectureReviewList.lectureTitle}</option>
+					</c:forEach>
+					</select>
+					
+
+
 					<td><input type="text" name="reviewTitle" value="${requestScope.lectureListReview.reviewTitle }" name="title" size="70" placeholder="제목을 입력하세요" required="required"><span class="error"><form:errors path="lec.reviewTitle" delimiter="//"/></span></td><!-- 작성  -->
 					<td><textarea rows="20" cols="100" name="reviewContent" placeholder="입력하세요">${requestScope.lectureListReview.reviewContent }</textarea><span class="error"><form:errors path="lec.reviewContent" delimiter="//"/></span></td><!-- 작성  -->
 				</tr>

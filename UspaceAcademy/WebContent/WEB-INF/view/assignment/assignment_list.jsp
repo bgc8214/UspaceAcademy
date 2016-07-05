@@ -56,28 +56,42 @@ text-decoration: underline;
 
 <h3>내정보 | 과제게시판</h3>
 <hr/>
-
-
 <table class="table_list" summary="영주" cellpacing="0">
 	<caption></caption>
 	<thead>
 		<tr>
+		
+<%-- 		<!--  보류 -->
+		<select id="lectureTitle" name="lectureTitle"> 
+					<c:forEach items="${requestScope.getLectureList}"  var="getLectureList"><!--  컨트롤러에서 보낸값 -->
+					<option>${getLectureList.lectureTitle}</option>
+					</c:forEach>
+		</select> --%>
+		
+		
 			<th scope="col">번호</th>
+			<!-- <th scope="col">강의명</th> 0  -->
 			<th scope="col">제목</th>
 			<th scope="col">아이디</th>
-			<th scope="col">이름</th><!--    -->
-			<th scope="col">작성일</th><!--    -->
-			<th scope="col">마감일</th><!--    -->
-			<th scope="col">조회수</th><!--    -->
+			<th scope="col">이름</th>
+			<th scope="col">작성일</th>
+			<th scope="col">마감일</th>
+			<th scope="col">조회수</th>
 		</tr>
 	<thead>
-
+		<!--  1.번호 -->
 		<c:forEach var="assignment" items="${requestScope.assignment}">
+			
 			<tr>
 				<td class="num">${assignment.assignmentNo}</td>
-
-
-				<!--  -->
+				
+				
+<!-- 				 0.강의명
+				<td>!</td> -->
+				
+				
+				
+				<!-- 2.제목 -->
 				<td class="title">
 				<c:if test="${assignment.replyLevel>1}">
 						<c:forEach begin="1" end="${assignment.replyLevel-1}">
@@ -97,20 +111,20 @@ text-decoration: underline;
 				<c:when test="${assignment.replyLevel>1 == false}">
 				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
 				</c:when>
-				
 				<c:otherwise> <!--  위에 경우가 모두 아니라면 -->
-				<%-- ${assignment.assignmentTitle} --%>
-			 <%-- 	<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'> --%>${assignment.assignmentTitle} <!-- </a> -->
+				 ${assignment.assignmentTitle} <!-- </a> -->
 				</c:otherwise>
 				</c:choose>
-			
-				
-				
 				</td>
+				<!-- 3.아이디 -->
 				<td class="title">${assignment.assignmentWriterId}</td>
+				<!-- 4. 이름 -->
 				<td class="title">${assignment.assignmentWriter}</td>
+				<!-- 5.날짜 -->
 				<td class="num">${assignment.assignmentDate}</td>
+				<!-- 6.마감일 -->
 				<td class="num">${assignment.assignmentDeadline}</td>
+				<!-- 7.조회수 -->
 				<td class="num">${assignment.assignmentHit}</td>
 			</tr>
 		</c:forEach>

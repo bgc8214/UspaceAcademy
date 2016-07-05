@@ -8,7 +8,6 @@
 <h3>내정보 | 과제게시판 | 상세보기</h3>
 <hr/>
 
-
 <table class="table_list" summary="영주" cellpacing="0">
 	<caption></caption>
 	<tbody>
@@ -32,6 +31,10 @@
 </tr>
 
 
+<!-- <tr>
+<th scope="col">강의명</th>
+</tr>
+ -->
 
 <tr>
 <th scope="col">제목</th>	

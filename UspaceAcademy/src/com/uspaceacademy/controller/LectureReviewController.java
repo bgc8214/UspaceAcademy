@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.LectureReviewService;
+import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.vo.LectureReview;
 import com.uspaceacademy.vo.Student;
 
@@ -28,8 +29,9 @@ import com.uspaceacademy.vo.Student;
 public class LectureReviewController{
 	
 	@Autowired
-	private LectureReviewService service;
-	
+	private LectureReviewService service; 
+	@Autowired
+	private LectureService lectureService;
 	
 	//mybatis.config.xml에 mapper꼭 등록하기
 	//---------------------------------------------------------------------
@@ -84,15 +86,29 @@ public class LectureReviewController{
 	public ModelAndView registerForm(String codeType){
 		
 		HashMap map = new HashMap<>();
-		//System.out.println("test"+codeType);
 		List codeList = service.selectCodeName(codeType);
+		List lectureTitle = lectureService.getLectureList(); //lecture 테이블에서 가져옴 - 강의명
 		
+		map.put("lectureTitle", lectureTitle); // lecture테이블에서 가져온 강의명 뿌려줌 lectureTitle라는 이름으로
+		map.put("codeType", codeList); 
+		
+		
+		System.out.println("수강후기 작성폼ok");	
+		return new ModelAndView("lectureReview/lectureReview_register.tiles",map);//등록폼으로 온다*
+	}
+/*	//수강후기 작성 폼 (lectureReview_list.jsp -> lectureReview_register.jsp)
+	@RequestMapping("/lecture_review_register")//lectureReview_detail.jsp에 수강후기등록!버튼에 링크*
+	public ModelAndView registerForm(String codeType){
+		
+		HashMap map = new HashMap<>();
+		List codeList = service.selectCodeName(codeType);
+
 		map.put("codeType", codeList);
 		
 		System.out.println("수강후기 작성폼ok");	
 		return new ModelAndView("lectureReview/lectureReview_register.tiles",map);//등록폼으로 온다*
 	}
-	
+	*/
 
 	
 
@@ -206,8 +222,10 @@ public class LectureReviewController{
 		LectureReview lectureReview = service.selectNo(reviewNo); //글번호     수정폼가기전에 reviewNo로 vo가져온다..
 		List codeList = service.selectCodeName(codeType);//코드타입
 		
+		List lectureTitle = lectureService.getLectureList(); //lecture테이블에서 강의명가져옴.
 		
 		HashMap map = new HashMap<>();
+		map.put("lectureTitle", lectureTitle); //lecture테이블에서 가져온 강의명(lectureTitle)뿌려줄것.
 		map.put("lectureListReview", lectureReview);
 		map.put("codeType", codeList);
 		
