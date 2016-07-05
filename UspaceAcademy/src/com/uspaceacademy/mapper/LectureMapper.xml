@@ -198,4 +198,41 @@
  	
  	</delete>
  	
+ 	<!-- 강의 삭제를 위한 참조관계 때문에.... -->
+ 	<delete id="deleteJointable" parameterType="_int">
+ 		delete from student_lecture_join where lecture_no3 = #{value}
+ 	</delete>
+ 	
+ 	<!-- 학생 탈퇴를 위한 -->
+ 	<delete id="deleteForStudent" parameterType="string">
+ 		delete from student_lecture_join where student_id3 = #{value}
+ 	</delete>
+ 	
+ 	<!-- 강사 탈퇴를 위해 강의 테이블에서 강사아이디로 강의중인 강의 번호조회 -->
+ 	<select id="selectByTeacherId" parameterType="string" resultType="_int">
+		select lecture_no lectureNo 
+		from lecture		
+		where teacher_id2 = #{value}
+ 	</select>
+ 	
+ 	<!-- 강사 탈퇴를 위해 학생_강의 조인 테이블에서 강사가 강의중인 강의번호로 삭제 -->
+	<delete id="deleteByLectureNo" parameterType="_int">
+		delete
+		from student_lecture_join
+		where lecture_no3 = #{value}
+	</delete>
+	
+	<!-- 강사 탈퇴를 위해 강의 테이블에서 강사가 강의중인 강의를 삭제 -->
+	<delete id="deleteByTeacherId" parameterType="string">
+		delete
+		from lecture
+		where teacher_id2 = #{value}
+	</delete> 	
+	
+	<!-- 강사아이디로 모든 정보 가져오기 -->
+	<select id="selectAllByTeacherId" parameterType="string" resultMap="lecture-basic">
+		select <include refid="column-basic"/>
+		from lecture		
+		where teacher_id2 = #{value}
+ 	</select>
 </mapper>

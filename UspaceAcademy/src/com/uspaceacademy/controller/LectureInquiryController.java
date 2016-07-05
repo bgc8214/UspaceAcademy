@@ -68,7 +68,10 @@ public class LectureInquiryController {
 			map.put("lectureInquiryDetail", lectureInquiry);
 			map.put("commentList", commentList);		
 			
-			return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", map);
+			System.out.println("비밀? " + lectureInquiry.getAdvancedSecret());
+			
+			return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
 		}
 		
 		else if(member.equals("teacher")){	
@@ -91,7 +94,9 @@ public class LectureInquiryController {
 			map.put("lectureInquiryDetail", lectureInquiry);
 			map.put("commentList", commentList);		
 			
-			return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", map);
+//			return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", map);
+			return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
 		}
 		
 		else if(member.equals("administrator")){	
@@ -109,7 +114,8 @@ public class LectureInquiryController {
 			map.put("lectureInquiryDetail", lectureInquiry);
 			map.put("commentList", commentList);
 			
-			return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", map);
+			return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
 		}
 		
 		else
@@ -168,7 +174,8 @@ public class LectureInquiryController {
 		map.put("lectureInquiryDetail", lectureInquiry);
 		map.put("commentList", commentList);
 
-		return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", map);
+		return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
 	}	
 	
 	
@@ -178,8 +185,6 @@ public class LectureInquiryController {
 		Map map = service.selectAllByPaging(page, lectureNo2);
 		map.put("page", page);
 		map.put("lectureNo2", lectureNo2);
-		
-		System.out.println("강의번호: " + lectureNo2);
 		
 		return new ModelAndView("lectureInquiry/lectureInquiry_list.tiles", map);
 	}
@@ -299,7 +304,7 @@ public class LectureInquiryController {
 	//글 등록하기
 //	String advancedTitle, String advancedContent, String codeName,
 	@RequestMapping("/registerLectureInquiry")
-	public String registerLectureInquiry(int lectureNo2, LectureInquiry lectureInquiry, String advancedSecret, HttpSession session, BindingResult errors){
+	public String registerLectureInquiry(@RequestParam(defaultValue="1") int page, int lectureNo2, LectureInquiry lectureInquiry, String advancedSecret, HttpSession session, BindingResult errors){
 		System.out.println("시크릿: " + advancedSecret);
 		
 		//비밀글인 경우
@@ -323,6 +328,8 @@ public class LectureInquiryController {
 			}
 			
 			service.insertLectureInquiry(lectureInquiry);
+			
+			service.selectAllByPaging(page, lectureNo2);
 			
 			return "redirect:/lectureInquiry/selectByAdvancedNo.do?advancedNo=" + lectureInquiry.getAdvancedNo()
 			+ "&lectureNo2=" + lectureInquiry.getLectureNo2();
@@ -350,22 +357,26 @@ public class LectureInquiryController {
 			
 			service.insertLectureInquiry(lectureInquiry);
 			
+			service.selectAllByPaging(page, lectureNo2);
+			
 			return "redirect:/lectureInquiry/selectByAdvancedNo.do?advancedNo=" + lectureInquiry.getAdvancedNo()
 			+ "&lectureNo2=" + lectureInquiry.getLectureNo2();
+//			return "redirect:/lectureInquiry/RegisterLectureInquiryRedirect.do?advancedNo=" + lectureInquiry.getAdvancedNo()
+//			+ "&lectureNo2=" + lectureInquiry.getLectureNo2();
 		}
 		else 
 			return "main.tiles";		
 	}	
 	
 	//등록 redirect 처리
-//	@RequestMapping("/RegisterLectureInquiryRedirect")
-//	public ModelAndView lectureInquiryRedirect(int advancedNo, int lectureNo2, @RequestParam(defaultValue="1") int page){
-//		service.selectAllByPaging(page, lectureNo2);		
-//		
-//		System.out.println("re No: " + advancedNo + "lecture: " + lectureNo2);
-//
-//		return new ModelAndView("/lecutreInquiry/selectByAdvancedNo.do?advancedNo=" + advancedNo + "&lectureNo2=" + lectureNo2);
-//	}
+	@RequestMapping("/RegisterLectureInquiryRedirect")
+	public ModelAndView lectureInquiryRedirect(int advancedNo, int lectureNo2, @RequestParam(defaultValue="1") int page){
+		service.selectAllByPaging(page, lectureNo2);		
+		
+		System.out.println("re No: " + advancedNo + "lecture: " + lectureNo2);
+
+		return new ModelAndView("/lecutreInquiry/selectByAdvancedNo.do?advancedNo=" + advancedNo + "&lectureNo2=" + lectureNo2);
+	}
 	
 	//등록했을 때 상세페이지 보기
 	@RequestMapping("/selectByAdvancedNo")
@@ -387,7 +398,7 @@ public class LectureInquiryController {
 
 	//수정폼
 	@RequestMapping("/updateLectureInquiryForm")
-	public ModelAndView updateLectureInquiryForm(int advancedNo, int lectureNo2){
+	public ModelAndView updateLectureInquiryForm(@RequestParam(defaultValue="1") int page, int advancedNo, int lectureNo2){
 		String advancedType = "강의질문";
 		
 		LectureInquiry lectureInquiryDetail = service.selectByAdvancedNo(advancedType, advancedNo, lectureNo2);
@@ -403,9 +414,9 @@ public class LectureInquiryController {
 		String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
 		String advancedType = "강의질문";
 		
-		LectureInquiry lectureInquiry = new LectureInquiry(updateLectureInquiry.getAdvancedNo(), updateLectureInquiry.getAdvancedSecret(), updateLectureInquiry.getAdvancedTitle(), updateLectureInquiry.getAdvancedContent(), advancedDate, advancedType, updateLectureInquiry.getLectureNo2());
+		updateLectureInquiry = new LectureInquiry(updateLectureInquiry.getAdvancedNo(), updateLectureInquiry.getAdvancedSecret(), updateLectureInquiry.getAdvancedTitle(), updateLectureInquiry.getAdvancedContent(), advancedDate, advancedType, updateLectureInquiry.getLectureNo2());
 		
-		service.updateLectureInquiry(lectureInquiry);
+		service.updateLectureInquiry(updateLectureInquiry);
 		
 		LectureInquiry lectureInquiryDetail = service.selectByAdvancedNoWithComment(advancedType, updateLectureInquiry.getAdvancedNo(), updateLectureInquiry.getLectureNo2());
 //		comment 추가해서 map으로 보내라.
@@ -427,4 +438,32 @@ public class LectureInquiryController {
 		return "/lectureInquiry/lectureInquiryList.do?lectureNo2=" + lectureNo2;
 	}
 	
+	
+	//키워드로 강의리스트 가져오기
+	@RequestMapping("/searchByKeyword.do")
+	public ModelAndView searchByKeyword(@RequestParam(defaultValue="1") int page, String searchType, String keyword, int lectureNo2){
+		Map map = new HashMap();
+		if(searchType.equals("advancedTitle")){
+		   map = service.selectTitleByPaging(page, keyword, lectureNo2);
+		   map.put("searchType", searchType);
+		   map.put("keyword", keyword);
+		   map.put("lectureNo2", lectureNo2);
+
+		}else if(searchType.equals("advancedContent")){
+			map = service.selectContentByPaging(page, keyword, lectureNo2);
+			map.put("searchType", searchType);
+			map.put("keyword", keyword);
+			map.put("lectureNo2", lectureNo2);
+		}
+		else{
+//			map = service.getLectureList(page);
+//			List codeList = service.searchCode("teacherSubject");
+//			map.put("page", page);
+//			map.put("codeList", codeList); 
+//			map.put("searchType", searchType);
+//			map.put("keyword", keyword);
+			return new ModelAndView("main.tiles");
+		}
+		return new ModelAndView("lectureInquiry/lectureInquiry_search.tiles", map);
+	}
 }

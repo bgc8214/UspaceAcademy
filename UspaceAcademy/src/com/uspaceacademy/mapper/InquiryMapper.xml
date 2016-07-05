@@ -140,6 +140,21 @@
 	</select>
 	
 	
+	
+		<select id="selectRownum" parameterType="map" resultType="_int">
+ 		SELECT rownum
+ 		FROM   (
+ 			SELECT  <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   advanced_board
+				where advanced_type = #{advancedType} and lecture_no2 = #{lectureNo2}
+ 				ORDER BY advanced_no DESC  
+ 			)
+ 		)
+ 	</select>
+	
+	
 		
 		
 	<!-- 전체 조회 -->

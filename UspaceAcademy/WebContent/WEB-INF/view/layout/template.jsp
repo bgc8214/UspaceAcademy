@@ -1,13 +1,23 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <!-- tiles 설정을 호출할 태그를 제공하는 태그 라이브러리. -->
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml-transitional.dtd">
+<html xmlns="http://www.w3.org/1991/xhtml">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script src="/js/common.js"></script>
+<link rel="stylesheet" type="text/css" href="js/common.js"/>
+<link rel="stylesheet" href="css/common.css">
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
+
 $(document).ready(function(){
 	
 	//버튼에 마우스 모양 손가락 써주기

@@ -29,12 +29,12 @@ $(document).ready(function() {
 	<tbody>
 		<form>
 		<input id="page" type="hidden" value="${param.page }">
-			<c:forEach items="${requestScope.inquiryList}" var="list" >
+			<c:forEach items="${requestScope.inquiryList}" var="list">
 				<tr>
 					<td>${list.advancedNo }</td>
 					
 
-							<td><a id="secret" href="/UspaceAcademy/inquiry/selectJoinByAdvancedNo.do?advancedNo=${list.advancedNo }
+							<td><a id="secret" href="/UspaceAcademy/inquiry/selectByAdvancedNo.do?advancedNo=${list.advancedNo }
 								&advancedSecret=${list.advancedSecret}">${list.advancedTitle }</a></td>
 				
 

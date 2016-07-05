@@ -35,19 +35,12 @@ public class InquiryController
 	
 	//1:1문의 전체 목록
 	@RequestMapping("/inquiryList")
-	public ModelAndView inquiryList(@RequestParam(defaultValue="1") int page){		
-		String advancedType = "1:1문의";
-		System.out.println("타입: " + advancedType);
-		String codeName = "1:1문의";
-		List codeList = service.selectByCodeName(codeName);
+	public ModelAndView inquiryList(@RequestParam(defaultValue="1") int page){
 
-		Code code = (Code) codeList.get(0);		
-//		System.out.println("코드는 무엇인가?" + codeList.get(0));
-
-
-		System.out.println("inquiryList 넘어오나");
-		Map map = service.getInquiryList(page, advancedType);
+		Map map = service.getInquiryList(page);
+		
 		map.put("page", page);
+		
 		return new ModelAndView("inquiry/inquiry_list.tiles", map);			
 	}
 	
@@ -65,8 +58,10 @@ public class InquiryController
 		Inquiry selectInquiry1 = service.selectJoinByAdvancedNo(advancedType, advancedNo);
 		int advancedHit1 = selectInquiry1.getAdvancedHit();
 		System.out.println("hit1: " + advancedHit1);
+
+//		List<Comment> commentList = selectInquiry1.getCommentList();
 		
-		
+//		if(commentList)
 		
 //		System.out.println("memberType = " + member);
 //		System.out.println("advancedNo = " + advancedNo);
@@ -80,11 +75,11 @@ public class InquiryController
 			System.out.println("hit: " + advancedHit);
 			selectInquiry.setAdvancedHit(++advancedHit);
 			service.updateHit(selectInquiry);			
-			List<Comment> commentList = selectInquiry.getCommentList();
+//			List<Comment> commentList = selectInquiry.getCommentList();
 			
 			HashMap map = new HashMap<>();
 			map.put("inquiryDetail", selectInquiry);
-			map.put("commentList", commentList);
+//			map.put("commentList", commentList);
 			
 			return new ModelAndView("inquiry/inquiry_detail.tiles", map);
 
@@ -108,10 +103,10 @@ public class InquiryController
 					selectInquiry.setAdvancedHit(++advancedHit);
 					service.updateHit(selectInquiry);				
 					
-					List<Comment> commentList = selectInquiry.getCommentList();
+//					List<Comment> commentList = selectInquiry.getCommentList();
 					HashMap map = new HashMap<>();
 					map.put("inquiryDetail", selectInquiry);
-					map.put("commentList", commentList);
+//					map.put("commentList", commentList);
 					
 					return new ModelAndView("inquiry/inquiry_detail.tiles", map);			
 				}			
@@ -129,10 +124,10 @@ public class InquiryController
 				selectInquiry.setAdvancedHit(++advancedHit);
 				service.updateHit(selectInquiry);
 				
-				List<Comment> commentList = selectInquiry.getCommentList();
+//				List<Comment> commentList = selectInquiry.getCommentList();
 				HashMap map = new HashMap<>();
 				map.put("inquiryDetail", selectInquiry);
-				map.put("commentList", commentList);
+//				map.put("commentList", commentList);
 				
 				return new ModelAndView("inquiry/inquiry_detail.tiles", map);				
 			}
@@ -153,21 +148,18 @@ public class InquiryController
 	
 	@RequestMapping("/selectByAdvancedNo")
 	public ModelAndView selectByAdvancedNo(int advancedNo, String advancedSecret, HttpSession session){
-		String secret = advancedSecret.split(",")[0];
+		advancedSecret = advancedSecret.split(",")[0];
 		String advancedType = "1:1문의";
-		List codeList = service.selectByCodeName(advancedType);		
-		Object member = session.getAttribute("memberType");	
+	
+		Object member = session.getAttribute("memberType");			
 		
-		
-		
-//		System.out.println("memberType = " + member);
 //		System.out.println("advancedNo = " + advancedNo);
 //		System.out.println("advancedSecret = " + advancedSecret);
 		
 		//비밀글이 아닌 경우(모든 사용자 조회 가능)
-		if(secret.equals("0")||secret.equals(null)){
-			System.out.println("000");
-			Inquiry selectInquiry = service.selectByAdvancedNo(advancedType, advancedNo);
+		if(advancedSecret.equals("0")||advancedSecret.equals(null)){
+
+			Inquiry selectInquiry = service.selectByAdvancedNo(advancedNo);
 			int advancedHit = selectInquiry.getAdvancedHit();
 			selectInquiry.setAdvancedHit(++advancedHit);
 			service.updateHit(selectInquiry);			
@@ -176,7 +168,7 @@ public class InquiryController
 		}
 		
 		//비밀글인 경우
-		else if(secret.equals("1")){
+		else if(advancedSecret.equals("1")){
 			System.out.println("111");
 			
 			member = session.getAttribute("memberType");			
@@ -229,12 +221,9 @@ public class InquiryController
 	//1:1문의 등록폼
 	@RequestMapping("/codeList.do")
 	public ModelAndView selectCodeName() {
-		String codeName = "1:1문의";
-		List codeList = service.selectByCodeName(codeName);
-		Code code = (Code)codeList.get(0);
-		String getCodeName = code.getCodeName();
+		String advancedType = "1:1문의";
 		
-		return new ModelAndView("inquiry/insert_inquiry.tiles", "advancedType", getCodeName);
+		return new ModelAndView("inquiry/insert_inquiry.tiles", "advancedType", advancedType);
 	}
 	
 	//1:1문의 등록하기	
@@ -358,19 +347,18 @@ public class InquiryController
 	@RequestMapping("/inquiryRedirect")
 	public ModelAndView inquiryRedirect(int advancedNo, @RequestParam(defaultValue="1") int page, String advancedSecret) // 새로고침 시 더 등록 안되도록 redirect 처리
 	{
-		String advancedType = "1:1문의";
-		Map map = service.getInquiryList(page, advancedType);
+		Map map = service.getInquiryList(page);
 //		map.put("advancedSecret", advancedSecret);
 //		map.put("advancedId", advancedId);
 //		map.put(advancedType, advancedType);
-		return new ModelAndView("/inquiry/selectJoinByAdvancedNo.do?advancedNo="+advancedNo+"&advancedSecret="+advancedSecret, map);
+		return new ModelAndView("/inquiry/selectJoinByAdvancedNo.do?advancedNo="+advancedNo+"&advancedSecret="+advancedSecret);
 	}	
 
 	//1:1문의 수정폼
 	@RequestMapping("/updateByAdvancedNo")
 	public ModelAndView updateByAdvancedNo(int advancedNo){
-		String advancedType = "1:1문의";
-		Inquiry inquiryDetail = service.selectByAdvancedNo(advancedType, advancedNo);
+
+		Inquiry inquiryDetail = service.selectByAdvancedNo(advancedNo);
 		return new ModelAndView("inquiry/inquiry_modify.tiles", "inquiryDetail", inquiryDetail);
 	}
 	
@@ -437,7 +425,7 @@ public class InquiryController
 			
 			HashMap map = new HashMap<>();
 			map.put("inquiryDetail", inquiry);
-			map.put("commentList", inquiry.getCommentList());		
+//			map.put("commentList", inquiry.getCommentList());		
 			
 			return new ModelAndView("inquiry/inquiry_detail.tiles", map);
 		}
@@ -448,7 +436,7 @@ public class InquiryController
 			
 			HashMap map = new HashMap<>();
 			map.put("inquiryDetail", inquiry);
-			map.put("commentList", inquiry.getCommentList());		
+//			map.put("commentList", inquiry.getCommentList());		
 			
 			return new ModelAndView("inquiry/inquiry_detail.tiles", map);
 		}
@@ -460,8 +448,9 @@ public class InquiryController
 	@RequestMapping("/updateCommentForm")
 	public ModelAndView updateCommentForm(int commentNo){
 		String commentType = "1:1문의";
-		Comment comment = service.selectByCommentNo(commentType, commentNo);
-		return new ModelAndView("inquiry/inquiry_modify.tiles", "commentList", comment);
+//		Comment comment = service.selectByCommentNo(commentType, commentNo);
+//		return new ModelAndView("inquiry/inquiry_modify.tiles", "commentList", comment);
+		return new ModelAndView("inquiry/inquiry_modify.tiles");
 	}
 	
 	//1:1문의  댓글
@@ -475,11 +464,11 @@ public class InquiryController
 		service.updateComment(comment);
 		
 		Inquiry inquiryDetail = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-		List commentList = inquiryDetail.getCommentList();	
+//		List commentList = inquiryDetail.getCommentList();	
 		
 		HashMap map = new HashMap<>();
 		map.put("inquiryDetail", inquiryDetail);
-		map.put("commentList", commentList);
+//		map.put("commentList", commentList);
 		
 		return new ModelAndView("inquiry/inquiry_detail", map);
 	}
@@ -490,13 +479,13 @@ public class InquiryController
 		String advancedType = "1:1문의";
 		String commentType = "1:1문의댓글";
 		Inquiry inquiryDetail = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-		List commentList = inquiryDetail.getCommentList();		
+//		List commentList = inquiryDetail.getCommentList();		
 				
-		service.deleteComment(commentType, commentNo);
+//		service.deleteComment(commentType, commentNo);
 		
 		HashMap map = new HashMap<>();
 		map.put("inquiryDetail", inquiryDetail);
-		map.put("commentList", commentList);
+//		map.put("commentList", commentList);
 
 		
 		return new ModelAndView("/inquiry/inquiry_detail.tiles", map);

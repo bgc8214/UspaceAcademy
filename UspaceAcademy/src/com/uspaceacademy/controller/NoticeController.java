@@ -64,7 +64,7 @@ public class NoticeController
 		service.register(notice1);
 		return "redirect:/notice/noticeRedirect.do?no="+notice1.getBasicNo()+"&page="+page;
 	}
-	
+	// 공지사항 등록 폼으로 이동
 	@RequestMapping("/noticeRegisterForm.do")
 	public ModelAndView moveNotice(String type) {
 		return new ModelAndView("notice/notice_form.tiles", "codeName", type);
@@ -80,8 +80,8 @@ public class NoticeController
 		
 	// 공지사항 수정
 	@RequestMapping("/noticeUpdate.do")
-	public String noticeModify(@RequestParam(defaultValue="1") int page, @ModelAttribute("updateForm") Notice notice, BindingResult errors) {
-
+	public String noticeModify(@RequestParam(defaultValue="1") int page, @ModelAttribute("updateForm") Notice notice, String keyword, BindingResult errors) {
+		System.out.println(keyword);
 		// 검증 - NoticeValidator	
 		NoticeValidator validator = new NoticeValidator();
 		validator.validate(notice, errors);
@@ -97,7 +97,7 @@ public class NoticeController
 		notice.setBasicDate(new SimpleDateFormat("yyyy-MM-dd kk:mm").format(new Date()));
 		service.modifyNotice(notice);
 
-		return "redirect:/notice/noticeUpdateRedirect.do?no="+notice.getBasicNo()+"&page="+page;
+		return "redirect:/notice/noticeUpdateRedirect.do?no="+notice.getBasicNo()+"&page="+page+"&keyword="+keyword;
 				
 	}
 	
@@ -117,12 +117,12 @@ public class NoticeController
 	
 	// 수정 폼 가기전에 no로  Notice 객체 가져오기
 	@RequestMapping("/noticeUpdateForm.do")
-	public ModelAndView noticeUpdateForm(int no, @RequestParam(defaultValue="1") int page) {
-		System.out.println(page);
+	public ModelAndView noticeUpdateForm(int no, @RequestParam(defaultValue="1") int page, String keyword) {
 		Notice notice = service.selectByNo(no);
 		Map map = new HashMap();
 		map.put("notice", notice);
 		map.put("page", page);
+		map.put("keyword", keyword);
 		return new ModelAndView("notice/notice_update.tiles", map);
 	}
 	
@@ -140,7 +140,7 @@ public class NoticeController
 	public String noticeRedirectRegister(int no, @RequestParam(defaultValue="1") int page) {// 새로고침 시 더 등록 안되도록 redirect 처리
 		return "redirect:/notice/noticeDetail.do?no="+no+"&page="+page;
 	}
-	
+
 	// 공지사항 제목 내용으로 검색 List
 	@RequestMapping("/noticeSearch.do")
 	public ModelAndView noticeSearch(@RequestParam(defaultValue="1") int page, String keyword) {

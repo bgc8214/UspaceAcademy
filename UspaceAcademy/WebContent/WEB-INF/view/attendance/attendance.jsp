@@ -22,7 +22,7 @@
 	<tr>
 		<th>일차 | 학생</th>
 		<c:forEach items="${requestScope.studentInfoList}" var="list">
-			<td align="center">${list.studentId}</td>
+			<td align="center">${list.studentName}</td>
 		</c:forEach>
 		<th>등록</th>
 	<c:set value="1" var="cnt"/>
@@ -55,8 +55,9 @@
 								<option value="결석">결석</option>
 							</select>
 						</td>	
+						<td align="center"><input id="btn" type="submit" value="등록"></td>
 					</c:forEach>
-					<td align="center"><input id="btn" type="submit" value="등록"></td>
+					
 			</form>
 		</tr>
 		</c:if>

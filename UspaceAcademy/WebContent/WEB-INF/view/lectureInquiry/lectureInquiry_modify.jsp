@@ -9,7 +9,7 @@
 <input type="hidden" name="lectureNo2" value="${requestScope.lectureInquiryDetail.lectureNo2 }">
 <input type="hidden" name="advancedSecret" value="${requestScope.lectureInquiryDetail.advancedSecret }">
 
-<table>
+<table border="1">
 	<tr>
 		<td>
 			제목: <input type="text" name="advancedTitle" size="70" value="${requestScope.lectureInquiryDetail.advancedTitle }">

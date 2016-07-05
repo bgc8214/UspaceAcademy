@@ -173,9 +173,9 @@ create sequence comment_board_seq nocache;
 
 select * from COMMENT_Table;
 
-insert into COMMENT_TABLE values(1, '댓글내용1', '2015-06-04', 'student2', '1:1문의댓글', 1);
-insert into COMMENT_TABLE values(2, '댓글내용2', '2015-06-05', 'student2', '1:1문의댓글', 1);
-insert into COMMENT_TABLE values(3, '댓글내용3', '2015-06-06', 'student2', '1:1문의댓글', 2);
+insert into COMMENT_TABLE values(11, '댓글내용1', '2015-06-04', 'student2', '1:1문의댓글', 9);
+insert into COMMENT_TABLE values(12, '댓글내용2', '2015-06-05', 'student2', '1:1문의댓글', 9);
+insert into COMMENT_TABLE values(11, '댓글내용3', '2015-06-06', 'student2', '1:1문의댓글', 2);
 
 insert into COMMENT_TABLE values(1, '댓글내용1', '2015-06-04', 'student2', '강의질문댓글', 100);
 

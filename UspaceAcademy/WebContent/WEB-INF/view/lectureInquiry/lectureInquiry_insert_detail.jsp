@@ -2,7 +2,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<table>
+<table border="1">
 	<tr>
 		<td>
 			no: ${requestScope.lectureInquiryDetail.advancedNo}<br> 글쓴이: ${requestScope.lectureInquiryDetail.advancedId}<br>글 등록일:${requestScope.lectureInquiryDetail.advancedDate}

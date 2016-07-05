@@ -203,6 +203,32 @@ public class LectureInquiryDao {
 		return session.selectOne("lectureInquiryMapper.selectContentCountContents", map);
 	}
 	
+	//페이징 처리(글쓴이로 검색)
+	public List selectIdByPaging(int page, String advancedType, String advancedId, int lectureNo2){
+		
+		Map map = new HashMap();
+		
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("advancedType", advancedType);
+		map.put("advancedContent", advancedId);
+		map.put("lectureNo2", lectureNo2);
+		
+		return session.selectList("lectureInquiryMapper.selectIdByPaging", map);
+	}
+	
+	//페이징 처리 헬퍼(글쓴이로 검색)
+	public int selectIdCountContents(String advancedType, String advancedId, int lectureNo2){
+		
+		Map map = new HashMap();
+		
+		map.put("advancedType", advancedType);
+		map.put("advancedContent", advancedId);
+		map.put("lectureNo2", lectureNo2);
+		
+		return session.selectOne("lectureInquiryMapper.selectIdCountContents", map);
+	}
+	
 	
 	
 	//전체 조회
@@ -214,5 +240,16 @@ public class LectureInquiryDao {
 	public List selectCodeName(String codeName){
 		
 		return session.selectList("codeTable.selectCodeName", codeName);
+	}
+
+	public List selectAllByPagingRownum(int page, String advancedType, int lectureNo2) {
+		Map map = new HashMap();
+		
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("advancedType", advancedType);
+		map.put("lectureNo2", lectureNo2);
+		
+		return session.selectList("lectureInquiryMapper.selectRownum", map);
 	}
 }

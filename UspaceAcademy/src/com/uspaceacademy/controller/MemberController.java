@@ -2,7 +2,10 @@ package com.uspaceacademy.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -24,9 +27,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.uspaceacademy.service.AttendanceService;
+import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.service.MemberService;
 import com.uspaceacademy.validaotor.StudentValidator;
 import com.uspaceacademy.validaotor.TeacherValidator;
@@ -40,6 +46,13 @@ public class MemberController
 {
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private LectureService lectureService;
+	
+	@Autowired
+	private AttendanceService attendanceService;
+	
 
 	/*
 	 * @RequestMapping("/register_form.do") public String register_form() {
@@ -49,8 +62,10 @@ public class MemberController
 	 */
 
 	@RequestMapping("/studentRegister.do")
-	public String studentRegister(@ModelAttribute Student student, BindingResult errors)
+	public String studentRegister(@ModelAttribute Student student, String addr1, String addr2, BindingResult errors)
 	{
+		student.setStudentAddress(addr1+addr2);
+
 		// 검증 - StudentValidator
 		StudentValidator validator = new StudentValidator();
 		validator.validate(student, errors);
@@ -62,7 +77,7 @@ public class MemberController
 			// 에러 응답 페이지로 이동
 			return "/member/studentRegisterForm.do";
 		}
-
+		
 		service.insertStudent(student);
 
 		return "redirect:/member/studentRedirect.do";
@@ -76,8 +91,10 @@ public class MemberController
 	}
 
 	@RequestMapping("/teacherRegister.do")
-	public String teacherRegister(@ModelAttribute Teacher teacher, BindingResult errors)
+	public String teacherRegister(@ModelAttribute Teacher teacher, String addr1, String addr2, BindingResult errors)
 	{
+		teacher.setTeacherAddress(addr1+addr2);
+		
 		TeacherValidator validator = new TeacherValidator();
 		validator.validate(teacher, errors);
 		boolean error = errors.hasErrors();
@@ -166,7 +183,7 @@ public class MemberController
 		{
 			if (student.getStudentPassword().equals(password))
 			{
-				System.out.println("학생으로로 로그인 성공");
+				System.out.println("학생으로 로그인 성공");
 				session.setAttribute("login_info", student);
 				System.out.println(student);
 				session.setAttribute("memberType", "student");
@@ -213,12 +230,27 @@ public class MemberController
 			return "/WEB-INF/view/member/studentDuplicationCheck.jsp";
 		}
 
-		if (id.length() < 5)
+/*		if (id.length() < 5)
 		{
 			request.setAttribute("idError", "아이디는 5글자보다 길어야합니다");
 
 			return "/WEB-INF/view/member/studentDuplicationCheck.jsp";
+		}*/
+		
+		// ID 정규식 체크
+		boolean err = false;
+		String regex = "^[a-zA-Z]{1}[a-zA-Z0-9_]{5,11}$";
+
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(id);
+		if(m.matches())
+			err = true;
+		if(err == false) {
+			System.out.println("형식에 맞지 않는 아이디가 입력되었습니다.");
+			request.setAttribute("idError", "영문대소문자로 시작하고 특수문자 _포함이 가능하며 6~12글자로 입력하세요");
+			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
 		}
+		
 
 		if (service.findStudentById(id) != null || service.findTeacherById(id) != null || id.equals("admin"))
 		{
@@ -244,12 +276,27 @@ public class MemberController
 			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
 		}
 
-		if (id.length() < 5)
+/*		if (id.length() < 5)
 		{
 			request.setAttribute("idError", "아이디는 5글자보다 길어야합니다");
 
 			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
+		}*/
+		
+		// ID 정규식 체크
+		boolean err = false;
+		String regex = "^[a-zA-Z]{1}[a-zA-Z0-9_]{5,11}$";
+
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(id);
+		if(m.matches())
+			err = true;
+		if(err == false) {
+			System.out.println("형식에 맞지 않는 아이디가 입력되었습니다.");
+			request.setAttribute("idError", "영문대소문자로 시작하고 특수문자 _포함이 가능하며 6~12글자로 입력하세요");
+			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
 		}
+		
 
 		if (service.findStudentById(id) != null || service.findTeacherById(id) != null || id.equals("admin"))
 		{
@@ -394,21 +441,22 @@ public class MemberController
 			return "main.tiles";
 		}
 	}
-	// 강사의 회원정보 수정을 위한 폼으로 이동하기
+	// 강사의 회원정보 수정을 위한 폼으로 이동
 	@RequestMapping("/updateTeacherForm.do")
 	public ModelAndView updateTeacherForm() {
-	/*	List codeList = service.searchCode("teacherSubject"); // 코드타입 정보를 리스트로 받는다.
-		System.out.println("확인 - "+ codeList);
-	
-		HashMap map = new HashMap<>(); // 코드테이블을 넘기기 위한 맵
-		map.put("codeType", codeList);*/
-		
 		return new ModelAndView("member/teacher_updateForm.tiles");
 	}
 	
+	// 강사 회원정보 수정
 	@RequestMapping("/updateTeacher.do")
-	public String updateAfterDetail(@ModelAttribute("updateForm") Teacher teacher, HttpSession session, BindingResult errors) {
-
+	public String updateAfterDetail(@ModelAttribute("updateForm") Teacher teacher, String baseAddress, String addr1, String addr2, HttpSession session, BindingResult errors) {
+		
+		if(addr1!=null && addr2!=null)
+			teacher.setTeacherAddress(addr1+addr2);
+		else
+			teacher.setTeacherAddress(baseAddress);
+		
+		
 		TeacherValidator validator = new TeacherValidator();
 		validator.validate(teacher, errors);
 		boolean error = errors.hasErrors();
@@ -426,13 +474,124 @@ public class MemberController
 			return "/teacherInfo.do";
 	}
 	
+	// 학생의 회원정보 수정을 위한 폼으로 이동
+	@RequestMapping("/updateStudentForm.do")
+	public ModelAndView updateStudentForm() {
+		return new ModelAndView("member/student_updateForm.tiles");
+	}
+	
+	// 학생의 회원정보 수정
+	@RequestMapping("/updateStudent.do")
+	public String updateStudent(@ModelAttribute("updateForm") Student student, String baseAddress, String addr1, String addr2, HttpSession session, BindingResult errors) {
+		
+		if(addr1!=null && addr2!=null)
+			student.setStudentAddress(addr1+addr2);
+		else
+			student.setStudentAddress(baseAddress);
+		
+		StudentValidator validator = new StudentValidator();
+		validator.validate(student, errors);
+		boolean error = errors.hasErrors();
+		int errorCount = errors.getErrorCount();
+		System.out.printf("학생 수정 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n", error, errorCount);
+		
+		if(errors.hasErrors()) {
+			return "/student/updateStudentForm.do";
+		}
+		
+		service.modifyStudent(student);
+		session.setAttribute("login_info", student);
+		System.out.println(session.getAttribute("login_info"));
+		return "/studentInfo.do";
+	}
+	
+	// 학생 탈퇴
+	@RequestMapping("/deleteStudent.do")
+	public String deleteStudent(HttpSession session) {
+		Student student = (Student)session.getAttribute("login_info");
+		service.deleteStudent(student.getStudentId());
+		session.invalidate();
+				return "main.tiles";
+	}
+
 	// 강사 탈퇴
 	@RequestMapping("/deleteTeacher.do")
-	public String deleteTeacher(String teacherId, HttpServletRequest request) {
-		System.out.println("삭제할 ID " + teacherId);
-		service.removeTeacher(teacherId);
-		HttpSession session = request.getSession();
+	public String deleteTeacher(HttpSession session) {
+		Teacher teacher = (Teacher)session.getAttribute("login_info");
+		service.removeTeacher(teacher.getTeacherId());
 		session.invalidate();
 		return "main.tiles";
+	}
+	
+	//관리자가 학생 강제 탈퇴
+	@RequestMapping("/deleteStudentByAdmin.do")
+	public String deleteStudentByAdmin(String studentId, HttpSession session) {
+
+		service.deleteStudent(studentId);
+		return "/member/studentAll.do";
+	}
+	
+	//관리자가 강사 강제 탈퇴
+	@RequestMapping("/deleteTeacherByAdmin.do")
+	public String deleteTeacherByAdmin(String teacherId,HttpSession session) {
+		
+		service.removeTeacher(teacherId);
+		return "/member/teacherAll.do";
+	}
+	
+	// 모든 학생 조회
+	@RequestMapping("/studentAll.do")
+	public ModelAndView studentAll(@RequestParam(defaultValue="1") int page) {
+		Map map = service.searchAllStudent(page);
+		map.put("page", page);
+		return new ModelAndView("member/studentAllInfo.tiles", map);
+	}
+	
+	// 학생이름으로 검색
+	@RequestMapping("/searchBystudentName.do")
+	public ModelAndView searchBystudentName(@RequestParam(defaultValue="1") int page, String name) {
+		Map map = service.searchBystudentNameService(name, page);
+		map.put("page", page);
+		map.put("name", name);
+		return new ModelAndView("member/search_studentName.tiles", map);
+	}
+	
+	// 모든 강사 조회
+	@RequestMapping("/teacherAll.do")
+	public ModelAndView teacherAll(@RequestParam(defaultValue="1") int page) {
+		Map map = service.searchAllTeacher(page);
+		map.put("page", page);
+		return new ModelAndView("member/teacherAllInfo.tiles", map);
+	}
+	
+	// 강사이름으로 검색
+	@RequestMapping("/searchByteacherName.do")
+	public ModelAndView searchByteacherName(@RequestParam(defaultValue="1") int page, String name) {
+		Map map = service.searchByteacherNameService(name, page);
+		map.put("page", page);
+		map.put("name", name);
+		return new ModelAndView("member/search_teacherName.tiles", map);
+	}
+	
+	//강사가 마이페이지에서 내 강좌 보여주기 
+	@RequestMapping("/selectAllByTeacherId.do")
+	public ModelAndView selectAllByTeacherId(HttpSession session) {
+		Teacher teacher = (Teacher)session.getAttribute("login_info");
+		teacher.getTeacherId();
+		
+		String teacherId = teacher.getTeacherId();
+		
+		List selectAllByTeacherId = lectureService.selectAllByTeacherId(teacherId);
+
+		return new ModelAndView("member/teacher_lectureInfo.tiles", "lectureList", selectAllByTeacherId);
+	}
+	
+	//관리자가 강사관리에서 강사의 과목 정보 보기
+	@RequestMapping("/selectAllByTeacherId2.do")
+	public ModelAndView selectAllByTeacherId2(String teacherId) {
+		
+		List selectAllByTeacherId = lectureService.selectAllByTeacherId(teacherId);
+
+		return new ModelAndView("member/teacher_lectureInfo.tiles", "lectureList", selectAllByTeacherId);
 	}
 }

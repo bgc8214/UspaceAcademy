@@ -39,11 +39,20 @@ $(document).ready(function() {
 	$(".faqList").on("mouseout", function() {
 		$(this).css("background-color", "white");
 	});
+	
+	$("#btn").on("click", function() {
+		if(!$("input[name=title]").val()) {
+			alert("키워드를 입력하세요.");
+			return false;
+		}
+	})
+	
+	
 	$(document).ready(effect);
 	function effect() {
-		$("tr:eq(2)").css("background-color", "#EAEAEA");
-	}
-	
+		$("tr:eq(2)").css("background-color", "#EAEAEA")
+		}
+	}	
 })
 
 
@@ -123,4 +132,9 @@ $(document).ready(function() {
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
 <p>
+<form action="/UspaceAcademy/FAQ/FAQTitleSearch.do">
+	<input type="text" name="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="제목으로 검색">
+</form><br>
+
+
 <a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button class="listBtn">FAQ리스트</button></a>

@@ -11,9 +11,7 @@ public class Inquiry implements Serializable
 	private String advancedId, advancedType;
 	private int lectureNo2;
 	
-	private List<Comment> commentList;
-	
-	public Inquiry(){}	
+	public Inquiry(){}
 	
 	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
 			String advancedDate) {
@@ -24,21 +22,6 @@ public class Inquiry implements Serializable
 		this.advancedContent = advancedContent;
 		this.advancedDate = advancedDate;
 	}
-
-	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
-			String advancedDate, int advancedHit, String advancedId, String advancedType, List<Comment> commentList) {
-		super();
-		this.advancedNo = advancedNo;
-		this.advancedSecret = advancedSecret;
-		this.advancedTitle = advancedTitle;
-		this.advancedContent = advancedContent;
-		this.advancedDate = advancedDate;
-		this.advancedHit = advancedHit;
-		this.advancedId = advancedId;
-		this.advancedType = advancedType;
-		this.commentList = commentList;
-	}
-
 
 	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
 			String advancedDate, int advancedHit, String advancedId, String advancedType) {
@@ -53,45 +36,13 @@ public class Inquiry implements Serializable
 		this.advancedType = advancedType;
 	}
 
-	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
-			String advancedDate, int advancedHit, String advancedId, String advancedType, int lectureNo2,
-			List<Comment> commentList) {
-		super();
-		this.advancedNo = advancedNo;
-		this.advancedSecret = advancedSecret;
-		this.advancedTitle = advancedTitle;
-		this.advancedContent = advancedContent;
-		this.advancedDate = advancedDate;
-		this.advancedHit = advancedHit;
-		this.advancedId = advancedId;
-		this.advancedType = advancedType;
-		this.lectureNo2 = lectureNo2;
-		this.commentList = commentList;
+	@Override
+	public String toString() {
+		return "Inquiry [advancedNo=" + advancedNo + ", advancedSecret=" + advancedSecret + ", advancedTitle="
+				+ advancedTitle + ", advancedContent=" + advancedContent + ", advancedDate=" + advancedDate
+				+ ", advancedHit=" + advancedHit + ", advancedId=" + advancedId + ", advancedType=" + advancedType
+				+ ", lectureNo2=" + lectureNo2 + "]";
 	}
-	
-	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
-			String advancedDate, int advancedHit, String advancedId, String advancedType, int lectureNo2) {
-		super();
-		this.advancedNo = advancedNo;
-		this.advancedSecret = advancedSecret;
-		this.advancedTitle = advancedTitle;
-		this.advancedContent = advancedContent;
-		this.advancedDate = advancedDate;
-		this.advancedHit = advancedHit;
-		this.advancedId = advancedId;
-		this.advancedType = advancedType;
-		this.lectureNo2 = lectureNo2;
-	}
-
-	public List<Comment> getCommentList() {
-		return commentList;
-	}
-
-
-	public void setCommentList(List<Comment> commentList) {
-		this.commentList = commentList;
-	}
-
 
 	public int getAdvancedNo() {
 		return advancedNo;
@@ -165,8 +116,6 @@ public class Inquiry implements Serializable
 		this.lectureNo2 = lectureNo2;
 	}
 
-
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -179,7 +128,6 @@ public class Inquiry implements Serializable
 		result = prime * result + ((advancedSecret == null) ? 0 : advancedSecret.hashCode());
 		result = prime * result + ((advancedTitle == null) ? 0 : advancedTitle.hashCode());
 		result = prime * result + ((advancedType == null) ? 0 : advancedType.hashCode());
-		result = prime * result + ((commentList == null) ? 0 : commentList.hashCode());
 		result = prime * result + lectureNo2;
 		return result;
 	}
@@ -227,22 +175,8 @@ public class Inquiry implements Serializable
 				return false;
 		} else if (!advancedType.equals(other.advancedType))
 			return false;
-		if (commentList == null) {
-			if (other.commentList != null)
-				return false;
-		} else if (!commentList.equals(other.commentList))
-			return false;
 		if (lectureNo2 != other.lectureNo2)
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Inquiry [advancedNo=" + advancedNo + ", advancedSecret=" + advancedSecret + ", advancedTitle="
-				+ advancedTitle + ", advancedContent=" + advancedContent + ", advancedDate=" + advancedDate
-				+ ", advancedHit=" + advancedHit + ", advancedId=" + advancedId + ", advancedType=" + advancedType
-				+ ", lectureNo2=" + lectureNo2 + ", commentList=" + commentList + "]";
-	}			
-	
+	}		
 }

@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 </script>
 
-<table>
+<table border="1">
 	<tr>
 		<td>
 			no: ${requestScope.lectureInquiryDetail.advancedNo}<br>

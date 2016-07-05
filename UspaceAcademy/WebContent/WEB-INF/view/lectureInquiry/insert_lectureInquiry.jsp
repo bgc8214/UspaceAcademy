@@ -6,7 +6,7 @@
 
 <form action="/UspaceAcademy/lectureInquiry/registerLectureInquiry.do" method="post">
 <input type="hidden" name="lectureNo2" value="${requestScope.lectureNo2 }">
-<table>
+<table border="1">
 	<tr>
 		<td>
 			제목: <input type="text" name="advancedTitle" size="70" value="${requestScope.lectureInquiryValidate.advancedTitle }">

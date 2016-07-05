@@ -44,6 +44,7 @@ public class TeacherValidator implements Validator
 			errors.rejectValue("id", "","ID를 꼭 넣으세요");
 		}*/
 		
+		
 		// 이메일 형식 검증
 				boolean err = false;
 				String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";

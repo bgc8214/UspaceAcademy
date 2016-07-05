@@ -5,6 +5,7 @@
   <sql id="column-basic">
   		attandance_state, lecture_day, student_id2, lecture_no2  
   </sql>
+  
   <resultMap type="Lecture" id="lecture-teach">
   		<id column="lecture_no" property="lectureNo"/>
   		<result column="lecture_title" property="lectureTitle"/>
@@ -20,23 +21,34 @@
   		<result column="lecture_subject" property="lectureSubject"/>
   		<result column="teacher_id2" property="teacherId2"/>
    </resultMap>
+   
    <resultMap id="student-info" type="student">
    		<id column="student_id" property="studentId"/>
    		<result column="student_name" property="studentName"/>
    </resultMap>
+   
    <resultMap id="attendance" type="attendance">
    		<result column="attandance_state" property="attendanceState"/>
    		<result column="lecture_day" property="lectureDay"/>
    		<result column="student_id2" property="studentId2"/>
    		<result column="lecture_no2" property="lectureNo"/>
    </resultMap>
-	<!-- 강사가 강의 중인 강의 정보 -->
+   
+   	<!-- 강사가 강의 중인 강의 정보 -->
 	<select id="selectTeachLecture" parameterType="string" resultMap="lecture-teach">
-		select distinct l.lecture_no, l.lecture_title, l.lecture_start_date, l.lecture_end_date, l.lecture_current_student, l.lecture_total_student
+		select distinct l.lecture_no, l.lecture_title, l.lecture_description, l.lecture_start_time, l.lecture_end_time, l.lecture_day, l.lecture_start_date, l.lecture_end_date, l.lecture_price, l.lecture_total_student, l.lecture_current_student, l.lecture_subject
 		from lecture l, student_lecture_join sl
 		where l.teacher_id2 = #{teacherId} and sl.lecture_no3 = l.lecture_no
 		order by l.lecture_no
 	</select>
+   
+	<!-- 강사가 강의 중인 강의 정보 -->
+<!-- 	<select id="selectTeachLecture" parameterType="string" resultMap="lecture-teach">
+		select distinct l.lecture_no, l.lecture_title, l.lecture_start_date, l.lecture_end_date, l.lecture_current_student, l.lecture_total_student
+		from lecture l, student_lecture_join sl
+		where l.teacher_id2 = #{teacherId} and sl.lecture_no3 = l.lecture_no
+		order by l.lecture_no
+	</select> -->
 	
 	<!-- 강사가  선택한 강의 학생 정보 -->
 	<select id="selectLectureStudentInfo" parameterType="_int" resultMap="student-info">
@@ -58,7 +70,8 @@
 		select <include refid="column-basic"/>
 		from attendance
 		where lecture_no2 = #{lectureNo} 
-		order by lecture_day, student_id2
+		order by lecture_day
+--student_id2
 	</select>
 	
 	<!-- 학생들의 출결이 등록된 마지막 일차수 -->
@@ -83,4 +96,29 @@
 		set attandance_state = #{attendanceState}
 		where lecture_day = #{lectureDay} and lecture_no2 = #{lectureNo} and student_id2 = #{studentId2}
 	</update>
+	
+	<!-- 학생이 수강중인 강의 정보 -->
+	<select id="studentLectureInfo" parameterType="string" resultType="map">
+		select distinct l.lecture_no, l.lecture_title, l.lecture_day, l.lecture_start_date, l.lecture_end_date
+		from student st, student_lecture_join sl, lecture l
+		where sl.student_id3 = #{studentId3} and sl.lecture_no3 = l.lecture_no and sl.zzim_option = '0'
+		order by l.lecture_no desc
+	</select>
+	
+	<!-- 학생이 선택한 강의의 출결상태 -->
+	<select id="studentAttendance" parameterType="map" resultMap="attendance">
+		select lecture_day, attandance_state, student_id2
+		from attendance
+		where lecture_no2 = #{lectureNo2} and student_id2 = #{studentId2}
+		order by lecture_day 
+	</select>
+	
+	<!-- 강의 삭제를 위한.... -->
+	<delete id="deleteAttendance">
+		delete from attendance where lecture_no2 = #{lectureNo}
+	</delete>
+	
+	<delete id="deleteAttendanceForStudent" parameterType="string">
+		delete from attendance where student_id2 = #{value}
+	</delete>
 </mapper> 

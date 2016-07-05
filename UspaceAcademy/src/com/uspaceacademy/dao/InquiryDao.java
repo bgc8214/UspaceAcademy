@@ -107,19 +107,19 @@ public class InquiryDao
 	}
 	
 	
-	//글번호로 댓글 조회
-	public Inquiry selectJoinByAdvancedNo(String advancedType, int advancedNo){
-		HashMap map = new HashMap<>();
-		map.put("advancedType", advancedType);
-		map.put("advancedNo", advancedNo);
-		
-		return session.selectOne("inquiryMapper.selectJoinByAdvancedNo", map);
-	}
-	
-	//댓글 번호 sequence
-	public int increaseCommentNo(){
-		return session.selectOne("inquiryMapper.increaseCommentNo");
-	}
+//	//글번호로 댓글 조회
+//	public Inquiry selectJoinByAdvancedNo(String advancedType, int advancedNo){
+//		HashMap map = new HashMap<>();
+//		map.put("advancedType", advancedType);
+//		map.put("advancedNo", advancedNo);
+//		
+//		return session.selectOne("inquiryMapper.selectJoinByAdvancedNo", map);
+//	}
+//	
+//	//댓글 번호 sequence
+//	public int increaseCommentNo(){
+//		return session.selectOne("inquiryMapper.increaseCommentNo");
+//	}
 	
 
 	//code 조회
@@ -127,33 +127,95 @@ public class InquiryDao
 		return session.selectList("codeTable.selectCodeName", codeType);
 	}
 	
+//	//댓글 등록
+//	public int insertComment(Comment comment){		
+//		
+//		return session.insert("inquiryMapper.insertComment", comment);
+//	}
+//	
+//	//상세 조회
+//	public Comment selectByCommentNo(String commentType, int commentNo){
+//		HashMap map = new HashMap<>();
+//		map.put("commentType", commentType);
+//		map.put("commentNo", commentNo);
+//		
+//		return session.selectOne("inquiryMapper.selectByCommentNo", map);
+//	}
+//	
+//	//댓글 수정
+//	public int updateComment(Comment comment){
+//		return session.update("inquiryMapper.updateComment", comment);
+//	}
+//	
+//	//댓글 삭제
+//	public int deleteComment(String commentType, int commentNo){
+//		HashMap map = new HashMap<>();
+//		map.put("commentType", commentType);
+//		map.put("commentNo", commentNo);
+//		
+//		return session.delete("inquiryMapper.deleteComment", map);
+//	}
+	
+	
+	
+	//글번호로 댓글 상세 조회
+	public List commentList(String commentType, int advancedNo2){
+		Map map = new HashMap<>();
+		map.put("commentType", commentType);
+		map.put("advancedNo2", advancedNo2);
+		
+		return session.selectList("lectureInquiryMapper.commentList", map);
+	}
+	
+	//댓글no로 검색
+	public Comment selectByCommentNo(String commentType, int commentNo, int advancedNo2){
+		Map map = new HashMap<>();
+		map.put("commentType", commentType);
+		map.put("commentNo", commentNo);
+		map.put("advancedNo2", advancedNo2);
+		
+		return session.selectOne("lectureInquiryMapper.selectByCommentNo", map);
+	}
+	
 	//댓글 등록
 	public int insertComment(Comment comment){		
 		
-		return session.insert("inquiryMapper.insertComment", comment);
+		return session.insert("lectureInquiryMapper.insertComment", comment);
 	}
 	
-	//상세 조회
-	public Comment selectByCommentNo(String commentType, int commentNo){
-		HashMap map = new HashMap<>();
-		map.put("commentType", commentType);
-		map.put("commentNo", commentNo);
-		
-		return session.selectOne("inquiryMapper.selectByCommentNo", map);
+	//댓글 번호 sequence
+	public int increaseCommentNo(){
+		return session.selectOne("inquiryMapper.increaseCommentNo");
 	}
 	
 	//댓글 수정
 	public int updateComment(Comment comment){
-		return session.update("inquiryMapper.updateComment", comment);
+		
+		return session.update("lectureInquiryMapper.updateComment", comment);
 	}
 	
 	//댓글 삭제
-	public int deleteComment(String commentType, int commentNo){
-		HashMap map = new HashMap<>();
+	public int deleteComment(String commentType, int commentNo, int advancedNo2){	
+		
+		Map map = new HashMap<>();
 		map.put("commentType", commentType);
 		map.put("commentNo", commentNo);
+		map.put("advancedNo2", advancedNo2);
 		
-		return session.delete("inquiryMapper.deleteComment", map);
+		return session.insert("lectureInquiryMapper.deleteComment", map);
+	}
+	
+	
+	
+	public List selectAllByPagingRownum(int page, String advancedType) {
+		Map map = new HashMap();
+		
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		map.put("advancedType", advancedType);
+
+		
+		return session.selectList("inquiryMapper.selectRownum", map);
 	}
 	
 }

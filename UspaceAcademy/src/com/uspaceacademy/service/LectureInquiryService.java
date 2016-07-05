@@ -108,6 +108,7 @@ public class LectureInquiryService {
 		Map map = new HashMap();
 		map.put("lectureInquiryList", dao.selectAllByPaging(page, advancedType, lectureNo2));
 		map.put("paging", new PagingBean(dao.selectAllCountContents(advancedType, lectureNo2), page));
+//		map.put("rowList", dao.selectAllByPagingRownum(page, advancedType, lectureNo2));
 		
 		return map;
 	}
@@ -117,19 +118,30 @@ public class LectureInquiryService {
 		String advancedType = "강의질문";
 		
 		Map map = new HashMap();
-		map.put("inquiryList", dao.selectTitleByPaging(page, advancedType, advancedTitle, lectureNo2));
+		map.put("lectureInquiryList", dao.selectTitleByPaging(page, advancedType, advancedTitle, lectureNo2));
 		map.put("paging", new PagingBean(dao.selectTitleCountContents(advancedType, advancedTitle, lectureNo2), page));
 		
 		return map;
 	}
 	
 	//내용으로 검색 페이징 처리
-	public Map selectAllByPaging(int page, String advancedContent, int lectureNo2) {
+	public Map selectContentByPaging(int page, String advancedContent, int lectureNo2) {
 		String advancedType = "강의질문";
 		
 		Map map = new HashMap();
-		map.put("inquiryList", dao.selectContentByPaging(page, advancedType, advancedContent, lectureNo2));
+		map.put("lectureInquiryList", dao.selectContentByPaging(page, advancedType, advancedContent, lectureNo2));
 		map.put("paging", new PagingBean(dao.selectContentCountContents(advancedType, advancedContent, lectureNo2), page));
+		
+		return map;
+	}
+	
+	//글쓴이로 검색 페이징 처리
+	public Map selectIdByPaging(int page, String advancedId, int lectureNo2) {
+		String advancedType = "강의질문";
+		
+		Map map = new HashMap();
+		map.put("lectureInquiryList", dao.selectContentByPaging(page, advancedType, advancedId, lectureNo2));
+		map.put("paging", new PagingBean(dao.selectContentCountContents(advancedType, advancedId, lectureNo2), page));
 		
 		return map;
 	}

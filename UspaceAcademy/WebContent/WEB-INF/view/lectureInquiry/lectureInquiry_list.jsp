@@ -15,7 +15,7 @@ $(document).ready(function() {
 });
 
 </script>
-<table width="500" border='1'>
+<table border='1'>
 	<thead>
 		<tr>
 			<td>글번호</td>			
@@ -29,8 +29,9 @@ $(document).ready(function() {
 	<tbody>
 		<form>
 		<input id="page" type="hidden" value="${param.page }">
-			<c:forEach items="${requestScope.lectureInquiryList}" var="list" >
+			<c:forEach items="${requestScope.lectureInquiryList}" var="list" varStatus="no">
 				<tr>
+<%-- 				<input type="hidden" value="${list.advancedNo }" name="advancedNo"> --%>
 					<td>${list.advancedNo }</td>
 					<td><a href="/UspaceAcademy/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
 						&advancedSecret=${list.advancedSecret}&lectureNo2=${list.lectureNo2 }">${list.advancedTitle }</a></td>
@@ -78,9 +79,19 @@ $(document).ready(function() {
 	</c:choose>
 <p>
 
-<form action="/UspaceAcademy/lectureInquiry/selectByTitle.do">
-	<input type="text" name="advancedTitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="제목으로 검색">
-</form><br>
+<!-- 검색관련 -->
+<form action="/UspaceAcademy/lectureInquiry/searchByKeyword.do?page=${param.page }" method="post">
+<input type="hidden" value="${requestScope.lectureNo2 }" name="lectureNo2">
+<select name="searchType">
+	<option value="advancedTitle">제목</option>
+	<option value="advancedContent">내용</option>
+	<!-- <option value="advancedId">글쓴이</option> -->
+</select>
+<input type="text" name="keyword">
+<input type="submit" value="검색">
+</form>
+
+<br>
 
 <a href="/UspaceAcademy/lectureInquiry/registerLectureInquiryForm.do?lectureNo2=${requestScope.lectureNo2 }">글 작성하기</a>
 	
