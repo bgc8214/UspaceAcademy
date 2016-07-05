@@ -2,24 +2,69 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-
-
 <h3>내정보 | 과제게시판 | 상세보기</h3>
 <hr/>
+<style type="text/css">
+table{
+table-layout: fixed;
+border:1px solid #dcdcdc;
+color:#353535;
+line-height:180%;
+}
+.notice_content{
+	font-size:18px;
+    position: relative;
+    display: inline-block;
+    padding: 40px;
+    width: 700px;
+    background: #ffffff;
+    border: 1px solid #d4d4d4;
+    float: left;
+    text-align: left;
+    min-height: 580px;
+    margin-bottom: 20px;
 
-<table class="table_list" summary="영주" cellpacing="0">
+}
+td{
+    padding: 15px 0;
+    border-top: 1px solid #eee;
+    text-align: center;
+    padding: 15px 0;
+}
+.notice_content h5.notice_line {
+    font-size: 35px;
+    font-family: 'Nanum Gothic Bold';
+    color: #474747;
+    position: relative;
+    padding: 0 195px 15px 0;
+}
+</style>
+
+
+
+
+
+
+
+
+
+
+
+<div class="notice_content">
+<h5 class="notic_line">${assignment.assignmentTitle}</h5>
+<p>
+
+<table  board="1" class="table_list" summary="영주" cellpacing="0">
 	<caption></caption>
-	<tbody>
-	
-	
-	
+<tbody>
+
 <tr>
 <th scope="col">아이디</th>	
 <td>${assignment.assignmentWriterId}</td>
 <th scope="col">이름</th>	
 <td>${assignment.assignmentWriter}</td>
 </tr>
+	
 	
 <tr>
 <th scope="col">작성일</th>	
@@ -31,15 +76,16 @@
 </tr>
 
 
+
 <!-- <tr>
 <th scope="col">강의명</th>
 </tr>
  -->
 
-<tr>
+<%-- <tr>
 <th scope="col">제목</th>	
 <td>${assignment.assignmentTitle}</td>
-</tr>
+</tr> --%>
 
 <tr>
 <th scope="col">내용</th>	
@@ -64,7 +110,7 @@
 
 </tbody>
 </table>
-
+</div>
 
 
 
