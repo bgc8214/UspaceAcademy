@@ -29,7 +29,7 @@ $(document).ready(function(){
 
 </script>
 
-<table border="1">
+<table border="">
 	<tr>
 		<td>
 			no: ${requestScope.lectureInquiryDetail.advancedNo}<br>
@@ -52,15 +52,15 @@ $(document).ready(function(){
 
 <p>
 
-<table>
+<table class="table table-bordered">
 <c:forEach items="${requestScope.commentList}" var="list">
 <%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
 	<tr>
 		<td>
-			댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			글쓴이: ${list.commentWriter}<br>
+			<%-- 댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --%>
+			글쓴이: ${list.commentWriter}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			글 등록일:${list.commentDate}<br>
-			내용<br>
+			내용:
 			${list.commentContent}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			
 			<c:choose>
