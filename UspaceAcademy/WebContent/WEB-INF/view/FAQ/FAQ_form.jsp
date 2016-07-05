@@ -28,12 +28,22 @@ $(document).ready(function() {
 	})
 })
 </script>
-
+<h3 class="pageTlt">FAQ 등록</h3>
+<hr>
 
 <form action="/UspaceAcademy/FAQ/FAQWrite.do" method="post">
 <input type="hidden" name="basicType" value="${requestScope.codeName}">
-FAQ제목 : <input type="text" name="basicTitle" value="${requestScope.FAQForm.basicTitle}"><span class="error"><form:errors path="FAQForm.basicTitle" /></span><br>
-FAQ내용 : <br>
-<textarea rows="45" cols="100" name="basicContent">${requestScope.FAQForm.basicContent}</textarea><span class="error"><form:errors path="FAQForm.basicContent" /></span><br>
-<input id="btn" type="submit" value="전송">
+	<table class="table table-bordered form-table">
+		<tbody>
+			<tr>
+				<th>제목</th>
+				<td><input type="text" name="basicTitle" value="${requestScope.FAQForm.basicTitle}"><span class="error"><form:errors path="FAQForm.basicTitle" /></span></td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td><textarea name="basicContent" class="form-control">${requestScope.FAQForm.basicContent}</textarea><span class="error"><form:errors path="FAQForm.basicContent" /></span>
+			</tr>
+		</tbody>
+	</table>
+		<input id="btn" type="submit" value="전송" class="btn btn-info">
 </form>

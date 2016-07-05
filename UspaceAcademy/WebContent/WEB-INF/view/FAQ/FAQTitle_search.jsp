@@ -32,13 +32,13 @@ $(document).ready(function() {
 		});
 	});
 	$(".faqList").on("mouseover", function() {
-		$(this).css("background-color", "hotpink");
+		$(this).css("background-color", "#FFB2D9");
 
 	});
 
 	$(".faqList").on("mouseout", function() {
 		$(this).css("background-color", "white");
-	});
+	})
 	
 	$("#btn").on("click", function() {
 		if(!$("input[name=title]").val()) {
@@ -50,8 +50,7 @@ $(document).ready(function() {
 	
 	$(document).ready(effect);
 	function effect() {
-		$("tr:eq(2)").css("background-color", "#EAEAEA")
-		}
+		$("tr:eq(2)").css("background-color", "#FFC19E")
 	}	
 })
 
@@ -65,7 +64,7 @@ $(document).ready(function() {
 
 
 <hr>
-	<table border="2" width="600">
+	<table border="2" width="600" class="table table-borered">
 		<thead>
 			<tr>
 				<th>No</th>
@@ -98,7 +97,7 @@ $(document).ready(function() {
 	
 	
 	
-	
+	<div align="center">
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
@@ -131,10 +130,18 @@ $(document).ready(function() {
 		</c:when>
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
+	</div>
 <p>
-<form action="/UspaceAcademy/FAQ/FAQTitleSearch.do">
-	<input type="text" name="title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="제목으로 검색">
-</form><br>
+<!-- 제목으로 검색 -->
+<div class="boardBottom" align="center">
+<form action="/UspaceAcademy/FAQ/FAQTitleSearch.do" method="post">
+	<fieldset>
+		<dd><input type="text" name="title" placeholder="제목을 입력하세요"/>
+			<input id="btn" type="submit" value="제목으로 검색" class="btn btn-info">
+		</dd>
+	</fieldset>
+</form>
+</div><br>
 
 
-<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button class="listBtn">FAQ리스트</button></a>
+<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button class="btn btn-success">FAQ리스트</button></a>

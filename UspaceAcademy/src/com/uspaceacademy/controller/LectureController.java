@@ -407,4 +407,12 @@ public class LectureController {
 		return "/lecture/applyList.do?page="+page;
 	}
 	
+	// 관리자가 강의가 시작되고 종료된 강의에 대해서 관리하기 위해서....
+	@RequestMapping("lectureAll.do")
+	public ModelAndView adminLectureCheck(@RequestParam(defaultValue="1") int page) {
+		Map map = new HashMap<>();
+		map = lectureService.selectAdminLectureService();
+//		System.out.println(map);
+		return new ModelAndView("lecture/admin_lectureList.tiles", map);
+	}
 }

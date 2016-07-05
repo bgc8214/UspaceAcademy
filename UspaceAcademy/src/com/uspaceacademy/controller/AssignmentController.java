@@ -170,6 +170,7 @@ public class AssignmentController {
 					(num,assignment.getAssignmentWriterId(),assignment.getAssignmentTitle(),
 							assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),
 							assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),fileName, 1); //fileName->파일이름넘겨줌
+			
 			assignment.setReplyFamily(num); 
 			
 			System.out.println(fileName+"파일이름"); //
@@ -441,7 +442,6 @@ public class AssignmentController {
 
 			
 		//위에 학생 답글-----------------------------------------------------------------------------------------------------------------
-		
 		
 		
 			

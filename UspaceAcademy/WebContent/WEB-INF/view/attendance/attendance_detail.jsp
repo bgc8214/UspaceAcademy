@@ -1,8 +1,9 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<h1>출석부 조회&수정 페이지!!(총 강좌 일수 - ${requestScope.diffDays })</h1><p>
-<table border="5" width="1500">
+<h3 class="pageTly">출석부 조회&수정 페이지!!(총 강좌 일수 - ${requestScope.diffDays })</h3>
+<hr>
+<table class="table table-responsive">
 	<tr>
 		<th>일차 | 학생</th>
 		<c:forEach items="${requestScope.studentInfoList}" var="list">
@@ -26,10 +27,10 @@
 				</select>
 			</td>
 			</c:forEach>
-			<td><input id="btn" type="submit" value="수정"></td>
+			<td><input id="btn" type="submit" value="수정" class="btn btn-warning"></td>
 		</tr>
 		</form>
 		</c:forEach>
 </table>
 <p>
-<a href="/UspaceAcademy/attendance/attendanceList.do"><button>강의 목록</button></a>
+<a href="/UspaceAcademy/attendance/attendanceList.do"><button class="btn btn-info">강의 목록</button></a>

@@ -1,0 +1,76 @@
+@charset "UTF-8";
+body, input, select, textarea, button, th, td {font-family:"돋움", Dotum, Arial, sans-serif}
+h1, h2, h3, h4, h5, h6 {font-family:"맑은 고딕",Malgun Gothic,"돋움",Dotum,sans-serif}
+.blind {position:absolute;top:-9999px;visibility:hidden;width:0;height:0;font-size:1%;line-height:0}
+
+html, body {min-width:1024px;height:100%}
+.container {width:1022px !important;padding:0;box-sizing:content-box}
+#wrap {position:relative;min-height:100%}
+
+/* header*/
+#header {background:#337ab7;border-top:5px solid #337ab7;border-bottom:1px solid #2e6da4;box-sizing:content-box}
+#header .top {height:70px;background:#fff}
+#header h1 {padding:10px 0;margin:0}
+#header h1 a {color:#002f6c;text-decoration:none;font-size:28px;font-weight:bold}
+
+.loginForm {position:absolute;right:0;top:20px;font-size:12px}
+.loginForm form {overflow:hidden}
+.loginForm fieldset {display:inline-block}
+.loginForm fieldset input {width:180px;padding:0 10px;height:31px;border:1px solid #ddd;border-radius:3px}
+.loginForm dl {float:left;margin-left:20px}
+.loginForm dt {float:left;margin-right:10px;line-height:32px;color:#555}
+.loginForm dd {float:left}
+.loginForm p {float:right;margin-left:10px;}
+.loginForm p button {font-size:12px}
+
+#header .container {position:relative;}
+#header ul {padding:0;margin:0}
+
+#gnb {height:50px;}
+#gnb li {float:left;position:relative;width:170px;height:50px;list-style:none;font-size:16px;font-family:"맑은 고딕",Malgun Gothic,"돋움",Dotum,sans-serif;text-align:center}
+#gnb li a {display:block;height:100%;color:#fff;font-weight:bold;text-decoration:none;line-height:50px}
+#gnb li ul {display:none;position:absolute;left:0;top:100%;padding:5px 0;background:rgba(0,0,0,0.7)}
+#gnb li li {float:none;height:auto;padding:10px 0;margin-left:0;font-size:16px;}
+#gnb li li a  {line-height:1.2}
+
+
+/* contents */
+#contents {padding:40px 0 100px 0;box-sizing:content-box}
+#contents .pageTlt {margin:0 0 20px 0;font-size:24px;color:#333}
+
+.table th, .table td {text-align:center}
+.table thead th {background:#eee}
+.table .txt {text-align:left}
+.table .txt a {display:block;color:#333}
+.answer:hover {background:none}
+.answer td:hover {background:none}
+.answer textarea {width:100%;height:150px;resize:none}
+.answer p {padding:10px 0;margin:0;text-align:right}
+
+.pageNav {padding:10px 0;text-align:center}
+.pageNav a, .pageNav strong {display:inline-block;padding:5px 9px;margin:0 2px;border:1px solid #ddd;border-radius:3px}
+.pageNav a {color:#333}
+.pageNav strong {background:#337ab7;color:#fff}
+.pageNav span {}
+.pageNav span a {}
+
+.form-table {}
+.form-table th {padding:0 20px !important;background:#eee;vertical-align:middle !important}
+.form-table th, .form-table td {text-align:left}
+.form-table input {width:278px;height:25px;padding:0 10px;border:1px solid #ddd;box-sizing:content-box}
+.form-table select {width:300px;height:25px;padding:0 8px;border:1px solid #ddd;}
+.form-table .notice {color:#ce4844}
+.form-table .btn {height:27px;padding:0 5px !important;vertical-align:top}
+
+.boardBottom {overflow:hidden;margin-bottom:20px}
+.boardBottom form {float:left}
+.boardBottom form fieldset {float:left}
+.boardBottom form fieldset input {width:200px;padding:0 10px;height:34px;border:1px solid #ddd;border-radius:3px}
+.boardBottom form p {float:left;margin-left:10px}
+.boardBottom .text-right {float:right}
+
+
+/* footer */
+#footer {position:absolute;left:0;bottom:0;width:100%;padding:20px 0;background:#eee}
+#footer p {text-align:center}
+#footer p:last-child {margin-bottom:0}

@@ -29,11 +29,13 @@ $(document).ready(function(){
 
 </script>
 
-<table>
+<table border="1">
 	<tr>
 		<td>
-			no: ${requestScope.lectureInquiryDetail.advancedNo}<br> 글쓴이: ${requestScope.lectureInquiryDetail.advancedId}<br>글 등록일:${requestScope.lectureInquiryDetail.advancedDate}
-			<br>조회수: ${requestScope.lectureInquiryDetail.advancedHit}
+			no: ${requestScope.lectureInquiryDetail.advancedNo}<br>
+			글쓴이: ${requestScope.lectureInquiryDetail.advancedId}<br>
+			글 등록일:${requestScope.lectureInquiryDetail.advancedDate}<br>
+			조회수: ${requestScope.lectureInquiryDetail.advancedHit}
 		</td>
 	</tr>
 	<tr>
@@ -49,16 +51,70 @@ $(document).ready(function(){
 </table>
 
 <p>
-<%-- <c:forEach items="requestScope.inquiryComment" var="inquiryComment"> --%>
-<!-- 	<a id="insertComment" href="/UspaceAcademy/inquiry/insertComment.do">댓글 쓰기</a>
-	<textarea rows="" cols=""></textarea> -->
-<%-- </c:forEach> --%>
-<!-- <form method="post" action="/UspaceAcademy/inquiry/insertComment.do"> -->
-<input type="text" id="commentContent"><br>
-<input type="button" value="댓글 등록" id="btn">
-<div id="cmtTarget"></div>
-<!-- </form> -->
+
+<table>
+<c:forEach items="${requestScope.commentList}" var="list">
+<%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
+	<tr>
+		<td>
+			댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			글쓴이: ${list.commentWriter}<br>
+			글 등록일:${list.commentDate}<br>
+			내용<br>
+			${list.commentContent}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			
+			<c:choose>
+				<c:when test="${sessionScope.memberType=='student'}">
+					<c:if test="${list.commentWriter eq sessionScope.login_info.studentId}">
+						<a href="/UspaceAcademy/lectureInquiry/updateCommentForm.do?commentNo=${list.commentNo }
+						&advancedNo2=${requestScope.lectureInquiryDetail.advancedNo}&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}">
+						<button>댓글 수정</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<a href="/UspaceAcademy/lectureInquiry/deleteComment.do?commentNo=${list.commentNo }&advancedNo2=${requestScope.lectureInquiryDetail.advancedNo}
+						&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}"><button>댓글 삭제</button></a><br>
+					</c:if>
+				</c:when>
+				<c:otherwise>
+					<c:if test="${sessionScope.memberType=='administrator'}">
+						<a href="/UspaceAcademy/inquiry/deleteComment.do"><button>댓글 삭제</button></a>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+		</td>
+	</tr>
+</c:forEach>
+</table>
+
+<h2 align="center">댓글 작성</h2>
+<form action="/UspaceAcademy/lectureInquiry/insertComment.do" >
+<input type="hidden" value="${requestScope.lectureInquiryDetail.advancedNo}" name="advancedNo2">
+<input type="hidden" value="${requestScope.lectureInquiryDetail.lectureNo2}" name="lectureNo2">
+	<table>
+		<tr>
+			<td>
+				<textarea id="commentContent" name="commentContent"></textarea>
+				<input type="submit" value="댓글 입력">
+			</td>
+		</tr>
+	</table>
+</form>
+
 <p>
-<a href="/UspaceAcademy/lectureInquiry/updateLIByAdvancedNo.do?advancedNo=${requestScope.lectureInquiryDetail.advancedNo }">강의질문하기 수정</a>
-<a href="/UspaceAcademy/lectureInquiry/deleteLIByAdvancedNo.do?advancedNo=${requestScope.lectureInquiryDetail.advancedNo }">강의질문하기 삭제</a>
-<a href="/UspaceAcademy/inquiry/inquiryList.do">1:1문의 목록</a>
+
+<c:choose>
+	<c:when test="${sessionScope.memberType=='student'}">
+		<c:if test="${requestScope.lectureInquiryDetail.advancedId eq sessionScope.login_info.studentId}">
+			<a href="/UspaceAcademy/lectureInquiry/updateLectureInquiryForm.do?advancedNo=${requestScope.lectureInquiryDetail.advancedNo }
+			&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">강의질문 수정</a>
+			<a href="/UspaceAcademy/lectureInquiry/deleteLectureInquiry.do?advancedNo=${requestScope.lectureInquiryDetail.advancedNo }
+			&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">강의질문 삭제</a>
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<c:if test="${sessionScope.memberType=='administrator'}">
+			<a href="/UspaceAcademy/lectureInquiry/deleteLectureInquiry.do?advancedNo=${requestScope.lectureInquiryDetail.advancedNo }
+			&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">강의질문 삭제</a>
+		</c:if>
+	</c:otherwise>
+</c:choose>
+
+<a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">전체 목록</a>

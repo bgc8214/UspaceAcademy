@@ -34,13 +34,21 @@
    		<result column="lecture_no2" property="lectureNo"/>
    </resultMap>
    
-	<!-- 강사가 강의 중인 강의 정보 -->
+   	<!-- 강사가 강의 중인 강의 정보 -->
 	<select id="selectTeachLecture" parameterType="string" resultMap="lecture-teach">
+		select distinct l.lecture_no, l.lecture_title, l.lecture_description, l.lecture_start_time, l.lecture_end_time, l.lecture_day, l.lecture_start_date, l.lecture_end_date, l.lecture_price, l.lecture_total_student, l.lecture_current_student, l.lecture_subject
+		from lecture l, student_lecture_join sl
+		where l.teacher_id2 = #{teacherId} and sl.lecture_no3 = l.lecture_no
+		order by l.lecture_no desc
+	</select>
+   
+	<!-- 강사가 강의 중인 강의 정보 -->
+<!-- 	<select id="selectTeachLecture" parameterType="string" resultMap="lecture-teach">
 		select distinct l.lecture_no, l.lecture_title, l.lecture_start_date, l.lecture_end_date, l.lecture_current_student, l.lecture_total_student
 		from lecture l, student_lecture_join sl
 		where l.teacher_id2 = #{teacherId} and sl.lecture_no3 = l.lecture_no
 		order by l.lecture_no
-	</select>
+	</select> -->
 	
 	<!-- 강사가  선택한 강의 학생 정보 -->
 	<select id="selectLectureStudentInfo" parameterType="_int" resultMap="student-info">

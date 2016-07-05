@@ -9,54 +9,62 @@
 				return false;
 			}
 		})
+		$("#ex").on("click", "tr", function() {
+			alert("상세페이지로 이동합니다");
+		})
+		
 	});
+	
 	$(document).ready(effect);
 	function effect() {
-		$("tr:eq(2)").css("background-color", "#EAEAEA");
+		$("tr:eq(2)").css("background-color", "#6CC0FF");
+	
 	}
+
 </script>
+<h3 class="pageTlt">공지사항</h3>
 <hr>
-	<table border="2">
+	<table class="table table-bordered table-hover" align="center">
 		<thead>
 			<tr>
-				<td>No</td>
-				<td>공지제목</td>
-				<td>등록일</td>
-				<td>조회수</td>
+				<th>No</th>
+				<th>공지제목</th>
+				<th>등록일</th>
+				<th>조회수</th>
 			</tr>
 		</thead>
-		<tbody>	
+		<tbody id="ex">
 			<c:forEach var="notice" items="${requestScope.noticeList}">
-				<tr id="tb">
-					<td>${notice.basicNo}</td>
-					<td><a href="/UspaceAcademy/notice/noticeDetail.do?no=${notice.basicNo}&page=${page}">${notice.basicTitle}</a></td>
-					<td>${notice.basicDate}</td>
-					<td>${notice.basicHit}</td>
+				<tr onclick="location.href='/UspaceAcademy/notice/noticeDetail.do?no=${notice.basicNo}&page=${page}'" style="cursor:pointer;" class="noticeList">
+					<td align="center">${notice.basicNo}</td>
+					<td align="center">${notice.basicTitle}</td>
+					<td align="center">${notice.basicDate}</td>
+					<td align="center">${notice.basicHit}</td>
 				</tr>
 			</c:forEach>
 		</tbody>	
-	</table><p>
-	
-
+	</table>
+	<p>	
 
 <%--◀이전 페이지 그룹 처리 --%>
+<div class="pageNav" align="center">
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/notice/list.do?page=${requestScope.paging.beginPage-1}&type=공지사항">
-			◀
+			<a href="/UspaceAcademy/notice/list.do?page=${requestScope.paging.beginPage-1}&type=공지사항" class="prevPage">
+			<!-- ◀ -->이전
 			</a>
 		</c:when>
-		<c:otherwise>◀</c:otherwise>
+		<c:otherwise>이전</c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 [${page }]
+			<span><strong>${page}</strong></span> 
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/notice/list.do?page=${page}&type=공지사항">
-					${page }
+				<span><strong>${page}</strong></span>	
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -65,30 +73,34 @@
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/notice/list.do?&page=${requestScope.paging.endPage + 1}&type=공지사항">
-			▶
+			<a href="/UspaceAcademy/notice/list.do?&page=${requestScope.paging.endPage + 1}&type=공지사항" class="nextPage">
+			<!-- ▶ -->다음
 			</a>
 		</c:when>
-		<c:otherwise>▶</c:otherwise>
+		<c:otherwise>다음</c:otherwise>
 	</c:choose>
+</div>
 <p>
 
-<!-- 공지사항 제목+내용으로 검색 -->
-<form action="/UspaceAcademy/notice/noticeSearch.do" method="post">
-	<input type="text" name="keyword">&nbsp;&nbsp;&nbsp;
-	<input id="btn" type="submit" value="제목+내용으로 검색">
-</form>
-<p>
+ <!-- 공지사항 제목+내용으로 검색 -->
+<div class="boardBottom" align="center">
+	<form action="/UspaceAcademy/notice/noticeSearch.do" method="post">
+		<fieldset>
+			<dd><input type="text" name="keyword" placeholder="제목+내용을 입력하세요." />
+			<input id="btn" type="submit" value="제목+내용으로 검색" class="btn btn-info"></dd>
+		</fieldset>
+	
+	</form>
+</div>
+
 
 
 <!-- 관리자용 공지사항 등록 버튼 -->
 <span class="notciceRegister">
 	<c:if test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button class="registerBtn">공지사항 등록</button></a>
+		<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button class="btn btn-success">공지사항 등록</button></a>
 	</c:if>
 </span>
-	
-	
-	
-	
 
+
+<p>

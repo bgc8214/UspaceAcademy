@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -141,6 +143,20 @@ public class LectureService {
 		lecture.setLectureCurrentStudent(lecture.getLectureCurrentStudent()-1);
 		lectureDao.updateLectureByNo(lecture);
 		return lectureDao.deleteLectureFromApplyListByLectureNo(studentId, lectureNo);
+	}
+	
+
+	//관리자용 강사 관리페이지에서 강사조회
+	public List selectAllByTeacherId(String teacherId) {		
+		return lectureDao.selectAllByTeacherId(teacherId);
+	}
+	
+	// 관리자용 강의목록 조회
+	public Map selectAdminLectureService() {
+		Map map = new HashMap<>();
+		map.put("lectureList", lectureDao.selectAdminLectureDao());
+		return map;
+
 	}
 	
 }

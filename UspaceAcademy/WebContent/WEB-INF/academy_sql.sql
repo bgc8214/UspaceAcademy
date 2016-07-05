@@ -157,7 +157,7 @@ create table advanced_board(
 	advanced_date varchar2(50) not null,
 	advanced_hit number not null,
 	advanced_id varchar2(50) not null,
-	advanced_type varchar2(50),
+	advanced_type varchar2(50) not null,
 	lecture_no2 number,
 	constraint fk_advanced_lecture foreign key(lecture_no2) references lecture(lecture_no)
 );
@@ -173,8 +173,9 @@ create sequence advanced_board_seq nocache;
 drop sequence advanced_board2_seq;
 create sequence advanced_board2_seq nocache;
 
+insert into ADVANCED_BOARD values(1, '0', '제목1', '내용1', '2016-05-05', 0, 'student', '1:1문의', null);
 
-
+delete from advanced_board where advanced_no=1
 
 
 
@@ -185,6 +186,7 @@ CREATE TABLE comment_table(
 	comment_content clob not null,
 	comment_date varchar2(50) not null,
 	comment_writer varchar2(50) not null, 
+	comment_type varchar2(50) not null,
 	advanced_no2 number not null,
 	constraint fk_comment_advanced foreign key (advanced_no2) references advanced_board(advanced_no)
 );
@@ -192,10 +194,29 @@ CREATE TABLE comment_table(
 drop sequence comment_board_seq;
 create sequence comment_board_seq nocache;
 
+select * from COMMENT_Table;
+
+insert into COMMENT_TABLE values(11, '댓글내용1', '2015-06-04', 'student2', '1:1문의댓글', 9);
+insert into COMMENT_TABLE values(12, '댓글내용2', '2015-06-05', 'student2', '1:1문의댓글', 9);
+insert into COMMENT_TABLE values(11, '댓글내용3', '2015-06-06', 'student2', '1:1문의댓글', 2);
+
+insert into COMMENT_TABLE values(1, '댓글내용1', '2015-06-04', 'student2', '강의질문댓글', 100);
+
+delete from COMMENT_TABLE where comment_type='1:1문의댓글' and comment_no=1
+
+insert into comment_table
+()
+select * from advanced_table
 
 
-
-
+		select	comment_no,
+				comment_content,
+				comment_date,
+				comment_writer,
+				comment_type,
+				advanced_no2
+		from	comment_table
+		where comment_type = '강의질문댓글' and advanced_no2 = 1
 
 
 
@@ -305,9 +326,9 @@ CREATE TABLE attendance(
 
 
 
-insert into code_table values('6', '1:1문의', 'advanced_board');
-insert into code_table values('7', '1:1문의댓글', 'comment_board');
-insert into code_table values('8', '강의질문하기', 'advanced_board');
+insert into code_table values('7', '1:1문의', 'advanced_board');
+insert into code_table values('8', '1:1문의댓글', 'comment_board');
+insert into code_table values('9', '강의질문하기', 'advanced_board');
 
 ---------------------------------------------------------------------
 -- code_table insert하는 구문     //영주1
@@ -317,6 +338,8 @@ insert into CODE_TABLE values('2', 'FAQ', 'basic_board');
 insert into CODE_TABLE values('3', '국어', 'teacherSubject');
 insert into CODE_TABLE values('4', '영어', 'teacherSubject');
 insert into CODE_TABLE values('5', '수학', 'teacherSubject');
+insert into CODE_TABLE values('6', '한국사', 'teacherSubject');
+
 
 select * from CODE_TABLE;
 	SELECT *
@@ -365,4 +388,54 @@ select * from assignment_board where assignment_no in(161, 170)
 
 
 
-
+--		select 	i.advanced_no,
+--				i.advanced_secret,
+--				i.advanced_title,
+--				i.advanced_content,
+--				i.advanced_date,
+--				i.advanced_hit,
+--				i.advanced_id,
+--				i.advanced_type,
+--				c.comment_no,
+--				c.comment_content,
+--				c.comment_date,
+--				c.comment_writer,
+--				c.advanced_no2
+--		from 	advanced_board i, comment_table c
+--		where 	i.advanced_no = c.advanced_no2
+--		and advanced_type = '1:1문의' and advanced_no = 1
+--
+--		update(		select 	i.advanced_no,
+--				i.advanced_secret,
+--				i.advanced_title,
+--				i.advanced_content,
+--				i.advanced_date,
+--				i.advanced_hit,
+--				i.advanced_id,
+--				i.advanced_type,
+--				c.comment_no,
+--				c.comment_content,
+--				c.comment_date,
+--				c.comment_writer,
+--				c.advanced_no2
+--		from 	advanced_board i, comment_table c
+--		where 	c.comment_no = 1)
+--		set comment_content = '뭐지'
+--		
+--		delete from comment_table c
+--		where exists(select 	i.advanced_no,
+--				i.advanced_secret,
+--				i.advanced_title,
+--				i.advanced_content,
+--				i.advanced_date,
+--				i.advanced_hit,
+--				i.advanced_id,
+--				i.advanced_type		
+--		from 	 advanced_board i
+--		
+--		where c.advanced_no2 = i.advanced_no
+--		)
+--		
+--
+--select * from lecture;
+--

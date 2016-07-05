@@ -1,15 +1,47 @@
 <%@page contentType="text/html;charset=utf-8"%>
-<h1>개인정보</h1>
-
-아이디 : <input type="text"  value="${sessionScope.login_info.teacherId}" readonly="readonly"><br>
-이름 : <input type="text"	value="${sessionScope.login_info.teacherName}" readonly="readonly"><br>
-이메일 : <input type="text"	value="${sessionScope.login_info.teacherEmail}" readonly="readonly"><br>
-전화번호 : <input type="text"	value="${sessionScope.login_info.teacherPhoneNo}" readonly="readonly"><br>
-주소 : <input type="text"	value="${sessionScope.login_info.teacherAddress}" readonly="readonly"><br>
-과목 : <select>
-		<option>${sessionScope.login_info.teacherSubject}</option>
-	</select>
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+var tmp;//이벤트소스를 저장하기 위한 변수
+$(document).ready(function(){
+	$("#remove").on("click", function(){
+		return confirm("정말 탈퇴 하시겠습니까?");
+	})
+})
+</script>
+<h3 class="pageTlt">개인정보</h3>
+<table class="table table-striped">
+	<tbody>
+		<tr>
+			<th>아이디</th>
+			<td><input type="text"  value="${sessionScope.login_info.teacherId}" readonly="readonly"></td>
+		</tr>
+		<tr>
+			<th>이름</th>
+			<td><input type="text"	value="${sessionScope.login_info.teacherName}" readonly="readonly"></td>
+		</tr>
+		<tr>
+			<th>이메일</th>
+			<td><input type="text"	value="${sessionScope.login_info.teacherEmail}" readonly="readonly"></td>
+		</tr>
+		<tr>
+			<th>전화번호</th>
+			<td><input type="text"	value="${sessionScope.login_info.teacherPhoneNo}" readonly="readonly"></td>
+		</tr>
+		<tr>
+			<th>주소</th>
+			<td><input type="text"	value="${sessionScope.login_info.teacherAddress}" readonly="readonly"></td>
+		</tr>
+		<tr>
+			<th>과목</th>
+			<td><select>
+					<option>${sessionScope.login_info.teacherSubject}</option>
+				</select>
+			</td>	
+		</tr>
+	</tbody>
+</table>
 <p>
-<a href="/UspaceAcademy/member/updateTeacherForm.do"><button>수정</button></a>
-<a href="/UspaceAcademy/member/deleteTeacher.do"><button>탈퇴</button></a>
-<%-- <a href="/UspaceAcademy/member/deleteTeacher.do?teacherId=${sessionScope.login_info.teacherId}"><button>탈퇴</button></a> --%>
+<div align="right">
+<a href="/UspaceAcademy/member/updateTeacherForm.do"><button class="btn btn-warning">수정</button></a>
+<a href="/UspaceAcademy/member/deleteTeacher.do"><button id="remove" class="btn btn-danger">탈퇴</button></a>
+</div>

@@ -10,6 +10,18 @@ public class LectureInquiry implements Serializable{
 	private int lectureNo2;
 	
 	public LectureInquiry(){}
+	
+	public LectureInquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
+			String advancedDate, String advancedType, int lectureNo2) {
+		super();
+		this.advancedNo = advancedNo;
+		this.advancedSecret = advancedSecret;
+		this.advancedTitle = advancedTitle;
+		this.advancedContent = advancedContent;
+		this.advancedDate = advancedDate;
+		this.advancedType = advancedType;
+		this.lectureNo2 = lectureNo2;
+	}
 
 	public LectureInquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
 			String advancedDate, int advancedHit, String advancedId, String advancedType, int lectureNo2) {

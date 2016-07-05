@@ -99,3 +99,6 @@ where teacher_id = '12345'
 		from lecture l, student_lecture_join sl
 		where l.teacher_id2 = '34567' and sl.lecture_no3 = l.lecture_no
 		order by l.lecture_no
+		
+		drop table lecture cascade constraint
+		

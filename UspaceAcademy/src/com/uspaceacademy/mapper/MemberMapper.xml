@@ -177,7 +177,7 @@
  	<include refid="column-basic-student"/> 
  	FROM (SELECT
  	<include refid="column-basic-student"/> 
- 	FROM student WHERE student_name = #{name}
+ 	FROM student WHERE student_name like '%'||#{name}||'%' 
  	ORDER BY student_name))
  	WHERE page= #{page}
  </select>
@@ -185,7 +185,7 @@
  <select id="selectStudentByNameCountContents" resultType="_int" parameterType="string">
  	select count(student_id)
  	from student
- 	where student_name = #{name}
+ 	where student_name like '%'||#{name}||'%' 
  </select>
  
  <!-- 강사 이름으로 검색 -->
@@ -195,7 +195,7 @@
  	<include refid="column-basic-teacher"/> 
  	FROM (SELECT
  	<include refid="column-basic-teacher"/> 
- 	FROM teacher WHERE teacher_name = #{name}
+ 	FROM teacher WHERE teacher_name like '%'||#{name}||'%' 
  	ORDER BY teacher_name))
  	WHERE page= #{page}
  </select>
@@ -203,8 +203,9 @@
   <select id="selectTeacherByNameCountContents" resultType="_int" parameterType="string">
  	select count(teacher_id)
  	from teacher
- 	where teacher_name = #{name}
+ 	where teacher_name like '%'||#{name}||'%' 
  </select>
  
+
  
 </mapper>

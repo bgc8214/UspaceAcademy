@@ -1,6 +1,7 @@
 package com.uspaceacademy.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class Inquiry implements Serializable
 {
@@ -10,20 +11,17 @@ public class Inquiry implements Serializable
 	private String advancedId, advancedType;
 	private int lectureNo2;
 	
-	public Inquiry(){}	
-
+	public Inquiry(){}
+	
 	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
-			String advancedDate, int advancedHit, String advancedId) {
+			String advancedDate) {
 		super();
 		this.advancedNo = advancedNo;
 		this.advancedSecret = advancedSecret;
 		this.advancedTitle = advancedTitle;
 		this.advancedContent = advancedContent;
 		this.advancedDate = advancedDate;
-		this.advancedHit = advancedHit;
-		this.advancedId = advancedId;
 	}
-
 
 	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
 			String advancedDate, int advancedHit, String advancedId, String advancedType) {
@@ -38,21 +36,13 @@ public class Inquiry implements Serializable
 		this.advancedType = advancedType;
 	}
 
-
-	public Inquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent,
-			String advancedDate, int advancedHit, String advancedId, String advancedType, int lectureNo2) {
-		super();
-		this.advancedNo = advancedNo;
-		this.advancedSecret = advancedSecret;
-		this.advancedTitle = advancedTitle;
-		this.advancedContent = advancedContent;
-		this.advancedDate = advancedDate;
-		this.advancedHit = advancedHit;
-		this.advancedId = advancedId;
-		this.advancedType = advancedType;
-		this.lectureNo2 = lectureNo2;
+	@Override
+	public String toString() {
+		return "Inquiry [advancedNo=" + advancedNo + ", advancedSecret=" + advancedSecret + ", advancedTitle="
+				+ advancedTitle + ", advancedContent=" + advancedContent + ", advancedDate=" + advancedDate
+				+ ", advancedHit=" + advancedHit + ", advancedId=" + advancedId + ", advancedType=" + advancedType
+				+ ", lectureNo2=" + lectureNo2 + "]";
 	}
-
 
 	public int getAdvancedNo() {
 		return advancedNo;
@@ -188,13 +178,5 @@ public class Inquiry implements Serializable
 		if (lectureNo2 != other.lectureNo2)
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Inquiry [advancedNo=" + advancedNo + ", advancedSecret=" + advancedSecret + ", advancedTitle="
-				+ advancedTitle + ", advancedContent=" + advancedContent + ", advancedDate=" + advancedDate
-				+ ", advancedHit=" + advancedHit + ", advancedId=" + advancedId + ", advancedType=" + advancedType
-				+ ", lectureNo2=" + lectureNo2 + "]";
 	}		
 }

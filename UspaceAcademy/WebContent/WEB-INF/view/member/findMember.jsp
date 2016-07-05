@@ -70,13 +70,33 @@ $(document).ready(function(){
 
 	
 </script>
-<h2>아이디 찾기</h2>
-이름 : <input type="text" id="name">
-핸드폰 번호 : <input type="text" id="phoneNo">
-<button id="findIdBtn" >아이디 찾기</button> <br>
-<h2>비밀번호 찾기</h2>
-아이디 : <input type="text" id="id">
-이메일 주소 : <input type="text" id="email">
-<button id="findPasswordBtn" >비밀번호 찾기</button> <br>
+<h3 class="pageTlt">아이디 찾기</h3>
+<hr>
+<form class="form-inline" role="form">
+	<table>
+		<tr>
+			<th>이름</th>
+			<td>&nbsp;&nbsp;<input type="text" id="name">&nbsp;&nbsp;</td>
+			<th>핸드폰 번호</th>
+			<td>&nbsp;&nbsp;<input type="text" id="phoneNo"></td>
+			<td>&nbsp;&nbsp;<button id="findIdBtn" class="btn btn-primary">아이디 찾기</button> </td>	
+		</tr>	
+	</table>
+</form>
+<hr>
+<h3 class="pageTlt">비밀번호 찾기</h3>
+<hr>
+<form class="form-inline" role="form">
+	<table>
+		<tr>
+			<th>아이디</th>
+			<td>&nbsp;&nbsp;<input type="text" id="id">&nbsp;&nbsp;</td>
+			<th>이메일 주소</th>
+			<td>&nbsp;&nbsp;<input type="text" id="email"></td>
+			<td>&nbsp;&nbsp;<button id="findPasswordBtn" class="btn btn-primary">비밀번호 찾기</button></td>
+		</tr>
+	</table>
+</form>
+
 
 

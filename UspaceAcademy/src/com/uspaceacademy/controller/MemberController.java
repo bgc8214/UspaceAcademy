@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -29,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.uspaceacademy.service.AttendanceService;
+import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.service.MemberService;
 import com.uspaceacademy.validaotor.StudentValidator;
 import com.uspaceacademy.validaotor.TeacherValidator;
@@ -42,6 +46,13 @@ public class MemberController
 {
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private LectureService lectureService;
+	
+	@Autowired
+	private AttendanceService attendanceService;
+	
 
 	/*
 	 * @RequestMapping("/register_form.do") public String register_form() {
@@ -51,8 +62,10 @@ public class MemberController
 	 */
 
 	@RequestMapping("/studentRegister.do")
-	public String studentRegister(@ModelAttribute Student student, BindingResult errors)
+	public String studentRegister(@ModelAttribute Student student, String addr1, String addr2, BindingResult errors)
 	{
+		student.setStudentAddress(addr1+addr2);
+
 		// 검증 - StudentValidator
 		StudentValidator validator = new StudentValidator();
 		validator.validate(student, errors);
@@ -64,7 +77,7 @@ public class MemberController
 			// 에러 응답 페이지로 이동
 			return "/member/studentRegisterForm.do";
 		}
-
+		
 		service.insertStudent(student);
 
 		return "redirect:/member/studentRedirect.do";
@@ -78,8 +91,10 @@ public class MemberController
 	}
 
 	@RequestMapping("/teacherRegister.do")
-	public String teacherRegister(@ModelAttribute Teacher teacher, BindingResult errors)
+	public String teacherRegister(@ModelAttribute Teacher teacher, String addr1, String addr2, BindingResult errors)
 	{
+		teacher.setTeacherAddress(addr1+addr2);
+		
 		TeacherValidator validator = new TeacherValidator();
 		validator.validate(teacher, errors);
 		boolean error = errors.hasErrors();
@@ -215,12 +230,27 @@ public class MemberController
 			return "/WEB-INF/view/member/studentDuplicationCheck.jsp";
 		}
 
-		if (id.length() < 5)
+/*		if (id.length() < 5)
 		{
 			request.setAttribute("idError", "아이디는 5글자보다 길어야합니다");
 
 			return "/WEB-INF/view/member/studentDuplicationCheck.jsp";
+		}*/
+		
+		// ID 정규식 체크
+		boolean err = false;
+		String regex = "^[a-zA-Z]{1}[a-zA-Z0-9_]{5,11}$";
+
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(id);
+		if(m.matches())
+			err = true;
+		if(err == false) {
+			System.out.println("형식에 맞지 않는 아이디가 입력되었습니다.");
+			request.setAttribute("idError", "영문대소문자로 시작하고 특수문자 _포함이 가능하며 6~12글자로 입력하세요");
+			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
 		}
+		
 
 		if (service.findStudentById(id) != null || service.findTeacherById(id) != null || id.equals("admin"))
 		{
@@ -246,12 +276,27 @@ public class MemberController
 			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
 		}
 
-		if (id.length() < 5)
+/*		if (id.length() < 5)
 		{
 			request.setAttribute("idError", "아이디는 5글자보다 길어야합니다");
 
 			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
+		}*/
+		
+		// ID 정규식 체크
+		boolean err = false;
+		String regex = "^[a-zA-Z]{1}[a-zA-Z0-9_]{5,11}$";
+
+		Pattern p = Pattern.compile(regex);
+		Matcher m = p.matcher(id);
+		if(m.matches())
+			err = true;
+		if(err == false) {
+			System.out.println("형식에 맞지 않는 아이디가 입력되었습니다.");
+			request.setAttribute("idError", "영문대소문자로 시작하고 특수문자 _포함이 가능하며 6~12글자로 입력하세요");
+			return "/WEB-INF/view/member/teacherDuplicationCheck.jsp";
 		}
+		
 
 		if (service.findStudentById(id) != null || service.findTeacherById(id) != null || id.equals("admin"))
 		{
@@ -402,10 +447,16 @@ public class MemberController
 		return new ModelAndView("member/teacher_updateForm.tiles");
 	}
 	
-	// 강사 정보 수정
+	// 강사 회원정보 수정
 	@RequestMapping("/updateTeacher.do")
-	public String updateAfterDetail(@ModelAttribute("updateForm") Teacher teacher, HttpSession session, BindingResult errors) {
-
+	public String updateAfterDetail(@ModelAttribute("updateForm") Teacher teacher, String baseAddress, String addr1, String addr2, HttpSession session, BindingResult errors) {
+		
+		if(addr1!=null && addr2!=null)
+			teacher.setTeacherAddress(addr1+addr2);
+		else
+			teacher.setTeacherAddress(baseAddress);
+		
+		
 		TeacherValidator validator = new TeacherValidator();
 		validator.validate(teacher, errors);
 		boolean error = errors.hasErrors();
@@ -431,7 +482,13 @@ public class MemberController
 	
 	// 학생의 회원정보 수정
 	@RequestMapping("/updateStudent.do")
-	public String updateStudent(@ModelAttribute("updateForm") Student student, HttpSession session, BindingResult errors) {
+	public String updateStudent(@ModelAttribute("updateForm") Student student, String baseAddress, String addr1, String addr2, HttpSession session, BindingResult errors) {
+		
+		if(addr1!=null && addr2!=null)
+			student.setStudentAddress(addr1+addr2);
+		else
+			student.setStudentAddress(baseAddress);
+		
 		StudentValidator validator = new StudentValidator();
 		validator.validate(student, errors);
 		boolean error = errors.hasErrors();
@@ -464,6 +521,22 @@ public class MemberController
 		service.removeTeacher(teacher.getTeacherId());
 		session.invalidate();
 		return "main.tiles";
+	}
+	
+	//관리자가 학생 강제 탈퇴
+	@RequestMapping("/deleteStudentByAdmin.do")
+	public String deleteStudentByAdmin(String studentId, HttpSession session) {
+
+		service.deleteStudent(studentId);
+		return "/member/studentAll.do";
+	}
+	
+	//관리자가 강사 강제 탈퇴
+	@RequestMapping("/deleteTeacherByAdmin.do")
+	public String deleteTeacherByAdmin(String teacherId,HttpSession session) {
+		
+		service.removeTeacher(teacherId);
+		return "/member/teacherAll.do";
 	}
 	
 	// 모든 학생 조회
@@ -500,4 +573,25 @@ public class MemberController
 		return new ModelAndView("member/search_teacherName.tiles", map);
 	}
 	
+	//강사가 마이페이지에서 내 강좌 보여주기 
+	@RequestMapping("/selectAllByTeacherId.do")
+	public ModelAndView selectAllByTeacherId(HttpSession session) {
+		Teacher teacher = (Teacher)session.getAttribute("login_info");
+		teacher.getTeacherId();
+		
+		String teacherId = teacher.getTeacherId();
+		
+		List selectAllByTeacherId = lectureService.selectAllByTeacherId(teacherId);
+
+		return new ModelAndView("member/teacher_lectureInfo.tiles", "lectureList", selectAllByTeacherId);
+	}
+	
+	//관리자가 강사관리에서 강사의 과목 정보 보기
+	@RequestMapping("/selectAllByTeacherId2.do")
+	public ModelAndView selectAllByTeacherId2(String teacherId) {
+		
+		List selectAllByTeacherId = lectureService.selectAllByTeacherId(teacherId);
+
+		return new ModelAndView("member/teacher_lectureInfo.tiles", "lectureList", selectAllByTeacherId);
+	}
 }
