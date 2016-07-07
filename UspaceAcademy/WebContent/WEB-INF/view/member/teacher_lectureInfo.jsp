@@ -8,6 +8,7 @@
 	<th>강의번호</th><th>강의과목</th><th>강의명</th><th>강사</th><th>강의기간</th><th>수강요일</th><th>강의시간</th>
 	<th>수강인원</th>
 	<th>출석</th>
+	<th>과제게시판</th>
 </tr>
 </thead>
 <tbody>
@@ -19,6 +20,7 @@
 				<td align="center"><span class="current">${lectureList.lectureCurrentStudent }</span> / <span class="total">${lectureList.lectureTotalStudent }</span></td>
 				<td align="center"><a href="/UspaceAcademy/attendance/attendanceSearch.do?lectureNo=${lectureList.lectureNo}&lectureStartDate=${lectureList.lectureStartDate}
 				&lectureEndDate=${lectureList.lectureEndDate}"><button>출석보기</button></a></td>
+				<td align="center"><a href="/UspaceAcademy/assignment/assignment_list.do?lectureNo=${lectureList.lectureNo}"><button>과제게시판</button></a></td>
 			</tr>
 	</c:forEach>
 </tbody>

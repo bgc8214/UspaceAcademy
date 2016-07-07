@@ -254,7 +254,7 @@
 	</select>
 
 
-	<!--  ................영주: 과목lectureSubject으로 강의명lectureTitle 조회해옴................-->
+	<!-- 영주   :   과목lectureSubject으로 강의명lectureTitle 조회해옴 -->
 	<select id="selectLectureTitleByLectureSubject" parameterType="string" resultMap="lecture-basic">
 	SELECT <include refid="column-basic"/>
 	FROM 	lecture

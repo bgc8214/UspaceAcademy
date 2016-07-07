@@ -7,7 +7,7 @@
 
 <h3>내정보 | 과제게시판 | 답글등록</h3>
 <hr/>
-<form method="POST"      <%-- file --%>enctype="multipart/form-data"       action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
+<form method="POST"      <%-- file --%>enctype="multipart/form-data"       action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"> <!--  폼으로 묶기* -->
 
 
 <table class="table_list" summary="영주" cellpacing="0">

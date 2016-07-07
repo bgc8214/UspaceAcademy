@@ -29,16 +29,11 @@ public class AssignmentDao {
 
 	//------join----------------------------------------------------
 	
-	
-	
-	
 /*	//조인
-	public List selectAssignmentLectureJoin(int lectureNo){
-		System.out.println("--------------------------selectAssignmentLectureJoin:"+lectureNo);
-		return session.selectList(namespace+"selectAssignmentLectureJoin",lectureNo);
-	}
-	*/
-
+	public List selectAssignmetLecture(int lectureNo){
+		System.out.println("디에이오!!!!!!!!!! :"+lectureNo );
+		return session.selectList(namespace+"selectAssignmetLecture", lectureNo);
+	}*/
 	
 	//----------------------------------------------------------	
 	
@@ -141,16 +136,19 @@ public class AssignmentDao {
 		
 		
 		//8.페이징 selectPaging
-		public List selectPaging(int page){
+		public List selectPaging(int page, int lectureNo){
 			Map map = new HashMap();
 			map.put("page", page);
+			map.put("lectureNo", lectureNo);//
 			map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+			System.out.println(map);
+			System.out.println(session.selectList(namespace+"selectPaging", map));
 			return session.selectList(namespace+"selectPaging", map);
 		}
 		
 		//9.페이징 selectCount
-		public int selectCount(){
-			return session.selectOne(namespace+"selectCount");
+		public int selectCount(int lectureNo){
+			return session.selectOne(namespace+"selectCount",lectureNo);
 		}
 		
 		
@@ -160,16 +158,6 @@ public class AssignmentDao {
 
 	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -29,29 +29,15 @@
 	<result column="lecture_no" property="lectureNo"/>
 	</resultMap>
 
-<!-- 조인........................................................................................................................................-->
-<!-- 조인 컬렉션 -->
-	<!-- <resultMap type="Assignment" id="assignment-lecture-resultmap" 	extends="assignment-basic">
-		<association property="lecture" javaType="lecture" resultMap="lecture.lecture-basic"/>
-	</resultMap> -->
-<!-- 	<resultMap type="Assignment" id="assignment-lecture-resultmap" 	extends="assignment-basic">
-		<association property="lecture" javaType="lecture" resultMap="lecture.lecture-basic"/>
-	</resultMap> -->
+<!--  조인.................................................................................................................................................................................................................... -->
 
-<!-- join x 
-	<select id="selectAssignmentLectureJoin" resultMap="assignment-lecture-resultmap"  parameterType="_int">
-	SELECT   a.assignment_no, a.assignment_writer_id, a.assignment_secret, a.assignment_title, a.assignment_content,
-			    a.assignment_date, a.assignment_hit, a.assignment_password, a.assignment_re_family,
-			    a.assignment_re_step, a.assignment_re_level, a.assignment_writer, a.assignment_deadline,
-				a.lecture_no,
-				l.lecture_no, l.lecture_title, l.lecture_description, l.lecture_start_time, l.lecture_end_time, l.lecture_day, 
-				l.lecture_start_date, l.lecture_end_date, l.lecture_price, l.lecture_total_student, l.lecture_current_student, l.lecture_subject, l.teacher_id2   
-	
-	FROM  assignment_board a, lecture l
-	WHERE  a.lecture_no=l.lecture_no 
-	</select> -->
 
-<!-- 	<resultMap type="Lecture" id="lecture-resultMap">
+<!--조인 컬렉션
+ 	<resultMap type="Assignment" id="assignment-lecture-resultmap" 	extends="assignment-basic">
+		<association property="lecture" javaType="lecture" resultMap="lecture.lecture-basic"/>
+	</resultMap> 
+lecture
+ 	<resultMap type="com.uspaceacademy.vo.Lecture" id="lecture-resultMap">
  		<id column="lecture_no" property="lectureNo"/>
 		<result column="lecture_title" property="lectureTitle"/>
 		<result column="lecture_description" property="lectureDescription"/>
@@ -66,26 +52,29 @@
 		<result column="lecture_subject" property="lectureSubject"/>
 		<result column="teacher_id2" property="teacherId2"/>
  	</resultMap>
- -->
 
-
-
-
-
-
-
-
-
-
+ select S!
+<select id="selectAssignmetLecture" parameterType="map" resultMap="assignment-lecture-resultmap">
+SELECT  	    a.assignment_no, a.assignment_writer_id, a.assignment_secret, a.assignment_title, a.assignment_content,
+			    a.assignment_date, a.assignment_hit, a.assignment_password, a.assignment_re_family,
+			    a.assignment_re_step, a.assignment_re_level, a.assignment_writer, a.assignment_deadline,
+				a.lecture_no,
+				l.lecture_no, l.lecture_title, l.lecture_description, l.lecture_start_time, l.lecture_end_time, l.lecture_day, 
+				l.lecture_start_date, l.lecture_end_date, l.lecture_price, l.lecture_total_student, l.lecture_current_student, l.lecture_subject, l.teacher_id2   
+	
+	FROM  assignment_board a, lecture l
+	WHERE   l.lecture_no=#{value}
+	</select> -->
+	
+	
 <!--  답글.................................................................................................................................................................................................................... -->
 
-
-	<!--  1.ㄷ조회   ,기존LIST대신이거             -->
+	<!--  1.ㄷ조회   ,기존LIST대신이거 
 	<select id="replyGetList"  resultType="Assignment" resultMap="assignment-basic">
 	SELECT	*
 	FROM    	assignment_board   
-	ORDER BY 	assignment_re_family DESC, assignment_re_step ASC <!--  콤마 안찍으면 오류남 -->
-	</select>
+	ORDER BY 	assignment_re_family DESC, assignment_re_step ASC  콤마 안찍으면 오류남
+	</select> -->
 	
 	
 	
@@ -112,18 +101,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
 	<!--  *************************************************************************  -->
-
-
 
 	<!--  1.삽입  -->
 	<insert id="insert" parameterType="Assignment">
@@ -157,18 +135,6 @@
 	</select> 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
 	<!-- 4.수정  -->
 <update id="update" parameterType="Assignment">
 	UPDATE  assignment_board
@@ -184,9 +150,8 @@
 				assignment_re_level=#{replyLevel},
 				assignment_writer=#{assignmentWriter},
 				assignment_deadline=#{assignmentDeadline}, 
-				assignment_file=#{assignmentFile},
-				lecture_no=#{lectureNo}
-	WHERE assignment_no=#{assignmentNo}
+				assignment_file=#{assignmentFile}
+	WHERE assignment_no=#{assignmentNo}   and   lecture_no=#{lectureNo}
 	</update>
 	<!-- <update id="update" parameterType="Assignment">
 	UPDATE  assignment_board
@@ -209,7 +174,8 @@
 	
 	<!-- 5.삭제 -->
 	<delete id="deleteByNo" parameterType="_int">
-	DELETE FROM assignment_board  WHERE assignment_no=#{assignmentNo}
+	DELETE FROM assignment_board  
+	WHERE assignment_no=#{assignmentNo}  and  lecture_no=#{lectureNo}
 	</delete>
 
 
@@ -235,7 +201,7 @@
 	WHERE	assignment_no=#{assignmentNo} -->
 	SELECT    <include refid="assignment-columns"></include> 
 	 FROM    assignment_board
-	WHERE	assignment_no=#{assignmentNo}
+	WHERE	assignment_no=#{assignmentNo}   and  lecture_no=#{lectureNo}
 	</select>
 
 
@@ -244,7 +210,7 @@
 	<select id="updateHit" parameterType="Assignment">
 	UPDATE assignment_board
 	SET		assignment_hit=#{assignmentHit}
-	WHERE	assignment_no=#{assignmentNo}
+	WHERE	assignment_no=#{assignmentNo}  and  lecture_no=#{lectureNo}
 	</select>
 
 
@@ -255,19 +221,20 @@
 
 	<!-- 아래 페이징처리............................................................................................................................ -->
 
-	<!--    8.   select 페이징 처리!!   (과제게시판) -->
+	<!--    8.   select 페이징 처리!!   (과제게시판)ok -->
 	<select id="selectPaging" parameterType="map" resultMap="assignment-basic">
 	SELECT <include refid="assignment-columns"/>
 	FROM(SELECT CEIL (rownum/#{itemsPerPage}) page, <include refid="assignment-columns"/>
 	FROM(SELECT <include refid="assignment-columns"/>
-			FROM assignment_board      order by   assignment_no   desc
+			FROM assignment_board 
+			WHERE lecture_no = #{lectureNo}    ORDER BY   assignment_no   desc, assignment_re_family DESC, assignment_re_step ASC 
 		)
 	)
 	WHERE page=#{page}
 	</select>
 	
 	
-	<!--   9.페이징처리에 필요함 ((과제게시판)이건 -  전체 리스트 (갯수) 세어줌 )   -->
+	<!--   9.페이징처리에 필요함 ((과제게시판)이건 -  전체 리스트 (갯수) 세어줌 ) ok  -->
 	<select id="selectCount" resultType="_int">
 	SELECT  count(assignment_no)
 	FROM    assignment_board
@@ -280,8 +247,6 @@
 
 
 </mapper>
-
-
 
 
 

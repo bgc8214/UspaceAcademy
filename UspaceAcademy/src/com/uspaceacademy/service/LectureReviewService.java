@@ -52,8 +52,6 @@ public class LectureReviewService{
 	}
 	
 		
-	
-	
 	//코드 영주1
 	public List selectCodeName(String code){
 		return dao.selectCodeName(code);
@@ -81,11 +79,8 @@ public class LectureReviewService{
 	//--------------------------------------------------------------------------------------------------------------------	
 	
 	
-	//10.11.   강의과목으로 검색 lectureSubject
-	//12.13.   리뷰제목으로 검색 reviewTitle
-	
-	
-	
+	//10.11.   강의과목으로 검색 lectureSubject->
+	//12.13.   리뷰제목으로 검색 reviewTitle->
 	
 	//10.11.   강의과목으로 검색 (수강후기 리스트에서)lectureSubject
 	public Map<String,Object> searchLectureSubject(String reviewSubject, int page){
@@ -110,39 +105,6 @@ public class LectureReviewService{
 		System.out.println("영주 서비스 리뷰제목으로 검색page : "+page);
 		return map;
 	}
-	
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
+}	
 //--------------------------------------------------------------------------------------------------------------------		
 
-/*
-	
-	//수강후기 검색 제목+내용==============
-	public List selectTitleContent(String lectureTitle, String reviewContent){ //매개변수 값 넣기*
-		return dao.selectTitleContent(lectureTitle, reviewContent);
-	}
-	//수강후기 검색 제목==============
-	public List selectTitle(String lectureTitle){
-		return dao.selectTitle(lectureTitle);
-	}
-	//수강후기 검색 내용==============
-	public List selectContent(String reviewContent){
-		return dao.selectContent(reviewContent);
-	}
-	
-	*/
-	
-	
-	
-	
-}

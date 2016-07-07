@@ -111,7 +111,7 @@ td{
 <input type="hidden" name="replyLevel"  value="${assignment.replyLevel}">
 <input type="hidden" name="replyFamily"  value="${assignment.replyFamily}">
 <input type="hidden" name="assignmentNo" value="${assignment.assignmentNo}">
-
+<input type="hidden" name="lectureNo" value="${assignemnt.lectureNo}">
 
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
@@ -127,7 +127,8 @@ td{
 <c:if test="${sessionScope.memberType=='student'}">
 <%-- <c:if test="${sessionScope.memberType=='student'&&assignment.assignmentWriter==requestScope.memberType.teacher}"> --%>
 <a href="/UspaceAcademy/assignment/assignment_replyRegister.do?assignmentNo=${assignment.assignmentNo}"><button>답글달기</button></a>
-	
+<a href="/UspaceAcademy/assignment/assignment_modifyFormStudent.do?assignmentNo=${assignment.assignmentNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
 	</c:if>																																											
 </span>
 
@@ -136,7 +137,6 @@ td{
 <!-- --------------------------------------------------------------------------------------------------------- -->	
 
 
-<!-- --------------------------------------------------------------------------------------------------------- -->
 <%-- 
 사진 파일명 ${requestScope.imageName }
 사진 크기 ${requsetScope.imageSize }byte
@@ -172,14 +172,4 @@ td{
 </c:forEach>
  --%>
 <!-- --------------------------------------------------------------------------------------------------------- -->
-
-
-
-
-
-
-
-
-
-
 

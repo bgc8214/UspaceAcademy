@@ -60,7 +60,7 @@
 <!--  ●오류났던거적기 : assingmentWriterId 없다고 오류남 - 해결 :  name="assignmentWriterId"네임으로 받고 , 밸류(실제받을값으로 바꿔받으면)받으면됨               -->
 <input type="hidden" name="assignmentWriterId" value="${sessionScope.login_info.teacherId}">
 <input type="hidden" name="assignmentWriter" value="${sessionScope.login_info.teacherName}">
-
+<input type="hidden"  name="lectureNo" value="${requestScope.lectureNo}">
 
 
 
