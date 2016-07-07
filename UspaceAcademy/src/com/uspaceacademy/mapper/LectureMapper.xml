@@ -253,4 +253,17 @@
 		order by lecture_no desc
 	</select>
 
+
+	<!--  ................영주: 과목lectureSubject으로 강의명lectureTitle 조회해옴................-->
+	<select id="selectLectureTitleByLectureSubject" parameterType="string" resultMap="lecture-basic">
+	SELECT <include refid="column-basic"/>
+	FROM 	lecture
+	WHERE  lecture_subject=#{value}
+	</select>
+
+
+
+
+
+
 </mapper>

@@ -24,16 +24,17 @@
 <td><input type="text" name="assignmentWriter" value="${sessionScope.login_info.teacherName}"  readonly="readonly"></td>
 </tr>
 
-<%-- <tr><!--  0  -->
+<tr><!--  0  -->
 <th scope="col">강의명</th>
 <td>
-<select id="lectureTitle" name="lectureTitle"> 
+!
+<%-- <select id="lectureTitle" name="lectureTitle"> 
 <c:forEach items="${requestScope.getLectureList}"  var="getLectureList"><!--  컨트롤러에서 보낸값 -->
 <option>${getLectureList.lectureTitle}</option>
 </c:forEach>
-</select>
+</select> --%>
 </td>
-</tr> --%>
+</tr>
 
 <tr><!--   3   -->
 <th scope="col">마감일</th>

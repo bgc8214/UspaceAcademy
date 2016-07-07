@@ -30,20 +30,8 @@ public class Assignment implements Serializable{
 	private int lectureNo; //F키 , 강의번호	2.강의명	5.강사명
 	
 	
-	
-	/*
-	 * num,
-	 * assignment.getAssignmentWriterId(
-	 * ),assignment.getAssignmentTitle()
-	 * ,assignment.getAssignmentContent(
-	 * ),sdfDate
-	 * ,assignment.getAssignmentHit()
-	 * ,assignment.getAssignmentWriter(),
-	 * assignment.getAssignmentDeadline()
-	 * ,fileName,
-1);
-	 * */
-	 
+	private Lecture lecture;/////////////////////////////////////////////////////
+
 	
 
 	

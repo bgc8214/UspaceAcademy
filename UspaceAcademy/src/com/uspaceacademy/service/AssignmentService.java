@@ -21,6 +21,16 @@ public class AssignmentService {
 		
 		
 		
+		//------join--------------------------------------------------------------------------------------------------------------
+		
+		
+		
+/*		//조인
+		public List selectAssignmentLectureJoin(int lectureNo){
+			return dao.selectAssignmentLectureJoin(lectureNo);
+		}*/
+		
+		
 		//--------------------------------------------------------------------------------------------------------------------
 		
 		

@@ -156,7 +156,13 @@ public class LectureService {
 		Map map = new HashMap<>();
 		map.put("lectureList", lectureDao.selectAdminLectureDao());
 		return map;
-
 	}
+	
+	//................영주: 과목lectureSubject으로 강의명lectureTitle 조회해옴................
+		public List selectLectureTitleByLectureSubject(String lectureSubject){
+			System.out.println("렉쳐서비스 영주lectureSubject:"+lectureSubject );
+			return lectureDao.selectLectureTitleByLectureSubject(lectureSubject);
+		}
+	
 	
 }

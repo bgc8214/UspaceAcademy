@@ -172,6 +172,7 @@ public class MemberController
 			{
 				System.out.println("강사로 로그인 성공");
 				session.setAttribute("login_info", teacher);
+				System.out.println(teacher);
 				session.setAttribute("memberType", "teacher");
 			} else
 			{

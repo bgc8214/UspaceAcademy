@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.LectureReviewService;
@@ -45,7 +46,7 @@ public class LectureReviewController{
 
 		Map map = service.selectPagingCount(page);
 		map.put("page", page);
-
+		
 		System.out.println("수강후기 리스트ok");
 		return new ModelAndView("lectureReview/lectureReview_list.tiles",  map);   //오류났던거적기 : map으로 넘겨줄땐 앞에 "  "  <- string으로 넘겨주는거 안적어도됨,  map이 page라는 이름으로 넘겨줌
 	}	
@@ -87,31 +88,26 @@ public class LectureReviewController{
 		
 		HashMap map = new HashMap<>();
 		List codeList = service.selectCodeName(codeType);
-		List lectureTitle = lectureService.getLectureList(); //lecture 테이블에서 가져옴 - 강의명
+		List lectureTitle = lectureService.selectLectureTitleByLectureSubject("국어"); //lecture 테이블에서 가져옴
 		
 		map.put("lectureTitle", lectureTitle); // lecture테이블에서 가져온 강의명 뿌려줌 lectureTitle라는 이름으로
 		map.put("codeType", codeList); 
-		
-		
 		System.out.println("수강후기 작성폼ok");	
 		return new ModelAndView("lectureReview/lectureReview_register.tiles",map);//등록폼으로 온다*
 	}
-/*	//수강후기 작성 폼 (lectureReview_list.jsp -> lectureReview_register.jsp)
-	@RequestMapping("/lecture_review_register")//lectureReview_detail.jsp에 수강후기등록!버튼에 링크*
-	public ModelAndView registerForm(String codeType){
-		
-		HashMap map = new HashMap<>();
-		List codeList = service.selectCodeName(codeType);
-
-		map.put("codeType", codeList);
-		
-		System.out.println("수강후기 작성폼ok");	
-		return new ModelAndView("lectureReview/lectureReview_register.tiles",map);//등록폼으로 온다*
+   //폼에서 과목명에 따른 강좌명 조회 //개설강좌에서 -> 과목명(lectureSubject)으로 강의명(lectureTitle)가져오기!
+	@RequestMapping("/selectLectureTitleByLectureSubject.do")
+	@ResponseBody
+	public List getLectureList(String lectureSubject){
+		List lectureTitle = lectureService.selectLectureTitleByLectureSubject(lectureSubject);
+		return lectureTitle;
 	}
-	*/
-
+	
 	
 
+	
+	
+	
 	
 	
 	
@@ -219,11 +215,10 @@ public class LectureReviewController{
 	@RequestMapping("/lecture_review_modifyForm")//lectureReview_detail.jsp 에서  
 	public ModelAndView modifyForm(int reviewNo, String codeType){
 
-		LectureReview lectureReview = service.selectNo(reviewNo); //글번호     수정폼가기전에 reviewNo로 vo가져온다..
+		LectureReview lectureReview = service.selectNo(reviewNo); //글번호     수정폼가기전에 reviewNo로 vo가져온다
 		List codeList = service.selectCodeName(codeType);//코드타입
-		
-		List lectureTitle = lectureService.getLectureList(); //lecture테이블에서 강의명가져옴.
-		
+		List lectureTitle = lectureService.selectLectureTitleByLectureSubject("국어");//lecture 테이블에서 가져옴.
+				
 		HashMap map = new HashMap<>();
 		map.put("lectureTitle", lectureTitle); //lecture테이블에서 가져온 강의명(lectureTitle)뿌려줄것.
 		map.put("lectureListReview", lectureReview);

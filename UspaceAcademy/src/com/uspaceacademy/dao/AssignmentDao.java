@@ -27,10 +27,20 @@ public class AssignmentDao {
 		this.session = session;
 	}
 
-	//----------------------------------------------------------
+	//------join----------------------------------------------------
 	
 	
-			
+	
+	
+/*	//조인
+	public List selectAssignmentLectureJoin(int lectureNo){
+		System.out.println("--------------------------selectAssignmentLectureJoin:"+lectureNo);
+		return session.selectList(namespace+"selectAssignmentLectureJoin",lectureNo);
+	}
+	*/
+
+	
+	//----------------------------------------------------------	
 	
 			//1.ㄷ조회  select id="replyGetList"
 			public List<Assignment> replyGetList(){

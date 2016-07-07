@@ -195,5 +195,13 @@ public class LectureDao {
 	public List selectAdminLectureDao() {
 		return session.selectList("lecture.selectAdminLectureList");
 	}
+	
+	//................영주: 과목lectureSubject으로 강의명lectureTitle 조회해옴................
+	public List selectLectureTitleByLectureSubject(String lectureSubject){
+		System.out.println("렉쳐 다오 영주:" + lectureSubject);
+		return session.selectList("lecture.selectLectureTitleByLectureSubject",lectureSubject);
+	}
+	
+	
 }
 

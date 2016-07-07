@@ -6,13 +6,13 @@
 <hr/>
 <style type="text/css">
 table{
-table-layout: fixed;
+/* table-layout: fixed;
 border:1px solid #dcdcdc;
 color:#353535;
-line-height:180%;
+line-height:180%; */
 }
 .notice_content{
-	font-size:18px;
+/* 	font-size:18px;
     position: relative;
     display: inline-block;
     padding: 40px;
@@ -22,21 +22,14 @@ line-height:180%;
     float: left;
     text-align: left;
     min-height: 580px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; */
 
 }
 td{
-    padding: 15px 0;
+/*     padding: 15px 0;
     border-top: 1px solid #eee;
     text-align: center;
-    padding: 15px 0;
-}
-.notice_content h5.notice_line {
-    font-size: 35px;
-    font-family: 'Nanum Gothic Bold';
-    color: #474747;
-    position: relative;
-    padding: 0 195px 15px 0;
+    padding: 15px 0; */
 }
 </style>
 
@@ -50,9 +43,7 @@ td{
 
 
 
-<div class="notice_content">
-<h5 class="notic_line">${assignment.assignmentTitle}</h5>
-<p>
+
 
 <table  board="1" class="table_list" summary="영주" cellpacing="0">
 	<caption></caption>
@@ -77,15 +68,16 @@ td{
 
 
 
-<!-- <tr>
+ <tr>
 <th scope="col">강의명</th>
+<td>!</td>
 </tr>
- -->
 
-<%-- <tr>
+
+<tr>
 <th scope="col">제목</th>	
 <td>${assignment.assignmentTitle}</td>
-</tr> --%>
+</tr> 
 
 <tr>
 <th scope="col">내용</th>	

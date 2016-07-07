@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.uspaceacademy.service.AssignmentService;
 import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.vo.Assignment;
+import com.uspaceacademy.vo.Lecture;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
 //mybatis.config.xml에 mapper꼭 등록하기
@@ -33,6 +34,8 @@ import com.uspaceacademy.vo.Teacher;
 @Controller
 @RequestMapping("/assignment")
 public class AssignmentController {
+
+	private static final String lecture = null;
 
 	@Autowired
 	private AssignmentService service;
@@ -49,9 +52,14 @@ public class AssignmentController {
 	//●오류났던거 적기 : 답글게시판으로 변경하는 과정에서 - mapper에 replyGetList -  where절에 ,콤마안찍어줬고, resultMap안적어줬음 그리고 아래 map.put("assignment")로했는데 jsp에서 이름다르게 뿌려줘서 그랬음.
 	//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때)
 		@RequestMapping("/assignment_list.do")
-		public ModelAndView list(@RequestParam(defaultValue="1") int page){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
-			
+		public ModelAndView list(@RequestParam(defaultValue="1") int page/*,String lectureNo*/){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
+																									
 			Map map = new HashMap();
+			
+/*			int num = Integer.parseInt(lectureNo);//
+			Lecture lecture = (Lecture) service.selectAssignmentLectureJoin(num);// 
+			System.out.println("11111111111111111111"+lecture);//
+*/		
 			
 			List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
 			map.put("getLectureList",getLectureList);//getLectureList로 넘김

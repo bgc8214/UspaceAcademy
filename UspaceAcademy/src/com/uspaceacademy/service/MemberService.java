@@ -76,7 +76,7 @@ public class MemberService
 		return dao.selectAllTeacher();
 	}
 
-	public List getTeacherBySubject(String teacherSubject) {
+	public List getTeacherBySubject(String teacherSubject) {//
 		return dao.selectTeacherBySubject(teacherSubject);
 	}
 	

@@ -29,12 +29,16 @@
 	<result column="lecture_no" property="lectureNo"/>
 	</resultMap>
 
-
-<!-- 조인(book보고하기)
-	<resultMap type="Assignment" id="assignment-lecture-resultmap" 	extends="assignment-basic">
+<!-- 조인........................................................................................................................................-->
+<!-- 조인 컬렉션 -->
+	<!-- <resultMap type="Assignment" id="assignment-lecture-resultmap" 	extends="assignment-basic">
 		<association property="lecture" javaType="lecture" resultMap="lecture.lecture-basic"/>
-	</resultMap>
+	</resultMap> -->
+<!-- 	<resultMap type="Assignment" id="assignment-lecture-resultmap" 	extends="assignment-basic">
+		<association property="lecture" javaType="lecture" resultMap="lecture.lecture-basic"/>
+	</resultMap> -->
 
+<!-- join x 
 	<select id="selectAssignmentLectureJoin" resultMap="assignment-lecture-resultmap"  parameterType="_int">
 	SELECT   a.assignment_no, a.assignment_writer_id, a.assignment_secret, a.assignment_title, a.assignment_content,
 			    a.assignment_date, a.assignment_hit, a.assignment_password, a.assignment_re_family,
@@ -44,9 +48,26 @@
 				l.lecture_start_date, l.lecture_end_date, l.lecture_price, l.lecture_total_student, l.lecture_current_student, l.lecture_subject, l.teacher_id2   
 	
 	FROM  assignment_board a, lecture l
-	WHERE  a.lecture_no=#{value} 
-
+	WHERE  a.lecture_no=l.lecture_no 
 	</select> -->
+
+<!-- 	<resultMap type="Lecture" id="lecture-resultMap">
+ 		<id column="lecture_no" property="lectureNo"/>
+		<result column="lecture_title" property="lectureTitle"/>
+		<result column="lecture_description" property="lectureDescription"/>
+		<result column="lecture_start_time" property="lectureStartTime"/>
+		<result column="lecture_end_time" property="lectureEndTime"/>
+		<result column="lecture_day" property="lectureDay"/>
+		<result column="lecture_start_date" property="lectureStartDate"/>
+		<result column="lecture_end_date" property="lectureEndDate"/>
+		<result column="lecture_price" property="lecturePrice"/>
+		<result column="lecture_total_student" property="lectureTotalStudent"/>
+		<result column="lecture_current_student" property="lectureCurrentStudent"/>
+		<result column="lecture_subject" property="lectureSubject"/>
+		<result column="teacher_id2" property="teacherId2"/>
+ 	</resultMap>
+ -->
+
 
 
 

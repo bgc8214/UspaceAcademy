@@ -70,7 +70,7 @@ text-decoration: underline;
 		
 		
 			<th scope="col">번호</th>
-			<!-- <th scope="col">강의명</th> 0  -->
+			<th scope="col">강의명</th>
 			<th scope="col">제목</th>
 			<th scope="col">아이디</th>
 			<th scope="col">이름</th>
@@ -86,8 +86,8 @@ text-decoration: underline;
 				<td class="num">${assignment.assignmentNo}</td>
 				
 				
-<!-- 				 0.강의명
-				<td>!</td> -->
+				<!-- 0.강의명  --> 
+				<td>!</td>
 				
 				
 				
