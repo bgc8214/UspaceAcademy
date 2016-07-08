@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.uspaceacademy.service.AssignmentService;
 import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.vo.Assignment;
+import com.uspaceacademy.vo.FileBoard;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
 //mybatis.config.xml에 mapper꼭 등록하기
@@ -34,53 +35,58 @@ import com.uspaceacademy.vo.Teacher;
 @RequestMapping("/assignment")
 public class AssignmentController {
 
+
 	@Autowired
 	private AssignmentService service;
-	
 	@Autowired
 	private LectureService lectureService;
-	
-	
 	
 	
 	
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	
 	//●오류났던거 적기 : 답글게시판으로 변경하는 과정에서 - mapper에 replyGetList -  where절에 ,콤마안찍어줬고, resultMap안적어줬음 그리고 아래 map.put("assignment")로했는데 jsp에서 이름다르게 뿌려줘서 그랬음.
-	//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때)
+	//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때)            ok
 		@RequestMapping("/assignment_list.do")
-		public ModelAndView list(@RequestParam(defaultValue="1") int page){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
+		public ModelAndView list(@RequestParam(defaultValue="1") int page, int lectureNo){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
 			
-			Map map = new HashMap();
+			System.out.println("assignment_list강의번호: " + lectureNo);/////////////////////////
 			
-			List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
-			map.put("getLectureList",getLectureList);//getLectureList로 넘김
-			
-			map.put("page", service.selectPagingCount(page));
-			map.put("assignment", service.replyGetList());
+			Map map = service.selectPagingCount(page,lectureNo);
+			map.put("page", page);//
+			map.put("lectureNo", lectureNo);
 			
 			System.out.println("과제게시판ok");
 			return new ModelAndView("assignment/assignment_list.tiles", map) ;       
 		}
-
 		
 
 		
 		
 
 
+		
 
 		// 과제게시판 - 상세조회(assignment_list.jsp -> assignment_detail.jsp)    
 		@RequestMapping("/assignment_detail")
-		public ModelAndView detail(String assignmentNo){
+		public ModelAndView detail(String assignmentNo, int lectureNo){ //●오류났던거적기 : 여기서 lectureNo 안넘겨줬었음.
 			int num = Integer.parseInt(assignmentNo);
-			Assignment assignment = service.selectNo(num);// no값으로 게시물 찾아옴
-
+			Assignment assignment = service.selectNo(num,lectureNo);// no값으로 게시물 찾아옴
+			
+			System.out.println("assignment_detail 강의번호: " + lectureNo);/////////////////////////
+			System.out.println("assignment_detail 글번호: " + assignmentNo);/////////////////////////
+			System.out.println("assignment_detail num: " + num);/////////////////////////
 			service.selectHit(assignment); // 조회수 증가시키기
-
+			System.out.println("service.selectHit(assignment) : " + service.selectHit(assignment));/////////////////////////
+			assignment.setLectureNo(lectureNo);
+			
+			System.out.println("assignment_detail assignment: " + assignment);/////////////////////////
+			
 			return new ModelAndView("assignment/assignment_detail.tiles", "assignment", assignment);
 		}
 		//●오류났던거 적기 :  생성자?(detail(){가로안)에 이거 넣어 줘서 HttpSession session, HttpRequest request
+
+
 		
 
 
@@ -95,14 +101,10 @@ public class AssignmentController {
 
 		//과제글 작성 폼 (assignment_list.jsp ->assignment_register.jsp)                     //ok
 		@RequestMapping("/assignment_register")
-		public ModelAndView registerForm(){
+		public ModelAndView registerForm(int lectureNo){
 			
-			/*Map map = new HashMap();
-			List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
-			map.put("getLectureList",getLectureList);//getLectureList로 넘김
-*/			
 			System.out.println("과제게시판 작성폼ok");	
-			return new ModelAndView("assignment/assignment_register.tiles");//등록폼으로 온다*
+			return new ModelAndView("assignment/assignment_register.tiles", "lectureNo",lectureNo);//등록폼으로 온다*
 		}
 		
 
@@ -116,13 +118,11 @@ public class AssignmentController {
 		
 		
 		
-		
-		//과제등록할거 작성하고 등록(과제작성완료 눌렀을때) 
+		//과제등록할거 작성하고 등록(과제작성완료 눌렀을때)      
 		@RequestMapping("/assignment_registerSuccess")//assignment_register.jsp 에서  										//파일                                              ┌파일보드 vo               ModelMap             HttpServlerRequest
-		public ModelAndView register(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors,    @ModelAttribute com.uspaceacademy.vo.FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
+		public ModelAndView register(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors,    @ModelAttribute FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
 			
 			String fileName = null; //파일
-			
 			
 			//Date
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -139,7 +139,7 @@ public class AssignmentController {
 			//파일 																			-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
 			System.out.println("assignment_registerSuccess,board"+fileBoard);
 			
-			ArrayList fileNames = new ArrayList(); //~~
+			ArrayList fileNames = new ArrayList();
 			
 			List upfile = fileBoard.getUpfile();//fileBoard(vo)에 upfile이라는 <List>
 			if( upfile != null ){ //null인 경우는 upfile이름으로 넘어온 요청파라미터가 없는 경우.
@@ -169,7 +169,7 @@ public class AssignmentController {
 			assignment= new Assignment
 					(num,assignment.getAssignmentWriterId(),assignment.getAssignmentTitle(),
 							assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),
-							assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),fileName, 1); //fileName->파일이름넘겨줌
+							assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),fileName,assignment.getLectureNo()); //fileName->파일이름넘겨줌
 			
 			assignment.setReplyFamily(num); 
 			
@@ -188,23 +188,25 @@ public class AssignmentController {
 		
 		
 		
+
 		
 		
-		
-		
+
 		
 		
 		
 		
 		//과제출제글 삭제(과제글 상세조회에서 삭제 눌렀을때) 
-		@RequestMapping("/assignment_delete")//assignment_detail.jsp 에서  
-		public ModelAndView delete(int assignmentNo, String type){
-			service.delete(assignmentNo);
-			List list = service.selectList(type);
+			@RequestMapping("/assignment_delete")//assignment_detail.jsp 에서  
+			public String delete(@RequestParam(defaultValue="1") String type,int assignmentNo,int lectureNo){
+					
+				service.delete(assignmentNo,lectureNo);     
+					
+				System.out.println("과제글 삭제 ok");
 				
-			System.out.println("과제글 삭제 ok");
-		return new ModelAndView("assignment/assignment_list.tiles","assignment",list);
-		}
+			
+			return "/assignment/assignment_list.do?letureNo="+lectureNo;
+			}
 		
 		
 		
@@ -218,21 +220,28 @@ public class AssignmentController {
 		
 		
 
-		//과제글 수정폼(과제글상세조회에서 수정하기 눌렀을때 - modify폼으로감)
+		//선생님 : 과제글 수정폼(과제글상세조회에서 수정하기 눌렀을때 - modify폼으로감)
 		@RequestMapping("/assignment_modifyForm")  
-		public ModelAndView modifyForm(int assignmentNo){  
-			Assignment assignment = service.selectNo(assignmentNo);
-			//HashMap map = new HashMap<>();
-			
-			Map map = new HashMap();//
-			/*List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
-			map.put("getLectureList",getLectureList);//getLectureList로 넘김
-*/			map.put("assignment", assignment);//
+		public ModelAndView modifyForm(int assignmentNo, int lectureNo){  
+			Assignment assignment = service.selectNo(assignmentNo,lectureNo);
+
+			Map map = new HashMap();
+			map.put("assignment", assignment);//
 			
 			System.out.println("과제글 수정 폼 ok");
 			return new ModelAndView("assignment/assignment_modify.tiles",map); 
 		}
-		
+		//학생 : 과제글 수정폼(답글 상세조회에서 수정하기 눌렀을때 - modify폼으로감)
+				@RequestMapping("/assignment_modifyFormStudent")  
+				public ModelAndView modifyFormStudent(int assignmentNo,int lectureNo){  
+					Assignment assignment = service.selectNo(assignmentNo,lectureNo);/////////////////////
+					
+					Map map = new HashMap();
+					map.put("assignment", assignment);//
+					
+					System.out.println("과제글 수정 폼 ok");
+					return new ModelAndView("assignment/assignment_modify_student.tiles",map); 
+				}
 
 
 		
@@ -245,8 +254,8 @@ public class AssignmentController {
 		
 		
 		
-		 
-		@RequestMapping("/assignment_modify") //assignment_modify.jsp에서																			  //파일
+		 //강사 : 수정
+		@RequestMapping("/assignment_modify") //assignment_modify.jsp에서 (강사가)수정완료 눌렀을때																  //파일
 		public ModelAndView modify(@ModelAttribute("lec") @Valid Assignment assignment,BindingResult errors, HttpSession session, @ModelAttribute com.uspaceacademy.vo.FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
 			
 			HashMap<String,Object> map = new HashMap<String,Object>();
@@ -260,7 +269,6 @@ public class AssignmentController {
 			return new ModelAndView("assignment/assignment_modify.tiles");
 			}
 			
-
 			//파일 																			-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
 			System.out.println("assignment_modify,board"+fileBoard);
 			
@@ -285,10 +293,7 @@ public class AssignmentController {
 			}
 			modelMap.addAttribute("fileNames",fileNames);             	  //~~
 			modelMap.addAttribute("title", fileBoard.getTitle());             //~~
-			
-			
-			
-			
+
 			Teacher t = (Teacher)session.getAttribute("login_info");
 			String teacher = t.getTeacherName(); //오류났던거 적기 : getAssignmentWriter안돼서 session에서 getTeacherName가져옴.
 			String teacherId = t.getTeacherId();
@@ -297,7 +302,7 @@ public class AssignmentController {
 			Date date = new Date();
 			String sdfDate = sdf.format(date);
 			
-			//조인관계 오류남 -------------------------------------------------
+			//
 			assignment= new Assignment(assignment.getAssignmentNo(),
 													teacherId,
 													assignment.getAssignmentTitle(),
@@ -310,14 +315,85 @@ public class AssignmentController {
 													teacher,
 													assignment.getAssignmentDeadline(),
 													fileName,
-													1);
+													assignment.getLectureNo()); 
 			service.update(assignment);
-			
 		
 			System.out.println("과제글 수정 ok");
 			return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
 		}
 
+		//학생 : 수정
+		@RequestMapping("/assignment_modify_student") //assignment_modify.jsp에서 (강사가)수정완료 눌렀을때																  //파일
+		public ModelAndView modifyStudent(@ModelAttribute("lec") @Valid Assignment assignment,BindingResult errors, HttpSession session, @ModelAttribute com.uspaceacademy.vo.FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
+			
+			HashMap<String,Object> map = new HashMap<String,Object>();
+			
+			String fileName = null; //파일
+			
+			//validator
+			boolean error = errors.hasErrors();
+			int errorCount = errors.getErrorCount();
+			if(errors.hasErrors()){
+			return new ModelAndView("assignment/assignment_modify_student.tiles");
+			}
+			
+			//파일 																			-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
+			System.out.println("assignment_modify,board"+fileBoard);
+			
+			ArrayList fileNames = new ArrayList(); //~~
+			
+			List upfile = fileBoard.getUpfile();//fileBoard(vo)에 upfile이라는 <List>
+			if( upfile != null ){ //null인 경우는 upfile이름으로 넘어온 요청파라미터가 없는 경우.
+				
+				String saveDir = request.getServletContext().getRealPath("/uploadFile"); //파일저장디렉토리
+				//String saveDir = "C:\\java\\temp"; //파일저장디렉토리
+				
+				for(Object f : upfile){
+					MultipartFile file = (MultipartFile)f; //업로드된 파일 정보 하나씩 조회 -> 이동
+					
+					if( ! file.isEmpty()){//업로드된 파일이 있으면 -> 이동
+						fileName = file.getOriginalFilename(); //업로드된 파일명 조회.
+						File dest = new File(saveDir, fileName);
+						file.transferTo(dest); //이동처리 
+						fileNames.add(fileName); //~~
+					}
+				}
+			}
+			modelMap.addAttribute("fileNames",fileNames);             	  //~~
+			modelMap.addAttribute("title", fileBoard.getTitle());             //~~
+			//
+			Student s = (Student)session.getAttribute("login_info");
+			String student = s.getStudentName(); //오류났던거 적기 : getAssignmentWriter안돼서 session에서 getTeacherName가져옴.
+			String studentId = s.getStudentId();
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			Date date = new Date();
+			String sdfDate = sdf.format(date);
+			
+		    //
+			assignment= new Assignment(assignment.getAssignmentNo(),
+													studentId,
+													assignment.getAssignmentTitle(),
+													assignment.getAssignmentContent(),
+													sdfDate,
+													assignment.getAssignmentHit(),
+													assignment.getReplyFamily(),
+													assignment.getReplyStep(),
+													assignment.getReplyLevel(),
+													student,
+													assignment.getAssignmentDeadline(),
+													fileName,
+													assignment.getLectureNo());
+			service.update(assignment);
+			
+			System.out.println("과제글 수정 ok");
+			return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
+		}
+
+		
+		
+		
+		
 		
 		
 		
@@ -341,16 +417,11 @@ public class AssignmentController {
 		
 			//답글 작성 폼 (assignment_detail.jsp ->assignment_replyRegister.jsp)글상세페이지에서 답변하기버튼클릭 -> 답변폼으로 온다
 			@RequestMapping("/assignment_replyRegister")
-			public ModelAndView replyRegister(int assignmentNo){
+			public ModelAndView replyRegister(int assignmentNo,int lectureNo){
 				
 				Map map = new HashMap();
-				
-				/*List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
-*/				Assignment assignment = service.selectNo(assignmentNo);
-				
-				/*map.put("getLectureList",getLectureList);//getLectureList로 넘김
-*/				map.put("assignment",assignment);
-				
+				Assignment assignment = service.selectNo(assignmentNo,lectureNo);
+				map.put("assignment",assignment);
 				
 				System.out.println("답글 작성폼 ok");	
 				return new ModelAndView("assignment/assignment_replyRegister.tiles",map);
@@ -371,7 +442,7 @@ public class AssignmentController {
 		
 			//답변폼에서   ->  답글등록할거 작성하고 답글등록(답글작성완료 눌렀을때) assignment_replyRegister.jsp 에서 assignment_list.jsp로감
 			@RequestMapping("/assignment_replyRegisterSuccess")																							      //┌파일																							
-			public ModelAndView reply(@ModelAttribute("lec") @Valid Assignment assignment, BindingResult errors,   HttpSession session, @ModelAttribute com.uspaceacademy.vo.FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
+			public ModelAndView reply(@ModelAttribute("lec") @Valid Assignment assignment, int lectureNo,BindingResult errors,   HttpSession session, @ModelAttribute com.uspaceacademy.vo.FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
 				
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				
@@ -421,16 +492,10 @@ public class AssignmentController {
 				
 				assignment.setAssignmentFile(fileName); //파일!
 				
-				assignment.setLectureNo(1);//-----------------------------------조인관계이거 문제됨!
+				assignment.setLectureNo(lectureNo);
 				
 				service.replyReplyReplyAddStep(assignment);
-				
-				
-				
-				
-				
-				
-				
+
 				System.out.println("답글  작성하고 등록ok");
 				return new ModelAndView("assignment/assignment_detail.tiles","assignment", assignment); //답글작성완료하면 상세페이지로 돌아가기*
 			}
@@ -444,7 +509,6 @@ public class AssignmentController {
 		//위에 학생 답글-----------------------------------------------------------------------------------------------------------------
 		
 		
-			
 			
 			//파일-다운로드처리
 			@RequestMapping("/download")

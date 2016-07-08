@@ -1,15 +1,50 @@
 <!--  처음에 뜨는 html소스 이런거 다 삭제해주고 시작* -->
-
-
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><!-- ??????? -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><!-- ??????? -->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%><!--  밸리 해주려면 이거선언* -->
+<style type="text/css">
+
+
+</style>
+
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#lectureSubject").on("change",function(){
+		var tmp = $(this);
+		$.ajax({
+			"url":"/UspaceAcademy/lectureReview/selectLectureTitleByLectureSubject.do",
+			"type":"POST",
+			"data":"lectureSubject="+tmp.val(),
+			"dataType":"json",
+			"success":function(list){
+				for(var i = 0; i<list.length; i++){
+					var lectureTitle = list[i].lectureTitle;
+					$("#lectureTitle").append("<option>"+lectureTitle+"</option>");
+				}
+			}, //오류메세지
+			"error":function(xhr,status,errorMsg){
+				alert("오류가발생했습니다"+status+","+errorMsg);
+			},
+			"beforeSend":function(){
+				$("#lectureTitle").empty();
+			}
+		})
+	})
+});
+
+
+</script>
+
+
+
+
+
+
 
 <title>lectureReview_modify.jsp</title>
-
-
 <h2>수강후기|수정</h2>
 
 
@@ -32,7 +67,7 @@
 		<tbody>
 
 				<tr>
-				<select name="lectureSubject">
+				<select name="lectureSubject" id="lectureSubject">
 					<c:forEach items="${requestScope.codeType }" var="code"> <!--  컨트롤러* -->
 					<option value="${code.codeName }">${code.codeName }</option> <!--  vo ??* -->
 					</c:forEach>
@@ -42,7 +77,7 @@
 					<!--  강의명(lecture(개설강좌)에서 가져옴) -->
 					<select id="lectureTitle" name="lectureTitle">
 					<c:forEach items="${requestScope.lectureTitle}"  var="lectureReviewList">
-					<option>${lectureReviewList.lectureTitle}</option>
+					<option value="${lectureReviewList.lectureTitle}">${lectureReviewList.lectureTitle}</option>
 					</c:forEach>
 					</select>
 					

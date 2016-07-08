@@ -10,7 +10,7 @@ function effect(){
 	$("tr:eq(2)").css("background-color", "palegreen");
 }
 
-$(document).ready(function(){
+/* $(document).ready(function(){
 	$("#insert").on("click", function(){
 		if(!$("input[name=commentContent]").val()){
 			alert("검색할 내용을 입력하세요!");
@@ -18,7 +18,7 @@ $(document).ready(function(){
 			return false;
 		}
 	});
-});
+}); */
 
 </script>
 

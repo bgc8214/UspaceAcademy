@@ -254,6 +254,15 @@
 	</select>
 
 
+	<!-- 영주   :   과목lectureSubject으로 강의명lectureTitle 조회해옴 -->
+	<select id="selectLectureTitleByLectureSubject" parameterType="string" resultMap="lecture-basic">
+	SELECT <include refid="column-basic"/>
+	FROM 	lecture
+	WHERE  lecture_subject=#{value}
+	</select>
+
+
+
 	<!-- 강의 리스트 페이징(강의명으로 검색) -->
  	<select id="selectLectureListByLectureTitleA" parameterType="map" resultMap="lecture-basic">
  		SELECT <include refid="column-basic"/>
@@ -323,7 +332,6 @@
  		FROM   lecture
  		WHERE  teacher_id2 = #{teacherId2}
  	</select>
-
 
 
 </mapper>

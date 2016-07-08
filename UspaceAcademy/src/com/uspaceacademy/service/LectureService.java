@@ -156,8 +156,14 @@ public class LectureService {
 		Map map = new HashMap<>();
 		map.put("lectureList", lectureDao.selectAdminLectureDao());
 		return map;
-
 	}
+	
+	//................영주: 과목lectureSubject으로 강의명lectureTitle 조회해옴................
+		public List selectLectureTitleByLectureSubject(String lectureSubject){
+			System.out.println("렉쳐서비스 영주lectureSubject:"+lectureSubject );
+			return lectureDao.selectLectureTitleByLectureSubject(lectureSubject);
+		}
+	
 	
 	//강의명으로 강의리스트에서 검색해서 강의명이 중간에 들어가는 강의들을 모두 list로 조회해옴(관리자용)
 	public Map getLectureByTitleA(String lectureTitle, int page) {

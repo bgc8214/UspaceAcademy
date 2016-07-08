@@ -417,7 +417,6 @@ public class LectureController {
 	}
 	
 	
-
 	//키워드로 강의리스트 가져오기(강의가 시작 되면 강의전체목록을 볼 수 없음...(관리자))
 	@RequestMapping("/searchLectureByKeywordA.do")
 	public ModelAndView searchLectureByA(@RequestParam(defaultValue="1") int page, @RequestParam(defaultValue="") String searchType, @RequestParam(defaultValue="") String keyword){
@@ -458,6 +457,5 @@ public class LectureController {
 			
 		}
 		return new ModelAndView("lecture/lecture_list.tiles", map);
-	}
-
+	}	
 }

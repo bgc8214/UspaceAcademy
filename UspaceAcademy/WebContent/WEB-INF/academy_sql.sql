@@ -14,7 +14,6 @@ create table code_table(
 -- 관리자
 drop table administrator;
 create table administrator(
-	administrator_id varchar2(50) primary key,
 	administrator_password varchar2(50) not null
 );
 insert into ADMINISTRATOR('admin','1234');
@@ -139,7 +138,7 @@ insert into lecture values(1, '수학고등3', '설ㅇ', '0515', '0516', '0420',
 insert into lecture values(2, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 insert into lecture values(3, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 insert into lecture values(4, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
-insert into lecture values(6, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+insert into lecture values(6, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'teacher1');
 
 
 
@@ -260,10 +259,11 @@ create table assignment_board(
 	assignment_writer varchar2(50) not null,
 	assignment_deadline varchar2(10) not null,
 	assignment_file varchar2(100) null,
-	lecture_no number null, -- n o t null 로바꾸기 영주
+	lecture_no number not null, -- n o t null 로바꾸기 영주
 	constraint fk_assignment_lecture foreign key (lecture_no) references lecture(lecture_no)
 );
-insert into assignment_board values(assignment_board_seq.nextval,'1',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,0,0,'1이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,'1',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,0,0,'1이름','20160627','파일',1);
+insert into assignment_board values(assignment_board_seq.nextval,'1',0,'고등국ㅇ3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,0,0,'12름','20160627','파일',13);
 insert into assignment_board values(assignment_board_seq.nextval,'2',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,1,'11이름','20160627',1);
 insert into assignment_board values(assignment_board_seq.nextval,'3',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'111이름','20160627',1);
 insert into assignment_board values(assignment_board_seq.nextval,'3',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'이영주','20160627',1);

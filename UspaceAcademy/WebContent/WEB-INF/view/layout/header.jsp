@@ -76,6 +76,7 @@ form {
 														.html(/* attendanceList.do */
 																'<a href="/UspaceAcademy/teacherInfo.do"><button>내 정보</button></a>'
 																+ '<a href="/UspaceAcademy/member/selectAllByTeacherId.do"><button>내 강좌</button></a>');
+
 												$("#td1").html("");
 												$("#td5").html("");
 											} else if ($("#memberType").val() == "student") // 마이페이지 학생 로그인
@@ -86,6 +87,7 @@ form {
 																+ '<a href="/UspaceAcademy/attendance/studentLectureInfo.do"><button>내 강좌</button></a>'
 																+ '<a href="/UspaceAcademy/lecture/zzimList.do"><button>장바구니</button></a>'
 																+ '<a href="/UspaceAcademy/lecture/applyList.do"><button>결제 목록</button></a>');
+
 												$("#td1").html("");
 												$("#td5").html("");
 											} else //마이페이지 관리자 로그인
@@ -148,7 +150,7 @@ form {
 							id="notice">공지사항</button></a></td>
 				<td><a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button
 							id="customerCenter">고객센터</button></a></td>
-				<td><button id="myPage">마이페이지</button></a></td>
+				<td><button id="myPage">마이페이지</button></td>
 							
 							
 			</tr>

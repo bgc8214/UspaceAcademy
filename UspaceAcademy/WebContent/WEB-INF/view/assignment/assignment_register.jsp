@@ -6,7 +6,7 @@
 
 
 <h3>내정보 | 과제게시판 | 등록하기</h3>
-<hr/>
+<hr/>																																												<!--  ★여기assignment_registerSuccess까지만있었움,,,,,  -->
 <form method="POST"       <%-- file --%>enctype="multipart/form-data"     action="/UspaceAcademy/assignment/assignment_registerSuccess.do"> <!--  폼으로 묶기* -->
 
 
@@ -14,16 +14,6 @@
 	<caption></caption>
 	<tbody>
 	
-<%-- <tr><!--  1   -->
-<th scope="col">강의명</th>
-<td class="title">
-<select id="lectureTitle" name="lectureTitle"> 
-<c:forEach items="${requestScope.getLectureList}"  var="getLectureList"><!--  컨트롤러에서 보낸값 -->
-<option>${getLectureList.lectureTitle}</option>
-</c:forEach>
-</select>
-</td>
-</tr>	 --%>
 
 
 
@@ -59,7 +49,7 @@
 <!--  ●오류났던거적기 : assingmentWriterId 없다고 오류남 - 해결 :  name="assignmentWriterId"네임으로 받고 , 밸류(실제받을값으로 바꿔받으면)받으면됨               -->
 <input type="hidden" name="assignmentWriterId" value="${sessionScope.login_info.teacherId}">
 <input type="hidden" name="assignmentWriter" value="${sessionScope.login_info.teacherName}">
-
+<input type="hidden"  name="lectureNo" value="${requestScope.lectureNo}">
 
 
 

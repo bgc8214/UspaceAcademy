@@ -38,7 +38,7 @@ public class MemberDao
 	}
 
 
-	public List selectTeacherBySubject(String teacherSubject) {
+	public List selectTeacherBySubject(String teacherSubject) {//
 		return session.selectList("memberMapper.selectTeacherBySubject", teacherSubject);
 	}
 	

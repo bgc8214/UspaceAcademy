@@ -68,9 +68,7 @@ text-decoration: underline;
 					</c:forEach>
 		</select> --%>
 		
-		
 			<th scope="col">번호</th>
-			<!-- <th scope="col">강의명</th> 0  -->
 			<th scope="col">제목</th>
 			<th scope="col">아이디</th>
 			<th scope="col">이름</th>
@@ -86,9 +84,6 @@ text-decoration: underline;
 				<td class="num">${assignment.assignmentNo}</td>
 				
 				
-<!-- 				 0.강의명
-				<td>!</td> -->
-				
 				
 				
 				<!-- 2.제목 -->
@@ -103,13 +98,13 @@ text-decoration: underline;
 				<!-- 학생은 자기가 쓴글&강사가 쓴글 만 볼 수 있게 하기 (강사는 모든글 볼수 있음) -->
 				<c:choose>
 				<c:when test="${sessionScope.memberType=='teacher'}"><!--  (강사는 모든글 볼수 있음) -->
-				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}'>${assignment.assignmentTitle}</a>
 				</c:when>
   				<c:when test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentId==assignment.assignmentWriterId}"><!-- eq -->
-				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}'>${assignment.assignmentTitle}</a>
 				</c:when> 
 				<c:when test="${assignment.replyLevel>1 == false}">
-				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}'>${assignment.assignmentTitle}</a>
+				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}'>${assignment.assignmentTitle}</a>
 				</c:when>
 				<c:otherwise> <!--  위에 경우가 모두 아니라면 -->
 				 ${assignment.assignmentTitle} <!-- </a> -->
@@ -130,17 +125,12 @@ text-decoration: underline;
 		</c:forEach>
 </table>
 
-
-
-
-
-
 <!-- --------------------------------------------------------------------------------------------------------- -->
 
 <!-- 강사만 과제글 등록가능 -->
 <span class="lectureRegister">
 	<c:if test="${sessionScope.memberType=='teacher'}">
-		<a href="/UspaceAcademy/assignment/assignment_register.do?"><button>과제글 등록</button></a><!--  과제글 등록폼으로 이동 -->
+		<a href="/UspaceAcademy/assignment/assignment_register.do?lectureNo=${requestScope.lectureNo}"><button>과제글 등록</button></a><!--  과제글 등록폼으로 이동 -->
 	</c:if>																																											
 </span>
 
@@ -149,7 +139,7 @@ text-decoration: underline;
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/assignment/assignment_list.do?&page=${requestScope.paging.beginPage - 1}">
+			<a href="/UspaceAcademy/assignment/assignment_list.do?page=${requestScope.paging.beginPage - 1}&lectureNo=${requestScope.lectureNo}">
 			◀
 			</a>
 		</c:when>
@@ -162,7 +152,7 @@ text-decoration: underline;
 			 [${page }]
 			</c:when>
 			<c:otherwise>
-				<a href="/UspaceAcademy/assignment/assignment_list.do?&page=${page }">
+				<a href="/UspaceAcademy/assignment/assignment_list.do?&page=${page }&lectureNo=${requestScope.lectureNo}">
 					${page }
 				</a>
 			</c:otherwise>
@@ -172,7 +162,7 @@ text-decoration: underline;
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/assignment/assignment_list.do?&page=${requestScope.paging.endPage + 1}">
+			<a href="/UspaceAcademy/assignment/assignment_list.do?&page=${requestScope.paging.endPage + 1}&lectureNo=${requestScope.lectureNo}">
 			▶
 			</a>
 		</c:when>

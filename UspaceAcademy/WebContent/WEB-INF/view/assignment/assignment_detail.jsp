@@ -6,13 +6,13 @@
 <hr/>
 <style type="text/css">
 table{
-table-layout: fixed;
+/* table-layout: fixed;
 border:1px solid #dcdcdc;
 color:#353535;
-line-height:180%;
+line-height:180%; */
 }
 .notice_content{
-	font-size:18px;
+/* 	font-size:18px;
     position: relative;
     display: inline-block;
     padding: 40px;
@@ -22,21 +22,14 @@ line-height:180%;
     float: left;
     text-align: left;
     min-height: 580px;
-    margin-bottom: 20px;
+    margin-bottom: 20px; */
 
 }
 td{
-    padding: 15px 0;
+/*     padding: 15px 0;
     border-top: 1px solid #eee;
     text-align: center;
-    padding: 15px 0;
-}
-.notice_content h5.notice_line {
-    font-size: 35px;
-    font-family: 'Nanum Gothic Bold';
-    color: #474747;
-    position: relative;
-    padding: 0 195px 15px 0;
+    padding: 15px 0; */
 }
 </style>
 
@@ -50,9 +43,7 @@ td{
 
 
 
-<div class="notice_content">
-<h5 class="notic_line">${assignment.assignmentTitle}</h5>
-<p>
+
 
 <table  board="1" class="table_list" summary="영주" cellpacing="0">
 	<caption></caption>
@@ -77,15 +68,11 @@ td{
 
 
 
-<!-- <tr>
-<th scope="col">강의명</th>
-</tr>
- -->
 
-<%-- <tr>
+<tr>
 <th scope="col">제목</th>	
 <td>${assignment.assignmentTitle}</td>
-</tr> --%>
+</tr> 
 
 <tr>
 <th scope="col">내용</th>	
@@ -119,32 +106,29 @@ td{
 <input type="hidden" name="replyLevel"  value="${assignment.replyLevel}">
 <input type="hidden" name="replyFamily"  value="${assignment.replyFamily}">
 <input type="hidden" name="assignmentNo" value="${assignment.assignmentNo}">
-
+<input type="hidden" name="lectureNo" value="${assignemnt.lectureNo}">
 
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
+
 <!-- 강사이고 강사본인이 쓴 글일경우만    -    삭제버튼,수정버튼 클릭가능(로그인한아이디랑 작성글아이디비교 -->
 <span class="assignmentRegister">
 	<c:if test="${sessionScope.memberType=='teacher'&&assignment.assignmentWriterId==sessionScope.login_info.teacherId}"><!-- ok 강사 본인글만 삭제,수정할 수 있음 -->
-<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/assignment/assignment_modifyForm.do?assignmentNo=${assignment.assignmentNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
-<!-- &&sessionScope.login_info.studentId==assignment.assignmentWriterId  -->
-<%-- <c:if test="${sessionScope.memberType=='teacher'&&sessionScope.memberType=='teacher'==requestScope.assignment.assignmentWriterId}"> --%>
+<a href="/UspaceAcademy/assignment/assignment_modifyForm.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
+</c:if>
 
-	</c:if>
 <c:if test="${sessionScope.memberType=='student'}">
 <%-- <c:if test="${sessionScope.memberType=='student'&&assignment.assignmentWriter==requestScope.memberType.teacher}"> --%>
-<a href="/UspaceAcademy/assignment/assignment_replyRegister.do?assignmentNo=${assignment.assignmentNo}"><button>답글달기</button></a>
-	
+<a href="/UspaceAcademy/assignment/assignment_replyRegister.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>답글달기</button></a>
+<a href="/UspaceAcademy/assignment/assignment_modifyFormStudent.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
 	</c:if>																																											
 </span>
 
 
 
 <!-- --------------------------------------------------------------------------------------------------------- -->	
-
-
-<!-- --------------------------------------------------------------------------------------------------------- -->
 <%-- 
 사진 파일명 ${requestScope.imageName }
 사진 크기 ${requsetScope.imageSize }byte
@@ -180,14 +164,4 @@ td{
 </c:forEach>
  --%>
 <!-- --------------------------------------------------------------------------------------------------------- -->
-
-
-
-
-
-
-
-
-
-
 
