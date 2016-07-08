@@ -188,4 +188,10 @@ public class MemberDao
 		return session.delete("attendanceMapper.deleteByAttendanceForTeacher", lectureNo2);
 	}
 	
+	// 강사 탈퇴를 위해 강사의 강좌번호로 과제 게시판 삭제
+	public int deleteTeacherInfoDao(int lectureNo) {
+		System.out.println("강의번호로 과제게시판 삭제");
+		return session.delete("assignmentMapper.deleteTeacherInfo", lectureNo);
+	}
+	
 }
