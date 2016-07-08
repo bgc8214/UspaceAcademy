@@ -165,4 +165,43 @@ public class LectureService {
 		}
 	
 	
+	//강의명으로 강의리스트에서 검색해서 강의명이 중간에 들어가는 강의들을 모두 list로 조회해옴(관리자용)
+	public Map getLectureByTitleA(String lectureTitle, int page) {
+		Map map = new HashMap();
+		map.put("lectureList", lectureDao.selectLectureListByLectureTitleA(lectureTitle, page));
+		map.put("paging", new PagingBean(lectureDao.selectCountContentsByLectureTitleA(lectureTitle), page));
+		return map;
+	}
+	
+	//강의과목으로 강의리스트에서 검색
+	public Map getLectureByLectureSubjectA(String lectureSubject, int page) {
+		Map map = new HashMap();
+		map.put("lectureList", lectureDao.selectLectureListByLectureSubjectA(lectureSubject, page));
+		map.put("paging", new PagingBean(lectureDao.selectCountContentsByLectureSubjectA(lectureSubject), page));
+		return map;
+	}
+	
+	//강의강사명으로 강의리스트에서 검색
+	@Transactional(rollbackFor=Exception.class)
+	public Map getLectureByTeacherNameA(String teacherName, int page) {  // 관리자
+		List teacherList = memberDao.selectTeacherListByTeacherName(teacherName);//강사리스트롤 조회해옴
+		List lectureList = new ArrayList();//페이징해서 넣을 강사 리스트 생성
+		int totalItems = 0;
+		for(Object o : teacherList){
+			//반복문 돌리면서 teacher객체에서 ID를 뽑아서 그 강사ID로 조회한 강의를 강의목록에 추가해줌 
+			Teacher teacher = (Teacher)o;
+			List semiLectureList = lectureDao.selectLectureListByTeacherIdA(teacher.getTeacherId(), page);//리스트 리턴
+			
+			for(Object obj : semiLectureList){
+				lectureList.add((Lecture)obj);
+			}
+			
+			//totalItems+=lectureDao.selectCountContentsByTeacherId(teacher.getTeacherId());
+		}
+		
+		Map map = new HashMap();
+		map.put("lectureList", lectureList);
+		map.put("paging", new PagingBean(lectureList.size(), page));
+		return map;
+	}
 }

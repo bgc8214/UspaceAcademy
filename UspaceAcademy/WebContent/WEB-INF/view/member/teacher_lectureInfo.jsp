@@ -16,11 +16,12 @@
 			<tr class="lectureList">
 				<td align="center">${lectureList.lectureNo }</td><td>${lectureList.lectureSubject }</td><td>${lectureList.lectureTitle }</td>
 				<td align="center" class="teacherId">${lectureList.teacherId2 }</td><td>${lectureList.lectureStartDate } ~ ${lectureList.lectureEndDate }</td>
-				<td align="center">${lectureList.lectureDay }</td><td>${lectureList.lectureStartTime }시 ~ ${lectureList.lectureEndTime }시</td>
+				<td align="center">${lectureList.lectureDay }</td><td>${lectureList.lectureStartTime } ~ ${lectureList.lectureEndTime }</td>
 				<td align="center"><span class="current">${lectureList.lectureCurrentStudent }</span> / <span class="total">${lectureList.lectureTotalStudent }</span></td>
 				<td align="center"><a href="/UspaceAcademy/attendance/attendanceSearch.do?lectureNo=${lectureList.lectureNo}&lectureStartDate=${lectureList.lectureStartDate}
-				&lectureEndDate=${lectureList.lectureEndDate}"><button>출석보기</button></a></td>
+				&lectureEndDate=${lectureList.lectureEndDate}&lectureDay=${lectureList.lectureDay}"><button class="btn btn-success">출석보기</button></a></td>
 				<td align="center"><a href="/UspaceAcademy/assignment/assignment_list.do?lectureNo=${lectureList.lectureNo}"><button>과제게시판</button></a></td>
+
 			</tr>
 	</c:forEach>
 </tbody>

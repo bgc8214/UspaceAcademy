@@ -112,15 +112,17 @@ public class MemberService
 	 */
 	public int removeTeacher(String teacherId) {
 		
-		List list = dao.selectLectureNo(teacherId);
-		
+		List list = dao.selectLectureNo(teacherId);		// 강사 id로 강의 테이블에서 강의 정보 가져오기
+		System.out.println(list);
 		for(int i=0; i<list.size(); i++) {
-			dao.deleteByLectureNo((int)list.get(i));
+			System.out.println(dao.deleteAttendanceForTeacher((int)list.get(i)));	// 강의번호로 출석부 테이블의 강사의 강좌 출석부 정보 삭제
+			System.out.println(dao.deleteByLectureNo((int)list.get(i)));	// 학생_강의 테이블 강의번호로 삭제
+//			dao.deleteByLectureNo((int)list.get(i));
 		}
-		
-		dao.deleteByTeacherId(teacherId);
-		
-		return dao.deleteTeacher(teacherId);
+		System.out.println("강의 테이블에서 강사번호로 강의 삭제 Service");
+		dao.deleteByTeacherId(teacherId);		// 강의 테이블에서 강사번호로 강의 들 삭제
+		System.out.println("강사 테이블에서 삭제 전");
+		return dao.deleteTeacher(teacherId);	// 강사 테이블에서 강사번호로 강사 정보 삭제
 	}
 	
 	// 모든 학생 조회(페이징)

@@ -4,7 +4,7 @@
 -- 코드테이블
 drop table code_table;
 create table code_table(
-	code_id varchar2(1) primary key,
+	code_id varchar2(5) primary key,
 	code_name varchar2(30) not null,
 	code_type varchar2(30) not null
 );
@@ -116,8 +116,8 @@ CREATE TABLE lecture(
 	lecture_no number primary key, --강의번호 primary key
 	lecture_title varchar2(100) not null, --강의제목
 	lecture_description varchar2(1000) not null, --강의 설명
-	lecture_start_time number not null, --강의 시작 시간
-	lecture_end_time number not null, --강의 끝 시간
+	lecture_start_time varchar2(15) not null, --강의 시작 시간
+	lecture_end_time varchar2(15) not null, --강의 끝 시간
 	lecture_day varchar2(50) not null, --강의 요일
 	lecture_start_date varchar2(50) not null, --강의 시작일
 	lecture_end_date varchar2(50) not null, --강의 종료일
@@ -327,20 +327,20 @@ CREATE TABLE attendance(
 
 
 
-insert into code_table values('7', '1:1문의', 'advanced_board');
-insert into code_table values('8', '1:1문의댓글', 'comment_board');
-insert into code_table values('9', '강의질문하기', 'advanced_board');
+
 
 ---------------------------------------------------------------------
 -- code_table insert하는 구문     //영주1
-insert into CODE_TABLE values('1', '공지사항', 'basic_board');
-insert into CODE_TABLE values('2', 'FAQ', 'basic_board');
+insert into CODE_TABLE values(code_table_seq.nextval, '공지사항', 'basic_board');
+insert into CODE_TABLE values(code_table_seq.nextval, 'FAQ', 'basic_board');
+insert into CODE_TABLE values(code_table_seq.nextval, '국어', 'teacherSubject');
+insert into CODE_TABLE values(code_table_seq.nextval, '영어', 'teacherSubject');
+insert into CODE_TABLE values(code_table_seq.nextval, '수학', 'teacherSubject');
 
-insert into CODE_TABLE values('3', '국어', 'teacherSubject');
-insert into CODE_TABLE values('4', '영어', 'teacherSubject');
-insert into CODE_TABLE values('5', '수학', 'teacherSubject');
-insert into CODE_TABLE values('6', '한국사', 'teacherSubject');
+drop sequence code_table_seq;
+create sequence code_table_seq nocache;
 
+select *from code_table
 
 select * from CODE_TABLE;
 	SELECT *

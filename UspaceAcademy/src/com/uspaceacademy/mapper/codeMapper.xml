@@ -22,4 +22,25 @@
 	from code_table
 	where code_name = #{codeName}
 </select>
+
+<select id="selectNextNo" resultType="_int">
+	select code_table_seq.nextval from dual
+</select>
+
+
+<!-- 출석부 등록 시 사용할 삽입 구문 -->
+<insert id="insertAttendanceDay" parameterType="code">
+	insert into code_table
+	values (#{codeId}, #{codeName}, #{codeType})
+</insert>
+
+<!-- 출석부 등록시 출결등록 일시가 있을경우 수정 -->
+<update id="updateAttendanceDay" parameterType="code">
+	update code_table
+	set code_name = #{codeName}
+	where code_type = #{codeType}
+</update>
+
 </mapper> 
+
+

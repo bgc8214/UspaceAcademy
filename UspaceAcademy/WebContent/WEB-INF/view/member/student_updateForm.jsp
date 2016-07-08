@@ -61,23 +61,23 @@ function checkValue() {
 <table border="2" class="table table-bordered">
 	<tr>
 		<th>아이디</th>
-		<td><input type="text" name="studentId" value="${sessionScope.login_info.studentId}" readonly="readonly"> <span class="error"><form:errors path="updateForm.studentId" delimiter=","/></span></td>
+		<td><input type="text" name="studentId" value="${requestScope.student.studentId}" readonly="readonly"> <span class="error"><form:errors path="updateForm.studentId" delimiter=","/></span></td>
 	</tr>
 	<tr>
 		<th>이름</th>
-		<td><input type="text" name="studentName" value="${sessionScope.login_info.studentName}"> <span class="error"><form:errors path="updateForm.studentName" delimiter=","/></span></td>
+		<td><input type="text" name="studentName" value="${requestScope.student.studentName}"> <span class="error"><form:errors path="updateForm.studentName" delimiter=","/></span></td>
 	</tr>
 	<tr>
 		<th>비밀번호</th>
-		<td><input type="password" name="studentPassword" value="${sessionScope.login_info.studentPassword}"> <span class="error"><form:errors path="updateForm.studentPassword" delimiter=","/></span></td>
+		<td><input type="password" name="studentPassword" value="${requestScope.student.studentPassword}"> <span class="error"><form:errors path="updateForm.studentPassword" delimiter=","/></span></td>
 	</tr>
 	<tr>
 		<th>이메일</th>
-		<td><input type="text" name="studentEmail" value="${sessionScope.login_info.studentEmail}"> <span class="error"><form:errors path="updateForm.studentEmail" delimiter=","/></span></td>
+		<td><input type="text" name="studentEmail" value="${requestScope.student.studentEmail}"> <span class="error"><form:errors path="updateForm.studentEmail" delimiter=","/></span></td>
 	</tr>
 	<tr>
 		<th>전화번호</th>
-		<td><input type="text" name="studentPhoneNo" value="${sessionScope.login_info.studentPhoneNo}"> <span class="error"><form:errors path="updateForm.studentPhoneNo" delimiter=","/></span></td>
+		<td><input type="text" name="studentPhoneNo" value="${requestScope.student.studentPhoneNo}"> <span class="error"><form:errors path="updateForm.studentPhoneNo" delimiter=","/></span></td>
 	</tr>
 	<tr>
 		<th>우편번호</th>
@@ -85,7 +85,7 @@ function checkValue() {
 	</tr>
 	<tr>
 		<th>주소</th>
-		<td><input id="addr1" name="addr1" type="text" value="${sessionScope.login_info.studentAddress}" readonly="readonly" placeholder="주소"/>
+		<td><input id="addr1" name="addr1" type="text" value="${requestScope.student.studentAddress}" readonly="readonly" placeholder="주소"/>
 	 		<input id="addr2" name="addr2" type="text" placeholder="상세주소"/><span class="error"><form:errors path="updateForm.studentAddress" delimiter=","/></span></td>
 </table>
 	<div align="right">

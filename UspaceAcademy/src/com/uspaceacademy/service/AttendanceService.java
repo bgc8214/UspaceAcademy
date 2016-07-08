@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.uspaceacademy.dao.AttendanceDao;
 import com.uspaceacademy.vo.Attendance;
+import com.uspaceacademy.vo.Code;
 import com.uspaceacademy.vo.Student;
 
 @Service
@@ -84,6 +85,27 @@ public class AttendanceService {
 	// 학생이 수강중인 강의중 선택한 강의의 출결 상태 조회
 	public List studentAttendanceStateService(int lectureNo2, String studentId2) {
 		return dao.studentAttendanceStateDao(lectureNo2, studentId2);
+	}
+	
+	// 코드 테이블에서 강의 번호에 맞는 최종 출결 등록 날짜 조회!!!!(출석 날짜 보다 우선)
+	public Code selectCode(String codeType) {
+		return dao.selectLastDay(codeType);
+	}
+	
+	// 코드 테이블 시퀀스 no
+	public int selectSeq() {
+		return dao.selectNextNo();
+	}
+	
+	// 출석 등록 날짜 추가
+	public int attendanceDayAdd(Code code) {
+		System.out.println("Service(출석등록날짜추가) "+code);
+		return dao.insertAttendanceRegisterLastDayDao(code);
+	}
+	
+	// 출석 등록 날짜 수정
+	public int updateAttendanceDayService(Code code) {
+		return dao.updateAttendanceDayDao(code);
 	}
 
 }

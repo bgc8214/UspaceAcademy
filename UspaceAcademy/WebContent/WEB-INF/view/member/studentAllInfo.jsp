@@ -9,6 +9,9 @@
 				return false;
 			}
 		})
+		$("#remove").on("click", function() {
+			return confirm("강제탈퇴 시키시겠습니까?");
+		})
 	});
 	
 	$(document).ready(effect);
@@ -38,7 +41,7 @@
 				<td align="center">${student.studentEmail}</td>
 				<td align="center">${student.studentPhoneNo}</td>
 				<td align="center">${student.studentAddress}</td>				
-				<td><a href="/UspaceAcademy/member/deleteStudentByAdmin.do?studentId=${student.studentId}"><button>학생 탈퇴</button></a></td>
+				<td><div id="remove"><a href="/UspaceAcademy/member/deleteStudentByAdmin.do?studentId=${student.studentId}"><button>학생 탈퇴</button></a></div></td>
 			</tr>	
 		</c:forEach>
 		

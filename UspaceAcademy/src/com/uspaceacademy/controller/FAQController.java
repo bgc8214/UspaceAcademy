@@ -1,10 +1,13 @@
 package com.uspaceacademy.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ import com.uspaceacademy.service.FAQService;
 import com.uspaceacademy.validaotor.FAQValidator;
 import com.uspaceacademy.vo.Code;
 import com.uspaceacademy.vo.FAQ;
+import com.uspaceacademy.vo.Teacher;
 
 
 @Controller
@@ -39,7 +43,7 @@ public class FAQController
 			if(codeNames.equals(c.getCodeName())) {
 				value = c.getCodeName();
 			}
-		}
+		}		
 		return new ModelAndView("FAQ/FAQ_form.tiles", "codeName", value);
 	}
 	
@@ -70,7 +74,7 @@ public class FAQController
 	
 	// FAQ Paiging 리스트
 	@RequestMapping("/list.do")
-	public ModelAndView FAQAllList(@RequestParam(defaultValue="1") int page, String type) {
+	public ModelAndView FAQAllList(@RequestParam(defaultValue="1") int page, String type, HttpSession session) {
 		Map map = service.FAQPagingList(page, type);
 		map.put("page", page);
 		return new ModelAndView("FAQ/FAQ_list.tiles", map);

@@ -111,8 +111,15 @@ public class Teacher
 	}
 
 	@Override
-	public int hashCode()
-	{
+	public String toString() {
+		return "Teacher [teacherId=" + teacherId + ", teacherPassword=" + teacherPassword + ", teacherName="
+				+ teacherName + ", teacherEmail=" + teacherEmail + ", teacherPhoneNo=" + teacherPhoneNo
+				+ ", teacherAddress=" + teacherAddress + ", teacherSubject=" + teacherSubject + ", teacherSalary="
+				+ teacherSalary + "]";
+	}
+
+	@Override
+	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((teacherAddress == null) ? 0 : teacherAddress.hashCode());
@@ -127,8 +134,7 @@ public class Teacher
 	}
 
 	@Override
-	public boolean equals(Object obj)
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -136,46 +142,39 @@ public class Teacher
 		if (getClass() != obj.getClass())
 			return false;
 		Teacher other = (Teacher) obj;
-		if (teacherAddress == null)
-		{
+		if (teacherAddress == null) {
 			if (other.teacherAddress != null)
 				return false;
 		} else if (!teacherAddress.equals(other.teacherAddress))
 			return false;
-		if (teacherEmail == null)
-		{
+		if (teacherEmail == null) {
 			if (other.teacherEmail != null)
 				return false;
 		} else if (!teacherEmail.equals(other.teacherEmail))
 			return false;
-		if (teacherId == null)
-		{
+		if (teacherId == null) {
 			if (other.teacherId != null)
 				return false;
 		} else if (!teacherId.equals(other.teacherId))
 			return false;
-		if (teacherName == null)
-		{
+		if (teacherName == null) {
 			if (other.teacherName != null)
 				return false;
 		} else if (!teacherName.equals(other.teacherName))
 			return false;
-		if (teacherPassword == null)
-		{
+		if (teacherPassword == null) {
 			if (other.teacherPassword != null)
 				return false;
 		} else if (!teacherPassword.equals(other.teacherPassword))
 			return false;
-		if (teacherPhoneNo == null)
-		{
+		if (teacherPhoneNo == null) {
 			if (other.teacherPhoneNo != null)
 				return false;
 		} else if (!teacherPhoneNo.equals(other.teacherPhoneNo))
 			return false;
 		if (teacherSalary != other.teacherSalary)
 			return false;
-		if (teacherSubject == null)
-		{
+		if (teacherSubject == null) {
 			if (other.teacherSubject != null)
 				return false;
 		} else if (!teacherSubject.equals(other.teacherSubject))
@@ -183,14 +182,4 @@ public class Teacher
 		return true;
 	}
 
-	@Override
-	public String toString()
-	{
-		return "Teacher [teacherId=" + teacherId + ", teacherPassword=" + teacherPassword + ", teacherName="
-				+ teacherName + ", teacherEmail=" + teacherEmail + ", teacherPhoneNo=" + teacherPhoneNo
-				+ ", teacherAddress=" + teacherAddress + ", teacherSubject=" + teacherSubject + ", teacherSalary="
-				+ teacherSalary + "]";
-	}
-	
-	
 }

@@ -19,14 +19,13 @@ function effect() {
 	</thead>
 <tbody>
 <c:forEach items="${requestScope.list}" var="list">
-
 	<tr>
 		<td class="bg-success">${list.lectureNo}</td>
 		<td class="bg-info">${list.lectureTitle}</td>
 		<td class="bg-warning">${list.lectureStartDate}</td>
 		<td class="bg-danger">${list.lectureEndDate}</td>
 		<td align="center"><a href="/UspaceAcademy/attendance/attendanceSearch.do?lectureNo=${list.lectureNo}&lectureStartDate=${list.lectureStartDate}
-		&lectureEndDate=${list.lectureEndDate}"><button>출석보기</button></a></td>
+		&lectureEndDate=${list.lectureEndDate}&lectureDay=${list.lectureDay}"><button class="btn btn-success">출석보기</button></a></td>
 	</tr>
 </c:forEach>
 </tbody>

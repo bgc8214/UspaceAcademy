@@ -25,6 +25,10 @@ span.errors{
 <link href="/UspaceAcademy/jQuery/jquery-ui.structure.min.css" rel="stylesheet">
 <link href="/UspaceAcademy/jQuery/jquery-ui.theme.min.css" rel="stylesheet">
 
+<!-- 추가적 timepicker -->
+<!--  <script src="http://code.jquery.com/jquery-latest.min.js"></script> --> <!--  datepicker가 안되는 원인 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.css" /> 
 <script type="text/javascript">
 
 
@@ -49,21 +53,14 @@ span.errors{
 				alert("강의세부내용을 입력하세요.");
 				return false;
 			}
-			if(isNaN($("input[name=lectureStartTime]").val())){
-				alert("강의 시작시간은 숫자만 입력하세요.");
+			if(!($("input[name=lectureStartTime]").val())){
+				alert("강의 시작시간을 선택하세요.");
 				return false;
 			}
-			if($("input[name=lectureStartTime]").val()>24||$("input[name=lectureStartTime]").val()<0){
-				alert("강의 시작시간은 0~24사이의 숫자만 입력하세요.");
-				return false;
-			}
-			if(isNaN($("input[name=lectureEndTime]").val())){
-				alert("강의 끝시간은 숫자만 입력하세요.");
+
+			if(!($("input[name=lectureEndTime]").val())){
+				alert("강의 종료시간을 선택하세요.");
 				
-				return false;
-			}
-			if($("input[name=lectureEndTime]").val()>24||$("input[name=lectureEndTime]").val()<0){
-				alert("강의 끝시간은 0~24사이의 숫자만 입력하세요.");
 				return false;
 			}
 			//요일 검증 시작
@@ -158,11 +155,25 @@ span.errors{
 	       	}
 		}) 	
 	});
+	
+	// timepicker
+	$(function() {
+		$('#lectureStartTime')
+	    	.timepicker({timeFormat:'H:i', 'minTime':'09:00','maxTime': '23:00','scrollDefaultNow': true })  //lectureStartTime 시작 기본 설정
+	   	 	.on('changeTime', function() {                            //lectureStartTime 을 선택한 후 동작
+	        
+	   	 	var from_time = $("input[name='lectureStartTime']").val();  //lectureStartTime 값을 변수에 저장
+	        $('#lectureEndTime').timepicker('option', 'minTime', from_time); //lectureEndTime의 mintime 지정
+	        if ($('#lectureEndTime').val() && $('#lectureEndTime').val() < from_time) { 
+	            $('#lectureEndTime').timepicker('setTime', from_time);
+				//lectureEndTime을 먼저 선택한 경우 그리고 lectureEndTime시간이 lectureStartTime시간보다 작은경우 lectureEndTime시간 변경
+	        }	
+	    });
 
+		$('#lectureEndTime').timepicker({timeFormat:'H:i','minTime':'09:00','maxTime': '23:00'}); //lectureEndTime 시간 기본 설정
+	})
 
 </script>
-
-
 
 
 
@@ -170,8 +181,8 @@ span.errors{
 <form action="/UspaceAcademy/lecture/registerLecture.do" method="post">
 강의명 : <input type="text" name="lectureTitle"><span class="errors"><form:errors path="lecture.lectureTitle" delimiter="//"/></span><br>
 강의 설명 : <textarea rows="10" cols="20" name="lectureDescription"></textarea><span class="errors"><form:errors path="lecture.lectureDescription" delimiter="//"/></span><br>
-강의 시작시간 : <input type="text" name="lectureStartTime"><span class="errors"><form:errors path="lecture.lectureStartTime" delimiter="//"/></span><br>
-강의 끝시간 : <input type="text" name="lectureEndTime"><span class="errors"><form:errors path="lecture.lectureEndTime" delimiter="//"/></span><br>
+강의 시작시간 : <input type="text" id="lectureStartTime" name="lectureStartTime"><span class="errors"><form:errors path="lecture.lectureStartTime" delimiter="//"/></span><br>
+강의 종료시간 : <input type="text" id="lectureEndTime" name="lectureEndTime"><span class="errors"><form:errors path="lecture.lectureEndTime" delimiter="//"/></span><br>
 <%-- 강의 요일 : <input type="text" name="lectureDay"><span class="errors"><form:errors path="lecture.lectureDay" delimiter="//"/></span><br> --%>
 강의 요일 :<label> 월 <input type="checkbox" name="lectureDay2" value='월'></label>
 		   <label> 화 <input type="checkbox" name="lectureDay2" value='화'></label>
@@ -183,9 +194,6 @@ span.errors{
 강의 수강료 : <input type="text" name="lecturePrice"><span class="errors"><form:errors path="lecture.lecturePrice" delimiter="//"/></span><br>
 강의 수강인원 : <input type="text" name="lectureTotalStudent"><span class="errors"><form:errors path="lecture.lectureTotalStudent" delimiter="//"/></span><br>
 <input type="hidden" name="lectureCurrentStudent" value="0"><span class="errors"><form:errors path="lecture.lectureCurrentStudent" delimiter="//"/></span><br>
-
-
-
 강의 시작일 : <input id="bt1" type="text" name="lectureStartDate" readonly="readonly"><span class="errors"><form:errors path="lecture.lectureStartDate" delimiter="//"/></span><br>
 강의 종료일 : <input id="bt2" type="text" name="lectureEndDate" readonly="readonly"><span class="errors"><form:errors path="lecture.lectureEndDate" delimiter="//"/></span><br>
 강의 종류 : 

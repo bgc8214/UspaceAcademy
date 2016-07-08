@@ -121,4 +121,9 @@
 	<delete id="deleteAttendanceForStudent" parameterType="string">
 		delete from attendance where student_id2 = #{value}
 	</delete>
+	
+	<!-- 강사 삭제를 위해 강의번호로 출석 정보 삭제 -->
+	<delete id="deleteByAttendanceForTeacher" parameterType="_int">
+		delete from attendance where lecture_no2 = #{value}
+	</delete>
 </mapper> 
