@@ -58,7 +58,7 @@ public class LectureController {
 		list.add(memberType);
 		return list;
 	}
-	//관리자가 강의를 등록하기 폼을 조회하기 위한 컨트롤러//
+	//관리자가 강의를 등록하기 폼을 조회하기 위한 컨트롤러
 	@RequestMapping("/registerForm.do")
 	public ModelAndView registerLecture(String codeType){
 		List codeList = lectureService.searchCode(codeType);
@@ -66,7 +66,6 @@ public class LectureController {
 		Map map = new HashMap();
 		map.put("codeList", codeList);
 		map.put("teacherList", teacherList);
-		System.out.println("대영 컨트롤러 teacherList : "+teacherList );
 		return new ModelAndView("lecture/register_form.tiles", map);
 	}
 	
@@ -74,9 +73,8 @@ public class LectureController {
 	@RequestMapping("/getTeacherBySubject.do")
 	@ResponseBody
 	public List getTeacherBySubject(String teacherSubject){
-		//System.out.println("대영컨트롤러 2 teacherSubject : "+teacherSubject);
-		List teacherList = memberService.getTeacherBySubject(teacherSubject);//teacherSubject->국어 영어 수학
-		//System.out.println("대영 컨트롤러2 teacherList : "+teacherList );
+		System.out.println("대영"+teacherSubject);
+		List teacherList = memberService.getTeacherBySubject(teacherSubject);
 		//System.out.println(teacherList);
 		//return new ModelAndView("lecture/register_form.tiles","teacherList", teacherList);
 		return teacherList;
