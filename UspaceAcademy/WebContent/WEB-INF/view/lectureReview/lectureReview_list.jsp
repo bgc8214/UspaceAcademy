@@ -30,15 +30,7 @@ line-height:140%;
 }
 
 </style>
-
-
-
-
-
-
 <h3>수강후기</h3>
-
-
 <hr/>
 
 <body id="main"> 
@@ -78,6 +70,7 @@ line-height:140%;
 	</table>
 </div>
 </body>
+
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
 <p>
@@ -120,11 +113,13 @@ line-height:140%;
 <span class="lectureRegister">
 <%-- 	<c:if test="${sessionScope.memberType=='administrator'}">
 		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>후기 등록</button></a><!--  수강후기 등록폼으로 이동 -->
-	</c:if>	 --%>																																										<!-- 코드타입 여기서 넘겨줌!!!!!!!!!!!!!, 이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
+	</c:if>	 --%>																																								<!-- 코드타입 여기서 넘겨줌!!!!!!!!!!!!!, 이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
 	<c:if test="${sessionScope.memberType=='student'}">
 		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>후기 등록</button></a>
 	</c:if>
 </span>
+<!-- 전체 목록으로 돌아가기 -->
+<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button>전체목록</button></a>
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
 <p>
@@ -133,9 +128,13 @@ line-height:140%;
 <select name="searchType">
 	<option value="reviewSubject">강의과목</option>
 	<option value="reviewTitle">제목</option>
+	<option value="lectureTitle">강의명</option>
 </select>
-<input type="text" name="keyword">
+<input type="text" name="keyword"><!--  검색할때 keyword -->
 <input type="submit" value="검색">
+
+
+
 </form>
 
 

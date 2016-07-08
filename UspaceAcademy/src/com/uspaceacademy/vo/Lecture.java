@@ -35,7 +35,6 @@ public class Lecture implements Serializable{
 	private String teacherId2;//외래키(teacher table)
 	
 	
-	//private Assignment assignment;//영주
 	
 	
 	
