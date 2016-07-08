@@ -34,7 +34,9 @@
 			<td align="center">${no.count}일차</td>
 			<c:forEach items="${stateList}" var="state">
 					<td align="center">${state}</td>
+<!-- 					<td align="center"> </td> -->
 			</c:forEach>
+			<td></td>
 		</tr>
 		<c:set var="cnt" value="${cnt+1}"/>
 		</c:forEach>
@@ -46,6 +48,7 @@
 				<input type="hidden" name="lectureNo" value="${requestScope.lectureNo}">
 				<input type="hidden" name="lectureStartDate" value="${requestScope.lecture.lectureStartDate}">
 				<input type="hidden" name="lectureEndDate" value="${requestScope.lecture.lectureEndDate}">
+				<input type="hidden" name="lectureDay" value="${requestScope.lecture.lectureDay}">
 					<td align="center">${cnt}일차</td>
 					<c:forEach begin="1" end="${fn:length(studentInfoList)}">
 						<td align="center">
@@ -57,29 +60,21 @@
 								<option value="결석">결석</option>
 							</select>
 						</td>	
-						<td align="center"><input id="btn" type="submit" value="등록"></td>
 					</c:forEach>
 
 					<c:choose>
-						<c:when test="${requestScope.diff>0}">
+						<c:when test="${requestScope.diff<=0 && requestScope.dummy=='0'&& requestScope.dummy1 =='1'}">
 							<td align="center"><input id="btn" type="submit" value="등록" class="btn btn-success"></td>
-				
 						</c:when>
-						<c:otherwise>
-									<td align="center"></td>
-						</c:otherwise>
+						<c:otherwise><td></td></c:otherwise>
 					</c:choose>
-
 			</form>
 		</tr>
 		</c:if>
 </table>
 
+<p>
+<a href="/UspaceAcademy/attendance/attendanceList.do"><button class="btn btn-info">강의목록</button></a>
+<a href="/UspaceAcademy/attendance/attendanceRedirect.do?startDate=${requestScope.lecture.lectureStartDate}&endDate=${requestScope.lecture.lectureEndDate}&lectureNo=${requestScope.lecture.lectureNo}&lectureDay=${requestScope.lecture.lectureDay}">
+<button class="btn btn-warning">출석수정</button></a>
 
-<c:choose>
-	<c:when test="${sessionScope.memberType=='teacher'}">
-		<a href="/UspaceAcademy/member/selectAllByTeacherId.do"><button class="btn btn-info">강의목록</button></a>
-		<a href="/UspaceAcademy/attendance/attendanceRedirect.do?startDate=${requestScope.lecture.lectureStartDate}&endDate=${requestScope.lecture.lectureEndDate}&lectureNo=${requestScope.lectureNo}">
-		<button class="btn btn-warning">출석수정</button></a>
-	</c:when>
-</c:choose>

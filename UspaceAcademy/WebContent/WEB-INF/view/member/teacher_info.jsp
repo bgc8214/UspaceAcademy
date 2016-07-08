@@ -13,35 +13,32 @@ $(document).ready(function(){
 	<tbody>
 		<tr>
 			<th>아이디</th>
-			<td><input type="text"  value="${sessionScope.login_info.teacherId}" readonly="readonly"></td>
+			<td>${sessionScope.login_info.teacherId}</td>
 		</tr>
 		<tr>
 			<th>이름</th>
-			<td><input type="text"	value="${sessionScope.login_info.teacherName}" readonly="readonly"></td>
+			<td>${sessionScope.login_info.teacherName}</td>
 		</tr>
 		<tr>
 			<th>이메일</th>
-			<td><input type="text"	value="${sessionScope.login_info.teacherEmail}" readonly="readonly"></td>
+			<td>${sessionScope.login_info.teacherEmail}</td>
 		</tr>
 		<tr>
 			<th>전화번호</th>
-			<td><input type="text"	value="${sessionScope.login_info.teacherPhoneNo}" readonly="readonly"></td>
+			<td>${sessionScope.login_info.teacherPhoneNo}</td>
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><input type="text"	value="${sessionScope.login_info.teacherAddress}" readonly="readonly"></td>
+			<td>${sessionScope.login_info.teacherAddress}</td>
 		</tr>
 		<tr>
 			<th>과목</th>
-			<td><select>
-					<option>${sessionScope.login_info.teacherSubject}</option>
-				</select>
-			</td>	
+			<td>${sessionScope.login_info.teacherSubject}</td>	
 		</tr>
 	</tbody>
 </table>
 <p>
 <div align="right">
 <a href="/UspaceAcademy/member/updateTeacherForm.do"><button class="btn btn-warning">수정</button></a>
-<a href="/UspaceAcademy/member/deleteTeacher.do"><button id="remove" class="btn btn-danger">탈퇴</button></a>
+<a href="/UspaceAcademy/member/deleteTeacher.do?"><button id="remove" class="btn btn-danger">탈퇴</button></a>
 </div>

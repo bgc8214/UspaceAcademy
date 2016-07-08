@@ -130,7 +130,7 @@ $(document).ready(function(){
 		<tr class="lectureList">
 			<td>${lectureList.lectureNo }</td><td>${lectureList.lectureSubject }</td><td>${lectureList.lectureTitle }</td>
 			<td class="teacherId">${lectureList.teacherId2 }</td><td>${lectureList.lectureStartDate } ~ ${lectureList.lectureEndDate }</td>
-			<td>${lectureList.lectureDay }</td><td>${lectureList.lectureStartTime }시 ~ ${lectureList.lectureEndTime }시</td>
+			<td>${lectureList.lectureDay }</td><td>${lectureList.lectureStartTime } ~ ${lectureList.lectureEndTime }</td>
 			<td><span class="current">${lectureList.lectureCurrentStudent }</span> / <span class="total">${lectureList.lectureTotalStudent }</span></td>
 		</tr>
 </c:forEach>
@@ -152,7 +152,9 @@ $(document).ready(function(){
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 <span><strong>${page }</strong></span>
+			 <span>${page }
+			 
+			 </span>
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${page }&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
@@ -173,21 +175,6 @@ $(document).ready(function(){
 	</c:choose>
 	</div>
 <br>
-<!-- 검색관련 -->
-<div class="boardBottom" align="center">
-<form action="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${param.page }" method="post">
-<select name="searchType">
-	<option value="lectureTitle">강의명</option>
-	<option value="teacherSubject">과목</option>
-	<option value="teacherName">강사</option>
-</select>
-<input type="text" name="keyword">
-<input type="submit" value="검색" class="btn btn-info">
-</form>
-</div>	
-<p>
-
-
 
 <!-- 관리자용 강의 등록 버튼 -->
 <span class="lectureRegister">
@@ -199,6 +186,41 @@ $(document).ready(function(){
 		<a href="/UspaceAcademy/lecture/applyList.do?page=${param.page }"><button class="btn btn-warning">결제 목록</button></a>
 	</c:if>
 </span>
+
+
+<c:choose>
+	<c:when test="${sessionScope.memberType=='administrator'}">
+		<!-- 검색관련 -->
+	<form action="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${param.page }" method="post">
+		<div align="right">
+			<select name="searchType">
+				<option value="lectureTitle">강의명</option>
+				<option value="teacherSubject">과목</option>
+				<option value="teacherName">강사</option>
+			</select>
+		<input type="text" name="keyword">
+		<input type="submit" value="검색" class="btn btn-info">
+		</div>	
+	</form>
+	</c:when>
+	<c:otherwise>
+		<!-- 검색관련 -->
+	<form action="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${param.page }" method="post">
+		<div align="right">
+			<select name="searchType">
+				<option value="lectureTitle">강의명</option>
+				<option value="teacherSubject">과목</option>
+				<option value="teacherName">강사</option>
+			</select>
+		<input type="text" name="keyword">
+		<input type="submit" value="검색" class="btn btn-info">
+		</div>	
+	</form>
+	</c:otherwise>
+</c:choose>
+
+
+
 
 
 

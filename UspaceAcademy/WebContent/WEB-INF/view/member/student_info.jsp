@@ -35,5 +35,5 @@ $(document).ready(function(){
 <p>
 <div align="right">
 	<a href="/UspaceAcademy/member/updateStudentForm.do"><button class="btn btn-warning">수정</button></a>
-	<a href="/UspaceAcademy/member/deleteStudent.do"><button name="remove" class="btn btn-danger">탈퇴</button></a>
+	<a href="/UspaceAcademy/member/deleteStudent.do"><button id="remove" class="btn btn-danger">탈퇴</button></a>
 </div>

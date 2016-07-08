@@ -86,11 +86,13 @@ where teacher_id = '12345'
 	from lecture
 	where teacher_id2 = '678910'
 
- 2. 학생_강의_조인 테이블에서 강의번호로 삭제
+ 2. 출석부 테이블에서 강의번호로 출석부 삭제	
+	
+ 3. 학생_강의_조인 테이블에서 강의번호로 삭제
  
- 3. 강의 테이블 - 강사 아이디 삭제
+ 4. 강의 테이블 - 강사 아이디 삭제
  
- 4. 강사 테이블 - 삭제
+ 5. 강사 테이블 - 삭제
  
  ----------------------------------------------
  
@@ -102,3 +104,12 @@ where teacher_id = '12345'
 		
 		drop table lecture cascade constraint
 		
+		
+		select *from code_table
+		
+		
+		
+		
+		delete
+		from student_lecture_join
+		where lecture_no3 = 19

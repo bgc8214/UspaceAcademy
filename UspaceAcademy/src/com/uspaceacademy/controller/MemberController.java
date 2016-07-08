@@ -518,6 +518,7 @@ public class MemberController
 	@RequestMapping("/deleteTeacher.do")
 	public String deleteTeacher(HttpSession session) {
 		Teacher teacher = (Teacher)session.getAttribute("login_info");
+		System.out.println("강사 본인 탈퇴");
 		service.removeTeacher(teacher.getTeacherId());
 		session.invalidate();
 		return "main.tiles";

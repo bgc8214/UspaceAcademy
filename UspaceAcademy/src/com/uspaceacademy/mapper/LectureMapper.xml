@@ -253,4 +253,77 @@
 		order by lecture_no desc
 	</select>
 
+
+	<!-- 강의 리스트 페이징(강의명으로 검색) -->
+ 	<select id="selectLectureListByLectureTitleA" parameterType="map" resultMap="lecture-basic">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   (
+ 			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   lecture
+ 				WHERE  lecture_title like '%'||#{lectureTitle}||'%'
+ 				ORDER BY lecture_no DESC  
+ 			)
+ 		)
+ 		WHERE  page = #{page}
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징 헬퍼(강의명으로 검색) -->
+ 	<select id="selectCountContentsByLectureTitleA" resultType="_int" parameterType="map">
+ 		SELECT count(lecture_no) 
+ 		FROM   lecture
+ 		WHERE  lecture_title like '%'||#{lectureTitle}||'%'
+ 	</select>
+
+
+
+	 	<!-- 강의 리스트 페이징(강의과목으로 검색) - 관리자 -->
+ 	<select id="selectLectureListByLectureSubjectA" parameterType="map" resultMap="lecture-basic">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   (
+ 			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   lecture
+ 				WHERE  lecture_subject like '%'||#{lectureSubject}||'%'
+ 				ORDER BY lecture_no DESC  
+ 			)
+ 		)
+ 		WHERE  page = #{page}
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징 헬퍼(강의과목으로 검색) - 관리자 -->
+ 	<select id="selectCountContentsBylectureSubjectA" resultType="_int" parameterType="map">
+ 		SELECT count(lecture_no) 
+ 		FROM   lecture
+ 		WHERE  lecture_subject like '%'||#{lectureSubject}||'%'
+ 	</select>
+
+
+	 	
+ 	<!-- 강의 리스트 페이징(강사ID로 검색) 관리자용 -->
+ 	<select id="selectLectureListByTeacherIdA" parameterType="map" resultMap="lecture-basic">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   (
+ 			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   lecture
+ 				WHERE  teacher_id2 = #{teacherId2}
+ 				ORDER BY lecture_no DESC  
+ 			)
+ 		)
+ 		WHERE  page = #{page}
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징 헬퍼(강의ID로 검색) 관리자용 -->
+ 	<select id="selectCountContentsByTeacherIdA" resultType="_int" parameterType="map">
+ 		SELECT count(lecture_no) 
+ 		FROM   lecture
+ 		WHERE  teacher_id2 = #{teacherId2}
+ 	</select>
+
+
+
 </mapper>

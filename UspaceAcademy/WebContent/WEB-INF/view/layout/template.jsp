@@ -6,17 +6,20 @@
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
 <!-- Optional theme -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
 <!-- Latest compiled and minified JavaScript -->
 <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="/js/common.js"></script>
-<!-- <link rel="stylesheet" type="text/css" href="/css/common.css"/> -->
-<link href="/css/common.css" rel="stylesheet" type="text/css">
 
-<link rel="stylesheet" href="jQuery/jquery.timepicker.min.css" type="text/css"/>
-<link rel="stylesheet" type="text/css" href="/js/common.js"/>
+<script src="/UspaceAcademy/js/common.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="/css/common.css"/> -->
+<link href="/UspaceAcademy/css/common.css" rel="stylesheet" type="text/css">
+
+<link rel="stylesheet" href="/UspaceAcademy/jQuery/jquery.timepicker.css" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="/UspaceAcademy/js/common.js"/>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 
 <script type="text/javascript">

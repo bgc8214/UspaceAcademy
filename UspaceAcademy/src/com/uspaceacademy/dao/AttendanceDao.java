@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.uspaceacademy.vo.Attendance;
+import com.uspaceacademy.vo.Code;
 
 @Repository
 public class AttendanceDao {
@@ -53,6 +54,7 @@ public class AttendanceDao {
 		Map map =  new HashMap<>();
 		map.put("lectureNo", lectureNo);
 		map.put("lectureDay", lectureDay);
+//		System.out.println("DAO  "+session.selectList(namespace+"lectureAttendanceState", map));
 		return session.selectList(namespace+"lectureAttendanceState", map);
 	}
 	
@@ -77,6 +79,27 @@ public class AttendanceDao {
 		map.put("lectureNo2", lectureNo2);
 		map.put("studentId2", studentId2);
 		return session.selectList(namespace+"studentAttendance", map);
+	}
+	
+	// 출석날짜 저장하기 전에 우선 강의번호로 출결 등록 날짜 조회
+	public Code selectLastDay(String codeType) {
+		return session.selectOne("codeTable.selectCodeName", codeType);
+	}
+	
+	// 코드 테이블 시퀀스 Number
+	public int selectNextNo() {
+		return session.selectOne("codeTable.selectNextNo");
+	}
+	
+	// 코드 테이블에 강의별 출석 등록 최종 날짜 저장
+	public int insertAttendanceRegisterLastDayDao(Code code) {
+		System.out.println("궁금 "+code);
+		return session.insert("codeTable.insertAttendanceDay", code);
+	}
+	
+	// 코드 테이블에 출결 등록 날짜 수정
+	public int updateAttendanceDayDao(Code code) {
+		return session.update("codeTable.updateAttendanceDay", code);
 	}
 	
 }

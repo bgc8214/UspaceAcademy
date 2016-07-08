@@ -36,9 +36,10 @@ function effect(){
 				<td>${lectureList.lectureStartDate } ~ ${lectureList.lectureEndDate }</td>
 				<td align="center">${lectureList.lectureDay }</td>
 				<td>${lectureList.lectureStartTime }시 ~ ${lectureList.lectureEndTime }시</td>
+				
 				<td align="center"><span class="current">${lectureList.lectureCurrentStudent }</span> / <span class="total">${lectureList.lectureTotalStudent }</span></td>
 				<td align="center"><a href="/UspaceAcademy/attendance/attendanceSearch.do?lectureNo=${lectureList.lectureNo}&lectureStartDate=${lectureList.lectureStartDate}
-				&lectureEndDate=${lectureList.lectureEndDate}"><button>출석보기</button></a></td>
+				&lectureEndDate=${lectureList.lectureEndDate}&lectureDay=${lectureList.lectureDay}"><button class="btn btn-success">출석보기</button></a></td>
 			</tr>
 	</c:forEach>
 </tbody>
