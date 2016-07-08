@@ -12,6 +12,21 @@
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+	//폼체크
+	 $("#ok").on("click",function(){
+		 	 	if(!$("input[name=reviewTitle]").val()){
+		 			alert("제목을 입력하세요");
+		 			return false;
+		 		}
+		 		if($("textarea[name=reviewContent]").val()==""){
+		 			alert("내용을 입력하세요");
+		 			return false;
+		 		}
+		 	});
+		 });
+	
+
+	
 	$("#lectureSubject").on("change",function(){
 		var tmp = $(this);
 		$.ajax({
@@ -33,9 +48,6 @@ $(document).ready(function(){
 			}
 		})
 	})
-});
-
-
 </script>
 
 
@@ -89,7 +101,7 @@ $(document).ready(function(){
 
 		</tbody>	
 	</table> 
-	<input type="submit" value="후기 수정 완료">
+	<input id="ok" type="submit" value="후기 수정 완료">
 	<input type="reset" value="초기화"/> 
 </form>
 

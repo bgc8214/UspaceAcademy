@@ -14,7 +14,6 @@ create table code_table(
 -- 관리자
 drop table administrator;
 create table administrator(
-	administrator_id varchar2(50) primary key,
 	administrator_password varchar2(50) not null
 );
 insert into ADMINISTRATOR('admin','1234');
@@ -139,7 +138,7 @@ insert into lecture values(1, '수학고등3', '설ㅇ', '0515', '0516', '0420',
 insert into lecture values(2, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 insert into lecture values(3, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
 insert into lecture values(4, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
-insert into lecture values(6, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'id-12');
+insert into lecture values(6, '수학고등3', '설ㅇ', '0515', '0516', '0420', '0821', '0822', 11, 2, 3, '수학', 'teacher1');
 
 
 

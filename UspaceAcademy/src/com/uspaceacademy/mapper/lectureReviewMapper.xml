@@ -177,6 +177,8 @@
 	<!--  강의과목으로 검색 lectureSubject / 강의리스트페이징헬퍼 -->
 	<!--  내용으로 검색 reviewContent / 강의리스트페이징-->
 	<!--  내용으로 검색 reviewContent / 강의리스트페이징헬퍼 -->
+	<!--  강의명으로 검색 lectureSubject / 강의리스트페이징-->
+	<!--  강의명으로 검색 lectureSubject / 강의리스트페이징헬퍼 -->
 	
 	
 	
@@ -226,9 +228,31 @@
 			SELECT count(review_no)
 				FROM review_board
 				WHERE review_title like '%'||#{reviewTitle}||'%'
-				</select>		
-			
-			
+				</select>	
+	
+		<!-- ***************************************************************************************************** -->		
+				
+	<!--  14. 강의명으로 검색 lectureTitle / 강의리스트페이징-->
+	<select id="selectPagingLectureTitle"  parameterType="map" resultMap="lectureReview-basic">
+	SELECT <include refid="lecture-review-columns"/>
+	FROM(
+		SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="lecture-review-columns"/>
+		FROM(
+			  SELECT <include refid="lecture-review-columns"/>
+			  FROM review_board
+			  WHERE lecture_title  like  '%'||#{lectureTitle}||'%'
+			  ORDER BY review_no DESC
+			  )
+			)
+			WHERE page=#{page}
+	</select>
+	
+	<!--  15. 강의명으로 검색 lectureTitle / 강의리스트페이징헬퍼 -->				
+	<select id="selectCountLectureTitle" resultType="_int">
+			SELECT count(review_no)
+			FROM review_board
+			WHERE lecture_title  like  '%'||#{lectureTitle}||'%'
+	</select>			
 			
 <!-- 위에 검색처리************************************************************************************************************************************************ -->	
 	

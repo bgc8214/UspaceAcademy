@@ -7,488 +7,467 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.InquiryService;
 import com.uspaceacademy.validaotor.InquiryValidator;
-import com.uspaceacademy.vo.Code;
 import com.uspaceacademy.vo.Comment;
 import com.uspaceacademy.vo.Inquiry;
 import com.uspaceacademy.vo.Student;
+import com.uspaceacademy.vo.Teacher;
 
 @Controller
 @RequestMapping("/inquiry")
-public class InquiryController
-{
-	private String code;
-	private String value;
+public class InquiryController {
 	
 	@Autowired
 	private InquiryService service;
 	
-	//1:1문의 전체 목록
-	@RequestMapping("/inquiryList")
-	public ModelAndView inquiryList(@RequestParam(defaultValue="1") int page){
-
-		Map map = service.getInquiryList(page);
-		
-		map.put("page", page);
-		
-		return new ModelAndView("inquiry/inquiry_list.tiles", map);			
-	}
-	
-	//1:1문의 전체목록에서 조회할 글을 눌렀을 때 상세페이지 조회하기. 
-	@RequestMapping("/selectJoinByAdvancedNo")
-	public ModelAndView selectJoinByAdvancedNo(int advancedNo, String advancedSecret, HttpSession session){
-		String secret = advancedSecret.split(",")[0];
-		String advancedType = "1:1문의";
-		List codeList = service.selectByCodeName(advancedType);		
-		Object member = session.getAttribute("memberType");	
-		
-		System.out.println("아예 넘어오지도 않네");
-		
-		
-		Inquiry selectInquiry1 = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-		int advancedHit1 = selectInquiry1.getAdvancedHit();
-		System.out.println("hit1: " + advancedHit1);
-
-//		List<Comment> commentList = selectInquiry1.getCommentList();
-		
-//		if(commentList)
-		
-//		System.out.println("memberType = " + member);
-//		System.out.println("advancedNo = " + advancedNo);
-//		System.out.println("advancedSecret = " + advancedSecret);
-		
-		//비밀글이 아닌 경우(모든 사용자 조회 가능)
-		if(secret.equals("0")||secret.equals(null)){
-			System.out.println("000");
-			Inquiry selectInquiry = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-			int advancedHit = selectInquiry.getAdvancedHit();
-			System.out.println("hit: " + advancedHit);
-			selectInquiry.setAdvancedHit(++advancedHit);
-			service.updateHit(selectInquiry);			
-//			List<Comment> commentList = selectInquiry.getCommentList();
-			
-			HashMap map = new HashMap<>();
-			map.put("inquiryDetail", selectInquiry);
-//			map.put("commentList", commentList);
-			
-			return new ModelAndView("inquiry/inquiry_detail.tiles", map);
-
-		}
-		
-		//비밀글인 경우
-		else if(secret.equals("1")){
-			System.out.println("111");
-			
-			member = session.getAttribute("memberType");			
-			
-			if(member.equals("student")){
-				Student student = (Student)session.getAttribute("login_info");
-				Inquiry findInquiry = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-				String id = findInquiry.getAdvancedId();
-
-				//비밀글에서 글쓴이가 맞는 경우
-				if(student.getStudentId().equals(id)){
-					Inquiry selectInquiry = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-					int advancedHit = selectInquiry.getAdvancedHit();
-					selectInquiry.setAdvancedHit(++advancedHit);
-					service.updateHit(selectInquiry);				
-					
-//					List<Comment> commentList = selectInquiry.getCommentList();
-					HashMap map = new HashMap<>();
-					map.put("inquiryDetail", selectInquiry);
-//					map.put("commentList", commentList);
-					
-					return new ModelAndView("inquiry/inquiry_detail.tiles", map);			
-				}			
-			
-				//비밀글에서 글쓴이가 아닌 경우
-				else{
-					return new ModelAndView("/inquiry/inquiryList.do");				
-				}
-			}
-			
-			//관리자인 경우
-			else if(member.equals("administrator")){
-				Inquiry selectInquiry = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-				int advancedHit = selectInquiry.getAdvancedHit();
-				selectInquiry.setAdvancedHit(++advancedHit);
-				service.updateHit(selectInquiry);
-				
-//				List<Comment> commentList = selectInquiry.getCommentList();
-				HashMap map = new HashMap<>();
-				map.put("inquiryDetail", selectInquiry);
-//				map.put("commentList", commentList);
-				
-				return new ModelAndView("inquiry/inquiry_detail.tiles", map);				
-			}
-			
-/*			//비회원인 경우
-			if(member.equals(null)){
-				return new ModelAndView("/inquiry/inquiryList.do");
-			}*/
-			
-			else
-				return new ModelAndView("/inquiry/inquiryList.do");
-		}		
-		else
-			return new ModelAndView("main.tiles");
-	}
-	
-	
-	
-	@RequestMapping("/selectByAdvancedNo")
-	public ModelAndView selectByAdvancedNo(int advancedNo, String advancedSecret, HttpSession session){
-		advancedSecret = advancedSecret.split(",")[0];
-		String advancedType = "1:1문의";
-	
-		Object member = session.getAttribute("memberType");			
-		
-//		System.out.println("advancedNo = " + advancedNo);
-//		System.out.println("advancedSecret = " + advancedSecret);
-		
-		//비밀글이 아닌 경우(모든 사용자 조회 가능)
-		if(advancedSecret.equals("0")||advancedSecret.equals(null)){
-
-			Inquiry selectInquiry = service.selectByAdvancedNo(advancedNo);
-			int advancedHit = selectInquiry.getAdvancedHit();
-			selectInquiry.setAdvancedHit(++advancedHit);
-			service.updateHit(selectInquiry);			
-			
-			return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", selectInquiry);
-		}
-		
-		//비밀글인 경우
-		else if(advancedSecret.equals("1")){
-			System.out.println("111");
-			
-			member = session.getAttribute("memberType");			
-			
-			if(member.equals("student")){
-				Student student = (Student)session.getAttribute("login_info");
-				Inquiry findInquiry = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-				String id = findInquiry.getAdvancedId();
-
-				//비밀글에서 글쓴이가 맞는 경우
-				if(student.getStudentId().equals(id)){
-					Inquiry selectInquiry = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-					int advancedHit = selectInquiry.getAdvancedHit();
-					selectInquiry.setAdvancedHit(++advancedHit);
-					service.updateHit(selectInquiry);		
-					
-					return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", selectInquiry);			
-				}			
-			
-				//비밀글에서 글쓴이가 아닌 경우
-				else{
-					return new ModelAndView("/inquiry/inquiryList.do");				
-				}
-			}
-			
-			//관리자인 경우
-			else if(member.equals("administrator")){
-				Inquiry selectInquiry = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-				int advancedHit = selectInquiry.getAdvancedHit();
-				selectInquiry.setAdvancedHit(++advancedHit);
-				service.updateHit(selectInquiry);
-				
-				return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", selectInquiry);				
-			}
-			
-/*			//비회원인 경우
-			if(member.equals(null)){
-				return new ModelAndView("/inquiry/inquiryList.do");
-			}*/
-			
-			else
-				return new ModelAndView("/inquiry/inquiryList.do");
-		}		
-		else
-			return new ModelAndView("main.tiles");
-	}
-	
-
-	
-	//1:1문의 등록폼
-	@RequestMapping("/codeList.do")
-	public ModelAndView selectCodeName() {
-		String advancedType = "1:1문의";
-		
-		return new ModelAndView("inquiry/insert_inquiry.tiles", "advancedType", advancedType);
-	}
-	
-	//1:1문의 등록하기	
-//	String advancedTitle, String advancedContent, String codeName,
-	@RequestMapping("/insertInquiry")
-	public String insertInquiry(Inquiry inquiry, String secret, HttpSession session, BindingResult errors){	
-		System.out.println("secret이 뭘까? "+secret);
-		
-		//비밀글인 경우
-		if(secret.equals("true")){
-			Object member = session.getAttribute("memberType");
-			
-			//학생인 경우
-			if(member.equals("student")){
-				int advancedNo = service.increaseAdvancedNo();
-				String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-		
-				Student student = (Student)session.getAttribute("login_info");
-				String advancedId = student.getStudentId();
-				
-				inquiry = new Inquiry(advancedNo, "1", inquiry.getAdvancedTitle(), inquiry.getAdvancedContent(), advancedDate, 0, advancedId, "1:1문의");
-				System.out.println(inquiry);
-				
-				InquiryValidator validator = new InquiryValidator();
-				validator.validate(inquiry, errors);
-				
-				//에러가 났을 경우
-				if (errors.hasErrors())
-				{
-					return "/inquiry/codeList.do";
-				}
-				
-				service.insertInquiry(inquiry);		
-				
-	//	//		return "/inquiry/selectByAdvancedNo.do?advancedNo="+inquiry.getAdvancedNo()+"&advancedSecret="+inquiry.getAdvancedSecret();
-				return "redirect:/inquiry/inquiryRedirect.do?advancedNo="+inquiry.getAdvancedNo()+"&advancedSecret="+inquiry.getAdvancedSecret()
-				+"&advancedType="+inquiry.getAdvancedType();
-			}
-			
-			//관리자인 경우
-			if(member.equals("administrator")){
-				int advancedNo = service.increaseAdvancedNo();
-				String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-				
-				inquiry = new Inquiry(advancedNo, "1", inquiry.getAdvancedTitle(), inquiry.getAdvancedContent(), advancedDate, 0, "administrator", "1:1문의");
-				System.out.println(inquiry);
-				
-				InquiryValidator validator = new InquiryValidator();
-				validator.validate(inquiry, errors);
-				
-				//에러가 났을 경우
-				if (errors.hasErrors())
-				{
-					return "/inquiry/codeList.do";
-				}
-				
-				service.insertInquiry(inquiry);		
-				
-	//	//		return "/inquiry/selectByAdvancedNo.do?advancedNo="+inquiry.getAdvancedNo()+"&advancedSecret="+inquiry.getAdvancedSecret();
-				return "redirect:/inquiry/inquiryRedirect.do?advancedNo="+inquiry.getAdvancedNo()+"&advancedSecret="+inquiry.getAdvancedSecret()
-				+"&advancedType="+inquiry.getAdvancedType();
-			}
-		}
-		
-		//비밀글이 아닌 경우
-		else{
-			Object member = session.getAttribute("memberType");
-			
-			//학생인 경우
-			if(member.equals("student")){						
-				int advancedNo = service.increaseAdvancedNo();
-				String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-				Student student = (Student)session.getAttribute("login_info");
-				String advancedId = student.getStudentId();
-				
-				inquiry = new Inquiry(advancedNo, "0", inquiry.getAdvancedTitle(), inquiry.getAdvancedContent(), advancedDate, 0, advancedId, inquiry.getAdvancedType());
-				System.out.println(inquiry);
-				
-				InquiryValidator validator = new InquiryValidator();
-				validator.validate(inquiry, errors);
-				
-				//에러가 났을 경우
-				if (errors.hasErrors())
-				{
-					return "/inquiry/codeList.do";
-				}
-				
-				service.insertInquiry(inquiry);
-				
-				return "redirect:/inquiry/inquiryRedirect.do?advancedNo="+inquiry.getAdvancedNo()+"&advancedSecret="+inquiry.getAdvancedSecret()
-				+"&advancedType="+inquiry.getAdvancedType();
-			}
-			
-			//관리자인 경우
-			if(member.equals("administrator")){						
-				int advancedNo = service.increaseAdvancedNo();
-				String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-				
-				inquiry = new Inquiry(advancedNo, "0", inquiry.getAdvancedTitle(), inquiry.getAdvancedContent(), advancedDate, 0, "administrator", inquiry.getAdvancedType());
-				System.out.println(inquiry);
-				
-				InquiryValidator validator = new InquiryValidator();
-				validator.validate(inquiry, errors);
-				
-				//에러가 났을 경우
-				if (errors.hasErrors())
-				{
-					return "/inquiry/codeList.do";
-				}
-				
-				service.insertInquiry(inquiry);
-				
-				return "redirect:/inquiry/inquiryRedirect.do?advancedNo="+inquiry.getAdvancedNo()+"&advancedSecret="+inquiry.getAdvancedSecret()
-				+"&advancedType="+inquiry.getAdvancedType();
-			}			
-		}
-		return "main.tiles";
-	}	
-	
-	//등록 redirect 처리
-	@RequestMapping("/inquiryRedirect")
-	public ModelAndView inquiryRedirect(int advancedNo, @RequestParam(defaultValue="1") int page, String advancedSecret) // 새로고침 시 더 등록 안되도록 redirect 처리
-	{
-		Map map = service.getInquiryList(page);
-//		map.put("advancedSecret", advancedSecret);
-//		map.put("advancedId", advancedId);
-//		map.put(advancedType, advancedType);
-		return new ModelAndView("/inquiry/selectJoinByAdvancedNo.do?advancedNo="+advancedNo+"&advancedSecret="+advancedSecret);
-	}	
-
-	//1:1문의 수정폼
-	@RequestMapping("/updateByAdvancedNo")
-	public ModelAndView updateByAdvancedNo(int advancedNo){
-
-		Inquiry inquiryDetail = service.selectByAdvancedNo(advancedNo);
-		return new ModelAndView("inquiry/inquiry_modify.tiles", "inquiryDetail", inquiryDetail);
-	}
-	
-	//1:1문의 수정하기
-	@RequestMapping("/updateInquiry")
-	public ModelAndView updateInquiry(int advancedNo, String advancedSecret, String advancedTitle, String advancedContent){
-		String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
-		Inquiry inquiryDetail = new Inquiry(advancedNo, advancedSecret, advancedTitle, advancedContent, advancedDate);
-		service.updateInquiry(inquiryDetail);
-		return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", inquiryDetail);
-	}
-	
-	//1:1문의 삭제하기
-	@RequestMapping("/deleteByAdvancedNo")
-	public String deleteByAdvancedNo(int advancedNo, String advancedType){
-		System.out.println("삭제: " + advancedType);
-		String codeName = "1:1문의";
-		List codeList = service.selectByCodeName(codeName);
-		Code code = (Code)codeList.get(0);
-		String getCodeName = code.getCodeName();
-	
-		service.deleteByAdvancedNo(advancedNo);
-		return "inquiry/inquiry_list.tiles";
-
-	}
-	
-	//1:1문의 제목으로 검색하기
-	@RequestMapping("/selectByTitle")
-	public ModelAndView selectByTitle(@RequestParam(defaultValue="1") int page, String advancedTitle){
-//		System.out.println(advancedType);
-		System.out.println(advancedTitle);
-		Map map = service.selectByTitle(advancedTitle, "1:1문의", page);
-		map.put("page", page);
-		map.put("advancedTitle", advancedTitle);
-		
-		return new ModelAndView("inquiry/inquiry_title_search.tiles", map);
-	}
-	
-	@RequestMapping("/searchByTitle")
-	public ModelAndView searchByTitle(String title){
-		System.out.println(title);
-		Map map = service.searchByTitle(title);
-		map.put("title", title);
-		
-		return new ModelAndView("inquiry/inquiry_title_search.tiles", map);
-	}
-	
-	//1:1문의  댓글 등록
+	//댓글 작성
 	@RequestMapping("/insertComment")
-	public ModelAndView insertComment(String commentContent, int advancedNo, HttpSession session){
+	public ModelAndView insertComment(String commentContent, int advancedNo2, HttpSession session){
+		
 		int commentNo = service.increaseCommentNo();
 		String commentDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
 		String commentType = "1:1문의댓글";
-		String advancedType = "1:1문의";
+		
 		Object member = session.getAttribute("memberType");
 		
 		if(member.equals("student")){
+			
 			Student advancedId = (Student)session.getAttribute("login_info");
 			String commentWriter = advancedId.getStudentId();
 			
-			Comment insertComment = new Comment(commentNo, commentContent, commentDate, commentWriter, commentType, advancedNo);
-			service.insertComment(insertComment);
-			Inquiry inquiry = service.selectJoinByAdvancedNo(advancedType, advancedNo);		
+			Comment insertComment = new Comment(commentNo, commentContent, commentDate, commentWriter, commentType, advancedNo2);
+			int c = service.insertComment(insertComment);
+			
+			List commentList = service.commentList(advancedNo2);
+			
+			Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo2);
 			
 			HashMap map = new HashMap<>();
 			map.put("inquiryDetail", inquiry);
-//			map.put("commentList", inquiry.getCommentList());		
+			map.put("commentList", commentList);		
 			
-			return new ModelAndView("inquiry/inquiry_detail.tiles", map);
+			return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+			+ inquiry.getAdvancedSecret(), map);
 		}
-		else if(member.equals("administrator")){			
-			Comment insertComment = new Comment(commentNo, commentContent, commentDate, "administrator", commentType, advancedNo);
+		
+		else if(member.equals("teacher")){	
+			
+			Teacher advancedId = (Teacher)session.getAttribute("login_info");
+			String commentWriter = advancedId.getTeacherId();		
+		
+			Comment insertComment = new Comment(commentNo, commentContent, commentDate, commentWriter, commentType, advancedNo2);
 			service.insertComment(insertComment);
-			Inquiry inquiry = service.selectJoinByAdvancedNo(advancedType, advancedNo);		
+			List commentList = service.commentList(advancedNo2);
+			
+			Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo2);
 			
 			HashMap map = new HashMap<>();
 			map.put("inquiryDetail", inquiry);
-//			map.put("commentList", inquiry.getCommentList());		
+			map.put("commentList", commentList);		
 			
-			return new ModelAndView("inquiry/inquiry_detail.tiles", map);
+			return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+			+ inquiry.getAdvancedSecret(), map);
 		}
+		
+		else if(member.equals("administrator")){	
+			
+			Comment insertComment = new Comment(commentNo, commentContent, commentDate, "administrator", commentType, advancedNo2);
+			service.insertComment(insertComment);			
+			List commentList = service.commentList(advancedNo2);
+			
+			Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo2);
+			
+			System.out.println("렉쳐: " + inquiry);
+			System.out.println("인서트코멘트: " + insertComment);
+			
+			HashMap map = new HashMap<>();
+			map.put("inquiryDetail", inquiry);
+			map.put("commentList", commentList);
+			
+			return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+			+ inquiry.getAdvancedSecret(), map);
+		}
+		
 		else
 			return new ModelAndView("main.tiles");
 	}
 	
-	//1:1문의  댓글 수정폼
+	//댓글 수정폼
 	@RequestMapping("/updateCommentForm")
-	public ModelAndView updateCommentForm(int commentNo){
-		String commentType = "1:1문의";
-//		Comment comment = service.selectByCommentNo(commentType, commentNo);
-//		return new ModelAndView("inquiry/inquiry_modify.tiles", "commentList", comment);
-		return new ModelAndView("inquiry/inquiry_modify.tiles");
-	}
+	public ModelAndView updateCommentForm(int commentNo, int advancedNo2){
+		
+		Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo2);
+		Comment comment = service.selectByCommentNo(commentNo, advancedNo2);
+		List commentList = service.commentList(advancedNo2);
+		
+		HashMap map = new HashMap<>();
+		map.put("inquiryDetail", inquiry);
+		map.put("comment", comment);
+		map.put("commentList", commentList);
+
+		return new ModelAndView("inquiry/comment_detail.tiles", map);
+	}	
 	
-	//1:1문의  댓글
+	//댓글 수정하기
 	@RequestMapping("/updateComment")
-	public ModelAndView updateComment(int commentNo, String commentContent, int advancedNo, HttpSession session){
-		String advancedType = "1:1문의";
+	public ModelAndView updateComment(int commentNo, int advancedNo2, String commentContent){
 		String commentType = "1:1문의댓글";
 		String commentDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
 		
-		Comment comment = new Comment(commentNo, commentContent, commentDate);		
-		service.updateComment(comment);
+		Inquiry lecturInquiry = service.selectByAdvancedNoWithComment(advancedNo2);
+
+		Comment comment = new Comment(commentNo, commentContent, commentDate, commentType, advancedNo2);
+		System.out.println(comment);
 		
-		Inquiry inquiryDetail = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-//		List commentList = inquiryDetail.getCommentList();	
+		int updateComment = service.updateComment(comment);	
+		System.out.println(updateComment);
+
+		return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret=" + 
+		lecturInquiry.getAdvancedSecret());
+	}	
+	
+	//댓글 삭제하기
+	@RequestMapping("/deleteComment")
+	public ModelAndView deleteComment(int commentNo, int advancedNo2){
+		
+		Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo2);
+		List commentList = service.commentList(advancedNo2);
+		
+		service.deleteComment(commentNo, advancedNo2);		
 		
 		HashMap map = new HashMap<>();
-		map.put("inquiryDetail", inquiryDetail);
-//		map.put("commentList", commentList);
+		map.put("inquiryDetail", inquiry);
+		map.put("commentList", commentList);
+
+		return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+			+ inquiry.getAdvancedSecret(), map);
+	}	
+	
+	
+	//게시판 전체 목록
+	@RequestMapping("/inquiryList")
+	public ModelAndView inquiryList(@RequestParam(defaultValue="1") int page){	
+		Map map = service.selectAllByPaging(page);
+		map.put("page", page);
 		
-		return new ModelAndView("inquiry/inquiry_detail", map);
+		return new ModelAndView("inquiry/inquiry_list.tiles", map);
 	}
 	
-	//1:1문의  댓글 삭제
-	@RequestMapping("/deleteComment")
-	public ModelAndView deleteComment(int commentNo, int advancedNo){
-		String advancedType = "1:1문의";
-		String commentType = "1:1문의댓글";
-		Inquiry inquiryDetail = service.selectJoinByAdvancedNo(advancedType, advancedNo);
-//		List commentList = inquiryDetail.getCommentList();		
-				
-//		service.deleteComment(commentType, commentNo);
-		
-		HashMap map = new HashMap<>();
-		map.put("inquiryDetail", inquiryDetail);
-//		map.put("commentList", commentList);
+	//전체목록에서 조회할 글을 눌렀을 때 상세페이지 조회. 
+	@RequestMapping("/selectByAdvancedNoWithComment")
+	public ModelAndView selectByAdvancedNoWithComment(int advancedNo, String advancedSecret, HttpSession session){
+		String secret = advancedSecret.split(",")[0];
 
+		Object member = session.getAttribute("memberType");	
 		
-		return new ModelAndView("/inquiry/inquiry_detail.tiles", map);
+		System.out.println("비밀: " + advancedSecret);
+		
+		//비밀글일 경우
+		if(secret.equals("true")){
+			member = session.getAttribute("memberType");
+			
+			//학생일 경우
+			if(member.equals("student")){
+				Student student = (Student)session.getAttribute("login_info");
+				Inquiry findInquiry = service.selectByAdvancedNoWithComment(advancedNo);
+				String id = findInquiry.getAdvancedId();
+				
+				//비밀글에서 글쓴이가 맞는 경우
+				if(student.getStudentId().equals(id)){
+					
+					Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo);
+					
+					int advancedHit = inquiry.getAdvancedHit();
+					inquiry.setAdvancedHit(++advancedHit);				
+					service.updateAdvancedHit(inquiry);
+					
+					List commentList = service.commentList(advancedNo);
+					
+					Map map = new HashMap();
+					map.put("lectureInquiryDetail", inquiry);
+					map.put("commentList", commentList);
+					
+					return new ModelAndView("inquiry/inquiry_detail.tiles", map);
+				}
+				
+				//비밀글에서 글쓴이가 아닌 경우
+				else
+					return new ModelAndView("/inquiry/inquiryList.do");	
+			}
+			
+			//강사, 관리자일 경우
+			else if(member.equals("teacher")||member.equals("administrator")){
+				
+				Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo);
+				
+				int advancedHit = inquiry.getAdvancedHit();
+				inquiry.setAdvancedHit(++advancedHit);				
+				service.updateAdvancedHit(inquiry);
+				
+				List commentList = service.commentList(advancedNo);
+				
+				System.out.println("advancedNo: " + advancedNo);
+				System.out.println("코멘트리스트2: " + commentList);
+				
+				Map map = new HashMap();
+				map.put("inquiryDetail", inquiry);
+				map.put("commentList", commentList);
+				
+				return new ModelAndView("inquiry/inquiry_detail.tiles", map);				
+			}			
+			
+			else
+				return new ModelAndView("main.tiles");
+		}
+		
+		//비밀글이 아닐 경우
+		else if(secret.equals("false")){
+			
+			member = session.getAttribute("memberType");			
+			
+			//학생, 강사, 관리자일 경우
+			if(member.equals("student")||member.equals("teacher")||member.equals("administrator")){
+				
+				Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo);
+				
+				int advancedHit = inquiry.getAdvancedHit();
+				inquiry.setAdvancedHit(++advancedHit);				
+				service.updateAdvancedHit(inquiry);
+				
+				List commentList = service.commentList(advancedNo);
+				
+				System.out.println("코멘트리스트3: " + commentList);
+				
+				Map map = new HashMap();
+				map.put("inquiryDetail", inquiry);
+				map.put("commentList", commentList);
+				
+				return new ModelAndView("inquiry/inquiry_detail.tiles", map);
+			}
+			
+			else
+				return new ModelAndView("main.tiles");
+		}		
+		
+		else
+			return new ModelAndView("main.tiles");
+	}
+	
+	//글 등록폼
+	@RequestMapping("/registerInquiryForm.do")
+	public ModelAndView registerInquiryForm() {
+		return new ModelAndView("inquiry/insert_inquiry.tiles");
+	}
+	
+	//글 등록하기
+//	String advancedTitle, String advancedContent, String codeName,
+	@RequestMapping("/registerInquiry")
+	public String registerInquiry(@RequestParam(defaultValue="1") int page, Inquiry inquiry, String advancedSecret, HttpSession session, BindingResult errors){
+		System.out.println("시크릿: " + advancedSecret);
+		
+		//비밀글인 경우
+		if(advancedSecret.equals("true")){
+			
+			int advancedNo = service.increaseAdvancedNo();
+			String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
+			Student student = (Student)session.getAttribute("login_info");
+			String advancedId = student.getStudentId();
+			String advancedType = "1:1문의";
+			
+			inquiry = new Inquiry(advancedNo, "true", inquiry.getAdvancedTitle(), inquiry.getAdvancedContent(),
+					advancedDate, 0, advancedId, advancedType);
+	
+			InquiryValidator validator = new InquiryValidator();
+			validator.validate(inquiry, errors);
+			
+			//에러가 났을 경우
+			if (errors.hasErrors()){
+				return "/inquiry/registerInquiryForm.do";
+			}
+			
+			service.insertInquiry(inquiry);
+			
+//			service.selectAllByPaging(page, lectureNo2);
+			
+//			return "redirect:/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + lectureInquiry.getAdvancedNo()
+//			+ "&lectureNo2=" + lectureInquiry.getLectureNo2();
+			return "redirect:/inquiry/registerInquiryRedirect.do?advancedNo=" + inquiry.getAdvancedNo();
+		}
+		
+		//공개글인 경우
+		else if(advancedSecret.equals("false")){
+			
+			int advancedNo = service.increaseAdvancedNo();
+			String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
+			Student student = (Student)session.getAttribute("login_info");
+			String advancedId = student.getStudentId();
+			String advancedType = "1:1문의";
+			
+			inquiry = new Inquiry(advancedNo, "false", inquiry.getAdvancedTitle(), inquiry.getAdvancedContent(),
+					advancedDate, 0, advancedId, advancedType);
+	
+			InquiryValidator validator = new InquiryValidator();
+			validator.validate(inquiry, errors);
+			
+			//에러가 났을 경우
+			if (errors.hasErrors())
+			{
+				return "/inquiry/registerInquiryForm.do";
+			}
+			
+			service.insertInquiry(inquiry);
+			
+//			service.selectAllByPaging(page, lectureNo2);
+			
+//			return "redirect:/lectureInquiry/selectByAdvancedNo.do?advancedNo=" + lectureInquiry.getAdvancedNo()
+//			+ "&lectureNo2=" + lectureInquiry.getLectureNo2();
+//			return "redirect:/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + lectureInquiry.getAdvancedNo() + "&advancedSecret="
+//			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureInquiry.getLectureNo2();
+			return "redirect:/inquiry/registerInquiryRedirect.do?advancedNo=" + inquiry.getAdvancedNo();
+		}
+		else 
+			return "main.tiles";		
+	}	
+	
+	//등록 redirect 처리
+	@RequestMapping("/registerInquiryRedirect")
+	public ModelAndView registerInquiryRedirect(int advancedNo, @RequestParam(defaultValue="1") int page){
+		Inquiry inquiryDetail = service.selectByAdvancedNoWithComment(advancedNo);	
+		
+		System.out.println("re No: " + advancedNo);
+
+		return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", inquiryDetail);
+	}
+	
+	//등록, 수정했을 때 상세페이지 보기
+	@RequestMapping("/selectByAdvancedNo")
+	public ModelAndView selectByAdvancedNo(int advancedNo){
+		
+		Inquiry inquiry = service.selectByAdvancedNo(advancedNo);
+		String advancedSecret = inquiry.getAdvancedSecret().split(",")[0];
+		
+		inquiry.setAdvancedSecret(advancedSecret);
+		
+		System.out.println("상세: " + inquiry.getAdvancedSecret());
+		
+		return new ModelAndView("inquiry/inquiry_insert_detail.tiles", "inquiryDetail", inquiry);
 	}
 
+	//수정폼
+	@RequestMapping("/updateInquiryForm")
+	public ModelAndView updateInquiryForm(@RequestParam(defaultValue="1") int page, int advancedNo){
+		
+		Inquiry inquiryDetail = service.selectByAdvancedNo(advancedNo);
+		
+		return new ModelAndView("inquiry/inquiry_modify.tiles", "inquiryDetail", inquiryDetail);
+	}
+	
+	//수정하기
+	@RequestMapping("/updateInquiry")
+	public String updateInquiry(@RequestParam(defaultValue="1") int page, @ModelAttribute("updateInquiry") @Valid Inquiry updateInquiry, BindingResult errors){
+		String secret = updateInquiry.getAdvancedSecret();
+
+		//비밀글인 경우
+		if(secret.equals("true")){
+		
+			String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
+			String advancedType = "1:1문의";
+			
+			updateInquiry = new Inquiry(updateInquiry.getAdvancedNo(), "true", updateInquiry.getAdvancedTitle(), updateInquiry.getAdvancedContent(), advancedDate, advancedType);
+			
+			InquiryValidator validator = new InquiryValidator();
+			validator.validate(updateInquiry, errors);
+			
+			//에러가 났을 경우
+			if (errors.hasErrors())
+			{
+				return "/inquiry/updateInquiryForm.do?advancedNo=" + updateInquiry.getAdvancedNo();
+			}
+			
+			service.updateInquiry(updateInquiry);				
+			
+			return "redirect:/inquiry/updateInquiryRedirect.do?advancedNo=" + updateInquiry.getAdvancedNo();
+		}
+		
+		//공개글인 경우
+		if(secret.equals("false")){
+		
+			String advancedDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
+			String advancedType = "1:1문의";
+			
+			updateInquiry = new Inquiry(updateInquiry.getAdvancedNo(), "false", updateInquiry.getAdvancedTitle(), updateInquiry.getAdvancedContent(), advancedDate, advancedType);
+			
+			InquiryValidator validator = new InquiryValidator();
+			validator.validate(updateInquiry, errors);
+			
+			//에러가 났을 경우
+			if (errors.hasErrors())
+			{
+				return "/inquiry/updateInquiryForm.do?advancedNo=" + updateInquiry.getAdvancedNo();
+			}
+			
+			service.updateInquiry(updateInquiry);				
+			
+			return "redirect:/inquiry/updateInquiryRedirect.do?advancedNo=" + updateInquiry.getAdvancedNo();
+		}
+		else 
+			return "main.tiles";
+	}
+	
+	//수정 redirect 처리
+	@RequestMapping("/updateInquiryRedirect")
+	public ModelAndView updateInquiryRedirect(int advancedNo, @RequestParam(defaultValue="1") int page){
+		Inquiry inquiryDetail = service.selectByAdvancedNoWithComment(advancedNo);	
+		
+		System.out.println("re No: " + advancedNo);
+
+		return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", inquiryDetail);
+	}
+	
+	//삭제하기
+	@RequestMapping("/deleteInquiry")
+	public String deleteInquiry(int advancedNo){
+		
+		service.deleteInquiry(advancedNo);
+
+		return "/inquiry/inquiryList.do";
+	}
+	
+	
+	//키워드로 강의리스트 가져오기
+	@RequestMapping("/searchByKeyword.do")
+	public ModelAndView searchByKeyword(@RequestParam(defaultValue="1") int page, String searchType, String keyword){
+		Map map = new HashMap();
+		if(searchType.equals("advancedTitle")){
+		   map = service.selectTitleByPaging(page, keyword);
+		   map.put("searchType", searchType);
+		   map.put("keyword", keyword);
+
+		}else if(searchType.equals("advancedContent")){
+			map = service.selectContentByPaging(page, keyword);
+			map.put("searchType", searchType);
+			map.put("keyword", keyword);
+		}
+		else{
+//			map = service.getLectureList(page);
+//			List codeList = service.searchCode("teacherSubject");
+//			map.put("page", page);
+//			map.put("codeList", codeList); 
+//			map.put("searchType", searchType);
+//			map.put("keyword", keyword);
+			return new ModelAndView("inquiry/inquiry_list.tiles");
+		}
+		return new ModelAndView("inquiry/inquiry_title_search.tiles", map);
+	}
 }

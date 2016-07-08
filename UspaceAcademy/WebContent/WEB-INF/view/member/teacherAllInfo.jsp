@@ -1,17 +1,21 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#btn").on("click", function() {
-			if(!$("input[name=name]").val()){
-				alert("이름을 입력하세요.");
-				return false;
-			}
-		})
-		$("#remove").on("click", function() {
-			return confirm("강제탈퇴 시키시겠습니까?");
-		})
-	});
+
+$(document).ready(function() {
+	$("#btn").on("click", function() {
+		if(!$("input[name=name]").val()){
+			alert("이름을 입력하세요.");
+			return false;
+		}
+	})
+	
+	$("#remove").on("click", function() {
+		return confirm("강제탈퇴 시키시겠습니까?");
+	})
+});
+
 </script>
 <h3 class="pageTly">모든 강사 정보</h3>
 <hr>
@@ -24,7 +28,6 @@
 			<th>주소</th>
 			<th>강의하는 과목</th>
 			<th>회원 탈퇴</th>
-			<th>과목</th>
 		<tr>
 	</thead>
 	<tbody>
@@ -34,9 +37,9 @@
 				<td align="center">${teacher.teacherEmail}</td>
 				<td align="center">${teacher.teacherPhoneNo}</td>
 				<td align="center">${teacher.teacherAddress}</td>
+
 				<td><a href="/UspaceAcademy/member/selectAllByTeacherId2.do?teacherId=${teacher.teacherId}">${teacher.teacherSubject}</a></td>
-				<td><div id="remove"><a href="/UspaceAcademy/member/deleteTeacherByAdmin.do?teacherId=${teacher.teacherId}"><button>강사 탈퇴</button></a></div></td>
-				<td align="center">${teacher.te	acherSubject}</td>
+				<td><a href="/UspaceAcademy/member/deleteTeacherByAdmin.do?teacherId=${teacher.teacherId}"><button id="remove">강사 탈퇴</button></a></td>
 			</tr>	
 		</c:forEach>
 		
@@ -82,8 +85,8 @@
 <div class="boardBottom" align="center">
 <!-- 학생이름으로 검색  -->
 <form action="/UspaceAcademy/member/searchByteacherName.do">
-	<fieldset>
-		<dd><input type="text" name="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="이름으로 검색" class="btn btn-info"><dd>
-	</fieldset>
+
+<input type="text" name="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="이름으로 검색" class="btn btn-info">
+
 </form>
 </div>

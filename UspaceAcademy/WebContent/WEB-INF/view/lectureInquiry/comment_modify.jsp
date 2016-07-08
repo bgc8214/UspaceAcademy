@@ -4,37 +4,32 @@
 
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
+	
+$(document).ready(effect);
+function effect(){
+	$("tr:eq(2)").css("background-color", "palegreen");
+	$("tr:eq(3)").css("background-color", "sky-blue");
+}
 
-$(document).ready(function(){
-	$("#btn").on("click", function(){
-		$.ajax({
-			"url":"/UspaceAcademy/comment/exInsertComment.do",
-			"type":"POST",
-			"data":"commentContent="+$("#commentContent").val(),
-			"dataType":"text",
-			"success":function(txt){
-/* 				$("#commentContent").val("");
-				$("#commentContent").focus(); */
-				$("#cmtTarget").html(txt);
-			},
-			"error":function(xhr, status, errorMsg){
-				alert("오류가 발생했습니다. " + status + ", " + errorMsg);
-			}
-/* 			"beforeSend":function(){
-				
-			} */
-		})
-	})
-})
+//폼체크
+$("#modify").on("click", function(){
+	if($("textarea[name=commentContent]").val()==""){
+		alert("내용을 입력하세요!");
+		
+		return false;
+	}
+});
 
 </script>
 
-<table border="1">
+<h2 align="center">상세보기</h2>
+
+<table border="" class="table table-bordered">
 	<tr>
 		<td>
-			no: ${requestScope.lectureInquiryDetail.advancedNo}<br>
-			글쓴이: ${requestScope.lectureInquiryDetail.advancedId}<br>
-			글 등록일:${requestScope.lectureInquiryDetail.advancedDate}<br>
+			no: ${requestScope.lectureInquiryDetail.advancedNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			글쓴이: ${requestScope.lectureInquiryDetail.advancedId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			글 등록일:${requestScope.lectureInquiryDetail.advancedDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			조회수: ${requestScope.lectureInquiryDetail.advancedHit}
 		</td>
 	</tr>
@@ -52,16 +47,34 @@ $(document).ready(function(){
 
 <p>
 
-<h2 align="center">댓글 수정</h2>
+<h4 align="center">댓글보기</h4>
+
+<table class="table table-bordered">
+<c:forEach items="${requestScope.commentList}" var="list">
+<%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
+	<tr>
+		<td>
+			<%-- 댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --%>
+			글쓴이: ${list.commentWriter}&nbsp;&nbsp;&nbsp;
+			글 등록일:${list.commentDate}<br>
+			내용:
+			${list.commentContent}<br><br>
+		</td>
+	</tr>
+</c:forEach>
+</table>
+
+<h4 align="center">댓글 수정</h4>
 <form action="/UspaceAcademy/lectureInquiry/updateComment.do" >
+<input type="hidden" value="${requestScope.comment.commentNo}" name="commentNo">
 <input type="hidden" value="${requestScope.lectureInquiryDetail.advancedNo}" name="advancedNo2">
 <input type="hidden" value="${requestScope.lectureInquiryDetail.lectureNo2}" name="lectureNo2">
-<input type="hidden" value="${requestScope.comment.commentNo }" name="commentNo">
+
 	<table>
 		<tr>
-			<td>			
-				<textarea name="commentContent" value="${requestScope.comment.commentContent }"></textarea>
-				<input type="submit" value="수정">
+			<td>
+				<textarea id="commentContent" name="commentContent" cols="50" rows="5"></textarea>
+				<input id="modify" type="submit" value="댓글 입력">
 			</td>
 		</tr>
 	</table>

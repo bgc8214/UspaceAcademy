@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-
 import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.service.MemberService;
 import com.uspaceacademy.validaotor.LectureValidator;
@@ -457,17 +456,5 @@ public class LectureController {
 			
 		}
 		return new ModelAndView("lecture/lecture_list.tiles", map);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	}	
 }

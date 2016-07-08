@@ -72,9 +72,9 @@
 		</tr>
 		</c:if>
 </table>
+
 <p>
 <a href="/UspaceAcademy/attendance/attendanceList.do"><button class="btn btn-info">강의목록</button></a>
 <a href="/UspaceAcademy/attendance/attendanceRedirect.do?startDate=${requestScope.lecture.lectureStartDate}&endDate=${requestScope.lecture.lectureEndDate}&lectureNo=${requestScope.lecture.lectureNo}&lectureDay=${requestScope.lecture.lectureDay}">
 <button class="btn btn-warning">출석수정</button></a>
 
-<p>

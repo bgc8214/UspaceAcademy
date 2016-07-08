@@ -32,34 +32,38 @@ public class LectureInquiryService {
 		return dao.increaseAdvancedNo();
 	}
 	
-	//등록 상세조회
-	public LectureInquiry selectByAdvancedNo(String advancedType, int advancedNo, int lectureNo2){
+	//등록, 수정 상세조회
+	public LectureInquiry selectByAdvancedNo(int advancedNo, int lectureNo2){
+		String advancedType = "강의질문";
 		
 		return dao.selectByAdvancedNo(advancedType, advancedNo, lectureNo2);
 	}
 	
 	//목록 상세조회
-	public LectureInquiry selectByAdvancedNoWithComment(String advancedType, int advancedNo, int lectureNo2){
+	public LectureInquiry selectByAdvancedNoWithComment(int advancedNo, int lectureNo2){
+		String advancedType = "강의질문";
 		
 		return dao.selectByAdvancedNoWithComment(advancedType, advancedNo, lectureNo2);
 	}
 	
 	//조회수
-	public int updateAdvancedHit(LectureInquiry inquiry){
+	public int updateAdvancedHit(LectureInquiry lectureInquiry){
 		
-		return dao.updateAdvancedHit(inquiry);
+		return dao.updateAdvancedHit(lectureInquiry);
 	}
 	
 	
 	
 	//글번호로 댓글 상세조회
-	public List commentList(String advancedType, int advancedNo2){
+	public List commentList(int advancedNo2){
+		String commentType = "강의질문댓글";
 		
-		return dao.commentList(advancedType, advancedNo2);
+		return dao.commentList(commentType, advancedNo2);
 	}
 	
 	//댓글번호로 댓글 상세조회
-	public Comment selectByCommentNo(String commentType, int commentNo, int advancedNo2){
+	public Comment selectByCommentNo(int commentNo, int advancedNo2){
+		String commentType = "강의질문댓글";
 		
 		return dao.selectByCommentNo(commentType, commentNo, advancedNo2);
 	}
@@ -83,7 +87,8 @@ public class LectureInquiryService {
 	}
 	
 	//댓글 삭제하기
-	public int deleteComment(String commentType, int commentNo, int advancedNo2){		
+	public int deleteComment(int commentNo, int advancedNo2){		
+		String commentType = "강의질문댓글";
 		
 		return dao.deleteComment(commentType, commentNo, advancedNo2);
 	}
@@ -96,7 +101,8 @@ public class LectureInquiryService {
 	}
 	
 	//글 삭제하기
-	public int deleteLectureInquiry(String advancedType, int advancedNo, int lectureNo2){
+	public int deleteLectureInquiry(int advancedNo, int lectureNo2){
+		String advancedType = "강의질문";
 		
 		return dao.deleteLectureInquiry(advancedType, advancedNo, lectureNo2);
 	}
@@ -144,18 +150,6 @@ public class LectureInquiryService {
 		map.put("paging", new PagingBean(dao.selectContentCountContents(advancedType, advancedId, lectureNo2), page));
 		
 		return map;
-	}
-	
-	
-	
-	//전체 조회
-	public List<LectureInquiry> selectAllInquirys(){		
-		return dao.selectAllInquirys();
-	}	
-	
-	//코드
-	public List selectCodeName(String codeName) {
-		return dao.selectCodeName(codeName);
 	}
 	
 }

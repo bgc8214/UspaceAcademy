@@ -45,6 +45,8 @@ public class LectureDao {
 	
 	//lecture 등록
 	public int insertLecture(Lecture lecture) {
+		System.out.println("dao11: " + lecture);
+		
 		return session.insert("lecture.insertLecture", lecture);
 	}
 	

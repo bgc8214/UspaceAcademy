@@ -51,9 +51,8 @@
 	<c:if test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentId==lectureListReview.reviewWriterId}">
 <a href="/UspaceAcademy/lectureReview/lecture_review_delete.do?reviewNo=${lectureListReview.reviewNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
 <a href="/UspaceAcademy/lectureReview/lecture_review_modifyForm.do?reviewNo=${lectureListReview.reviewNo}&codeType=teacherSubject"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
-
 	</c:if>
 </span>
-
+<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button>전체목록</button></a>
 <!-- --------------------------------------------------------------------------------------------------------- -->
 

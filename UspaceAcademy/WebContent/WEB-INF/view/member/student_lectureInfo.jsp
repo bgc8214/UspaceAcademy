@@ -18,7 +18,7 @@
 <h3 class="pageTlt">학생의 강의 정보 page</h3>
 <hr>
 
-<table border="3" width="1500" align="center" class="table table-bordered">
+<table border="" width="1500" class="table table-bordered">
 	<thead>
 		<th>강의번호</th>
 		<th>강의</th>
@@ -31,15 +31,19 @@
 	</thead>
 	<tbody id="ex">
 		<c:forEach items="${requestScope.studentLectureInfo}" var="studentInfo">
-			<tr >
+			<tr style="cursor:pointer">
 				<td align="center">${studentInfo.LECTURE_NO}</td>
 				<td align="center">${studentInfo.LECTURE_TITLE}</td>
 				<td align="center">${studentInfo.LECTURE_DAY}</td>
 				<td align="center">${studentInfo.LECTURE_START_DATE}</td>
 				<td align="center">${studentInfo.LECTURE_END_DATE}</td>
 				<td align="center"><a href="/UspaceAcademy/attendance/attendanceInfo.do?lectureNo2=${studentInfo.LECTURE_NO}"><button>출석보기</button></a></td>
-				<td align="center"><a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=${studentInfo.LECTURE_NO}"><button>강의질문하기</button></a></td>
-				<td align="center"><a href="/UspaceAcademy/assignment/assignment_list.do?lectureNo=${studentInfo.LECTURE_NO}"><button>과제게시판</button></a></td>
+				<td align="center">
+					<a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=${studentInfo.LECTURE_NO}&lectureTitle=${studentInfo.LECTURE_TITLE}"><button>강의 질문 게시판</button></a>
+				</td>
+				<td align="center">
+					<a href="/UspaceAcademy/assignment/assignment_list.do?lectureNo=${studentInfo.LECTURE_NO}"><button>과제 게시판</button></a>		
+				</td>
 			</tr>
 		</c:forEach>
 	</tbody>

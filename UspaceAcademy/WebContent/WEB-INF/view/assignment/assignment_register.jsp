@@ -3,7 +3,37 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%><!--  밸리 해주려면 이거선언* -->
+<style type="text/css">
 
+
+</style>
+
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function(){
+	//폼체크
+	$("#ok").on("click", function(){
+		if(!$("input[name=assignmentDeadline]").val()){
+			alert("마감일을 입력하세요!");
+			
+			return false;
+		}
+		if(!$("input[name=assignmentTitle]").val()){
+			alert("제목을 입력하세요!");
+			
+			return false;
+		}
+		if($("textarea[name=assignmentContent]").val()==""){
+			alert("내용을 입력하세요!");
+			
+			return false;
+		}
+	
+	});
+});
+
+</script>
 
 <h3>내정보 | 과제게시판 | 등록하기</h3>
 <hr/>																																												<!--  ★여기assignment_registerSuccess까지만있었움,,,,,  -->
@@ -56,7 +86,7 @@
 
 </tbody>
 </table>
-	<input type="submit" value="과제등록완료">
+	<input id="ok" type="submit" value="과제등록완료">
 	<input type="reset" value="초기화"/> 
 </form>
 

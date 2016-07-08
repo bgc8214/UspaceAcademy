@@ -2,9 +2,15 @@ package com.uspaceacademy.vo;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Comment implements Serializable{
 	private int commentNo;
-	private String commentContent, commentDate, commentWriter, commentType;
+	
+	@NotEmpty(message="내용을 입력하세요.")
+	private String commentContent;
+	
+	private String commentDate, commentWriter, commentType;
 	private int advancedNo2;
 	
 	private Inquiry inquiry;

@@ -30,6 +30,16 @@ form {
 	$(document)
 			.ready(
 					function() { // 마우스를 올렸을 때 하위 메뉴 나온다.
+						$("#join").on("mouseover", function(){
+							var td = $(this).text();
+							$("#td6")
+									.html(
+											'<a href="/UspaceAcademy/member/studentRegisterForm.do"><button style="width:76px">학생 회원가입</button></a>'
+											+ '<a href="/UspaceAcademy/member/teacherRegisterForm.do?codeType=teacherSubject"><button>강사 회원가입</button></a>');
+							$("#td1").html("");
+							$("#td5").html("");
+						}),
+						
 						$("#introduce")
 								.on(
 										"mouseover",
@@ -37,7 +47,9 @@ form {
 											var td = $(this).text();
 											$("#td1")
 													.html(
-															'<a href="/UspaceAcademy/academyIntroduce.do"><button>학원소개</button></a><a href="/UspaceAcademy/roadIntroduce.do"><button>오시는길</button></a><a href="/UspaceAcademy/teacherIntroduce.do"><button>강사소개</button></a>');
+															'<a href="/UspaceAcademy/academyIntroduce.do"><button>학원소개</button>' 
+															+ '</a><a href="/UspaceAcademy/roadIntroduce.do"><button>오시는길</button></a>'
+															+'<a href="/UspaceAcademy/teacherIntroduce.do"><button>강사소개</button></a>');
 											$("#td5").html("");
 											$("#td6").html("");
 										});
@@ -48,7 +60,8 @@ form {
 											var td = $(this).text();
 											$("#td5")
 													.html(
-															'<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button style="width:76px">FAQ</button></a><a href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의"><button>1대1문의</button></a>');
+															'<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button style="width:76px">FAQ</button></a>'
+															+ '<a href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의"><button>1대1문의</button></a>');
 											$("#td1").html("");
 											$("#td6").html("");
 										});
@@ -61,21 +74,29 @@ form {
 											if ($("#memberType").val() == "teacher") { // 마이페이지 강사 로그인
 												$("#td6")
 														.html(/* attendanceList.do */
-																'<a href="/UspaceAcademy/teacherInfo.do"><button>내 정보</button></a><a href="/UspaceAcademy/member/selectAllByTeacherId.do"><button>내 강좌</button></a><a href="/UspaceAcademy/assignment/assignment_list.do"><button id="assignment">과제게시판버릴것</button></a><a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=1"><button>강의 질문 게시판</button></a>');
+																'<a href="/UspaceAcademy/teacherInfo.do"><button>내 정보</button></a>'
+																+ '<a href="/UspaceAcademy/member/selectAllByTeacherId.do"><button>내 강좌</button></a>');
+
 												$("#td1").html("");
 												$("#td5").html("");
 											} else if ($("#memberType").val() == "student") // 마이페이지 학생 로그인
 											{
 												$("#td6")
 														.html(
-																'<a href="/UspaceAcademy/studentInfo.do"><button>내 정보</button></a><a href="/UspaceAcademy/attendance/studentLectureInfo.do"><button>내 강좌</button></a><a href="/UspaceAcademy/assignment/assignment_list.do"><button id="assignment">과제게시판버릴것</button></a><a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=1"><button>강의 질문 게시판</button></a>');
+																'<a href="/UspaceAcademy/studentInfo.do"><button>내 정보</button></a>'
+																+ '<a href="/UspaceAcademy/attendance/studentLectureInfo.do"><button>내 강좌</button></a>'
+																+ '<a href="/UspaceAcademy/lecture/zzimList.do"><button>장바구니</button></a>'
+																+ '<a href="/UspaceAcademy/lecture/applyList.do"><button>결제 목록</button></a>');
+
 												$("#td1").html("");
 												$("#td5").html("");
 											} else //마이페이지 관리자 로그인
 											{
 												$("#td6")
 														.html(
-																'<a href="/UspaceAcademy/member/studentAll.do"><button style="width:88px">학생관리</button></a><a href="/UspaceAcademy/member/teacherAll.do"><button style="width:88px" >강사관리</button><a href="/UspaceAcademy/lecture/lectureAll.do"><button style="width:88px">강의관리</button></a><button style="width:88px">재정관리</button>');
+																'<a href="/UspaceAcademy/member/studentAll.do"><button style="width:88px">학생관리</button></a>'
+																+ '<a href="/UspaceAcademy/member/teacherAll.do"><button style="width:88px" >강사관리</button>'
+																+ '<a href="/UspaceAcademy/lecture/lectureAll.do"><button style="width:88px">강의관리</button></a>');
 												$("#td1").html("");
 												$("#td5").html("");
 											}
@@ -104,12 +125,12 @@ form {
 			</tr>
 
 			<tr>
-				<td width="79" id="td1"></td>
-				<td width="79" id="td2"></td>
-				<td width="79" id="td3"></td>
-				<td width="79" id="td4"></td>
-				<td width="79" id="td5"></td>
-				<td width="88" id="td6"></td>
+				<td width="150" id="td1"></td>
+				<td width="150" id="td2"></td>
+				<td width="150" id="td3"></td>
+				<td width="150" id="td4"></td>
+				<td width="150" id="td5"></td>
+				<td width="500" id="td6"></td>
 			</tr>
 		</table>
 
@@ -129,8 +150,7 @@ form {
 							id="notice">공지사항</button></a></td>
 				<td><a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button
 							id="customerCenter">고객센터</button></a></td>
-				<td><a href="/UspaceAcademy/lecture/lectureList.do"><button
-							id="myPage">마이페이지</button></a></td>
+				<td><button id="myPage">마이페이지</button></td>
 							
 							
 			</tr>
