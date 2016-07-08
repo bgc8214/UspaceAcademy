@@ -140,8 +140,6 @@ public class LectureReviewController{
 		//LectureReview lectureReview1 = new LectureReview(num,"이영주",lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),sdfDate,0);
 		LectureReview lectureReview1 = new LectureReview(num,studentId,studentName,lectureReview.getLectureSubject(),lectureReview.getLectureTitle(),lectureReview.getReviewTitle(),lectureReview.getReviewContent(),sdfDate,0);
 		
-		System.out.println("리뷰라이터가안넘어감"+lectureReview1);/////////////////////////////
-		
 		service.insert(lectureReview1);
 		
 		System.out.println("수강후기 작성하고 등록ok");
@@ -276,25 +274,27 @@ public ModelAndView modify(String reviewNo, String reviewWriter,String lectureSu
 }
 }*/
 
-
+	
+	
+	
 	//검색기능
 	@RequestMapping("lecture_review_search")
 	public ModelAndView search(@RequestParam(defaultValue="1") int page,  @RequestParam(defaultValue="")String searchType, @RequestParam(defaultValue="")String keyword){
 		Map<String,Object> map = new HashMap<String,Object>();
-		System.out.println(searchType+" ------------컨트롤러---------- "+keyword);
-		
 		if(searchType.equals("reviewSubject")){
 			map = service.searchLectureSubject(keyword, page);
 			map.put("searchType", searchType);
 			map.put("keyword",keyword);
-		System.out.println("------------------------과목일경우 영주컨트롤러1 searchType:" + searchType);
-		System.out.println("------------------------과목일경우 영주컨트롤러1 keyword:" + keyword);
 		}else if(searchType.equals("reviewTitle")){
 			map = service.searchReviewTitle(keyword, page);
 			map.put("searchType", searchType);
 			map.put("keyword", keyword);
-			System.out.println("------------------------제목일경우 영주컨트롤러2 searchType:" + searchType);
-			System.out.println("------------------------제목일경우 영주컨트롤러2 keyword:" + keyword);
+		}else if(searchType.equals("lectureTitle")){ //강의명일 경우
+			map = service.searchLectureTitle(keyword, page);
+			map.put("searchType",searchType);
+			map.put("keyword",keyword);
+			System.out.println("===========searchType컨트롤러=======:"+searchType);
+			System.out.println("===========keyword컨트롤러=======:"+keyword);
 		}else{
 			map = service.selectPagingCount(page);
 			List codeList = service.selectCodeName("teacherSubject");
@@ -302,13 +302,13 @@ public ModelAndView modify(String reviewNo, String reviewWriter,String lectureSu
 			map.put("codeList",codeList );
 			map.put("searchType",searchType );
 			map.put("keyword",keyword );
-			System.out.println("------------------------영주컨트롤러3 page:" + page);
-			System.out.println("------------------------영주컨트롤러3 codeList:" + codeList);
-			System.out.println("------------------------영주컨트롤러3 searchType:" + searchType);
-			System.out.println("------------------------영주컨트롤러3 keyword:" + keyword);
+			System.out.println("else===========page컨트롤러=======:"+page);
+			System.out.println("else===========codeList컨트롤러=======:"+codeList);
+			System.out.println("else===========searchType컨트롤러=======:"+searchType);
+			System.out.println("else===========keyword컨트롤러=======:"+keyword);
 		}
-		
-		return new ModelAndView("lectureReview/lectureReview_list.tiles",map);
+		System.out.println(map);
+		return new ModelAndView("lectureReview/lectureReview_search.tiles",map);
 	}
 }
 

@@ -81,18 +81,15 @@ public class LectureReviewService{
 	
 	//10.11.   강의과목으로 검색 lectureSubject->
 	//12.13.   리뷰제목으로 검색 reviewTitle->
+	//14.15.   강의명으로 검색 lectureTitle->
 	
 	//10.11.   강의과목으로 검색 (수강후기 리스트에서)lectureSubject
 	public Map<String,Object> searchLectureSubject(String reviewSubject, int page){
 		Map <String,Object>map = new HashMap<String,Object>();
 		map.put("lectureListReview",dao.selectPagingLectureSubject(reviewSubject, page));//●오류났던거적기 : consol창에 출력은 됐었음, lectureReview_list.jsp에 requestScope ->아래보기                               
 		map.put("paging", new PagingBean(dao.selectCountLectureSubject(reviewSubject),page)); //●이부분lectureListReview로 해야하는데 내가 lectureReview했었음
-		System.out.println("영주 서비스 강의 과목으로 검색reviewSubject : "+reviewSubject);
-		System.out.println("영주 서비스 강의 과목으로 검색page : "+page);
 		return map;
 	}
-	
-	
 	
 	
 	
@@ -101,10 +98,31 @@ public class LectureReviewService{
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("lectureListReview", dao.selectPagingReviewTitle(reviewTitle, page));
 		map.put("paging", new PagingBean(dao.selectCountReviewTitle(reviewTitle),page));
-		System.out.println("영주 서비스 리뷰제목으로 검색reviewTitle : "+reviewTitle);
-		System.out.println("영주 서비스 리뷰제목으로 검색page : "+page);
 		return map;
 	}
+	
+	
+	//14.15. 강의명으로 (수강후기 리스트에서) 검색 lectureTitle
+	public Map<String,Object> searchLectureTitle(String lectureTitle, int page){
+		Map<String,Object>map = new HashMap<String,Object>();
+		map.put("lectureListReview", dao.selectPagingLectureTitle(lectureTitle, page)); 
+		map.put("paging", new PagingBean(dao.selectCountLectureTitle(lectureTitle),page));
+		System.out.println("===========lectureTitle서비스=======:"+lectureTitle);
+		System.out.println("===========page서비스=======:"+page);
+		
+		return map;
+	}
+	
+	
+	
 }	
+
+
+
+
+
+
+
+
 //--------------------------------------------------------------------------------------------------------------------		
 

@@ -2,11 +2,15 @@ package com.uspaceacademy.vo;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Pattern;
+
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 public class Assignment implements Serializable{
 
-	//
+	
 	private int assignmentNo;					//1.글번호-
 	private String assignmentWriterId;        //추가:작성자 아이디 
 	private int assignmentSecret;				//4.비밀여부 
@@ -30,19 +34,7 @@ public class Assignment implements Serializable{
 	private int lectureNo; //F키 , 강의번호	2.강의명	5.강사명
 	
 	
-	private Lecture lecture;/////////////////////////////////////////////////////
-
-	
-
-	
-	
-	//
-	
-	
-	
-	
-	
-
+//------------------------------------------------------------------------------------------------
 
 
 	public Assignment(int assignmentNo, String assignmentWriterId, String assignmentTitle, String assignmentContent,
