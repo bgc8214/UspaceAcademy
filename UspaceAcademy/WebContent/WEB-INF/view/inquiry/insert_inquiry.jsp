@@ -30,5 +30,5 @@
 </table>
 </form>
 
-<a href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의">1:1문의 목록보기</a>
+<a href="/UspaceAcademy/inquiry/inquiryList.do">1:1문의 목록보기</a>
 <%-- ${requestScope.insertInquiry} --%>

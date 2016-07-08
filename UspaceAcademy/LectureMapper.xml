@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" > 
+<mapper namespace="lecture">
+ 	
+ 	<sql id="column-basic">
+ 		lecture_no, lecture_title, lecture_description, lecture_start_time, lecture_end_time, lecture_day, lecture_start_date, lecture_end_date, lecture_price, lecture_total_student, lecture_current_student, lecture_subject, teacher_id2   
+ 	</sql>
+ 	
+ 	<resultMap type="Lecture" id="lecture-basic">
+ 		<id column="lecture_no" property="lectureNo"/>
+		<result column="lecture_title" property="lectureTitle"/>
+		<result column="lecture_description" property="lectureDescription"/>
+		<result column="lecture_start_time" property="lectureStartTime"/>
+		<result column="lecture_end_time" property="lectureEndTime"/>
+		<result column="lecture_day" property="lectureDay"/>
+		<result column="lecture_start_date" property="lectureStartDate"/>
+		<result column="lecture_end_date" property="lectureEndDate"/>
+		<result column="lecture_price" property="lecturePrice"/>
+		<result column="lecture_total_student" property="lectureTotalStudent"/>
+		<result column="lecture_current_student" property="lectureCurrentStudent"/>
+		<result column="lecture_subject" property="lectureSubject"/>
+		<result column="teacher_id2" property="teacherId2"/>
+ 	</resultMap>
+ 	<resultMap type="com.uspaceacademy.vo.StudentLectureJoin" id="studentLectureJoin-basic">
+ 		<id column="student_id3" property="studentId3"/>
+ 		<id column="lecture_no3" property="lectureNo3"/>
+ 		<result column="zzim_option" property="zzimOption"/>
+ 	</resultMap>
+ 	
+ 	<!-- 강의 전체 조회 -->
+ 	<select id="selectLectureList" resultMap="lecture-basic">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   lecture
+ 	</select>
+ 	
+ 	<!-- 강의 번호로 조회(PK로) -->
+ 	<select id="selectLectureByNo" resultMap="lecture-basic" parameterType="_int">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   lecture
+ 		WHERE  lecture_no = #{value}
+ 	</select>
+ 	
+ 	<!-- 강의 번호 시퀀스로부터 조회 -->
+ 	<select id="selectLectureSequence" resultType="_int">
+ 		SELECT lecture_seq.nextval 
+ 		FROM   dual
+ 	</select>
+ 	
+ 	<insert id="insertLecture" parameterType="Lecture">
+ 		INSERT INTO lecture VALUES(#{lectureNo}, #{lectureTitle}, #{lectureDescription}, #{lectureStartTime}, #{lectureEndTime}, #{lectureDay}, #{lectureStartDate}, #{lectureEndDate}, #{lecturePrice}, #{lectureTotalStudent}, #{lectureCurrentStudent}, #{lectureSubject}, #{teacherId2})
+ 	</insert>
+ 	
+ 	<!--  강의 수정하기 -->
+ 	<update id="updateLectureByNo" parameterType="Lecture">
+ 		UPDATE lecture
+ 		SET    lecture_title=#{lectureTitle}, 
+ 		       lecture_description=#{lectureDescription},
+ 		       lecture_start_time=#{lectureStartTime},
+ 		       lecture_end_time=#{lectureEndTime},
+ 		       lecture_day=#{lectureDay},
+ 		       lecture_start_date=#{lectureStartDate},
+ 		       lecture_end_date=#{lectureEndDate},
+ 		       lecture_price=#{lecturePrice},
+ 		       lecture_total_student=#{lectureTotalStudent},
+ 		       lecture_current_student=#{lectureCurrentStudent},
+ 		       lecture_subject=#{lectureSubject},
+ 		       teacher_id2=#{teacherId2}
+ 		WHERE  lecture_no=#{lectureNo}
+ 	</update>
+ 	
+ 	<!-- id로 강의 삭제하기 -->
+ 	<delete id="deleteLectureByNo" parameterType="_int">
+ 		DELETE FROM lecture
+ 		WHERE  lecture_no = #{value}
+ 	</delete>
+ 	
+ 	<!-- 조인테이블에 정보 넣어주기(결제를 통해서) -->
+ 	<insert id="insertStudentLectureJoin" parameterType="map">
+ 		INSERT INTO student_lecture_join VALUES(#{studentId}, #{lectureNo}, #{zzim})
+ 	</insert>
+ 	
+ 	<!-- 조인테이블에서 zzim여부와 studentId로 강의목록 받아오기 -->
+ 	<select id="selectStudentLectureJoinList" parameterType="map" resultMap="studentLectureJoin-basic">
+ 		SELECT student_id3, lecture_no3, zzim_option
+ 		FROM   student_lecture_join
+ 		WHERE  student_id3 = #{studentId}
+ 		AND    zzim_option = #{zzimOption}
+ 	</select>
+ 	<!-- 조인테이블의 찜 목록을 실제 결제목록으로 변경 -->
+ 	<update id="updateStudentLectureJoinList" parameterType="map">
+ 		UPDATE student_lecture_join
+ 		SET    zzim_option=#{zzimOption}
+ 		WHERE  student_id3=#{studentId}
+ 		AND	   lecture_no3=#{lectureNo}
+ 	</update>
+ 	
+ 	<!-- 조인테이블에서 하나의 row를 받아오기 위한 sql-->
+ 	<select id="selectOneStudentLectureJoin" parameterType="map" resultMap="studentLectureJoin-basic">
+ 		SELECT student_id3, lecture_no3, zzim_option
+ 		FROM   student_lecture_join
+ 		WHERE  student_id3 = #{studentId}
+ 		AND    zzim_option = #{zzimOption}
+ 		AND    lecture_no3 = #{lectureNo}
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징 조회 -->
+ 	<select id="selectListByPaging" parameterType="map" resultMap="lecture-basic">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   (
+ 			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   lecture
+ 				ORDER BY lecture_no DESC  
+ 			)
+ 		)
+ 		WHERE  page = #{page}
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징 헬퍼 -->
+ 	<select id="selectCountContents" resultType="_int">
+ 		SELECT count(lecture_no) 
+ 		FROM   lecture
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징(강의명으로 검색) -->
+ 	<select id="selectLectureListByLectureTitle" parameterType="map" resultMap="lecture-basic">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   (
+ 			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   lecture
+ 				WHERE  lecture_title like '%'||#{lectureTitle}||'%'
+ 				ORDER BY lecture_no DESC  
+ 			)
+ 		)
+ 		WHERE  page = #{page}
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징 헬퍼(강의명으로 검색) -->
+ 	<select id="selectCountContentsByLectureTitle" resultType="_int">
+ 		SELECT count(lecture_no) 
+ 		FROM   lecture
+ 		WHERE  lecture_title like '%'||#{lectureTitle}||'%'
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징(강의과목으로 검색) -->
+ 	<select id="selectLectureListByLectureSubject" parameterType="map" resultMap="lecture-basic">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   (
+ 			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   lecture
+ 				WHERE  lecture_subject like '%'||#{lectureSubject}||'%'
+ 				ORDER BY lecture_no DESC  
+ 			)
+ 		)
+ 		WHERE  page = #{page}
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징 헬퍼(강의과목으로 검색) -->
+ 	<select id="selectCountContentsBylectureSubject" resultType="_int">
+ 		SELECT count(lecture_no) 
+ 		FROM   lecture
+ 		WHERE  lecture_subject like '%'||#{lectureSubject}||'%'
+ 	</select>
+ 	
+ 	
+ 	<!-- 강의 리스트 페이징(강사ID로 검색) -->
+ 	<select id="selectLectureListByTeacherId" parameterType="map" resultMap="lecture-basic">
+ 		SELECT <include refid="column-basic"/>
+ 		FROM   (
+ 			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   lecture
+ 				WHERE  teacher_id2 = #{teacherId2}
+ 				ORDER BY lecture_no DESC  
+ 			)
+ 		)
+ 		WHERE  page = #{page}
+ 	</select>
+ 	
+ 	<!-- 강의 리스트 페이징 헬퍼(강의ID로 검색) -->
+ 	<select id="selectCountContentsByTeacherId" resultType="_int">
+ 		SELECT count(lecture_no) 
+ 		FROM   lecture
+ 		WHERE  teacher_id2 = #{teacherId2}
+ 	</select>
+ 	
+ 	<!-- 학생 강의 조인 테이블에서 강의 한개 삭제 -->
+ 	<delete id="deleteLectureFromApplyListByLectureNo">
+ 		DELETE FROM student_lecture_join
+ 		WHERE  student_id3=#{studentId}
+ 		AND    lecture_no3=#{lectureNo}
+ 	
+ 	</delete>
+ 	
+ 	<!-- 강의 삭제를 위한 참조관계 때문에.... -->
+ 	<delete id="deleteJointable" parameterType="_int">
+ 		delete from student_lecture_join where lecture_no3 = #{value}
+ 	</delete>
+ 	
+ 	<!-- 학생 탈퇴를 위한 -->
+ 	<delete id="deleteForStudent" parameterType="string">
+ 		delete from student_lecture_join where student_id3 = #{value}
+ 	</delete>
+ 	
+ 	<!-- 강사 탈퇴를 위해 강의 테이블에서 강사아이디로 강의중인 강의 번호조회 -->
+ 	<select id="selectByTeacherId" parameterType="string" resultType="_int">
+		select lecture_no lectureNo 
+		from lecture		
+		where teacher_id2 = #{value}
+ 	</select>
+ 	
+ 	<!-- 강사 탈퇴를 위해 학생_강의 조인 테이블에서 강사가 강의중인 강의번호로 삭제 -->
+	<delete id="deleteByLectureNo" parameterType="_int">
+		delete
+		from student_lecture_join
+		where lecture_no3 = #{value}
+	</delete>
+	
+	<!-- 강사 탈퇴를 위해 강의 테이블에서 강사가 강의중인 강의를 삭제 -->
+	<delete id="deleteByTeacherId" parameterType="string">
+		delete
+		from lecture
+		where teacher_id2 = #{value}
+	</delete> 	
+</mapper>

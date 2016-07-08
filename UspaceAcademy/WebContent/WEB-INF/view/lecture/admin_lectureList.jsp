@@ -33,8 +33,8 @@ $(document).ready(function(){
 					}*/
 					if(list[1]=="administrator"){
 						var txt2 = tmp.children().eq(0).text();
-						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?page="+$("#page").val()+"&lectureNo="+txt2+"&codeType=teacherSubject><button class='btn btn-warning'>강의수정</button></a>"+
-								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+"><button class='btn btn-danger'>강의삭제</button></a>";
+						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?lectureNo="+txt2+"&codeType=teacherSubject><button class='btn btn-warning'>강의수정</button></a>"+
+								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?lectureNo="+txt2+"><button class='btn btn-danger'>강의삭제</button></a>";
 						tmp.next().children().eq(0).append($(temp2));
 					}
 				
@@ -144,7 +144,7 @@ $(document).ready(function(){
 <br>
 <!-- 검색관련 -->
 <div class="boardBottom" align="center">
-<form action="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${param.page }" method="post">
+<form action="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${param.page }" method="post">
 <select name="searchType">
 	<option value="lectureTitle">강의명</option>
 	<option value="teacherSubject">과목</option>

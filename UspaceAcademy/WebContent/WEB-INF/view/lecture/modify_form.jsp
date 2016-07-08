@@ -22,6 +22,11 @@ span.errors{
 <link href="/UspaceAcademy/jQuery/jquery-ui.min.css" rel="stylesheet">
 <link href="/UspaceAcademy/jQuery/jquery-ui.structure.min.css" rel="stylesheet">
 <link href="/UspaceAcademy/jQuery/jquery-ui.theme.min.css" rel="stylesheet">
+
+<!-- timepicker -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-timepicker/1.10.0/jquery.timepicker.css" /> 
+
 <script type="text/javascript">
 	$(document).ready(function(){
 		// 자바에서 현재날짜 가져오기
@@ -111,8 +116,22 @@ span.errors{
 			}	
 		});
 		
-			
-		
+		// timepicker
+		$(function() {
+			$('#lectureStartTime')
+		    	.timepicker({timeFormat:'H:i', 'minTime':'09:00','maxTime': '23:00','scrollDefaultNow': true })  //lectureStartTime 시작 기본 설정
+		   	 	.on('changeTime', function() {                            //lectureStartTime 을 선택한 후 동작
+		        
+		   	 	var from_time = $("input[name='lectureStartTime']").val();  //lectureStartTime 값을 변수에 저장
+		        $('#lectureEndTime').timepicker('option', 'minTime', from_time); //lectureEndTime의 mintime 지정
+		        if ($('#lectureEndTime').val() && $('#lectureEndTime').val() < from_time) { 
+		            $('#lectureEndTime').timepicker('setTime', from_time);
+					//lectureEndTime을 먼저 선택한 경우 그리고 lectureEndTime시간이 lectureStartTime시간보다 작은경우 lectureEndTime시간 변경
+		        }	
+		    });
+
+			$('#lectureEndTime').timepicker({timeFormat:'H:i','minTime':'09:00','maxTime': '23:00'}); //lectureEndTime 시간 기본 설정
+		})
 		
 	})
 </script>
@@ -122,8 +141,8 @@ span.errors{
 <form action="/UspaceAcademy/lecture/modifyLectureByNo.do?page=${param.page}&lectureNo=${requestScope.lecture.lectureNo}" method="post">
 강의명 : <input type="text" name="lectureTitle" value="${requestScope.lecture.lectureTitle }"><span class="errors"><form:errors path="lectureForm.lectureTitle" delimiter="//"/></span><br>
 강의 설명 : <textarea rows="10" cols="20" name="lectureDescription">${requestScope.lecture.lectureDescription }</textarea><span class="errors"><form:errors path="lectureForm.lectureDescription" delimiter="//"/></span><br>
-강의 시작시간 : <input type="text" name="lectureStartTime" value="${requestScope.lecture.lectureStartTime }"><span class="errors"><form:errors path="lectureForm.lectureStartTime" delimiter="//"/></span><br>
-강의 끝시간 : <input type="text" name="lectureEndTime" value="${requestScope.lecture.lectureEndTime }"><span class="errors"><form:errors path="lectureForm.lectureEndTime" delimiter="//"/></span><br>
+강의 시작시간 : <input type="text" id="lectureStartTime" name="lectureStartTime" value="${requestScope.lecture.lectureStartTime }"><span class="errors"><form:errors path="lectureForm.lectureStartTime" delimiter="//"/></span><br>
+강의 끝시간 : <input type="text" id="lectureEndTime" name="lectureEndTime" value="${requestScope.lecture.lectureEndTime }"><span class="errors"><form:errors path="lectureForm.lectureEndTime" delimiter="//"/></span><br>
 <%-- 강의 요일 : <input type="text" name="lectureDay" value="${requestScope.lecture.lectureDay }"><span class="errors"><form:errors path="lectureForm.lectureDay" delimiter="//"/></span><br> --%>
 강의 요일 :<label> 월 <input id="mon" type="checkbox" name="lectureDay2" value='월'></label>
 		   <label> 화 <input id="tue" type="checkbox" name="lectureDay2" value='화'></label>

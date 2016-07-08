@@ -6,12 +6,13 @@ public class LectureReview{
 	
 	private int reviewNo;//글번호
 	
+	private String reviewWriterId;//글쓴이 아이디
 	private String reviewWriter;//글쓴이
+	
 	private String lectureSubject;//강의과목
 	private String lectureTitle;//강의명
 	
-	
-	
+
 	@NotEmpty(message="제목을 입력해주세요")
 	private String reviewTitle;//글제목
 	
@@ -28,6 +29,41 @@ public class LectureReview{
 	public LectureReview() {
 	}
 	
+	
+	
+	//review_writer_id 추가 후 생성자-----------------------------------------------------------------------------------------------------------------
+	
+	//모두
+	public LectureReview(int reviewNo, String reviewWriterId, String reviewWriter, String lectureSubject,
+			String lectureTitle, String reviewTitle, String reviewContent, String reviewDate, int reviewHit) {
+		super();
+		this.reviewNo = reviewNo;
+		this.reviewWriterId = reviewWriterId;
+		this.reviewWriter = reviewWriter;
+		this.lectureSubject = lectureSubject;
+		this.lectureTitle = lectureTitle;
+		this.reviewTitle = reviewTitle;
+		this.reviewContent = reviewContent;
+		this.reviewDate = reviewDate;
+		this.reviewHit = reviewHit;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//----------------------------------------------------------------------------------------------------------------------------------------------------
+	
+	
+	
+	//-------------------------------------------------------------------------------------------------------------------
 	//객체생성 밸리 (lectureReview_register.jsp 에서 컨트롤러로 보내는  4개의 값에 대한 생성자)*
 	public LectureReview(String lectureSubject, String lectureTitle,  String reviewTitle, String reviewContent) {
 		super();
@@ -36,6 +72,10 @@ public class LectureReview{
 		this.reviewTitle = reviewTitle;
 		this.reviewContent = reviewContent;
 	}
+
+
+
+
 
 
 	//date없는 생성자
@@ -77,77 +117,117 @@ public class LectureReview{
 		this.reviewTitle = reviewTitle;
 		this.reviewContent = reviewContent;
 	}
+	//-------------------------------------------------------------------------------------------------------------------
 
-	@Override
-	public String toString() {
-		return "LectureReview [reviewNo=" + reviewNo + ", reviewWriter=" + reviewWriter + ", lectureTitle="
-				+ lectureTitle + ", lectureSubject=" + lectureSubject + ", reviewTitle=" + reviewTitle
-				+ ", reviewContent=" + reviewContent + ", reviewDate=" + reviewDate + ", reviewHit=" + reviewHit + "]";
-	}
+
 
 	public int getReviewNo() {
 		return reviewNo;
 	}
 
+
+
 	public void setReviewNo(int reviewNo) {
 		this.reviewNo = reviewNo;
 	}
+
+
+
+	public String getReviewWriterId() {
+		return reviewWriterId;
+	}
+
+
+
+	public void setReviewWriterId(String reviewWriterId) {
+		this.reviewWriterId = reviewWriterId;
+	}
+
+
 
 	public String getReviewWriter() {
 		return reviewWriter;
 	}
 
+
+
 	public void setReviewWriter(String reviewWriter) {
 		this.reviewWriter = reviewWriter;
 	}
 
-	public String getLectureTitle() {
-		return lectureTitle;
-	}
 
-	public void setLectureTitle(String lectureTitle) {
-		this.lectureTitle = lectureTitle;
-	}
 
 	public String getLectureSubject() {
 		return lectureSubject;
 	}
 
+
+
 	public void setLectureSubject(String lectureSubject) {
 		this.lectureSubject = lectureSubject;
 	}
+
+
+
+	public String getLectureTitle() {
+		return lectureTitle;
+	}
+
+
+
+	public void setLectureTitle(String lectureTitle) {
+		this.lectureTitle = lectureTitle;
+	}
+
+
 
 	public String getReviewTitle() {
 		return reviewTitle;
 	}
 
+
+
 	public void setReviewTitle(String reviewTitle) {
 		this.reviewTitle = reviewTitle;
 	}
+
+
 
 	public String getReviewContent() {
 		return reviewContent;
 	}
 
+
+
 	public void setReviewContent(String reviewContent) {
 		this.reviewContent = reviewContent;
 	}
+
+
 
 	public String getReviewDate() {
 		return reviewDate;
 	}
 
+
+
 	public void setReviewDate(String reviewDate) {
 		this.reviewDate = reviewDate;
 	}
+
+
 
 	public int getReviewHit() {
 		return reviewHit;
 	}
 
+
+
 	public void setReviewHit(int reviewHit) {
 		this.reviewHit = reviewHit;
 	}
+
+
 
 	@Override
 	public int hashCode() {
@@ -161,8 +241,11 @@ public class LectureReview{
 		result = prime * result + reviewNo;
 		result = prime * result + ((reviewTitle == null) ? 0 : reviewTitle.hashCode());
 		result = prime * result + ((reviewWriter == null) ? 0 : reviewWriter.hashCode());
+		result = prime * result + ((reviewWriterId == null) ? 0 : reviewWriterId.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -207,8 +290,47 @@ public class LectureReview{
 				return false;
 		} else if (!reviewWriter.equals(other.reviewWriter))
 			return false;
+		if (reviewWriterId == null) {
+			if (other.reviewWriterId != null)
+				return false;
+		} else if (!reviewWriterId.equals(other.reviewWriterId))
+			return false;
 		return true;
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "LectureReview [reviewNo=" + reviewNo + ", reviewWriterId=" + reviewWriterId + ", reviewWriter="
+				+ reviewWriter + ", lectureSubject=" + lectureSubject + ", lectureTitle=" + lectureTitle
+				+ ", reviewTitle=" + reviewTitle + ", reviewContent=" + reviewContent + ", reviewDate=" + reviewDate
+				+ ", reviewHit=" + reviewHit + "]";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

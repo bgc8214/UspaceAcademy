@@ -343,7 +343,7 @@ public class LectureController {
 		}
 	}
 	
-	//키워드로 강의리스트 가져오기
+	//키워드로 강의리스트 가져오기(강의가 시작 되면 강의전체목록을 볼 수 없음...(학생, 강사))
 	@RequestMapping("/searchLectureByKeyword.do")
 	public ModelAndView searchLectureBy(@RequestParam(defaultValue="1") int page, @RequestParam(defaultValue="") String searchType, @RequestParam(defaultValue="") String keyword){
 		Map map = new HashMap();
@@ -351,6 +351,8 @@ public class LectureController {
 		   map = lectureService.getLectureByTitle(keyword, page);
 		   map.put("searchType", searchType);
 		   map.put("keyword", keyword);
+		   System.out.println("-----------------------제목일경우 ㄷㅇ컨트롤러1 searchType:" + searchType);
+			System.out.println("-----------------------제목일경우 ㄷㅇ컨트롤러1 keyword:" + keyword);
 		   //if(((List)map.get("lectureList")).size()==0){
 		   //map = lectureService.getLectureList(page);
 			 //  map.put("searchType", searchType);
@@ -360,7 +362,8 @@ public class LectureController {
 			map = lectureService.getLectureByLectureSubject(keyword, page);
 			map.put("searchType", searchType);
 			map.put("keyword", keyword);
-			
+			System.out.println("-----------------------과목일경우 ㄷㅇ컨트롤러2 searchType:" + searchType);
+			System.out.println("-----------------------과목일경우 ㄷㅇ컨트롤러2 keyword:" + keyword);
 		}else if(searchType.equals("teacherName")){
 			map = lectureService.getLectureByTeacherName(keyword, page);
 			map.put("searchType", searchType);
@@ -372,6 +375,11 @@ public class LectureController {
 			map.put("codeList", codeList); 
 			map.put("searchType", searchType);
 			map.put("keyword", keyword);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 page:" + page);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 codeList:" + codeList);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 searchType:" + searchType);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 keyword:" + keyword);
+			
 		}
 		return new ModelAndView("lecture/lecture_list.tiles", map);
 	}
@@ -407,4 +415,59 @@ public class LectureController {
 //		System.out.println(map);
 		return new ModelAndView("lecture/admin_lectureList.tiles", map);
 	}
+	
+	
+	//키워드로 강의리스트 가져오기(강의가 시작 되면 강의전체목록을 볼 수 없음...(관리자))
+	@RequestMapping("/searchLectureByKeywordA.do")
+	public ModelAndView searchLectureByA(@RequestParam(defaultValue="1") int page, @RequestParam(defaultValue="") String searchType, @RequestParam(defaultValue="") String keyword){
+		Map map = new HashMap();
+		if(searchType.equals("lectureTitle")){
+		   map = lectureService.getLectureByTitleA(keyword, page);
+		   map.put("searchType", searchType);
+		   map.put("keyword", keyword);
+		   System.out.println("-----------------------제목일경우 ㄷㅇ컨트롤러1 searchType:" + searchType);
+			System.out.println("-----------------------제목일경우 ㄷㅇ컨트롤러1 keyword:" + keyword);
+		   //if(((List)map.get("lectureList")).size()==0){
+		   //map = lectureService.getLectureList(page);
+			 //  map.put("searchType", searchType);
+		  // map.put("keyword", keyword);
+		   //}
+		}else if(searchType.equals("teacherSubject")){
+			map = lectureService.getLectureByLectureSubjectA(keyword, page);
+			System.out.println("컨트롤러 - "+ map);
+			map.put("searchType", searchType);
+			map.put("keyword", keyword);
+			System.out.println("-----------------------과목일경우 ㄷㅇ컨트롤러2 searchType:" + searchType);
+			System.out.println("-----------------------과목일경우 ㄷㅇ컨트롤러2 keyword:" + keyword);
+		}else if(searchType.equals("teacherName")){
+			map = lectureService.getLectureByTeacherNameA(keyword, page);
+			map.put("searchType", searchType);
+			map.put("keyword", keyword);
+		}else{
+			map = lectureService.getLectureList(page);
+			List codeList = lectureService.searchCode("teacherSubject");
+			map.put("page", page);
+			map.put("codeList", codeList); 
+			map.put("searchType", searchType);
+			map.put("keyword", keyword);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 page:" + page);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 codeList:" + codeList);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 searchType:" + searchType);
+			System.out.println("------------------------ㄷㅇ컨트롤러4 keyword:" + keyword);
+			
+		}
+		return new ModelAndView("lecture/lecture_list.tiles", map);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

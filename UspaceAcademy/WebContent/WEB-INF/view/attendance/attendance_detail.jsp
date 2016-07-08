@@ -1,6 +1,16 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<script type="text/javascript">
+
+	$(document).ready(function (){
+		$("#btn").on("click", function() {
+			alert("수정 되었습니다");
+		})
+	})
+</script>
+
+
 <h3 class="pageTly">출석부 조회&수정 페이지!!(총 강좌 일수 - ${requestScope.diffDays })</h3>
 <hr>
 <table class="table table-responsive">
@@ -9,12 +19,13 @@
 		<c:forEach items="${requestScope.studentInfoList}" var="list">
 			<td align="center">${list.studentName}</td>
 		</c:forEach>
-		<th>등록</th>
+		<th>수정</th>
 		<c:forEach items="${requestScope.attendanceList}" var="stateList" varStatus="no">
 		<form action="/UspaceAcademy/attendance/updateAttendance.do?lectureNo=${requestScope.lectureNo}" method="post">
 		<input type="hidden" name="day" value="${no.count}">
 		<input type="hidden" name="startDate" value="${requestScope.startDate}">
 		<input type="hidden" name="endDate" value="${requestScope.endDate}">
+		<input type="hidden" name="lectureDay" value="${requestScope.lectureDay}">
 		<tr>
 			<td>${no.count}일차</td>
 			<c:forEach items="${stateList}" var="state">

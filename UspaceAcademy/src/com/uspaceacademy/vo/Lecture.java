@@ -1,10 +1,10 @@
 package com.uspaceacademy.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Range;
@@ -16,10 +16,10 @@ public class Lecture implements Serializable{
 	private String lectureTitle;
 	@NotEmpty
 	private String lectureDescription;
-	@Range(min=1, max=24)
-	private int lectureStartTime;
-	@Range(min=1, max=24)
-	private int lectureEndTime;
+	@NotEmpty
+	private String lectureStartTime;
+	@NotEmpty
+	private String lectureEndTime;
 	private String lectureDay;
 	@NotEmpty
 	private String lectureStartDate;
@@ -35,23 +35,29 @@ public class Lecture implements Serializable{
 	private String teacherId2;//외래키(teacher table)
 	
 	
+	//private Assignment assignment;//영주
+	
+	
+	
+	
 	//생성자 3개(null 허용인 컬럼은 각각 생성자를 다 만들어 준다)
 	public Lecture(){
 		
 	}
 
 	// 강사가 선택한 강좌의 학생들의 정보를 조회할 때 사용.
-	public Lecture(int lectureNo, String lectureStartDate, String lectureEndDate) {
+	public Lecture(int lectureNo, String lectureStartDate, String lectureEndDate, String lectureDay) {
 		super();
 		this.lectureNo = lectureNo;
 		this.lectureStartDate = lectureStartDate;
 		this.lectureEndDate = lectureEndDate;
+		this.lectureDay = lectureDay;
 	}
 
 
 
-	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, int lectureStartTime,
-			int lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
+	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, String lectureStartTime,
+			String lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
 			int lectureTotalStudent, String lectureSubject, String teacherId2) {
 		super();
 		this.lectureNo = lectureNo;
@@ -71,7 +77,7 @@ public class Lecture implements Serializable{
 	
 
 
-	public Lecture(String lectureTitle, String lectureDescription, int lectureStartTime, int lectureEndTime,
+	public Lecture(String lectureTitle, String lectureDescription, String lectureStartTime, String lectureEndTime,
 			String lectureStartDate, String lectureEndDate, int lecturePrice, int lectureTotalStudent,
 			String lectureSubject, String teacherId2) {
 		super();
@@ -89,7 +95,7 @@ public class Lecture implements Serializable{
 
 
 
-	public Lecture(String lectureTitle, String lectureDescription, int lectureStartTime, int lectureEndTime,
+	public Lecture(String lectureTitle, String lectureDescription, String lectureStartTime, String lectureEndTime,
 			String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
 			int lectureTotalStudent, String lectureSubject, String teacherId2) {
 		super();
@@ -108,8 +114,8 @@ public class Lecture implements Serializable{
 
 
 
-	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, int lectureStartTime,
-			int lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
+	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, String lectureStartTime,
+			String lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
 			int lectureTotalStudent, int lectureCurrentStudent) {
 		super();
 		this.lectureNo = lectureNo;
@@ -126,8 +132,8 @@ public class Lecture implements Serializable{
 	}
 
 
-	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, int lectureStartTime,
-			int lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
+	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, String lectureStartTime,
+			String lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
 			int lectureTotalStudent, int lectureCurrentStudent, String lectureSubject) {
 		super();
 		this.lectureNo = lectureNo;
@@ -145,8 +151,8 @@ public class Lecture implements Serializable{
 	}
 
 
-	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, int lectureStartTime,
-			int lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
+	public Lecture(int lectureNo, String lectureTitle, String lectureDescription, String lectureStartTime,
+			String lectureEndTime, String lectureDay, String lectureStartDate, String lectureEndDate, int lecturePrice,
 			int lectureTotalStudent, int lectureCurrentStudent, String lectureSubject, String teacherId2) {
 		super();
 		this.lectureNo = lectureNo;
@@ -195,22 +201,22 @@ public class Lecture implements Serializable{
 	}
 
 
-	public int getLectureStartTime() {
+	public String getLectureStartTime() {
 		return lectureStartTime;
 	}
 
 
-	public void setLectureStartTime(int lectureStartTime) {
+	public void setLectureStartTime(String lectureStartTime) {
 		this.lectureStartTime = lectureStartTime;
 	}
 
 
-	public int getLectureEndTime() {
+	public String getLectureEndTime() {
 		return lectureEndTime;
 	}
 
 
-	public void setLectureEndTime(int lectureEndTime) {
+	public void setLectureEndTime(String lectureEndTime) {
 		this.lectureEndTime = lectureEndTime;
 	}
 
@@ -305,7 +311,6 @@ public class Lecture implements Serializable{
 				+ ", teacherId2=" + teacherId2 + "]";
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -314,18 +319,17 @@ public class Lecture implements Serializable{
 		result = prime * result + ((lectureDay == null) ? 0 : lectureDay.hashCode());
 		result = prime * result + ((lectureDescription == null) ? 0 : lectureDescription.hashCode());
 		result = prime * result + ((lectureEndDate == null) ? 0 : lectureEndDate.hashCode());
-		result = prime * result + lectureEndTime;
+		result = prime * result + ((lectureEndTime == null) ? 0 : lectureEndTime.hashCode());
 		result = prime * result + lectureNo;
 		result = prime * result + lecturePrice;
 		result = prime * result + ((lectureStartDate == null) ? 0 : lectureStartDate.hashCode());
-		result = prime * result + lectureStartTime;
+		result = prime * result + ((lectureStartTime == null) ? 0 : lectureStartTime.hashCode());
 		result = prime * result + ((lectureSubject == null) ? 0 : lectureSubject.hashCode());
 		result = prime * result + ((lectureTitle == null) ? 0 : lectureTitle.hashCode());
 		result = prime * result + lectureTotalStudent;
 		result = prime * result + ((teacherId2 == null) ? 0 : teacherId2.hashCode());
 		return result;
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -353,7 +357,10 @@ public class Lecture implements Serializable{
 				return false;
 		} else if (!lectureEndDate.equals(other.lectureEndDate))
 			return false;
-		if (lectureEndTime != other.lectureEndTime)
+		if (lectureEndTime == null) {
+			if (other.lectureEndTime != null)
+				return false;
+		} else if (!lectureEndTime.equals(other.lectureEndTime))
 			return false;
 		if (lectureNo != other.lectureNo)
 			return false;
@@ -364,7 +371,10 @@ public class Lecture implements Serializable{
 				return false;
 		} else if (!lectureStartDate.equals(other.lectureStartDate))
 			return false;
-		if (lectureStartTime != other.lectureStartTime)
+		if (lectureStartTime == null) {
+			if (other.lectureStartTime != null)
+				return false;
+		} else if (!lectureStartTime.equals(other.lectureStartTime))
 			return false;
 		if (lectureSubject == null) {
 			if (other.lectureSubject != null)
@@ -385,5 +395,9 @@ public class Lecture implements Serializable{
 			return false;
 		return true;
 	}
+
+
+
+
 	
 }

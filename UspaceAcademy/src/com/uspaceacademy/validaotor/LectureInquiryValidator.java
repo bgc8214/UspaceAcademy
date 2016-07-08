@@ -25,5 +25,9 @@ public class LectureInquiryValidator implements Validator{
 		{
 			errors.rejectValue("advancedContent", "","내용을 입력하세요");
 		}		
+		if(lectureInquiryValidate.getAdvancedSecret()==null || lectureInquiryValidate.getAdvancedSecret().trim().isEmpty())
+		{
+			errors.rejectValue("advancedSecret", "","비밀글 여부를 선택하세요.");
+		}	
 	}
 }

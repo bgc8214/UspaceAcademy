@@ -31,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.uspaceacademy.service.AttendanceService;
+import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.service.MemberService;
 import com.uspaceacademy.validaotor.StudentValidator;
 import com.uspaceacademy.validaotor.TeacherValidator;
@@ -44,6 +46,13 @@ public class MemberController
 {
 	@Autowired
 	private MemberService service;
+	
+	@Autowired
+	private LectureService lectureService;
+	
+	@Autowired
+	private AttendanceService attendanceService;
+	
 
 	/*
 	 * @RequestMapping("/register_form.do") public String register_form() {
@@ -509,9 +518,26 @@ public class MemberController
 	@RequestMapping("/deleteTeacher.do")
 	public String deleteTeacher(HttpSession session) {
 		Teacher teacher = (Teacher)session.getAttribute("login_info");
+		System.out.println("강사 본인 탈퇴");
 		service.removeTeacher(teacher.getTeacherId());
 		session.invalidate();
 		return "main.tiles";
+	}
+	
+	//관리자가 학생 강제 탈퇴
+	@RequestMapping("/deleteStudentByAdmin.do")
+	public String deleteStudentByAdmin(String studentId, HttpSession session) {
+
+		service.deleteStudent(studentId);
+		return "/member/studentAll.do";
+	}
+	
+	//관리자가 강사 강제 탈퇴
+	@RequestMapping("/deleteTeacherByAdmin.do")
+	public String deleteTeacherByAdmin(String teacherId,HttpSession session) {
+		
+		service.removeTeacher(teacherId);
+		return "/member/teacherAll.do";
 	}
 	
 	// 모든 학생 조회
@@ -548,4 +574,25 @@ public class MemberController
 		return new ModelAndView("member/search_teacherName.tiles", map);
 	}
 	
+	//강사가 마이페이지에서 내 강좌 보여주기 
+	@RequestMapping("/selectAllByTeacherId.do")
+	public ModelAndView selectAllByTeacherId(HttpSession session) {
+		Teacher teacher = (Teacher)session.getAttribute("login_info");
+		teacher.getTeacherId();
+		
+		String teacherId = teacher.getTeacherId();
+		
+		List selectAllByTeacherId = lectureService.selectAllByTeacherId(teacherId);
+
+		return new ModelAndView("member/teacher_lectureInfo.tiles", "lectureList", selectAllByTeacherId);
+	}
+	
+	//관리자가 강사관리에서 강사의 과목 정보 보기
+	@RequestMapping("/selectAllByTeacherId2.do")
+	public ModelAndView selectAllByTeacherId2(String teacherId) {
+		
+		List selectAllByTeacherId = lectureService.selectAllByTeacherId(teacherId);
+
+		return new ModelAndView("member/teacher_lectureInfo.tiles", "lectureList", selectAllByTeacherId);
+	}
 }

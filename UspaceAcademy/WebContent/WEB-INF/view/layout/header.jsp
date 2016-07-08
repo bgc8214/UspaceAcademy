@@ -2,13 +2,18 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
 button {
+	border: /* 1x */ /* solid */ #FFFFFF; /*---테두리 정의---*/
+	background-Color: #FFFFFF; /*--백그라운드 정의---*/
+	font: 17px 맑은고딕; /*--폰트 정의---*/
 /* 	border: 1x solid #ff0080; ---테두리 정의--- */
 /* 	background-Color: #ffe6f2; --백그라운드 정의--- */
 	font: 12px 굴림; /*--폰트 정의---*/
 	font-weight: bold; /*--폰트 굵기---*/
-	color: #ff0080; /*--폰트 색깔---*/
-	width: 130;
-	height: 30; /*--버튼 크기---*/
+	color: #DB0000; /*--폰트 색깔---*/
+	width: 400;
+	height: 100; /*--버튼 크기---*/
+	margin-left: 15px;
+	margin-right: 15px;
 }
 
 table {
@@ -55,15 +60,15 @@ form {
 										function() {
 											if ($("#memberType").val() == "teacher") { // 마이페이지 강사 로그인
 												$("#td6")
-														.html(
-																'<a href="/UspaceAcademy/teacherInfo.do"><button>내 정보</button></a><a href="/UspaceAcademy/attendance/attendanceList.do"><button>내 강좌</button></a><a href="/UspaceAcademy/assignment/assignment_list.do"><button id="assignment">과제게시판</button></a><a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do"><button>강의 질문 게시판</button></a>');
+														.html(/* attendanceList.do */
+																'<a href="/UspaceAcademy/teacherInfo.do"><button>내 정보</button></a><a href="/UspaceAcademy/member/selectAllByTeacherId.do"><button>내 강좌</button></a><a href="/UspaceAcademy/assignment/assignment_list.do"><button id="assignment">과제게시판</button></a><a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=1"><button>강의 질문 게시판</button></a>');
 												$("#td1").html("");
 												$("#td5").html("");
 											} else if ($("#memberType").val() == "student") // 마이페이지 학생 로그인
 											{
 												$("#td6")
 														.html(
-																'<a href="/UspaceAcademy/studentInfo.do"><button>내 정보</button></a><a href="/UspaceAcademy/attendance/studentLectureInfo.do"><button>내 강좌</button></a><a href="/UspaceAcademy/assignment/assignment_list.do"><button id="assignment">과제게시판</button></a><a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do"><button>강의 질문 게시판</button></a>');
+																'<a href="/UspaceAcademy/studentInfo.do"><button>내 정보</button></a><a href="/UspaceAcademy/attendance/studentLectureInfo.do"><button>내 강좌</button></a><a href="/UspaceAcademy/assignment/assignment_list.do"><button id="assignment">과제게시판</button></a><a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=1"><button>강의 질문 게시판</button></a>');
 												$("#td1").html("");
 												$("#td5").html("");
 											} else //마이페이지 관리자 로그인

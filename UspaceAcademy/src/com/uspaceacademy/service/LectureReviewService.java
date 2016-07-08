@@ -56,7 +56,6 @@ public class LectureReviewService{
 	
 	//코드 영주1
 	public List selectCodeName(String code){
-		System.out.println("렉쳐리뷰 서비스" + code);
 		return dao.selectCodeName(code);
 	}
 	
@@ -89,11 +88,12 @@ public class LectureReviewService{
 	
 	
 	//10.11.   강의과목으로 검색 (수강후기 리스트에서)lectureSubject
-	public Map searchLectureSubject(String lectureSubject, int page){
-		Map map = new HashMap();
-		map.put("lectureList",dao.selectPagingLectureSubject(lectureSubject, page));
-		map.put("paging", new PagingBean(dao.selectCountLectureSubject(lectureSubject),page));
-		System.out.println(lectureSubject+"111111111111111111111111111");
+	public Map<String,Object> searchLectureSubject(String reviewSubject, int page){
+		Map <String,Object>map = new HashMap<String,Object>();
+		map.put("lectureListReview",dao.selectPagingLectureSubject(reviewSubject, page));//●오류났던거적기 : consol창에 출력은 됐었음, lectureReview_list.jsp에 requestScope ->아래보기                               
+		map.put("paging", new PagingBean(dao.selectCountLectureSubject(reviewSubject),page)); //●이부분lectureListReview로 해야하는데 내가 lectureReview했었음
+		System.out.println("영주 서비스 강의 과목으로 검색reviewSubject : "+reviewSubject);
+		System.out.println("영주 서비스 강의 과목으로 검색page : "+page);
 		return map;
 	}
 	
@@ -102,10 +102,12 @@ public class LectureReviewService{
 	
 	
 	//12.13.   리뷰제목으로 (수강후기 리스트에서)검색 reviewTitle
-	public Map searchReviewTitle(String reviewTitle, int page){
-		Map map = new HashMap();
-		map.put("lectureList", dao.selectPagingReviewTitle(reviewTitle, page));
+	public Map<String,Object> searchReviewTitle(String reviewTitle, int page){
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("lectureListReview", dao.selectPagingReviewTitle(reviewTitle, page));
 		map.put("paging", new PagingBean(dao.selectCountReviewTitle(reviewTitle),page));
+		System.out.println("영주 서비스 리뷰제목으로 검색reviewTitle : "+reviewTitle);
+		System.out.println("영주 서비스 리뷰제목으로 검색page : "+page);
 		return map;
 	}
 	
@@ -114,28 +116,7 @@ public class LectureReviewService{
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	

@@ -4,15 +4,16 @@
 
 
 	<sql id ="assignment-columns">
-	assignment_no, assignment_secret, assignment_title, assignment_content,
+	assignment_no, assignment_writer_id, assignment_secret, assignment_title, assignment_content,
 	assignment_date, assignment_hit, assignment_password, assignment_re_family,
-	assignment_re_step, assignment_re_level, assignment_writer, assignment_deadline,
+	assignment_re_step, assignment_re_level, assignment_writer, assignment_deadline, assignment_file,
 	lecture_no
 	</sql>
 
 
 	<resultMap type="Assignment" id="assignment-basic">
 	<id column="assignment_no" property="assignmentNo"/>
+	<result column="assignment_writer_id" property="assignmentWriterId"/>
 	<result column="assignment_secret" property="assignmentSecret"/>
 	<result column="assignment_title" property="assignmentTitle"/>
 	<result column="assignment_content" property="assignmentContent"/>
@@ -24,8 +25,35 @@
 	<result column="assignment_re_level" property="replyLevel"/>
 	<result column="assignment_writer" property="assignmentWriter"/>
 	<result column="assignment_deadline" property="assignmentDeadline"/>
+	<result column="assignment_file" property="assignmentFile"/>
 	<result column="lecture_no" property="lectureNo"/>
 	</resultMap>
+
+
+<!-- 조인(book보고하기)
+	<resultMap type="Assignment" id="assignment-lecture-resultmap" 	extends="assignment-basic">
+		<association property="lecture" javaType="lecture" resultMap="lecture.lecture-basic"/>
+	</resultMap>
+
+	<select id="selectAssignmentLectureJoin" resultMap="assignment-lecture-resultmap"  parameterType="_int">
+	SELECT   a.assignment_no, a.assignment_writer_id, a.assignment_secret, a.assignment_title, a.assignment_content,
+			    a.assignment_date, a.assignment_hit, a.assignment_password, a.assignment_re_family,
+			    a.assignment_re_step, a.assignment_re_level, a.assignment_writer, a.assignment_deadline,
+				a.lecture_no,
+				l.lecture_no, l.lecture_title, l.lecture_description, l.lecture_start_time, l.lecture_end_time, l.lecture_day, 
+				l.lecture_start_date, l.lecture_end_date, l.lecture_price, l.lecture_total_student, l.lecture_current_student, l.lecture_subject, l.teacher_id2   
+	
+	FROM  assignment_board a, lecture l
+	WHERE  a.lecture_no=#{value} 
+
+	</select> -->
+
+
+
+
+
+
+
 
 
 <!--  답글.................................................................................................................................................................................................................... -->
@@ -43,34 +71,15 @@
 	<!-- 2.ㄷ답글등록  -->
 	<insert id="replyReply" parameterType="Assignment" >
 	 <!-- INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep},#{replyLevel},#{assignmentWriter},#{assignmentDeadline},#{lectureNo}) -->
-	INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep}+1,#{replyLevel}+1,#{assignmentWriter},#{assignmentDeadline},#{lectureNo})<!--  스텝하고 레벨에 1씩 +해야 답글달림 -->-->
+	INSERT INTO  assignment_board  VALUES (#{assignmentNo},#{assignmentWriterId},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep}+1,#{replyLevel}+1,#{assignmentWriter},#{assignmentDeadline},#{assignmentFile},#{lectureNo})<!--  스텝하고 레벨에 1씩 +해야 답글달림 -->-->
 	</insert>
+	
 	<!-- 3.ㄷ업데이트 -->
 	<update id="replyAddStep" parameterType="Assignment">
 	UPDATE assignment_board  
 	SET   assignment_re_step = assignment_re_step +1
 	WHERE  assignment_re_family=#{replyFamily}   AND  assignment_re_step > #{replyStep}
 	</update>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -89,16 +98,16 @@
 
 
 
+
+
 	<!--  *************************************************************************  -->
 
 
 
 	<!--  1.삽입  -->
 	<insert id="insert" parameterType="Assignment">
-	INSERT INTO assignment_board VALUES (#{assignmentNo},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep},#{replyLevel},#{assignmentWriter},#{assignmentDeadline},#{lectureNo})
+	INSERT INTO assignment_board VALUES (#{assignmentNo},#{assignmentWriterId},#{assignmentSecret},#{assignmentTitle},#{assignmentContent},#{assignmentDate},#{assignmentHit},#{assignmentPassword},#{replyFamily},#{replyStep},#{replyLevel},#{assignmentWriter},#{assignmentDeadline},#{assignmentFile},#{lectureNo})
 	</insert>
-
-
 
 	<!-- 2.시퀀스 -->
 	<select id="selectNextNo" resultType="_int">
@@ -109,6 +118,7 @@
 	<!-- 3.전체조회(이건그냥 - 전체조회할때) -->
  	<select id="select" resultType="Assignment">
 	SELECT   assignment_no  assignmentNo,
+				assignment_writer_id assignmentWriterId,
 				assignment_secret   assignmentSecret,
 				assignment_title   assignmentTitle,
 				assignment_content   assignmentContent,
@@ -120,19 +130,10 @@
 				assignment_re_level   replyLevel,
 				assignment_writer   assignmentWriter,
 				assignment_deadline    assignmentDeadline,
+				assignment_file   assignmentFile,
 				lecture_no    lectureNo
 	FROM 	assignment_board
 	</select> 
-<!-- 	  └글목록보기
-	SELECT <include refid="assignment-columns"/>
-	FROM(SELECT  rownum rnum, assignment_no, assignment_title, assignment_content, assignment_date, assignment_hit, assignment_re_family,assignment_re_step, assignment_re_level,assignment_writer,assignment_deadline
-	FROM(SELECT  <include refid="assignment-columns"/> 
-			FROM assignment_board  order  by  assignment_re_family    desc,assignment_re_level   asc
-		)
-	)
-	WHERE rnum>=?  and  rnum<=?
-
--->
 
 
 
@@ -150,7 +151,8 @@
 	<!-- 4.수정  -->
 <update id="update" parameterType="Assignment">
 	UPDATE  assignment_board
-	SET		assignment_secret=#{assignmentSecret},
+	SET		assignment_writer_id=#{assignmentWriterId},
+				assignment_secret=#{assignmentSecret},
 				assignment_title=#{assignmentTitle},
 				assignment_content=#{assignmentContent},
 				assignment_date=#{assignmentDate},
@@ -161,6 +163,7 @@
 				assignment_re_level=#{replyLevel},
 				assignment_writer=#{assignmentWriter},
 				assignment_deadline=#{assignmentDeadline}, 
+				assignment_file=#{assignmentFile},
 				lecture_no=#{lectureNo}
 	WHERE assignment_no=#{assignmentNo}
 	</update>
@@ -191,8 +194,9 @@
 
 
 	<!-- 6.전체조회(NO로) (이건 - 세부조회할때)  -->
-	<select id="selectNo" parameterType="_int"	resultType="Assignment">
-	SELECT 	assignment_no   assignmentNo,
+	<select id="selectNo" parameterType="_int"	resultMap="assignment-basic">
+	<!-- SELECT 	assignment_no   assignmentNo,
+				assignment_writer_id  assignmentWriterId,
 				assignment_secret   assignmentSecret,
 				assignment_title   assignmentTitle,
 				assignment_content   assignmentContent,
@@ -204,8 +208,12 @@
 				assignment_re_level   replyLevel,
 				assignment_writer   assignmentWriter,
 				assignment_deadline   assignmentDeadline,  
+				assignment_file   assignmentFile,
 				lecture_no   lectureNo
 	FROM		assignment_board
+	WHERE	assignment_no=#{assignmentNo} -->
+	SELECT    <include refid="assignment-columns"></include> 
+	 FROM    assignment_board
 	WHERE	assignment_no=#{assignmentNo}
 	</select>
 
@@ -250,28 +258,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </mapper>
+
+
+
+
+

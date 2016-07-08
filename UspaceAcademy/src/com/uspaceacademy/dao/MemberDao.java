@@ -109,18 +109,22 @@ public class MemberDao
 	}
 	// 강사 탈퇴를 위해서 강사가 강의 중인 강좌 조회
 	public List selectLectureNo(String teacherId) {
+		System.out.println("강사 id로 강의 번호 조회 :  "+session.selectList("lecture.selectByTeacherId", teacherId));
 		return session.selectList("lecture.selectByTeacherId", teacherId);
 	}
 	// 강사가 강의 중인 강좌 정보를 삭제(조인테이블)
 	public int deleteByLectureNo(int lectureNo) {
-		return session.delete("lecture.deleteByLectureNo", (int)lectureNo);
+		System.out.println("조인 테이블에서 강사의 강의 정보 삭제");
+		return session.delete("lecture.deleteByLectureNo", lectureNo);
 	}
 	// 강사번호로 강의중인 강좌 삭제
 	public int deleteByTeacherId(String teacherId) {
+		System.out.println("강의 테이블에서 강사번로 강의들 삭제");
 		return session.delete("lecture.deleteByTeacherId", teacherId);
 	}
 	// 강사 테이블에서 강사 삭제(최종 탈퇴!)
 	public int deleteTeacher(String teacherId) {
+		System.out.println("강사 테이블에서 강사정보 삭제!");
 		return session.delete("memberMapper.deleteTeacher", teacherId);
 	}
 	
@@ -176,6 +180,12 @@ public class MemberDao
 	// 이름으로 강사 찾기 전체 수
 	public int selectTeacherCountContents(String name) {
 		return session.selectOne("memberMapper.selectTeacherByNameCountContents", name);
+	}
+	
+	// 강사 탈퇴를 위해 강사의 강좌번호 출석부 우선 삭제
+	public int deleteAttendanceForTeacher(int lectureNo2) {	
+		System.out.println("강의번호로 출석부 삭제 DAO");
+		return session.delete("attendanceMapper.deleteByAttendanceForTeacher", lectureNo2);
 	}
 	
 }

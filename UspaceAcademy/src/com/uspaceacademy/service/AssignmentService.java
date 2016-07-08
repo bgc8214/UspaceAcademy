@@ -31,14 +31,25 @@ public class AssignmentService {
 		
 		
 		//2.ㄷ답글등록  insert id="replyReply" 3.ㄷ업데이트 update id="replyAddStep"
+		public void replyReplyReplyAddStep(Assignment assignment){
+			 dao.replyAddStep(assignment);
+			 dao.replyReply(assignment);
+		}
+		
+		/*아래처럼하면 "assignment"가 두개라 아래것만 리턴됨
+		 * 이렇게해서 오류났었음  
+		 2.ㄷ답글등록  insert id="replyReply" 3.ㄷ업데이트 update id="replyAddStep"
 		public HashMap<String,Object> replyReplyReplyAddStep(Assignment assignment){
 			HashMap<String,Object> map = new HashMap<String,Object>();
-	/*		map.put("replyReply",dao.replyReply(assignment));
-			map.put("replyAddStep", dao.replyAddStep(assignment));*/
-			map.put("assignment",dao.replyReply(assignment));
-			map.put("assignment", dao.replyAddStep(assignment));
+			map.put("assignment",dao.replyAddStep(assignment);
+			map.put("assignment",dao.replyReply(assignment);  
 			return map;
-		}
+		}*/
+		
+		
+		
+		
+		
 		
 /*		
 		HashMap<String,Object> map = new HashMap<String,Object>();
@@ -56,6 +67,7 @@ public class AssignmentService {
 		
 		//1.게시물등록 ㅇ
 		public int insert(Assignment assignment){
+			System.out.println("인설트 서비스--------------" + assignment);
 			return dao.insert(assignment);
 		}
 		
@@ -68,11 +80,6 @@ public class AssignmentService {
 		public List selectList(String type){
 			return dao.selectList(type);
 		}
-/*		//수강후기 전체 리스트ㅇ
-				public List<Assignment> selectList(){
-					System.out.println("AssignmentService + selectList");
-					return dao.selectList();
-				}*/
 		
 		//4.수정 ㅇ
 		public int update(Assignment assignment){

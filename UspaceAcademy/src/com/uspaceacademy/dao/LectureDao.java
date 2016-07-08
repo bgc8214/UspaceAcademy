@@ -117,7 +117,7 @@ public class LectureDao {
 		map.put("currentDate", currentDate);
 		return session.selectOne("lecture.selectCountContents", map);
 	}
-	//강의명에 매개변수로 넘어온 값이 포함되어있으면 모두 조회 - 강의시작 날짜를 통해 강의가 시작된 강의들을 제외된 상태
+	//강의명에 매개변수로 넘어온 값이 포함되어있으면 모두 조회 - 강의시작 날짜를 통해 강의가 시작된 강의들을 제외된 상태(학생&강사)
 	public List selectLectureListByLectureTitle(String lectureTitle, int page) {
 		Map map = new HashMap();
 		map.put("lectureTitle", lectureTitle);
@@ -128,6 +128,7 @@ public class LectureDao {
 		map.put("currentDate", currentDate);
 		return session.selectList("lecture.selectLectureListByLectureTitle", map);
 	}
+	
 	//강의명으로 검색한 것 페이징 처리 도와줌 - 강의시작 날짜를 통해 강의가 시작된 강의들을 제외된 상태
 	public int selectCountContentsByLectureTitle(String lectureTitle) {
 		Map map = new HashMap<>();
@@ -185,10 +186,70 @@ public class LectureDao {
 		map.put("lectureNo", lectureNo);
 		return session.delete("lecture.deleteLectureFromApplyListByLectureNo", map);
 	}
-	
+
+	//관리자용 강사 관리페이지에서 강사조회
+	public List selectAllByTeacherId(String teacherId) {
+		return session.selectList("lecture.selectAllByTeacherId", teacherId);
+	}
+
 	// 관리자용 강의 목록 조회
 	public List selectAdminLectureDao() {
 		return session.selectList("lecture.selectAdminLectureList");
 	}
+	
+
+	//강의명에 매개변수로 넘어온 값이 포함되어있으면 모두 조회 - 강의시작 날짜를 통해 강의가 시작된 강의들을 제외된 상태(학생&강사)
+	public List selectLectureListByLectureTitleA(String lectureTitle, int page) {
+		Map map = new HashMap();
+		map.put("lectureTitle", lectureTitle);
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		return session.selectList("lecture.selectLectureListByLectureTitleA", map);
+	}
+	
+	//강의명으로 검색한 것 페이징 처리 도와줌 - 강의시작 날짜를 통해 강의가 시작된 강의들을 제외된 상태
+	public int selectCountContentsByLectureTitleA(String lectureTitle) {
+		Map map = new HashMap<>();
+		map.put("lectureTitle", lectureTitle);
+		SimpleDateFormat smp = new SimpleDateFormat("yyyy/MM/dd");
+		String currentDate  = smp.format(new Date());
+		map.put("currentDate", currentDate);
+		return session.selectOne("lecture.selectCountContentsByLectureTitleA",map);
+	}
+	
+	//강의과목으로 검색한 것 페이징 처리
+	public Object selectLectureListByLectureSubjectA(String lectureSubject, int page) {
+			Map map = new HashMap();
+			map.put("lectureSubject", lectureSubject);
+			map.put("page", page);
+			map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+			return session.selectList("lecture.selectLectureListByLectureSubjectA", map);
+	}
+
+	//강의과목으로 검색한 것 페이징 처리 도와줌
+	public int selectCountContentsByLectureSubjectA(String lectureSubject) {
+			Map map = new HashMap<>();
+			map.put("lectureSubject", lectureSubject);
+			return session.selectOne("lecture.selectCountContentsBylectureSubjectA", map);
+		}
+	
+	
+	//선생ID로 lectureList를 조회함 - 관리자용
+	public List selectLectureListByTeacherIdA(String teacherId2, int page) {
+		Map map = new HashMap();
+		map.put("teacherId2", teacherId2);
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		return session.selectList("lecture.selectLectureListByTeacherIdA", map);
+	}
+	//선생ID로 검색한 것 페이징 처리 도와줌 - 관리자용
+	public int selectCountContentsByTeacherIdA(String teacherId2) {
+		Map map = new HashMap<>();
+		map.put("teacherId2", teacherId2);
+		return session.selectOne("lecture.selectCountContentsByTeacherIdA", teacherId2);
+	}
+	
+	
+	
 }
 

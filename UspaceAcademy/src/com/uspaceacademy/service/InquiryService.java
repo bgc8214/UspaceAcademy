@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.uspaceacademy.dao.InquiryDao;
 import com.uspaceacademy.util.PagingBean;
+import com.uspaceacademy.vo.Comment;
 import com.uspaceacademy.vo.Inquiry;
 
 @Service
@@ -31,7 +32,9 @@ public class InquiryService
 	
 	//상세조회
 	public Inquiry selectByAdvancedNo(int advancedNo){
-		return dao.selectByAdvancedNo(advancedNo);
+		String advancedType = "1:1문의";
+		
+		return dao.selectByAdvancedNo(advancedType, advancedNo);
 	}
 	
 	//조회수
@@ -60,18 +63,21 @@ public class InquiryService
 	}
 	
 	//강의 목록 페이징 처리
-	public Map getInquiryList(int page, String advancedType) {
+	public Map getInquiryList(int page) {
+		String advancedType = "1:1문의";
+		
 		Map map = new HashMap();
 		map.put("inquiryList", dao.selectList(page, advancedType));
 		map.put("paging", new PagingBean(dao.selectCountContents(advancedType), page));
+		map.put("rowList", dao.selectAllByPagingRownum(page, advancedType));
 		return map;
 	}
 	
 	//제목으로 검색 페이징 처리
-	public Map selectByTitle(String title, int page) {
+	public Map selectByTitle(String advancedTitle, String advancedType, int page) {
 		Map map = new HashMap();
-		map.put("selectByTitle", dao.selectByTitle(title, page));
-		map.put("paging", new PagingBean(page, dao.selectByTitleCountContents(title)));
+		map.put("selectByTitle", dao.selectByTitle(advancedTitle, advancedType, page));
+		map.put("paging", new PagingBean(page, dao.selectByTitleCountContents(advancedTitle, advancedType)));
 		return map;
 	}
 	
@@ -82,4 +88,84 @@ public class InquiryService
 		
 		return map;
 	}
+	
+	//글번호로 댓글 조회
+	public Inquiry selectJoinByAdvancedNo(String advancedType, int advancedNo){	
+//		return dao.selectJoinByAdvancedNo(advancedType, advancedNo);
+		return dao.selectByAdvancedNo(advancedType, advancedNo);
+	}
+	
+//	//댓글 번호 sequence
+//	public int increaseCommentNo(){
+//		return dao.increaseCommentNo();
+//	}
+	
+	
+	
+	//글번호로 댓글 상세조회
+	public List commentList(int advancedNo){
+		String advancedType = "1:1문의";
+		
+		return dao.commentList(advancedType, advancedNo);
+	}
+	
+	//댓글번호로 댓글 상세조회
+	public Comment selectByCommentNo(int commentNo, int advancedNo){
+		String commentType = "1:1문의댓글";
+		
+		return dao.selectByCommentNo(commentType, commentNo, advancedNo);
+	}
+	
+	//댓글 등록하기
+	public int insertComment(Comment comment){
+		
+		return dao.insertComment(comment);
+	}
+	
+	//댓글 번호 sequence
+	public int increaseCommentNo(){
+		
+		return dao.increaseCommentNo();
+	}
+	
+	//댓글 수정하기
+	public int updateComment(Comment comment){		
+		
+		return dao.updateComment(comment);
+	}
+	
+	//댓글 삭제하기
+	public int deleteComment(int commentNo, int advancedNo){
+		String commentType = "1:1문의댓글";
+		
+		return dao.deleteComment(commentType, commentNo, advancedNo);
+	}
+	
+	
+	
+
+//	//코드 
+//	public List selectCode(String codeType){
+//		return dao.selectCode(codeType);
+//	}
+//	
+//	//등록하기
+//	public int insertComment(Comment comment){
+//		return dao.insertComment(comment);
+//	}
+//	
+//	//상세조회
+//	public Comment selectByCommentNo(String commentType, int commentNo){
+//		return dao.selectByCommentNo(commentType, commentNo);
+//	}
+//	
+//	//수정하기
+//	public int updateComment(Comment comment){
+//		return dao.updateComment(comment);
+//	}
+//	
+//	//삭제하기
+//	public int deleteComment(String commentType, int commentNo){
+//		return dao.deleteComment(commentType, commentNo);
+//	}
 }

@@ -18,6 +18,7 @@
 
 
 		<mapper resource="com/uspaceacademy/mapper/InquiryMapper.xml"/>
+		<mapper resource="com/uspaceacademy/mapper/lectureInquiryMapper.xml"/>
 
 
 		<mapper resource="com/uspaceacademy/mapper/lectureReviewMapper.xml" /><!--  영주 -->

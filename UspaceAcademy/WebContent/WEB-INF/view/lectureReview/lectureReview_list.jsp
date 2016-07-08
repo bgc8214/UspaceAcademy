@@ -4,42 +4,80 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><!-- ??????? -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><!-- ??????? -->
 
+<style type="text/css">
+
+body{
+min-width:1400px;
+}
+body, code{
+font:11px 'Nanum Gothic';
+color: #000;
+}
+body{
+display : block;
+}
+
+th, td{
+border:0;
+vertical-align:top;
+}
+
+.boardList table{
+border: 1px solid #d7d5d5;
+color: #353535;
+font-size: 11px;
+line-height:140%;
+}
+
+</style>
+
+
+
+
+
+
 <h3>수강후기</h3>
 
 
 <hr/>
- 	<table border="2">
+
+<body id="main"> 
+<div class="boardList">
+ 	<table border="1" summary>
 		<thead>
 			<tr>
-				<td>글번호</td>
-				<td>글쓴이</td>
-				<td>강의과목</td>
-				<td>강의명</td>
-				<td>제목</td>
-				<td>날짜</td>
-				<td>조회수</td>
+				<th scope="col">글번호</th>
+				<th scope="col">아이디</th><!--  id추가  -->
+				<th scope="col">이름</th>
+				<th scope="col">강의과목</th>
+				<th scope="col">강의명</th>
+				<th scope="col">제목</th>
+				<th scope="col">날짜</th>
+				<th scope="col">조회수</th>
 			</tr>
 		</thead>
+		
 		<tbody>
 		
 		<%-- <form><input id="page" type="hidden" value="${param.page}"></form> <!-- ?????????????지워????? --> --%>
 		
 			<c:forEach var="lectureListReview" items="${requestScope.lectureListReview}">
 				<tr>
-					<td>${lectureListReview.reviewNo}</td>
-					<td>${lectureListReview.reviewWriter}</td>
-					
-					<td>${lectureListReview.lectureSubject}</td>
-					<td>${lectureListReview.lectureTitle}</td>
+					<td>${lectureListReview.reviewNo}</td><!--  글번호 -->
+					<td>${lectureListReview.reviewWriterId}</td><!--  id추가  -->
+					<td>${lectureListReview.reviewWriter}</td><!-- 이름 -->
+					<td class="category">${lectureListReview.lectureSubject}</td><!-- 강의과목  -->
+					<td class="left">${lectureListReview.lectureTitle}</td><!-- 강의명  -->   
 					<td><a href="/UspaceAcademy/lectureReview/lecture_review_detail.do?reviewNo=${lectureListReview.reviewNo}"> <!--  한개값넘겨줄때 ? 물음표,  여러개 넘겨줄때 & 앤드.   -->
-							${lectureListReview.reviewTitle}</a></td>
-					
-					<td>${lectureListReview.reviewDate}</td>
-					<td>${lectureListReview.reviewHit}</td>
+							${lectureListReview.reviewTitle}</a></td><!-- 제목  -->
+					<td>${lectureListReview.reviewDate}</td><!-- 날짜  -->
+					<td>${lectureListReview.reviewHit}</td><!-- 조회수  -->
 				</tr>
 			</c:forEach>
 		</tbody>	
 	</table>
+</div>
+</body>
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
 <p>
@@ -80,11 +118,11 @@
 
 <!-- 관리자랑 학생일 경우만, 강의등록버튼클릭가능 -->
 <span class="lectureRegister">
-	<c:if test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>수강후기 등록</button></a><!--  수강후기 등록폼으로 이동 -->
-	</c:if>																																											<!-- 코드타입 여기서 넘겨줌!!!!!!!!!!!!!, 이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
+<%-- 	<c:if test="${sessionScope.memberType=='administrator'}">
+		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>후기 등록</button></a><!--  수강후기 등록폼으로 이동 -->
+	</c:if>	 --%>																																										<!-- 코드타입 여기서 넘겨줌!!!!!!!!!!!!!, 이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
 	<c:if test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>수강후기 등록</button></a>
+		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>후기 등록</button></a>
 	</c:if>
 </span>
 
@@ -93,7 +131,7 @@
 <!--  검색 기능 -->
 <form action="/UspaceAcademy/lectureReview/lecture_review_search.do?page=${param.page}" method="post">
 <select name="searchType">
-	<option value="lectureSubject">강의과목</option>
+	<option value="reviewSubject">강의과목</option>
 	<option value="reviewTitle">제목</option>
 </select>
 <input type="text" name="keyword">

@@ -1,5 +1,7 @@
 package com.uspaceacademy.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.AttendanceService;
+import com.uspaceacademy.vo.Code;
 import com.uspaceacademy.vo.Lecture;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
@@ -44,6 +47,9 @@ public class AttendanceController {
 	@RequestMapping("/attendanceSearch.do")
 	public ModelAndView attendanceList(@ModelAttribute Lecture lecture) throws ParseException {
 		
+		System.out.println(lecture);
+		
+		// 강의가 시작되었을 때만 등록버튼 띄우기	
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", java.util.Locale.getDefault());
 		
 		Date currentDate = new Date();	// 현재 날짜
@@ -52,15 +58,33 @@ public class AttendanceController {
 		Date vDate = dateFormat.parse(current);			// 현재 날짜
 		Date sDate = dateFormat.parse(lecture.getLectureStartDate());		// 강의 시작일
 
-		
-		long diff = vDate.getTime() - sDate.getTime() ;	// 현재 날짜 - 강의 시작일
-		
+		long diff = sDate.getTime() - vDate.getTime();	// 강의시작일 - 현재날짜
+	//	
+		String dummy = "0";
+	
+		// 코드 테이블에서 강의번호로 최종 출석이 등록된 날짜를 조회
+		Code code = service.selectCode(lecture.getLectureNo()+"");	
+		if(code!=null) {
+			
+			String today = new SimpleDateFormat("yyyy/MM/dd").format(new Date());		// 현재 날짜 확인
+//			System.out.println("오늘 날짜"+today);
+			
+			String registerDay = code.getCodeName();
+			
+			if(today.equals(registerDay)) {
+				System.out.println("오늘 날짜와 전 날짜가 같아요");
+				dummy = "1";
+			}
+		}
+		else {
+			System.out.println("출석 목록 이 없습니다.");
+		}
 
 		// 조회 및 상세페이지로 이동하여 이미 등록된 츨결정보를 보여주고 출석등록이 가능하도록!!!
 		List studentInfoList = service.selectLectureStudentInfoService(lecture.getLectureNo());	// 강사가 선택한 강좌의 학생 정보
 		List attendanceList = service.attendanceStateService(lecture.getLectureNo());			// 출석 상태 조회		
 		
-		long diffDays = diffDaysMethod(lecture.getLectureStartDate(), lecture.getLectureEndDate());
+		long diffDays = diffDaysMethod(lecture.getLectureStartDate(), lecture.getLectureEndDate(), lecture.getLectureDay());	// 일자수
 		
 		Map map = new HashMap<>();
 		map.put("diffDays", diffDays);		// 강의일수
@@ -68,24 +92,40 @@ public class AttendanceController {
 		map.put("lectureNo", lecture.getLectureNo());
 		map.put("lecture", lecture);
 		map.put("attendanceList", attendanceList);		// 일자별로 정렬된 학생들의 출결정보 - 출결이 등록된 마지막 날짜까지의....
-		map.put("diff", diff);		// 넘어가면 출결 등록 버튼 숨기기
+		map.put("diff", diff);		// 넘어가면 출결 등록 버튼 숨기기(강의시작일 - 현재 날)		
+		map.put("dummy", dummy);
 		
 		return new ModelAndView("attendance/attendance.tiles", map);	
 	}
 	
 	// 강사가 학생의 출결 등록
 	@RequestMapping("/attendanceRegister.do")
-	public String attendanceRegister(int day, String [] attendanceState, int lectureNo, @ModelAttribute Lecture lecture) throws ParseException {
+	public String attendanceRegister(int day, String [] attendanceState, int lectureNo, @ModelAttribute Lecture lecture, HttpSession session) throws ParseException, UnsupportedEncodingException {
 		List<Student> list = service.selectLectureStudentInfoService(lectureNo);	// 특정강의를 수강중인 학생 정보를 가진 객체 List
 		service.attendanceRegisterService(day, attendanceState, lectureNo, list);	// 강의 날짜, 출결상태, 강의번호, 특정강의를 수강중인 학생 정보를 가진 객체 List
-		return "redirect:/attendance/attendanceRedirect.do?startDate="+lecture.getLectureStartDate()+"&endDate="+lecture.getLectureEndDate()+"&lectureNo="+lecture.getLectureNo();
+		System.out.println(lecture.getLectureDay());
+		// 코드 테이블에서 sequence 번호
+		String num = Integer.toString(lectureNo);	// 강의번호 문자로 변환
+		String seq = Integer.toString(service.selectSeq());	// 시퀀스 문자로 변환
+		// 일단 코드 테이블에서 강의번호로 출석 날짜 조회 해 오고 이것이 만약에 null이라면
+		if(service.selectCode(num)==null)  {
+			System.out.println("코드테이블에 출석등록 날짜");
+			System.out.println(service.attendanceDayAdd(new Code(seq, new SimpleDateFormat("yyyy/MM/dd").format(new Date()), num)));
+		}
+		else {
+			System.out.println("코드 테이블에 출결 정보가 존재하므로 최종 출석 등록 날짜 수정");
+			System.out.println(service.updateAttendanceDayService(new Code(seq, new SimpleDateFormat("yyyy/MM/dd").format(new Date()), num)));
+		}
+			System.out.println("출결등록 Redirect 전..."+lecture.getLectureDay());	
+		return "redirect:/attendance/attendanceRedirect.do?startDate="+lecture.getLectureStartDate()+"&endDate="+lecture.getLectureEndDate()+"&lectureDay="+URLEncoder.encode(lecture.getLectureDay(),"UTF-8")+"&lectureNo="+lecture.getLectureNo();
 	}
 	
 	// 출석등록 redirect 처리!
 	@RequestMapping("attendanceRedirect.do")
-	public ModelAndView attendanceRegisterRedirect(String startDate, String endDate, int lectureNo) throws ParseException {
-		long diffDays = diffDaysMethod(startDate, endDate);
-		
+	public ModelAndView attendanceRegisterRedirect(String startDate, String endDate, String lectureDay , int lectureNo) throws ParseException {
+
+		long diffDays = diffDaysMethod(startDate, endDate, lectureDay);
+
 		List studentInfoList = service.selectLectureStudentInfoService(lectureNo);	// 강사가 선택한 강좌의 학생 정보
 		List attendanceList = service.attendanceStateService(lectureNo);			// 출석 상태 조회
 		
@@ -96,23 +136,25 @@ public class AttendanceController {
 		map.put("lectureNo", lectureNo);			// 강의 번호
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
+		map.put("lectureDay", lectureDay);
 		return new ModelAndView("attendance/attendance_detail.tiles", map);
 	}
 	
 	// 일자(하루씩) 출결 수정
 	@RequestMapping("/updateAttendance.do")
-	public String modifyAttendance(int lectureNo, int day, String startDate, String endDate, @RequestParam String attendanceState) {
+	public String modifyAttendance(int lectureNo, int day, String startDate, String endDate, String lectureDay, @RequestParam String attendanceState) throws UnsupportedEncodingException {
 		List<Student> list = service.selectLectureStudentInfoService(lectureNo);	// 강의를 수강중인 학생 정보(학생id로 오름차순 정렬된)
 		service.attendanceStateModify(lectureNo, day, attendanceState, list);	// 수정
-		
-		return "redirect:/attendance/attendanceUpdateRedirect.do?startDate="+startDate+"&endDate="+endDate+"&lectureNo="+lectureNo;
+		System.out.println(lectureDay);
+		System.out.println("리다이렉트 전"+ lectureDay);
+		return "redirect:/attendance/attendanceUpdateRedirect.do?startDate="+startDate+"&endDate="+endDate+"&lectureNo="+lectureNo+"&lectureDay="+URLEncoder.encode(lectureDay,"UTF-8");
 	}
 	
 	// 수정 Redirect - 출결 수정 후 조회 & 수정 페이지로 이동
 	@RequestMapping("/attendanceUpdateRedirect.do")
-	public ModelAndView modifyRedirect(String startDate, String endDate, int lectureNo) throws ParseException {
-		long diffDays = diffDaysMethod(startDate, endDate);
-		
+	public ModelAndView modifyRedirect(String startDate, String endDate, int lectureNo, String lectureDay) throws ParseException {
+		long diffDays = diffDaysMethod(startDate, endDate, lectureDay);
+		System.out.println("리다이렉트"+lectureDay);
 		List studentInfoList = service.selectLectureStudentInfoService(lectureNo);	// 강사가 선택한 강좌의 학생 정보
 		List attendanceList = service.attendanceStateService(lectureNo);			// 출석 상태 조회
 		
@@ -123,19 +165,26 @@ public class AttendanceController {
 		map.put("lectureNo", lectureNo);			// 강의 번호
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
+		
 		return new ModelAndView("attendance/attendance_detail.tiles", map);
 	}
 	
 	// 강의일수 구해주는 메서드
-	public long diffDaysMethod(String startDate, String endDate) throws ParseException {
+	public long diffDaysMethod(String startDate, String endDate, String day) throws ParseException {
 		String day1 = startDate.split("/")[0]+startDate.split("/")[1]+startDate.split("/")[2];
 		String day2 = endDate.split("/")[0]+endDate.split("/")[1]+endDate.split("/")[2];
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd", java.util.Locale.getDefault());
 		Date date = dateFormat.parse(startDate);
 		Date date1 = dateFormat.parse(endDate);
 		long diff = date1.getTime() - date.getTime();		
-		long diffDays = (diff/(24*60*60*1000))+1;		// 일차수
-		return diffDays;
+		long diffDays = (diff/(24*60*60*1000))+1;		// 일차수 - 달력에서 계산된
+		
+		long mok = diffDays/7;	
+		long na = diffDays%7;
+		long diffDay = mok*day.length()+na;		// 실제 강의 일수
+//		System.out.println("일차수  " + diffDay);
+		
+		return diffDay;
 	}
 	
 	// 학생이 수강중인 강의 정보

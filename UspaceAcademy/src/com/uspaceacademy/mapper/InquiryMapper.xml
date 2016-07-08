@@ -27,6 +27,46 @@
 		lecture_no2
 	</sql>
 	
+	<sql id="inquiry-comment-join-select">
+		select 	i.advanced_no,
+				i.advanced_secret,
+				i.advanced_title,
+				i.advanced_content,
+				i.advanced_date,
+				i.advanced_hit,
+				i.advanced_id,
+				i.advanced_type,
+				c.comment_no,
+				c.comment_content,
+				c.comment_date,
+				c.comment_writer,
+				c.comment_type,
+				c.advanced_no2
+		from 	advanced_board i, comment_table c
+		where 	i.advanced_no = c.advanced_no2
+	</sql>
+	
+	<sql id="inquiry-comment-join">
+				i.advanced_no,
+				i.advanced_secret,
+				i.advanced_title,
+				i.advanced_content,
+				i.advanced_date,
+				i.advanced_hit,
+				i.advanced_id,
+				i.advanced_type,
+				c.comment_no,
+				c.comment_content,
+				c.comment_date,
+				c.comment_writer,
+				c.comment_type,
+				c.advanced_no2
+		from 	advanced_board i, comment_table c
+		where 	i.advanced_no = c.advanced_no2
+	</sql>
+	
+
+	
 	<resultMap type="inquiry" id="inquiry-resultmap">
 		<id column="advanced_no" property="advancedNo"/>
 		<result column="advanced_secret" property="advancedSecret"/>
@@ -38,6 +78,84 @@
 		<result column="advanced_type" property="advancedType"/>
 		<result column="lecture_no2" property="lectureNo2"/>
 	</resultMap>
+	
+	<resultMap type="comment" id="comment-resultmap">
+		<id column="comment_no" property="commentNo"/>
+		<result column="comment_content" property="commentContent"/>
+		<result column="comment_date" property="commentDate"/>
+		<result column="comment_writer" property="commentWriter"/>
+		<result column="comment_type" property="commentType"/>
+		<result column="advanced_no2" property="advancedNo2"/>
+	</resultMap>
+	
+<!-- 	<resultMap type="inquiry" id="inquiry-comment-resultmap" extends="inquiry-resultmap">
+		<collection property="commentList" ofType="comment" resultMap="comment-resultmap"/>
+	</resultMap> -->
+	
+	<resultMap type="comment" id="comment-inquiry-resultmap" extends="comment-resultmap">
+		<association property="inquiry" javaType="inquiry" resultMap="inquiry-resultmap"/>
+	</resultMap>
+	
+	
+	
+	<!-- 글번호로 조회하기(조인) -->
+<!-- 	<select id="selectJoinByAdvancedNo" parameterType="map" resultMap="inquiry-comment-resultmap">
+		<include refid="inquiry-comment-join-select"/>
+		and advanced_type = #{advancedType} and advanced_no = #{advancedNo}
+	</select> -->
+	
+	<!-- 댓글 번호 sequence -->
+	<select id="increaseCommentNo" resultType="_int">
+		select comment_board_seq.nextval from dual
+	</select>
+	
+	<!-- 댓글 등록 -->
+	<insert id="insertComment" parameterType="comment">
+		insert into comment_table values(#{commentNo}, #{commentContent}, #{commentDate}, #{commentWriter}, #{commentType}, #{advancedNo2})
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateComment" parameterType="comment">
+		update comment_table
+		set		comment_content = #{commentContent},
+				comment_date = #{commentDate}
+		where comment_type = #{commentType} and comment_no = #{commentNo}				
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteComment" parameterType="map">
+		delete from comment_table where comment_type = #{commentType} and comment_no = #{commentNo}
+	</delete>
+	
+	<!-- 댓글 번호로 조회 -->
+	<select id="selectByCommentNo" resultType="map">
+		select 	comment_no,
+				comment_content,
+				comment_date,
+				comment_writer,
+				comment_type,
+				advanced_no2
+		from 	comment_table
+		where comment_no = #{commentNo}
+	</select>
+	
+	
+	
+		<select id="selectRownum" parameterType="map" resultType="_int">
+ 		SELECT rownum
+ 		FROM   (
+ 			SELECT  <include refid="column-basic"/>
+ 			FROM   (
+ 				SELECT <include refid="column-basic"/>
+ 				FROM   advanced_board
+				where advanced_type = #{advancedType} and lecture_no2 = #{lectureNo2}
+ 				ORDER BY advanced_no DESC  
+ 			)
+ 		)
+ 	</select>
+	
+	
+		
 		
 	<!-- 전체 조회 -->
 	<select id="selectAllInquirys" resultMap="inquiry-resultmap">
@@ -50,14 +168,16 @@
 	</insert>
 	
 	<!-- 상세조회 -->
-	<select id="selectByAdvancedNo" resultMap="inquiry-resultmap" parameterType="_int">
+	<select id="selectByAdvancedNo" resultMap="inquiry-resultmap" parameterType="map">
 		<include refid="inquiry-select"></include>
-		where advanced_no = #{advancedNo}
+		where advanced_type = #{advancedType} and advanced_no = #{advancedNo}
 	</select>
 	
 	<!-- 조회수 -->
 	<update id="updateHit" parameterType="inquiry">
-		update advanced_board set advanced_hit = #{advancedHit} where advanced_no = #{advancedNo}
+		update advanced_board
+		set advanced_hit = #{advancedHit} 
+		where advanced_type = #{advancedType} and advanced_no = #{advancedNo}
 	</update>
 	
 	<!-- 수정하기 -->
@@ -110,7 +230,7 @@
  			FROM   (
  				SELECT <include refid="column-basic"/>
  				FROM   advanced_board
- 				where advanced_title like '%'||#{advancedTitle}||'%'
+ 				where advanced_type=#{advancedType} and advanced_title like '%'||#{advancedTitle}||'%'
  				ORDER BY advanced_no DESC  
  			)
  		)
@@ -121,7 +241,7 @@
  	<select id="selectByTitleCountContents" resultType="_int" parameterType="map">
  		SELECT count(advanced_no) 
  		FROM   advanced_board
- 		where advanced_title like '%'||#{advancedTitle}||'%'
+ 		where advanced_type=#{advancedType} and advanced_title like '%'||#{advancedTitle}||'%'
  	</select>
  	
  	<!-- 실험 제목 조회 -->

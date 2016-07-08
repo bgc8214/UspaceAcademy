@@ -35,7 +35,7 @@ public class AssignmentDao {
 			//1.ㄷ조회  select id="replyGetList"
 			public List<Assignment> replyGetList(){
 				return session.selectList(namespace+"replyGetList");
-				//오류났던거 적기 : System.out.println("dao0====================="+session.selectList(namespace+"replyGetList")); 이렇게하는것도 이클립스가 인식해서!!!!!!!!!!!!!!! 두번 작동되서 안된다
+				//●오류났던거 적기 : System.out.println("dao0====================="+session.selectList(namespace+"replyGetList")); 이렇게하는것도 이클립스가 인식해서!!!!!!!!!!!!!!! 두번 작동되서 안된다
 			}
 	
 	
@@ -69,6 +69,7 @@ public class AssignmentDao {
 	
 		//1. 삽입(게시물등록)ㅇ
 		public int insert(Assignment assignment){
+			System.out.println("영주 인설트----------------------------"+assignment);
 			return session.insert(namespace+"insert", assignment);
 		}
 		

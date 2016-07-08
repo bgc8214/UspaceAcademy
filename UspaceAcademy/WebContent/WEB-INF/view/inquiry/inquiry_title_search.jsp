@@ -32,7 +32,7 @@
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/inquiry/selectByTitle.do?page=${requestScope.paging.beginPage - 1}&title=${requestScope.title}">
+			<a href="/UspaceAcademy/inquiry/selectByTitle.do?page=${requestScope.paging.beginPage - 1}&advancedTitle=${requestScope.advancedTitle}">
 			◀
 			</a>
 		</c:when>
@@ -45,7 +45,7 @@
 			 [${page }]
 			</c:when>
 			<c:otherwise>
-				<a href="/UspaceAcademy/inquiry/selectByTitle.do?page=${page }&title=${requestScope.title}">
+				<a href="/UspaceAcademy/inquiry/selectByTitle.do?page=${page }&advancedTitle=${requestScope.advancedTitle}">
 					${page }
 				</a>
 			</c:otherwise>
@@ -55,7 +55,7 @@
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/inquiry/selectByTitle.do?&page=${requestScope.paging.endPage + 1}&title=${requestScope.title}">
+			<a href="/UspaceAcademy/inquiry/selectByTitle.do?&page=${requestScope.paging.endPage + 1}&advancedTitle=${requestScope.advancedTitle}">
 			▶
 			</a>
 		</c:when>
@@ -63,4 +63,4 @@
 	</c:choose>
 <p>
 
-<a href="/UspaceAcademy/inquiry/inquiryList.do">1:1문의 목록</a>
+<a href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의">1:1문의 목록</a>

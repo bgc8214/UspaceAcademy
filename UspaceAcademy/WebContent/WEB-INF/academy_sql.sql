@@ -1,8 +1,10 @@
+--생성할때 순서있음 영주
+
 
 -- 코드테이블
 drop table code_table;
 create table code_table(
-	code_id varchar2(1) primary key,
+	code_id varchar2(5) primary key,
 	code_name varchar2(30) not null,
 	code_type varchar2(30) not null
 );
@@ -70,10 +72,20 @@ create table basic_board(
 drop sequence basic_board_seq; 
 create sequence basic_board_seq nocache;
 
--- 수강 후기
+
+
+
+
+
+
+
+
+
+-- 수강 후기 (영주)
 drop table review_board;
 create table review_board(
 	review_no number primary key,
+	review_writer_id  varchar2(50) not null,
 	review_writer varchar2(50) not null,
 	lecture_title varchar2(100) not null,
 	lecture_subject varchar2(50) not null,
@@ -87,14 +99,25 @@ DROP SEQUENCE review_board_seq;
 CREATE SEQUENCE review_board_seq nocache;
 
 
+
+
+
+
+
+
+
+
+
+
+
 -- 강의
 DROP table lecture cascade constraint;
 CREATE TABLE lecture(
 	lecture_no number primary key, --강의번호 primary key
 	lecture_title varchar2(100) not null, --강의제목
 	lecture_description varchar2(1000) not null, --강의 설명
-	lecture_start_time number not null, --강의 시작 시간
-	lecture_end_time number not null, --강의 끝 시간
+	lecture_start_time varchar2(15) not null, --강의 시작 시간
+	lecture_end_time varchar2(15) not null, --강의 끝 시간
 	lecture_day varchar2(50) not null, --강의 요일
 	lecture_start_date varchar2(50) not null, --강의 시작일
 	lecture_end_date varchar2(50) not null, --강의 종료일
@@ -134,7 +157,7 @@ create table advanced_board(
 	advanced_date varchar2(50) not null,
 	advanced_hit number not null,
 	advanced_id varchar2(50) not null,
-	advanced_type varchar2(50),
+	advanced_type varchar2(50) not null,
 	lecture_no2 number,
 	constraint fk_advanced_lecture foreign key(lecture_no2) references lecture(lecture_no)
 );
@@ -150,8 +173,9 @@ create sequence advanced_board_seq nocache;
 drop sequence advanced_board2_seq;
 create sequence advanced_board2_seq nocache;
 
+insert into ADVANCED_BOARD values(1, '0', '제목1', '내용1', '2016-05-05', 0, 'student', '1:1문의', null);
 
-
+delete from advanced_board where advanced_no=1
 
 
 
@@ -162,12 +186,51 @@ CREATE TABLE comment_table(
 	comment_content clob not null,
 	comment_date varchar2(50) not null,
 	comment_writer varchar2(50) not null, 
+	comment_type varchar2(50) not null,
 	advanced_no2 number not null,
 	constraint fk_comment_advanced foreign key (advanced_no2) references advanced_board(advanced_no)
 );
 
 drop sequence comment_board_seq;
 create sequence comment_board_seq nocache;
+
+select * from COMMENT_Table;
+
+insert into COMMENT_TABLE values(11, '댓글내용1', '2015-06-04', 'student2', '1:1문의댓글', 9);
+insert into COMMENT_TABLE values(12, '댓글내용2', '2015-06-05', 'student2', '1:1문의댓글', 9);
+insert into COMMENT_TABLE values(11, '댓글내용3', '2015-06-06', 'student2', '1:1문의댓글', 2);
+
+insert into COMMENT_TABLE values(1, '댓글내용1', '2015-06-04', 'student2', '강의질문댓글', 100);
+
+delete from COMMENT_TABLE where comment_type='1:1문의댓글' and comment_no=1
+
+insert into comment_table
+()
+select * from advanced_table
+
+
+		select	comment_no,
+				comment_content,
+				comment_date,
+				comment_writer,
+				comment_type,
+				advanced_no2
+		from	comment_table
+		where comment_type = '강의질문댓글' and advanced_no2 = 1
+
+
+
+
+
+
+select * from file_board;
+drop table file_board cascade constraint;
+--영주 파일업로드할 테이블
+create table file_board(
+title varchar2(1000) null ,
+upfile varchar2(4000)
+);
+
 
 
 
@@ -179,12 +242,12 @@ create sequence comment_board_seq nocache;
 
 drop sequence assignment_board_seq;
 create sequence assignment_board_seq nocache;
-
 -- 과제
 select * from assignment_board;
 drop table assignment_board cascade constraint;
 create table assignment_board(
 	assignment_no number primary key,
+	assignment_writer_id varchar2(50) not null,
 	assignment_secret number not null,
 	assignment_title varchar2(100) not null,
 	assignment_content clob not null,
@@ -196,18 +259,19 @@ create table assignment_board(
 	assignment_re_level number not null,
 	assignment_writer varchar2(50) not null,
 	assignment_deadline varchar2(10) not null,
+	assignment_file varchar2(100) null,
 	lecture_no number null, -- n o t null 로바꾸기 영주
 	constraint fk_assignment_lecture foreign key (lecture_no) references lecture(lecture_no)
 );
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,0,0,'1이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,1,'11이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'111이름','20160627',1);
-
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,1,1,'2이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,2,'22이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,3,'222이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,1,'2!이름','20160627',1);
-insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,2,'22@이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,'1',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,0,0,'1이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,'2',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,1,'11이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,'3',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'111이름','20160627',1);
+insert into assignment_board values(assignment_board_seq.nextval,'3',0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,1,1,2,'이영주','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,1,1,'2이름','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,2,'22이름','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,2,3,'222이름','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,1,'2!이름','20160627',1);
+--insert into assignment_board values(assignment_board_seq.nextval,0,'고등국어3','고등국어2과제입니다제풀해주세요','20160622',0,1234,2,3,2,'22@이름','20160627',1);
 
 --영주 : 지우지마세요~!
 --	assignment_no number primary key,					--1.글번호
@@ -262,20 +326,20 @@ CREATE TABLE attendance(
 
 
 
-insert into code_table values('7', '1:1문의', 'advanced_board');
-insert into code_table values('8', '1:1문의댓글', 'comment_board');
-insert into code_table values('9', '강의질문하기', 'advanced_board');
+
 
 ---------------------------------------------------------------------
 -- code_table insert하는 구문     //영주1
-insert into CODE_TABLE values('1', '공지사항', 'basic_board');
-insert into CODE_TABLE values('2', 'FAQ', 'basic_board');
+insert into CODE_TABLE values(code_table_seq.nextval, '공지사항', 'basic_board');
+insert into CODE_TABLE values(code_table_seq.nextval, 'FAQ', 'basic_board');
+insert into CODE_TABLE values(code_table_seq.nextval, '국어', 'teacherSubject');
+insert into CODE_TABLE values(code_table_seq.nextval, '영어', 'teacherSubject');
+insert into CODE_TABLE values(code_table_seq.nextval, '수학', 'teacherSubject');
 
-insert into CODE_TABLE values('3', '국어', 'teacherSubject');
-insert into CODE_TABLE values('4', '영어', 'teacherSubject');
-insert into CODE_TABLE values('5', '수학', 'teacherSubject');
-insert into CODE_TABLE values('6', '한국사', 'teacherSubject');
+drop sequence code_table_seq;
+create sequence code_table_seq nocache;
 
+select *from code_table
 
 select * from CODE_TABLE;
 	SELECT *
@@ -289,12 +353,10 @@ INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,�
 INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
 
 --수강후기
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
-insert into REVIEW_BOARD values(review_board_seq.nextval,'이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'id-1','이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'id-2','김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+insert into REVIEW_BOARD values(review_board_seq.nextval,'id-1','이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
+
 
 INSERT INTO administrator values('admin', '1234');
 
@@ -320,4 +382,60 @@ create table secret_table(
 
 select * from assignment_board where assignment_no in(161, 170)
 
-select * from lecture;
+
+
+
+
+
+
+--		select 	i.advanced_no,
+--				i.advanced_secret,
+--				i.advanced_title,
+--				i.advanced_content,
+--				i.advanced_date,
+--				i.advanced_hit,
+--				i.advanced_id,
+--				i.advanced_type,
+--				c.comment_no,
+--				c.comment_content,
+--				c.comment_date,
+--				c.comment_writer,
+--				c.advanced_no2
+--		from 	advanced_board i, comment_table c
+--		where 	i.advanced_no = c.advanced_no2
+--		and advanced_type = '1:1문의' and advanced_no = 1
+--
+--		update(		select 	i.advanced_no,
+--				i.advanced_secret,
+--				i.advanced_title,
+--				i.advanced_content,
+--				i.advanced_date,
+--				i.advanced_hit,
+--				i.advanced_id,
+--				i.advanced_type,
+--				c.comment_no,
+--				c.comment_content,
+--				c.comment_date,
+--				c.comment_writer,
+--				c.advanced_no2
+--		from 	advanced_board i, comment_table c
+--		where 	c.comment_no = 1)
+--		set comment_content = '뭐지'
+--		
+--		delete from comment_table c
+--		where exists(select 	i.advanced_no,
+--				i.advanced_secret,
+--				i.advanced_title,
+--				i.advanced_content,
+--				i.advanced_date,
+--				i.advanced_hit,
+--				i.advanced_id,
+--				i.advanced_type		
+--		from 	 advanced_board i
+--		
+--		where c.advanced_no2 = i.advanced_no
+--		)
+--		
+--
+--select * from lecture;
+--

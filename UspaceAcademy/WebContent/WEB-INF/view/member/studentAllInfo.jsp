@@ -9,6 +9,9 @@
 				return false;
 			}
 		})
+		$("#remove").on("click", function() {
+			return confirm("강제탈퇴 시키시겠습니까?");
+		})
 	});
 	
 	$(document).ready(effect);
@@ -27,19 +30,25 @@
 			<th>이메일</th>
 			<th>전화번호</th>
 			<th>주소</th>
+			<th>회원 탈퇴</th>
 		<tr>
 	</thead>
 	<tbody>
 		<c:forEach items="${requestScope.studentAllList}" var="student"> 
 			<tr>
+			
 				<td align="center">${student.studentName}</td>
 				<td align="center">${student.studentEmail}</td>
 				<td align="center">${student.studentPhoneNo}</td>
-				<td align="center">${student.studentAddress}</td>
+				<td align="center">${student.studentAddress}</td>				
+				<td><div id="remove"><a href="/UspaceAcademy/member/deleteStudentByAdmin.do?studentId=${student.studentId}"><button>학생 탈퇴</button></a></div></td>
 			</tr>	
 		</c:forEach>
 		
 	</tbody>
+	
+	
+	
 </table>
 <p>
 <%--◀이전 페이지 그룹 처리 --%>
