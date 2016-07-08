@@ -594,6 +594,6 @@ public class MemberController
 		
 		List selectAllByTeacherId = lectureService.selectAllByTeacherId(teacherId);
 
-		return new ModelAndView("member/teacher_lectureInfo.tiles", "lectureList", selectAllByTeacherId);
+		return new ModelAndView("member/teacher_lectureInfo2.tiles", "lectureList", selectAllByTeacherId);
 	}
 }

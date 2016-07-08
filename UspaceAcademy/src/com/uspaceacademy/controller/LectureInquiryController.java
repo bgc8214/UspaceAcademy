@@ -462,20 +462,22 @@ public class LectureInquiryController {
 		   map.put("searchType", searchType);
 		   map.put("keyword", keyword);
 		   map.put("lectureNo2", lectureNo2);
+		   map.put("page", page);
 
 		}else if(searchType.equals("advancedContent")){
 			map = service.selectContentByPaging(page, keyword, lectureNo2);
 			map.put("searchType", searchType);
 			map.put("keyword", keyword);
 			map.put("lectureNo2", lectureNo2);
+			map.put("page", page);
 		}
 		else{
-//			map = service.getLectureList(page);
-//			List codeList = service.searchCode("teacherSubject");
-//			map.put("page", page);
-//			map.put("codeList", codeList); 
-//			map.put("searchType", searchType);
-//			map.put("keyword", keyword);
+			map = service.selectAllByPaging(page, lectureNo2);
+			map.put("page", page); 
+			map.put("searchType", searchType);
+			map.put("keyword", keyword);
+			map.put("lectureNo2", lectureNo2);
+			
 			return new ModelAndView("lectureInquiry/lectureInquiry_list.tiles");
 		}
 		return new ModelAndView("lectureInquiry/lectureInquiry_search.tiles", map);

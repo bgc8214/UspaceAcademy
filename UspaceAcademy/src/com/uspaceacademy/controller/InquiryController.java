@@ -195,7 +195,7 @@ public class InquiryController {
 					List commentList = service.commentList(advancedNo);
 					
 					Map map = new HashMap();
-					map.put("lectureInquiryDetail", inquiry);
+					map.put("inquiryDetail", inquiry);
 					map.put("commentList", commentList);
 					
 					return new ModelAndView("inquiry/inquiry_detail.tiles", map);

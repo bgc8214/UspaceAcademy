@@ -119,8 +119,7 @@ form {
 				<td><a href="/UspaceAcademy/notice/list.do?type=공지사항"><button
 							id="notice">공지사항</button></a></td>
 				<td><button	id="customerCenter">고객센터</button></td>
-				<td><a href="/UspaceAcademy/registerSelect.do"><button
-							id="join">회원가입</button></a></td>
+				<td><button id="join">회원가입</button></a></td>
 
 			</tr>
 
