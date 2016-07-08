@@ -244,7 +244,10 @@ SELECT  	    a.assignment_no, a.assignment_writer_id, a.assignment_secret, a.ass
 	<!-- 위에 페이징처리............................................................................................................................ -->
 
 
-
+	<!-- 강사 탈퇴를 위해서....  (정훈) -->
+	<delete id="deleteTeacherInfo" parameterType="_int">
+		delete from assignment_board where lecture_no = #{lectureNo}
+	</delete>
 
 </mapper>
 

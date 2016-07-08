@@ -5,29 +5,34 @@
 	$(document).ready(function() {
 		$("#btn").on("click", function() {
 			if(!$("input[name=keyword]").val()){
-				alert("키워드를 입력하세요.");
+				alert("제목 또는 내용을 입력하세요.");
 				return false;
 			}
 		})
 		$("#ex").on("click", "tr", function() {
 			alert("상세페이지로 이동합니다");
 		})
+		$(".noticeList").on("mouseover", function() {
+			$(this).css("background-color", "#FFD9FA");
+		});
+		$(".noticeList").on("mouseout", function() {
+			$(this).css("background-color", "white");
+		});
 		
 	});
 	
 	$(document).ready(effect);
 	function effect() {
-		$("tr:eq(2)").css("background-color", "#6CC0FF");
+		$("tr:eq(2)").css("background-color", "#E8D9FF");
 	
 	}
 
 </script>
 <h3 class="pageTlt">공지사항</h3>
 <hr>
-	<table class="table table-bordered table-hover" align="center">
+	<table class="table table-bordered">
 		<thead>
 			<tr>
-				<th>No</th>
 				<th>공지제목</th>
 				<th>등록일</th>
 				<th>조회수</th>
@@ -36,7 +41,6 @@
 		<tbody id="ex">
 			<c:forEach var="notice" items="${requestScope.noticeList}">
 				<tr onclick="location.href='/UspaceAcademy/notice/noticeDetail.do?no=${notice.basicNo}&page=${page}'" style="cursor:pointer;" class="noticeList">
-					<td align="center">${notice.basicNo}</td>
 					<td align="center">${notice.basicTitle}</td>
 					<td align="center">${notice.basicDate}</td>
 					<td align="center">${notice.basicHit}</td>
@@ -82,25 +86,27 @@
 </div>
 <p>
 
- <!-- 공지사항 제목+내용으로 검색 -->
-<div class="boardBottom" align="center">
-	<form action="/UspaceAcademy/notice/noticeSearch.do" method="post">
-		<fieldset>
-			<dd><input type="text" name="keyword" placeholder="제목+내용을 입력하세요." />
-			<input id="btn" type="submit" value="제목+내용으로 검색" class="btn btn-info"></dd>
-		</fieldset>
-	
-	</form>
-</div>
-
-
-
 <!-- 관리자용 공지사항 등록 버튼 -->
 <span class="notciceRegister">
 	<c:if test="${sessionScope.memberType=='administrator'}">
 		<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button class="btn btn-success">공지사항 등록</button></a>
 	</c:if>
 </span>
+
+
+
+ <!-- 공지사항 제목+내용으로 검색 -->
+<div class="boardBottom">
+	<form action="/UspaceAcademy/notice/noticeSearch.do" method="post">
+		<fieldset>
+			<input type="text" name="keyword" placeholder="제목+내용을 입력하세요."/>
+			<input id="btn" type="submit" value="제목+내용으로 검색" class="btn btn-info">
+		</fieldset>
+	</form>
+</div>
+
+
+
 
 
 <p>

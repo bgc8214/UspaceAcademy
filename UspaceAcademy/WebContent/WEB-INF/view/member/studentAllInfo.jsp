@@ -42,7 +42,7 @@
 				<td align="center">${student.studentEmail}</td>
 				<td align="center">${student.studentPhoneNo}</td>
 				<td align="center">${student.studentAddress}</td>				
-				<td><a href="/UspaceAcademy/member/deleteStudentByAdmin.do?studentId=${student.studentId}"><button id="remove">학생 탈퇴</button></a></td>
+				<td><a href="/UspaceAcademy/member/deleteStudentByAdmin.do?studentId=${student.studentId}"><button id="remove" class="btn btn-danger">학생 탈퇴</button></a></td>
 			</tr>	
 		</c:forEach>
 		

@@ -140,8 +140,19 @@ form {
 			<tr>
 				<td><a href="/UspaceAcademy/academyIntroduce.do"><button
 							id="introduce">학원소개</button></a></td>
-				<td><a href="/UspaceAcademy/lecture/lectureList.do"><button
+							
+				<c:choose>
+					<c:when test="${sessionScope.memberType=='administrator'}">
+					
+				<td><a href="/UspaceAcademy/lecture/lectureAll.do"><button
+							id="lecture">개설강좌</button></a></td> <!-- 관리자용 강의 리스트 -->
+					</c:when>	
+					<c:otherwise>
+						<td><a href="/UspaceAcademy/lecture/lectureList.do"><button
 							id="lecture">개설강좌</button></a></td>
+					</c:otherwise>
+				</c:choose>						
+		
 				<td><a
 					href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button
 							id="lectureReview">수강후기</button></a></td>
@@ -193,15 +204,15 @@ form {
 		<c:choose>
 			<c:when test="${sessionScope.memberType=='student' }">
 			${sessionScope.login_info.studentName } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-info">로그아웃</button></a>
+			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
 			</c:when>
 			<c:when test="${sessionScope.memberType=='teacher' }">
 			${sessionScope.login_info.teacherName } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-info">로그아웃</button></a>
+			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
 			</c:when>
 			<c:when test="${sessionScope.memberType=='administrator' }">
 			${sessionScope.login_info } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-info">로그아웃</button></a>
+			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
 			</c:when>
 		</c:choose>
 	</c:otherwise>

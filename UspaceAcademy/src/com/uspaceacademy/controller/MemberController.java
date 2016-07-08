@@ -535,8 +535,7 @@ public class MemberController
 	
 	//관리자가 강사 강제 탈퇴
 	@RequestMapping("/deleteTeacherByAdmin.do")
-	public String deleteTeacherByAdmin(String teacherId,HttpSession session) {
-		
+	public String deleteTeacherByAdmin(String teacherId, HttpSession session) {
 		service.removeTeacher(teacherId);
 		return "/member/teacherAll.do";
 	}
@@ -579,7 +578,6 @@ public class MemberController
 	@RequestMapping("/selectAllByTeacherId.do")
 	public ModelAndView selectAllByTeacherId(HttpSession session) {
 		Teacher teacher = (Teacher)session.getAttribute("login_info");
-		teacher.getTeacherId();
 		
 		String teacherId = teacher.getTeacherId();
 		

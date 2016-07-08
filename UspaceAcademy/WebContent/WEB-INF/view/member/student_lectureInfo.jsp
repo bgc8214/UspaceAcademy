@@ -18,7 +18,7 @@
 <h3 class="pageTlt">학생의 강의 정보 page</h3>
 <hr>
 
-<table border="" width="1500" class="table table-bordered">
+<table class="table table-bordered">
 	<thead>
 		<th>강의번호</th>
 		<th>강의</th>

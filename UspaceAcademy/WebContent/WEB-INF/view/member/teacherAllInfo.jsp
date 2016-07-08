@@ -39,7 +39,8 @@ $(document).ready(function() {
 				<td align="center">${teacher.teacherAddress}</td>
 
 				<td><a href="/UspaceAcademy/member/selectAllByTeacherId2.do?teacherId=${teacher.teacherId}">${teacher.teacherSubject}</a></td>
-				<td><a href="/UspaceAcademy/member/deleteTeacherByAdmin.do?teacherId=${teacher.teacherId}"><button id="remove">강사 탈퇴</button></a></td>
+				<td><a href="/UspaceAcademy/member/deleteTeacherByAdmin.do?teacherId=${teacher.teacherId}"><button id="remove" class="btn btn-danger">강사 탈퇴</button></a></td>
+
 			</tr>	
 		</c:forEach>
 		
