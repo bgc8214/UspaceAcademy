@@ -415,4 +415,6 @@ public class LectureController {
 //		System.out.println(map);
 		return new ModelAndView("lecture/admin_lectureList.tiles", map);
 	}
+	
+	
 }

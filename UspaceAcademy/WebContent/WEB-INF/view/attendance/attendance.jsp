@@ -75,6 +75,11 @@
 		</c:if>
 </table>
 
-<a href="/UspaceAcademy/attendance/attendanceList.do"><button class="btn btn-info">강의목록</button></a>
-<a href="/UspaceAcademy/attendance/attendanceRedirect.do?startDate=${requestScope.lecture.lectureStartDate}&endDate=${requestScope.lecture.lectureEndDate}&lectureNo=${requestScope.lectureNo}">
-<button class="btn btn-warning">출석수정</button></a>
+
+<c:choose>
+	<c:when test="${sessionScope.memberType=='teacher'}">
+		<a href="/UspaceAcademy/member/selectAllByTeacherId.do"><button class="btn btn-info">강의목록</button></a>
+		<a href="/UspaceAcademy/attendance/attendanceRedirect.do?startDate=${requestScope.lecture.lectureStartDate}&endDate=${requestScope.lecture.lectureEndDate}&lectureNo=${requestScope.lectureNo}">
+		<button class="btn btn-warning">출석수정</button></a>
+	</c:when>
+</c:choose>

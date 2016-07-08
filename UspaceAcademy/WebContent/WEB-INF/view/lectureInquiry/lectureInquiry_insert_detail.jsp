@@ -2,11 +2,25 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<table border="1">
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+	
+$(document).ready(effect);
+function effect(){
+	$("tr:eq(2)").css("background-color", "palegreen");
+	$("tr:eq(3)").css("background-color", "sky-blue");
+
+}
+
+</script>
+
+<table border="" class="table table-bordered">
 	<tr>
 		<td>
-			no: ${requestScope.lectureInquiryDetail.advancedNo}<br> 글쓴이: ${requestScope.lectureInquiryDetail.advancedId}<br>글 등록일:${requestScope.lectureInquiryDetail.advancedDate}
-			<br>조회수: ${requestScope.lectureInquiryDetail.advancedHit}
+			no: ${requestScope.lectureInquiryDetail.advancedNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			글쓴이: ${requestScope.lectureInquiryDetail.advancedId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			글 등록일:${requestScope.lectureInquiryDetail.advancedDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			조회수: ${requestScope.lectureInquiryDetail.advancedHit}
 		</td>
 	</tr>
 	<tr>

@@ -1,21 +1,32 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-목록<br>
+
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
-	for(var i=0;i<length(requestScope.inquiryList);i++){
-		if(requestScope.inquiryList[i].advancedSecret=='1'){	
-			$("#secret").on("click", function() {
-				alert("비밀글 입니다.");					
-			});
+
+$(document).ready(effect);
+function effect(){
+	$("tr:eq(2)").css("background-color", "palegreen");
+
+}
+
+//폼체크
+$(document).ready(function(){
+	$("#search").on("click", function(){
+		if(!$("input[name=keyword]").val()){
+			alert("검색할 내용을 입력하세요!");
+			
+			return false;
 		}
-	}
+	});
 });
 
 </script>
-<table width="500" border='1'>
+
+<h2>1:1문의 게시판</h2><br>
+
+<table border='1' class="table table-bordered">
 	<thead>
 		<tr>
 			<td>글번호</td>			
@@ -27,24 +38,30 @@ $(document).ready(function() {
 	</thead>
 			
 	<tbody>
-		<form>
 		<input id="page" type="hidden" value="${param.page }">
-			<c:forEach items="${requestScope.inquiryList}" var="list">
-				<tr>
-					<td>${list.advancedNo }</td>
-					
-
-							<td><a id="secret" href="/UspaceAcademy/inquiry/selectByAdvancedNo.do?advancedNo=${list.advancedNo }
-								&advancedSecret=${list.advancedSecret}">${list.advancedTitle }</a></td>
-				
-
-					<td>${list.advancedId }</td>
-					<td>${list.advancedDate }</td>
-					<td>${list.advancedHit }</td>
-				</tr> 
-	 		</c:forEach>
-	 	</form>	
+		<c:forEach items="${requestScope.inquiryList}" var="list">
+			<input type="hidden" id="secret" value="${list.advancedSecret}">
+			<tr>
+				<td>${list.advancedNo }</td>
+				<td>
+					<c:choose>
+					<c:when test="${list.advancedSecret}">
+						<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
+						&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글</a>
+					</c:when>
+					<c:otherwise>
+						<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
+						&advancedSecret=${list.advancedSecret}">${list.advancedTitle }</a>
+					</c:otherwise>
+					</c:choose>
+				</td>
+				<td>${list.advancedId }</td>
+				<td>${list.advancedDate }</td>
+				<td>${list.advancedHit }</td>
+			</tr> 
+ 		</c:forEach>
 	</tbody>
+	
 </table>
 
 <p>
@@ -74,7 +91,7 @@ $(document).ready(function() {
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/inquiry/inquiryList.do?&page=${requestScope.paging.endPage + 1}">
+			<a href="/UspaceAcademy/inquiry/inquiryList.do?page=${requestScope.paging.endPage + 1}">
 			▶
 			</a>
 		</c:when>
@@ -82,11 +99,25 @@ $(document).ready(function() {
 	</c:choose>
 <p>
 
-<form action="/UspaceAcademy/inquiry/selectByTitle.do">
-	<input type="text" name="advancedTitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" value="제목으로 검색">
-</form><br>
+<!-- 검색관련 -->
+<form action="/UspaceAcademy/inquiry/searchByKeyword.do?page=${param.page }" method="post">
+	<select name="searchType">
+		<option value="advancedTitle">제목</option>
+		<option value="advancedContent">내용</option>
+		<!-- <option value="advancedId">글쓴이</option> -->
+	</select>
+	<input type="text" name="keyword">
+	<input id="search" type="submit" value="검색">
+</form>
 
-<a href="/UspaceAcademy/inquiry/codeList.do">1:1문의 등록</a>
-	
-	<%-- ${requestScope.list} --%>
+<br>
+
+<c:choose>
+	<c:when test="${sessionScope.memberType=='student'}">
+		<a href="/UspaceAcademy/inquiry/registerInquiryForm.do">질문하기 등록</a>
+	</c:when>
+</c:choose>
+
+
+
 	

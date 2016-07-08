@@ -8,7 +8,13 @@
 				alert("이름을 입력하세요.");
 				return false;
 			}
-		})
+		});
+		
+
+		$("#withdrawal").on("click", function(){
+			return confirm("정말 탈퇴하시겠습니까?");
+		});
+
 	});
 	
 	$(document).ready(effect);
@@ -38,7 +44,7 @@
 				<td align="center">${student.studentEmail}</td>
 				<td align="center">${student.studentPhoneNo}</td>
 				<td align="center">${student.studentAddress}</td>				
-				<td><a href="/UspaceAcademy/member/deleteStudentByAdmin.do?studentId=${student.studentId}"><button>학생 탈퇴</button></a></td>
+				<td><a href="/UspaceAcademy/member/deleteStudentByAdmin.do?studentId=${student.studentId}"><button id="withdrawal">학생 탈퇴</button></a></td>
 			</tr>	
 		</c:forEach>
 		

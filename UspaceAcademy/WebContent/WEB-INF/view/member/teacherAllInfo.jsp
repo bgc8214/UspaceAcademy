@@ -1,14 +1,18 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript">
-	$(document).ready(function() {
-		$("#btn").on("click", function() {
-			if(!$("input[name=name]").val()){
-				alert("이름을 입력하세요.");
-				return false;
-			}
-		})
+$(document).ready(function() {
+	$("#btn").on("click", function() {
+		if(!$("input[name=name]").val()){
+			alert("이름을 입력하세요.");
+			return false;
+		}
 	});
+	
+	$("#withdrawal").on("click", function() {
+		return confirm("정말 탈퇴하시겠습니까?");	
+	});
+});
 </script>
 <h3 class="pageTly">모든 강사 정보</h3>
 <hr>
@@ -21,7 +25,6 @@
 			<th>주소</th>
 			<th>강의하는 과목</th>
 			<th>회원 탈퇴</th>
-			<th>과목</th>
 		<tr>
 	</thead>
 	<tbody>
@@ -31,9 +34,8 @@
 				<td align="center">${teacher.teacherEmail}</td>
 				<td align="center">${teacher.teacherPhoneNo}</td>
 				<td align="center">${teacher.teacherAddress}</td>
-				<td><a href="/UspaceAcademy/member/selectAllByTeacherId2.do?teacherId=${teacher.teacherId}">${teacher.teacherSubject}</a></td>
-				<td><a href="/UspaceAcademy/member/deleteTeacherByAdmin.do?teacherId=${teacher.teacherId}"><button>강사 탈퇴</button></a></td>
-				<td align="center">${teacher.teacherSubject}</td>
+				<td><a id="aaaa" href="/UspaceAcademy/member/selectAllByTeacherId2.do?teacherId=${teacher.teacherId}">${teacher.teacherSubject}</a></td>
+				<td><a href="/UspaceAcademy/member/deleteTeacherByAdmin.do?teacherId=${teacher.teacherId}"><button id="withdrawal">강사 탈퇴</button></a></td>
 			</tr>	
 		</c:forEach>
 		
