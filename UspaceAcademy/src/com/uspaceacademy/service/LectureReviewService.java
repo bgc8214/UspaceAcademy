@@ -107,8 +107,8 @@ public class LectureReviewService{
 		Map<String,Object>map = new HashMap<String,Object>();
 		map.put("lectureListReview", dao.selectPagingLectureTitle(lectureTitle, page)); 
 		map.put("paging", new PagingBean(dao.selectCountLectureTitle(lectureTitle),page));
-		System.out.println("===========lectureTitle=======:"+lectureTitle);
-		System.out.println("===========page=======:"+page);
+		System.out.println("===========lectureTitle서비스=======:"+lectureTitle);
+		System.out.println("===========page서비스=======:"+page);
 		
 		return map;
 	}

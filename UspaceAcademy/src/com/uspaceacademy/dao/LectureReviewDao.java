@@ -31,7 +31,6 @@ public class LectureReviewDao{
 	
 	//1.수강후기 삽입(게시물등록)ㅇ
 	public int insert(LectureReview lectureReview){
-		System.out.println(lectureReview);
 		return session.insert(namespace+"insert", lectureReview);
 	}
 	
@@ -68,7 +67,6 @@ public class LectureReviewDao{
 	
 	//6.수강후기 no로 조회 (수강신청 세부조회할때) ㅇ
 	public LectureReview selectNo(int reviewNo){
-		//System.out.println("dao "+session.selectOne(namespace+"selectNo", reviewNo));
 		return session.selectOne(namespace+"selectNo", reviewNo); 
 	}
 	
@@ -150,9 +148,8 @@ public class LectureReviewDao{
 		map.put("reviewTitle", reviewTitle);
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
-		List list =  session.selectList(namespace+"selectPagingReviewTitle", map);
-		System.out.println(list);
-		return list;
+		return session.selectList(namespace+"selectPagingReviewTitle", map);
+		
 	}
 
 	
@@ -169,13 +166,17 @@ public class LectureReviewDao{
 		map.put("lectuerTitle", lectureTitle);
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
-		List list = session.selectList(namespace+"selectPagingLectureTitle",map);
-		return list;
+		System.out.println("===========lectureTitle디에이오11=======:"+lectureTitle);
+		System.out.println("===========page디에이오11=======:"+page);
+		return session.selectList(namespace+"selectPagingLectureTitle",map);
+		
+		
 	}
 	
 	
 	//15. 강의명으로 검색 lectureTitle / 강의리스트페이징헬퍼 selectCountLectureTitle
 	public int selectCountLectureTitle(String lectureTitle){
+		System.out.println("===========lectureTitle디에이오22=======:"+lectureTitle);
 		return session.selectOne(namespace+"selectCountLectureTitle", lectureTitle);
 	}
 	

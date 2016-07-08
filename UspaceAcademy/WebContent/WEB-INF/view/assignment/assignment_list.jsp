@@ -48,12 +48,25 @@ text-overflow: ellipsis;
 .table_list tbody tr td .title a:hover{
 text-decoration: underline;
 }
-
-
-
 </style>
 
-
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#ex").on("click", "tr", function() {
+			alert("상세페이지로 이동합니다");
+		})
+		
+	});
+	
+	$(document).ready(effect);
+	function effect() {
+		$("tr:eq(2)").css("background-color", "#6CC0FF");
+	
+	}
+</script>
+			
+			
 <h3>내정보 | 과제게시판</h3>
 <hr/>
 <table class="table_list" summary="영주" cellpacing="0">
@@ -77,17 +90,17 @@ text-decoration: underline;
 			<th scope="col">조회수</th>
 		</tr>
 	<thead>
-		<!--  1.번호 -->
+		
+		<tbody id="ex">
 		<c:forEach var="assignment" items="${requestScope.assignment}">
 			
-			<tr>
-				<td class="num">${assignment.assignmentNo}</td>
+			<tr onclick="location.href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}'"  style="cursor:pointer;"  class="assignment">
 				
-				
-				
-				
+				<!--  1.번호 -->
+				<td class="num"  align="center">${assignment.assignmentNo}</td>
+
 				<!-- 2.제목 -->
-				<td class="title">
+				<td class="title"  align="center">
 				<c:if test="${assignment.replyLevel>1}">
 						<c:forEach begin="1" end="${assignment.replyLevel-1}">
 						 &nbsp;&nbsp;
@@ -112,7 +125,7 @@ text-decoration: underline;
 				</c:choose>
 				</td>
 				<!-- 3.아이디 -->
-				<td class="title">${assignment.assignmentWriterId}</td>
+				<td class="title" align="center">${assignment.assignmentWriterId}</td>
 				<!-- 4. 이름 -->
 				<td class="title">${assignment.assignmentWriter}</td>
 				<!-- 5.날짜 -->
@@ -123,6 +136,7 @@ text-decoration: underline;
 				<td class="num">${assignment.assignmentHit}</td>
 			</tr>
 		</c:forEach>
+	</tbody>		
 </table>
 
 <!-- --------------------------------------------------------------------------------------------------------- -->

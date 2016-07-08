@@ -248,7 +248,7 @@
 	</select>
 	
 	<!--  15. 강의명으로 검색 lectureTitle / 강의리스트페이징헬퍼 -->				
-	<select id="selectCountLectureTitle" resultType="_int">
+	<select id="selectCountLectureTitle" resultType="_int" parameterType="map">
 			SELECT count(review_no)
 			FROM review_board
 			WHERE lecture_title  like  '%'||#{lectureTitle}||'%'
