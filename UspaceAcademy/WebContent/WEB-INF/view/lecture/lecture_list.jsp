@@ -24,7 +24,7 @@ $(document).ready(function(){
 				$('<tr class="dummy"><td colspan=8" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">'+txt+'</textarea></td></tr>').insertAfter(tmp);
 
 				 */
- 				$('<tr class="dummy"><td colspan="8" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
+ 				$('<tr class="dummy"><td colspan="9" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
 				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : "+list[0].lecturePrice+"<br>";
 					tmp.next().children().eq(0).append(txt);
 					if(list[1]=="student"){
@@ -40,7 +40,7 @@ $(document).ready(function(){
 					if(list[1]=="administrator"){
 						var txt2 = tmp.children().eq(0).text();
 						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?page="+$("#page").val()+"&lectureNo="+txt2+"&codeType=teacherSubject><button class='btn btn-warning'>강의수정</button></a>"+
-								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+">&nbsp;&nbsp;<button class='btn btn-danger'>강의삭제</button></a>";
+								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+">&nbsp;&nbsp;<button id='removeBtn' class='btn btn-danger'>강의삭제</button></a>";
 						tmp.next().children().eq(0).append($(temp2));
 					}
 				
@@ -77,6 +77,9 @@ $(document).ready(function(){
 	$(".lectureList").on("mouseout", function(){
         this.style.backgroundColor = 'white';
 	});
+	$("#removeBtn").on("click", function() {
+		return confirm("강의를 삭제하시겠습니까?")
+	})
 	var ids="";
 	var temp=$(".teacherId");
 	for(var i=0;i<$(".teacherId").length;i++){
@@ -107,6 +110,12 @@ $(document).ready(function(){
 	function effect() {
 		$("tr:eq(2)").css("background-color", "#FFE08C");
 	}
+	$("#searchBtn").on("click", function() {
+		if(!$("input[name=keyword]").val()){
+			alert("키워드를 입력하세요.");
+			return false;
+		}
+	})
 	
 })
 </script>
@@ -120,8 +129,7 @@ $(document).ready(function(){
 
 <thead>
 <tr>
-	<th>강의번호</th><th>강의과목</th><th>강의명</th><th>강사</th><th>강의기간</th><th>수강요일</th><th>강의시간</th>
-	<th>수강인원</th>
+	<th>강의번호</th><th>과목</th><th>강의명</th><th>강사</th><th>강의시작일</th><th>강의종료일</th><th>강의요일</th><th>강의시간</th><th>수강인원</th>
 </tr>
 </thead>
 <tbody>
@@ -129,7 +137,7 @@ $(document).ready(function(){
 <c:forEach items="${requestScope.lectureList }" var="lectureList">
 		<tr class="lectureList">
 			<td>${lectureList.lectureNo }</td><td>${lectureList.lectureSubject }</td><td>${lectureList.lectureTitle }</td>
-			<td class="teacherId">${lectureList.teacherId2 }</td><td>${lectureList.lectureStartDate } ~ ${lectureList.lectureEndDate }</td>
+			<td class="teacherId">${lectureList.teacherId2 }</td><td>${lectureList.lectureStartDate }</td><td>${lectureList.lectureEndDate }</td>
 			<td>${lectureList.lectureDay }</td><td>${lectureList.lectureStartTime } ~ ${lectureList.lectureEndTime }</td>
 			<td><span class="current">${lectureList.lectureCurrentStudent }</span> / <span class="total">${lectureList.lectureTotalStudent }</span></td>
 		</tr>
@@ -212,8 +220,8 @@ $(document).ready(function(){
 				<option value="teacherSubject">과목</option>
 				<option value="teacherName">강사</option>
 			</select>
-		<input type="text" name="keyword">
-		<input type="submit" value="검색" class="btn btn-info">
+		<input type="text" name="keyword" placeholder="입력하세요.">
+		<input id="searchBtn" type="submit" value="검색" class="btn btn-info">
 		</div>	
 	</form>
 	</c:otherwise>

@@ -7,7 +7,7 @@
 
 <h3>내정보 | 과제게시판 | 답글등록</h3>
 <hr/>
-<form method="POST"      <%-- file --%>enctype="multipart/form-data"       action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
+<form method="POST"      <%-- file --%>enctype="multipart/form-data"       action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"> <!--  폼으로 묶기* -->
 
 
 <table class="table_list" summary="영주" cellpacing="0">
@@ -22,22 +22,9 @@
 
 
 
-<%-- <tr><!-- 0 -->
-<th scope="col">강의명</th>
-<td>
-<select id="lectureTitle" name="lectureTitle"> 
-<c:forEach items="${requestScope.getLectureList}"  var="getLectureList"><!--  컨트롤러에서 보낸값 -->
-<option>${getLectureList.lectureTitle}</option>
-</c:forEach>
-</select>
-</td>
-</tr> --%>
-
-
-
 <tr><!-- 2 -->
 <th>이름</th>
-<td><input type="text" name="assignmentWriter" value="${sessionScope.login_info.studentName}"  readonly="readonly"></td>
+<td><input type="text" name="assignmentWriter" value="${sessionScope.login_info.studentName}"  readonly="readonly">
 </td>
 </tr>
 

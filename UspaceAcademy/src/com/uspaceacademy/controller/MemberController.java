@@ -172,6 +172,7 @@ public class MemberController
 			{
 				System.out.println("강사로 로그인 성공");
 				session.setAttribute("login_info", teacher);
+				System.out.println(teacher);
 				session.setAttribute("memberType", "teacher");
 			} else
 			{
@@ -577,7 +578,6 @@ public class MemberController
 	@RequestMapping("/selectAllByTeacherId.do")
 	public ModelAndView selectAllByTeacherId(HttpSession session) {
 		Teacher teacher = (Teacher)session.getAttribute("login_info");
-		teacher.getTeacherId();
 		
 		String teacherId = teacher.getTeacherId();
 		

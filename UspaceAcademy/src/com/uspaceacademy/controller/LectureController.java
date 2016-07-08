@@ -123,7 +123,7 @@ public class LectureController {
 	@RequestMapping("/lectureRegisterRedirect")
 	public ModelAndView	registerRedirect(@RequestParam(defaultValue="1") int page){
 		Map map = lectureService.getLectureList(page);
-		return new ModelAndView("lecture/lecture_list.tiles", map);
+		return new ModelAndView("/lecture/lectureAll.do?page="+page);
 		
 	}
 	
@@ -175,17 +175,15 @@ public class LectureController {
 		System.out.println(flag+"개의 강의가 수정되었습니다 - 대영쓰 - ");
 		//새로운 강의 리스트 조회
 		Map map = lectureService.getLectureList(page);
-		return new ModelAndView("lecture/lecture_list.tiles", map);
+		return new ModelAndView("/lecture/lectureAll.do?page="+page);
 	}
 	
 	//강의를 삭제하기 위한 컨트롤러
 	@RequestMapping("/removeLectureByNo.do")
-	public ModelAndView removeLectureByNo(int lectureNo, @RequestParam(defaultValue="1") int page){
+	public String removeLectureByNo(int lectureNo, @RequestParam(defaultValue="1") int page){
 		//삭제하는 서비스 부름
 		int flag = lectureService.removeLectureByNo(lectureNo);
-		//새로운 강의 리스트 조회
-		Map map = lectureService.getLectureList(page);
-		return new ModelAndView("lecture/lecture_list.tiles", map);
+		return "/lecture/lectureAll.do?page="+page;
 	}
 	
 	//결제하기 폼을 조회하기 위한 컨트롤러
@@ -456,18 +454,6 @@ public class LectureController {
 			System.out.println("------------------------ㄷㅇ컨트롤러4 keyword:" + keyword);
 			
 		}
-		return new ModelAndView("lecture/lecture_list.tiles", map);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		return new ModelAndView("lecture/admin_lectureSearch.tiles", map);
+	}	
 }

@@ -35,7 +35,7 @@ span.errors{
 		var mm = dt.getMonth()+1;
 		var dd = dt.getDate();
 		var h = dt.getHours();
-		if(h>=15) dd++;
+		if(h>=24) dd++;
 		mindt=yy+"/"+mm+"/"+dd;
 		
 		$("#subject").on("change",function(){

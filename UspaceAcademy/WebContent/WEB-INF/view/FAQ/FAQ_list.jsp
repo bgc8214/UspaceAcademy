@@ -44,7 +44,7 @@ $(document).ready(function() {
 	
 	$("#btn").on("click", function() {
 		if(!$("input[name=title]").val()) {
-			alert("키워드를 입력하세요.");
+			alert("제목을 입력하세요.");
 			return false;
 		}
 	})
@@ -57,7 +57,7 @@ $(document).ready(function() {
 </script>
 <h3 class="pageTlt">FAQ</h3>
 <hr>
-	<table border="2" width="600" class="table table-bordered">
+	<table class="table table-bordered">
 		<thead>
 			<tr>
 				<th>No</th>
@@ -116,12 +116,11 @@ $(document).ready(function() {
 </div>
 <p>
 <!-- 제목으로 검색 -->
-<div class="boardBottom" align="center">
+<div class="boardBottom">
 <form action="/UspaceAcademy/FAQ/FAQTitleSearch.do" method="post">
 	<fieldset>
-		<dd><input type="text" name="title" placeholder="제목을 입력하세요"/>
-			<input id="btn" type="submit" value="제목으로 검색" class="btn btn-info">
-		</dd>
+		<input type="text" name="title" placeholder="제목을 입력하세요"/>
+		<input id="btn" type="submit" value="제목으로 검색" class="btn btn-info">
 	</fieldset>
 </form>
 </div><br>

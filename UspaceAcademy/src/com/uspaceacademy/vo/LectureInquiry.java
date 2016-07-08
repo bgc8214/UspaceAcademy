@@ -2,11 +2,27 @@ package com.uspaceacademy.vo;
 
 import java.io.Serializable;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class LectureInquiry implements Serializable{
+	
 	private int advancedNo;
-	private String advancedSecret, advancedTitle, advancedContent, advancedDate;
+	
+	@NotEmpty(message="비밀 여부를 선택하세요.")
+	private String advancedSecret;
+	
+	@NotEmpty(message="제목을 입력하세요.")
+	private String advancedTitle;
+	
+	@NotEmpty(message="내용을 입력하세요.")
+	private String advancedContent;
+
+	private String advancedDate;
+	
 	private int advancedHit;
+	
 	private String advancedId, advancedType;
+	
 	private int lectureNo2;
 	
 	public LectureInquiry(){}

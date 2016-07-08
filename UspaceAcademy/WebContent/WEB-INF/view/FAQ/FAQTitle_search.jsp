@@ -32,7 +32,7 @@ $(document).ready(function() {
 		});
 	});
 	$(".faqList").on("mouseover", function() {
-		$(this).css("background-color", "#FFB2D9");
+		$(this).css("background-color", "#FAF4C0");
 
 	});
 
@@ -50,7 +50,7 @@ $(document).ready(function() {
 	
 	$(document).ready(effect);
 	function effect() {
-		$("tr:eq(2)").css("background-color", "#FFC19E")
+		$("tr:eq(2)").css("background-color", "#FFC19E");
 	}	
 })
 
@@ -64,14 +64,13 @@ $(document).ready(function() {
 
 
 <hr>
-	<table border="2" width="600" class="table table-borered">
+	<table class="table table-borered">
 		<thead>
 			<tr>
 				<th>No</th>
 				<th>FAQ제목</th>
 				<th>등록일</th>
 				<th>조회수</th>
-				<th>타입</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -87,7 +86,6 @@ $(document).ready(function() {
 						<td>${faq.basicTitle}</td>
 						<td>${faq.basicDate}</td>
 						<td>${faq.basicHit}</td>
-						<td>${faq.basicType}</td>
 					</tr>
 				</c:forEach>
 			</c:if>

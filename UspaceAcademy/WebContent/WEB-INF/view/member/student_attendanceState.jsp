@@ -21,3 +21,6 @@
 	</c:if>
 	</tbody>
 </table>
+
+<p>
+<a href="/UspaceAcademy/attendance/studentLectureInfo.do"><button class="btn btn-info">내 강의 목록</button></a>

@@ -15,7 +15,7 @@
 		<tr>
 			<th>내용</th>
 			<td colspan="3">
-				<textarea class="form-control">${requestScope.notice.basicContent}</textarea>
+				<textarea class="form-control" readonly="readonly">${requestScope.notice.basicContent}</textarea>
 			</td>
 		</tr>
 		<tr>

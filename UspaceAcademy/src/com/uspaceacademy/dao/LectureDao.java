@@ -45,6 +45,8 @@ public class LectureDao {
 	
 	//lecture 등록
 	public int insertLecture(Lecture lecture) {
+		System.out.println("dao11: " + lecture);
+		
 		return session.insert("lecture.insertLecture", lecture);
 	}
 	
@@ -197,6 +199,11 @@ public class LectureDao {
 		return session.selectList("lecture.selectAdminLectureList");
 	}
 	
+	//................영주: 과목lectureSubject으로 강의명lectureTitle 조회해옴................
+	public List selectLectureTitleByLectureSubject(String lectureSubject){
+		System.out.println("렉쳐 다오 영주:" + lectureSubject);
+		return session.selectList("lecture.selectLectureTitleByLectureSubject",lectureSubject);
+	}
 
 	//강의명에 매개변수로 넘어온 값이 포함되어있으면 모두 조회 - 강의시작 날짜를 통해 강의가 시작된 강의들을 제외된 상태(학생&강사)
 	public List selectLectureListByLectureTitleA(String lectureTitle, int page) {
@@ -248,7 +255,6 @@ public class LectureDao {
 		map.put("teacherId2", teacherId2);
 		return session.selectOne("lecture.selectCountContentsByTeacherIdA", teacherId2);
 	}
-	
 	
 	
 }

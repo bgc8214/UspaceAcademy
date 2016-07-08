@@ -4,37 +4,32 @@
 
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
+	
+$(document).ready(effect);
+function effect(){
+	$("tr:eq(2)").css("background-color", "palegreen");
+}
 
-$(document).ready(function(){
-	$("#btn").on("click", function(){
-		$.ajax({
-			"url":"/UspaceAcademy/comment/exInsertComment.do",
-			"type":"POST",
-			"data":"commentContent="+$("#commentContent").val(),
-			"dataType":"text",
-			"success":function(txt){
-/* 				$("#commentContent").val("");
-				$("#commentContent").focus(); */
-				$("#cmtTarget").html(txt);
-			},
-			"error":function(xhr, status, errorMsg){
-				alert("오류가 발생했습니다. " + status + ", " + errorMsg);
-			}
-/* 			"beforeSend":function(){
-				
-			} */
-		})
-	})
-})
+/* $(document).ready(function(){
+	$("#insert").on("click", function(){
+		if(!$("input[name=commentContent]").val()){
+			alert("검색할 내용을 입력하세요!");
+			
+			return false;
+		}
+	});
+}) */
 
 </script>
 
-<table border="1">
+<h2 align="center">상세보기</h2>
+
+<table border="" class="table table-bordered">
 	<tr>
 		<td>
-			no: ${requestScope.lectureInquiryDetail.advancedNo}<br>
-			글쓴이: ${requestScope.lectureInquiryDetail.advancedId}<br>
-			글 등록일:${requestScope.lectureInquiryDetail.advancedDate}<br>
+			no: ${requestScope.lectureInquiryDetail.advancedNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			글쓴이: ${requestScope.lectureInquiryDetail.advancedId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			글 등록일:${requestScope.lectureInquiryDetail.advancedDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			조회수: ${requestScope.lectureInquiryDetail.advancedHit}
 		</td>
 	</tr>
@@ -52,25 +47,27 @@ $(document).ready(function(){
 
 <p>
 
-<table>
+<h4 align="center">댓글보기</h4>
+
+<table class="table table-bordered">
 <c:forEach items="${requestScope.commentList}" var="list">
 <%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
 	<tr>
 		<td>
-			댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			글쓴이: ${list.commentWriter}<br>
+			<%-- 댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --%>
+			글쓴이: ${list.commentWriter}&nbsp;&nbsp;&nbsp;
 			글 등록일:${list.commentDate}<br>
-			내용<br>
-			${list.commentContent}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			내용:
+			${list.commentContent}<br><br>
 			
 			<c:choose>
 				<c:when test="${sessionScope.memberType=='student'}">
 					<c:if test="${list.commentWriter eq sessionScope.login_info.studentId}">
 						<a href="/UspaceAcademy/lectureInquiry/updateCommentForm.do?commentNo=${list.commentNo }
 						&advancedNo2=${requestScope.lectureInquiryDetail.advancedNo}&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}">
-						<button>댓글 수정</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button>수정</button></a>
 						<a href="/UspaceAcademy/lectureInquiry/deleteComment.do?commentNo=${list.commentNo }&advancedNo2=${requestScope.lectureInquiryDetail.advancedNo}
-						&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}"><button>댓글 삭제</button></a><br>
+						&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}"><button>삭제</button></a><br>
 					</c:if>
 				</c:when>
 				<c:otherwise>
@@ -84,15 +81,15 @@ $(document).ready(function(){
 </c:forEach>
 </table>
 
-<h2 align="center">댓글 작성</h2>
+<h4 align="center">댓글 작성</h4>
 <form action="/UspaceAcademy/lectureInquiry/insertComment.do" >
 <input type="hidden" value="${requestScope.lectureInquiryDetail.advancedNo}" name="advancedNo2">
 <input type="hidden" value="${requestScope.lectureInquiryDetail.lectureNo2}" name="lectureNo2">
 	<table>
 		<tr>
 			<td>
-				<textarea id="commentContent" name="commentContent"></textarea>
-				<input type="submit" value="댓글 입력">
+				<textarea id="commentContent" name="commentContent" cols="50" rows="5"></textarea>
+				<input id="insert" type="submit" value="댓글 입력">
 			</td>
 		</tr>
 	</table>
@@ -104,15 +101,15 @@ $(document).ready(function(){
 	<c:when test="${sessionScope.memberType=='student'}">
 		<c:if test="${requestScope.lectureInquiryDetail.advancedId eq sessionScope.login_info.studentId}">
 			<a href="/UspaceAcademy/lectureInquiry/updateLectureInquiryForm.do?advancedNo=${requestScope.lectureInquiryDetail.advancedNo }
-			&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">강의질문 수정</a>
+			&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">글 수정</a>&nbsp;&nbsp;&nbsp;
 			<a href="/UspaceAcademy/lectureInquiry/deleteLectureInquiry.do?advancedNo=${requestScope.lectureInquiryDetail.advancedNo }
-			&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">강의질문 삭제</a>
+			&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">글 삭제</a>&nbsp;&nbsp;&nbsp;
 		</c:if>
 	</c:when>
 	<c:otherwise>
 		<c:if test="${sessionScope.memberType=='administrator'}">
 			<a href="/UspaceAcademy/lectureInquiry/deleteLectureInquiry.do?advancedNo=${requestScope.lectureInquiryDetail.advancedNo }
-			&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">강의질문 삭제</a>
+			&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2 }">글 삭제</a>&nbsp;&nbsp;&nbsp;
 		</c:if>
 	</c:otherwise>
 </c:choose>

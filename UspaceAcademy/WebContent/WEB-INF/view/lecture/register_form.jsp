@@ -87,11 +87,11 @@ span.errors{
 				return false;
 			}
 			if(!$("input[name=lectureStartDate]").val()){
-				alert("강의 시작일을 입력하세요.");
+				alert("강의 시작일을 선택하세요.");
 				return false;
 			}
 			if(!$("input[name=lectureStartDate]").val()){
-				alert("강의 종료일을 입력하세요.");
+				alert("강의 종료일을 선택하세요.");
 				return false;
 			}
 		})

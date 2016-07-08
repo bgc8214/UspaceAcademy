@@ -21,13 +21,25 @@ public class AssignmentService {
 		
 		
 		
+		//------join--------------------------------------------------------------------------------------------------------------
+		
+		
+		
+/*		//조인
+		public List selectAssignmentLectureJoin(int lectureNo){
+			return dao.selectAssignmetLecture(lectureNo);
+		}
+		*/
+		
 		//--------------------------------------------------------------------------------------------------------------------
 		
 		
 		//1.ㄷ조회  select id="replyGetList"
 		public List replyGetList(){
+			
 			return dao.replyGetList();
 		}
+		
 		
 		
 		//2.ㄷ답글등록  insert id="replyReply" 3.ㄷ업데이트 update id="replyAddStep"
@@ -67,7 +79,6 @@ public class AssignmentService {
 		
 		//1.게시물등록 ㅇ
 		public int insert(Assignment assignment){
-			System.out.println("인설트 서비스--------------" + assignment);
 			return dao.insert(assignment);
 		}
 		
@@ -87,13 +98,13 @@ public class AssignmentService {
 		}
 		
 		//5.삭제ㅇ
-		public int delete(int assignmentNo){
-			return dao.deleteByNo(assignmentNo);
+		public int delete(int assignmentNo,int lectureNo){
+			return dao.deleteByNo(assignmentNo,lectureNo);
 		}
 		
 		//6.세부조회ㅇ
-		public Assignment selectNo(int assignmentNo){
-			return dao.selectNo(assignmentNo);
+		public Assignment selectNo(int assignmentNo, int lectureNo){
+			return dao.selectNo(assignmentNo,lectureNo);
 		}
 
 		
@@ -112,10 +123,10 @@ public class AssignmentService {
 		
 		
 		// 페이징처리   8.paging + 9.count
-		public HashMap<String,Object> selectPagingCount(int page){
-			HashMap<String,Object> map = new HashMap<String,Object>();
-			map.put("assignment", dao.selectPaging(page));															
-			map.put("paging", new PagingBean(dao.selectCount(), page));//PagingBean 임폴트.				
+		public Map selectPagingCount(int page,int lectureNo){
+			Map map = new HashMap();
+			map.put("assignment", dao.selectPaging(page, lectureNo));															
+			map.put("paging", new PagingBean(dao.selectCount(lectureNo), page));//PagingBean 임폴트.			
 			return map;
 		}
 		

@@ -8,9 +8,6 @@ tr.dummy, td.dummy{
 <script type="text/javascript">
 var tmp;//이벤트소스를 저장하기 위한 변수
 $(document).ready(function(){
-	$("#remove").on("click", function() {
-		return confirm("강의를 삭제하시겠습니까?");
-	})
 	$(".lectureList").on("click",function(){
 		tmp = $(this);
 		$.ajax({
@@ -37,7 +34,7 @@ $(document).ready(function(){
 					if(list[1]=="administrator"){
 						var txt2 = tmp.children().eq(0).text();
 						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?lectureNo="+txt2+"&codeType=teacherSubject><button class='btn btn-warning'>강의수정</button></a>"+
-								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?lectureNo="+txt2+"><button id='removeBtn' class='btn btn-danger'>강의삭제</button></a>";
+								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?lectureNo="+txt2+"><button class='btn btn-danger'>강의삭제</button></a>";
 						tmp.next().children().eq(0).append($(temp2));
 					}
 				
@@ -74,13 +71,6 @@ $(document).ready(function(){
 	$(".lectureList").on("mouseout", function(){
         this.style.backgroundColor = 'white';
 	});
-	$("#btn").on("click", function() {
-		if(!$("input[name=keyword]").val()){
-			alert("키워드를 입력하세요.");
-			return false;
-		}
-	})
-
 	var ids="";
 	var temp=$(".teacherId");
 	for(var i=0;i<$(".teacherId").length;i++){
@@ -115,7 +105,7 @@ $(document).ready(function(){
 })
 </script>
 
-<h3 class="pageTlt">전체 강의 목록</h3>
+<h3 class="pageTlt">검색된 강의 목록</h3>
 <hr>
 
 <table class="table table-bordered">
@@ -139,7 +129,7 @@ $(document).ready(function(){
 				<td>${lecture.lectureNo}</td>
 				<td>${lecture.lectureSubject}</td>
 				<td>${lecture.lectureTitle}</td>
-				<td class="teacherId">${lecture.teacherId2 }</td>
+				<td class="teacherId">${lecture.teacherId2}</td>
 				<td>${lecture.lectureStartDate}</td>
 				<td>${lecture.lectureEndDate}</td>
 				<td>${lecture.lectureDay}</td>
@@ -151,10 +141,11 @@ $(document).ready(function(){
 	</tbody>
 </table>
 
-<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button class="btn btn-success">강의 등록</button></a>
+
+
 <br>
 <!-- 검색관련 -->
-<div class="boardBottom">
+<div class="boardBottom" align="center">
 <form action="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${param.page }" method="post">
 <select name="searchType">
 	<option value="lectureTitle">강의명</option>
@@ -162,7 +153,7 @@ $(document).ready(function(){
 	<option value="teacherName">강사</option>
 </select>
 <input type="text" name="keyword">
-<input type="submit" value="검색" class="btn btn-info" id="btn">
+<input type="submit" value="검색" class="btn btn-info">
 </form>
 </div>
 <p>

@@ -2,12 +2,38 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<table>
+/*
+	파일명이 잘못됐지만 이거 댓글 수정 jsp입니다.
+*/
+
+
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+	
+$(document).ready(effect);
+function effect(){
+	$("tr:eq(2)").css("background-color", "palegreen");
+}
+
+//폼체크
+$("#modify").on("click", function(){
+	if($("textarea[name=commentContent]").val()==""){
+		alert("내용을 입력하세요!");
+		
+		return false;
+	}
+});
+
+</script>
+
+<h2 align="center">상세보기</h2>
+
+<table border="" class="table table-bordered">
 	<tr>
 		<td>
-			no: ${requestScope.inquiryDetail.advancedNo}<br>
-			글쓴이: ${requestScope.inquiryDetail.advancedId}<br>
-			글 등록일:${requestScope.inquiryDetail.advancedDate}<br>
+			no: ${requestScope.inquiryDetail.advancedNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			글쓴이: ${requestScope.inquiryDetail.advancedId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			글 등록일:${requestScope.inquiryDetail.advancedDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			조회수: ${requestScope.inquiryDetail.advancedHit}
 		</td>
 	</tr>
@@ -25,57 +51,38 @@
 
 <p>
 
-<h2 align="center">댓글 보기</h2>
+<h4 align="center">댓글보기</h4>
 
-<table>
+<table class="table table-bordered">
 <c:forEach items="${requestScope.commentList}" var="list">
+<%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
 	<tr>
 		<td>
-			글쓴이: ${list.commentWriter}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<%-- 댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --%>
+			글쓴이: ${list.commentWriter}&nbsp;&nbsp;&nbsp;
 			글 등록일:${list.commentDate}<br>
-			내용<br> ${list.commentContent}<br><br>
+			내용:
+			${list.commentContent}<br><br>
 		</td>
 	</tr>
 </c:forEach>
-
 </table>
 
+<h4 align="center">댓글 수정</h4>
+<form action="/UspaceAcademy/inquiry/updateComment.do" >
+<input type="hidden" value="${requestScope.comment.commentNo}" name="commentNo">
+<input type="hidden" value="${requestScope.inquiryDetail.advancedNo}" name="advancedNo2">
 
-<h2 align="center">댓글 작성</h2>
-<form action="/UspaceAcademy/inquiry/insertComment.do" >
-<input type="hidden" value="${requestScope.inquiryDetail.advancedNo}" name="advancedNo">
-<input type="hidden" value="${requestScope.inquiryDetail.advancedId}" name="commentWriter">
-<table>
-	<tr>
-		<td>
-			<textarea id="commentContent" name="commentContent"></textarea>
-			<input type="submit" value="입력">
-		</td>
-	</tr>
-	<tr>	
-		<td>
-			<a href="/UspaceAcademy/inquiry/updateComment.do"><button>댓글 수정</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="/UspaceAcademy/inquiry/deleteComment.do"><button>댓글 삭제</button></a>
-		</td>
-	</tr>	
-</table>
+	<table>
+		<tr>
+			<td>
+				<textarea id="commentContent" name="commentContent" cols="50" rows="5">${requestScope.comment.commentContent }</textarea>
+				<input id="modify" type="submit" value="댓글 입력">
+			</td>
+		</tr>
+	</table>
 </form>
 
-<!-- </form> -->
 <p>
 
-<c:choose>
-	<c:when test="${sessionScope.memberType=='student'}">
-		<c:if test="${requestScope.inquiryDetail.advancedId eq sessionScope.login_info.studentId}">
-			<a href="/UspaceAcademy/inquiry/updateByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }&advancedType=1:1문의">1:1문의 수정</a>
-			<a href="/UspaceAcademy/inquiry/deleteByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }&advancedType=1:1문의">1:1문의 삭제</a>
-		</c:if>
-	</c:when>
-	<c:otherwise>
-		<c:if test="${sessionScope.memberType=='administrator'}">
-			<a href="/UspaceAcademy/inquiry/deleteByAdvancedNo.do?advancedNo=${requestScope.inquiryDetail.advancedNo }&advancedType=1:1문의">1:1문의 삭제</a>
-		</c:if>
-	</c:otherwise>
-</c:choose>
-<a href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의">1:1문의 목록</a>
-
+<a href="/UspaceAcademy/inquiry/inquiryList.do">전체 목록</a>

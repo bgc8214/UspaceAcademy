@@ -117,14 +117,14 @@ function idCheck()
 	
 	<tr>
 		<th>과목</th>
-		<th>
+		<td>
 			<select name="teacherSubject">
 			<c:forEach items="${requestScope.codeType }" var="code">
 				<option value="${code.codeName }">${code.codeName }</option>
 			
 			</c:forEach>
 			</select>
-		</th>
+		</td>
 	</tr>
 </table>
 <p class="text-right"><input id="btn" type="submit" value="가입" class="btn btn-primary"></p>

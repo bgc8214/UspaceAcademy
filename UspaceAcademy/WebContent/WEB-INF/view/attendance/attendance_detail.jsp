@@ -1,15 +1,18 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
 <script type="text/javascript">
 
-	$(document).ready(function (){
-		$("#btn").on("click", function() {
-			alert("수정 되었습니다");
-		})
-	})
-</script>
+$(document).ready(function(){
+	$("input[type=submit]").on("click", function(){
+		
+		return confirm("수정하시겠습니까?");								
+	});
+});
 
+</script>
 
 <h3 class="pageTly">출석부 조회&수정 페이지!!(총 강좌 일수 - ${requestScope.diffDays })</h3>
 <hr>
@@ -44,4 +47,4 @@
 		</c:forEach>
 </table>
 <p>
-<a href="/UspaceAcademy/attendance/attendanceList.do"><button class="btn btn-info">강의 목록</button></a>
+<a href="/UspaceAcademy/member/selectAllByTeacherId.do"><button class="btn btn-info">강의 목록</button></a>

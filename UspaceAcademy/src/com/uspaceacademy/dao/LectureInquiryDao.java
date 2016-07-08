@@ -90,7 +90,7 @@ public class LectureInquiryDao {
 	
 	//댓글 번호 sequence
 	public int increaseCommentNo(){
-		return session.selectOne("inquiryMapper.increaseCommentNo");
+		return session.selectOne("lectureInquiryMapper.increaseCommentNo");
 	}
 	
 	//댓글 수정
@@ -234,12 +234,6 @@ public class LectureInquiryDao {
 	//전체 조회
 	public List<LectureInquiry> selectAllInquirys(){
 		return session.selectList("lectureInquiryMapper.selectAllInquirys");
-	}
-	
-	//코드 조회
-	public List selectCodeName(String codeName){
-		
-		return session.selectList("codeTable.selectCodeName", codeName);
 	}
 
 	public List selectAllByPagingRownum(int page, String advancedType, int lectureNo2) {

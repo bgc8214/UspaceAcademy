@@ -20,7 +20,7 @@
 </script> 
 <h3 class="pageTlt">출결</h3>
 <hr>
-<table align="center" class="table table-bordered">
+<table class="table table-bordered">
 	<tr>
 		<th>일차 | 학생</th>
 		<c:forEach items="${requestScope.studentInfoList}" var="list">
@@ -72,9 +72,9 @@
 		</tr>
 		</c:if>
 </table>
+
 <p>
-<a href="/UspaceAcademy/attendance/attendanceList.do"><button class="btn btn-info">강의목록</button></a>
+<a href="/UspaceAcademy/member/selectAllByTeacherId.do"><button class="btn btn-info">강의목록</button></a>
 <a href="/UspaceAcademy/attendance/attendanceRedirect.do?startDate=${requestScope.lecture.lectureStartDate}&endDate=${requestScope.lecture.lectureEndDate}&lectureNo=${requestScope.lecture.lectureNo}&lectureDay=${requestScope.lecture.lectureDay}">
 <button class="btn btn-warning">출석수정</button></a>
 
-<p>
