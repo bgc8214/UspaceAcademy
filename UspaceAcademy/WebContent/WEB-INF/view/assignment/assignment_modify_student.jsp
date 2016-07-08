@@ -3,7 +3,27 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%><!--  밸리 해주려면 이거선언* -->
+<style type="text/css">
 
+
+</style>
+
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+ //폼체크
+ $(document).ready(function(){
+	 $("#ok").on("click",function(){
+	 	if(!$("input[name=assignmentTitle]").val()){
+			alert("제목을 입력하세요");
+			return false;
+		}
+		if($("textarea[name=assignmentContent]").val()==""){
+			alert("내용을 입력하세요");
+			return false;
+		}
+	});
+});
+</script>
 <h3>내정보 | 과제게시판 | 수정</h3>
 <hr/>
 
@@ -49,7 +69,7 @@
 
 </tbody>
 </table>
-	<input type="submit" value="수정완료">
+	<input id="ok" type="submit" value="수정완료">
 	<input type="reset" value="초기화"/> 
 </form>
 

@@ -18,7 +18,7 @@ function effect(){
 <table border='1' class="table table-bordered">
 	<thead>
 		<tr>
-			<td>글번호</td>			
+			<!-- <td>글번호</td> -->			
 			<td>제목</td>
 			<td>글쓴이</td>
 			<td>글 등록일</td>
@@ -31,7 +31,7 @@ function effect(){
 			<c:forEach items="${requestScope.lectureInquiryList}" var="list">
 				<input type="hidden" id="secret" value="${list.advancedSecret}">
 				<tr>
-					<td>${list.advancedNo }</td>
+					<%-- <td>${list.advancedNo }</td> --%>
 					<td>
 						<c:choose>
 						<c:when test="${list.advancedSecret}">

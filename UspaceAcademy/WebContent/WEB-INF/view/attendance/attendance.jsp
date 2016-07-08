@@ -74,7 +74,10 @@
 </table>
 
 <p>
+
 <a href="/UspaceAcademy/member/selectAllByTeacherId.do"><button class="btn btn-info">강의목록</button></a>
+<!-- <a href="/UspaceAcademy/member/teacherAll.do"><button class="btn btn-info">모든 강사 정보</button></a> -->
+
 <a href="/UspaceAcademy/attendance/attendanceRedirect.do?startDate=${requestScope.lecture.lectureStartDate}&endDate=${requestScope.lecture.lectureEndDate}&lectureNo=${requestScope.lecture.lectureNo}&lectureDay=${requestScope.lecture.lectureDay}">
 <button class="btn btn-warning">출석수정</button></a>
 

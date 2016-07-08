@@ -53,7 +53,9 @@ $(document).ready(function(){
 </tbody>
 </table>
 <div align="right">
-<input class="btn btn-warning" id="submit" type="submit" value="일괄신청하기">&nbsp;<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><input class="btn btn-info" type="button" value="강의목록"></a>
+<input class="btn btn-warning" id="submit" type="submit" value="결제하기">
+&nbsp;<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><input class="btn btn-info" type="button" value="장바구니 삭제"></a>
+&nbsp;<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><input class="btn btn-info" type="button" value="강의목록"></a>
 </div>
 </form>
 

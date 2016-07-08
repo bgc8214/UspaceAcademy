@@ -22,9 +22,9 @@ $("#modify").on("click", function(){
 
 </script>
 
-<h2 align="center">상세보기</h2>
+<h2 class="pageTlt">상세보기</h2>
 
-<table border="" class="table table-bordered">
+<table border="" class="table table-bordered form-table">
 	<tr>
 		<td>
 			no: ${requestScope.lectureInquiryDetail.advancedNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -47,9 +47,9 @@ $("#modify").on("click", function(){
 
 <p>
 
-<h4 align="center">댓글보기</h4>
+<h4 class="pageTlt">댓글보기</h4>
 
-<table class="table table-bordered">
+<table class="table table-bordered form-table">
 <c:forEach items="${requestScope.commentList}" var="list">
 <%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
 	<tr>
@@ -64,7 +64,7 @@ $("#modify").on("click", function(){
 </c:forEach>
 </table>
 
-<h4 align="center">댓글 수정</h4>
+<h4 class="pageTlt">댓글 수정</h4>
 <form action="/UspaceAcademy/lectureInquiry/updateComment.do" >
 <input type="hidden" value="${requestScope.comment.commentNo}" name="commentNo">
 <input type="hidden" value="${requestScope.lectureInquiryDetail.advancedNo}" name="advancedNo2">
