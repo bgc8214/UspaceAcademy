@@ -68,11 +68,6 @@ td{
 
 
 
- <tr>
-<th scope="col">강의명</th>
-<td>!</td>
-</tr>
-
 
 <tr>
 <th scope="col">제목</th>	
@@ -115,28 +110,25 @@ td{
 
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
+
 <!-- 강사이고 강사본인이 쓴 글일경우만    -    삭제버튼,수정버튼 클릭가능(로그인한아이디랑 작성글아이디비교 -->
 <span class="assignmentRegister">
 	<c:if test="${sessionScope.memberType=='teacher'&&assignment.assignmentWriterId==sessionScope.login_info.teacherId}"><!-- ok 강사 본인글만 삭제,수정할 수 있음 -->
-<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/assignment/assignment_modifyForm.do?assignmentNo=${assignment.assignmentNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
-<!-- &&sessionScope.login_info.studentId==assignment.assignmentWriterId  -->
-<%-- <c:if test="${sessionScope.memberType=='teacher'&&sessionScope.memberType=='teacher'==requestScope.assignment.assignmentWriterId}"> --%>
+<a href="/UspaceAcademy/assignment/assignment_modifyForm.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
+</c:if>
 
-	</c:if>
 <c:if test="${sessionScope.memberType=='student'}">
 <%-- <c:if test="${sessionScope.memberType=='student'&&assignment.assignmentWriter==requestScope.memberType.teacher}"> --%>
-<a href="/UspaceAcademy/assignment/assignment_replyRegister.do?assignmentNo=${assignment.assignmentNo}"><button>답글달기</button></a>
-<a href="/UspaceAcademy/assignment/assignment_modifyFormStudent.do?assignmentNo=${assignment.assignmentNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_replyRegister.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>답글달기</button></a>
+<a href="/UspaceAcademy/assignment/assignment_modifyFormStudent.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
 	</c:if>																																											
 </span>
 
 
 
 <!-- --------------------------------------------------------------------------------------------------------- -->	
-
-
 <%-- 
 사진 파일명 ${requestScope.imageName }
 사진 크기 ${requsetScope.imageSize }byte

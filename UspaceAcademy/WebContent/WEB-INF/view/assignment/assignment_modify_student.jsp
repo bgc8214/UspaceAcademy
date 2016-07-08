@@ -7,7 +7,7 @@
 <h3>내정보 | 과제게시판 | 수정</h3>
 <hr/>
 
-<form method="POST"       <%-- file --%>enctype="multipart/form-data"            action="/UspaceAcademy/assignment/assignment_modify_student.do?assignmentNo=${assignment.assignmentNo}"> <!--  폼으로 묶기* -->
+<form method="POST"     <%-- file --%>enctype="multipart/form-data"      action="/UspaceAcademy/assignment/assignment_modify_student.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"> <!--  폼으로 묶기* -->
 
 <table class="table_list" summary="영주" cellpacing="0">
 	<caption></caption>
@@ -26,7 +26,7 @@
 
 <tr><!--   4   -->
 <th scope="col">제목</th>
-<td><input type="text" value="${requestScope.assignment.assignmentTitle }"  name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"><span class="error"><form:errors path="lec.assignmentTitle" delimiter="//"/></span></td>
+<td><input type="text" value="${requestScope.assignment.assignmentTitle}"  name="assignmentTitle" size="70" placeholder="제목을 입력하세요" required="required"><span class="error"><form:errors path="lec.assignmentTitle" delimiter="//"/></span></td>
 </tr>
 
 <tr><!--   5   -->

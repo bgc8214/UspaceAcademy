@@ -174,8 +174,8 @@ SELECT  	    a.assignment_no, a.assignment_writer_id, a.assignment_secret, a.ass
 	
 	<!-- 5.삭제 -->
 	<delete id="deleteByNo" parameterType="_int">
-	DELETE FROM assignment_board  
-	WHERE assignment_no=#{assignmentNo}  and  lecture_no=#{lectureNo}
+	DELETE  FROM assignment_board  
+	WHERE  assignment_no=#{assignmentNo}  and  lecture_no=#{lectureNo}
 	</delete>
 
 
@@ -227,7 +227,7 @@ SELECT  	    a.assignment_no, a.assignment_writer_id, a.assignment_secret, a.ass
 	FROM(SELECT CEIL (rownum/#{itemsPerPage}) page, <include refid="assignment-columns"/>
 	FROM(SELECT <include refid="assignment-columns"/>
 			FROM assignment_board 
-			WHERE lecture_no = #{lectureNo}    ORDER BY   assignment_no   desc, assignment_re_family DESC, assignment_re_step ASC 
+			WHERE lecture_no = #{lectureNo}    ORDER BY  assignment_re_family DESC, assignment_re_step ASC 
 		)
 	)
 	WHERE page=#{page}

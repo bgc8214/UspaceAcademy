@@ -43,8 +43,6 @@ public class AssignmentController {
 	
 	
 	
-	
-	
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	
 	//●오류났던거 적기 : 답글게시판으로 변경하는 과정에서 - mapper에 replyGetList -  where절에 ,콤마안찍어줬고, resultMap안적어줬음 그리고 아래 map.put("assignment")로했는데 jsp에서 이름다르게 뿌려줘서 그랬음.
@@ -52,7 +50,7 @@ public class AssignmentController {
 		@RequestMapping("/assignment_list.do")
 		public ModelAndView list(@RequestParam(defaultValue="1") int page, int lectureNo){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
 			
-			System.out.println("강의번호: " + lectureNo);
+			System.out.println("assignment_list강의번호: " + lectureNo);/////////////////////////
 			
 			Map map = service.selectPagingCount(page,lectureNo);
 			map.put("page", page);//
@@ -67,19 +65,28 @@ public class AssignmentController {
 		
 
 
+		
 
 		// 과제게시판 - 상세조회(assignment_list.jsp -> assignment_detail.jsp)    
 		@RequestMapping("/assignment_detail")
-		public ModelAndView detail(String assignmentNo, int lectureNo){
+		public ModelAndView detail(String assignmentNo, int lectureNo){ //●오류났던거적기 : 여기서 lectureNo 안넘겨줬었음.
 			int num = Integer.parseInt(assignmentNo);
-			Assignment assignment = service.selectNo(num);// no값으로 게시물 찾아옴
+			Assignment assignment = service.selectNo(num,lectureNo);// no값으로 게시물 찾아옴
 			
+			System.out.println("assignment_detail 강의번호: " + lectureNo);/////////////////////////
+			System.out.println("assignment_detail 글번호: " + assignmentNo);/////////////////////////
+			System.out.println("assignment_detail num: " + num);/////////////////////////
 			service.selectHit(assignment); // 조회수 증가시키기
+			System.out.println("service.selectHit(assignment) : " + service.selectHit(assignment));/////////////////////////
 			assignment.setLectureNo(lectureNo);
+			
+			System.out.println("assignment_detail assignment: " + assignment);/////////////////////////
 			
 			return new ModelAndView("assignment/assignment_detail.tiles", "assignment", assignment);
 		}
 		//●오류났던거 적기 :  생성자?(detail(){가로안)에 이거 넣어 줘서 HttpSession session, HttpRequest request
+
+
 		
 
 
@@ -103,7 +110,6 @@ public class AssignmentController {
 
 		
 
-		
 		
 		
 		
@@ -182,23 +188,25 @@ public class AssignmentController {
 		
 		
 		
+
 		
 		
-		
-		
+
 		
 		
 		
 		
 		//과제출제글 삭제(과제글 상세조회에서 삭제 눌렀을때) 
-		@RequestMapping("/assignment_delete")//assignment_detail.jsp 에서  
-		public ModelAndView delete(int assignmentNo, String type){
-			service.delete(assignmentNo);
-			List list = service.selectList(type);
+			@RequestMapping("/assignment_delete")//assignment_detail.jsp 에서  
+			public String delete(@RequestParam(defaultValue="1") String type,int assignmentNo,int lectureNo){
+					
+				service.delete(assignmentNo,lectureNo);     
+					
+				System.out.println("과제글 삭제 ok");
 				
-			System.out.println("과제글 삭제 ok");
-		return new ModelAndView("assignment/assignment_list.tiles","assignment",list);
-		}
+			
+			return "/assignment/assignment_list.do?letureNo="+lectureNo;
+			}
 		
 		
 		
@@ -214,10 +222,9 @@ public class AssignmentController {
 
 		//선생님 : 과제글 수정폼(과제글상세조회에서 수정하기 눌렀을때 - modify폼으로감)
 		@RequestMapping("/assignment_modifyForm")  
-		public ModelAndView modifyForm(int assignmentNo){  
-			Assignment assignment = service.selectNo(assignmentNo);
-			//HashMap map = new HashMap<>();
-			
+		public ModelAndView modifyForm(int assignmentNo, int lectureNo){  
+			Assignment assignment = service.selectNo(assignmentNo,lectureNo);
+
 			Map map = new HashMap();
 			map.put("assignment", assignment);//
 			
@@ -226,8 +233,8 @@ public class AssignmentController {
 		}
 		//학생 : 과제글 수정폼(답글 상세조회에서 수정하기 눌렀을때 - modify폼으로감)
 				@RequestMapping("/assignment_modifyFormStudent")  
-				public ModelAndView modifyFormStudent(int assignmentNo){  
-					Assignment assignment = service.selectNo(assignmentNo);
+				public ModelAndView modifyFormStudent(int assignmentNo,int lectureNo){  
+					Assignment assignment = service.selectNo(assignmentNo,lectureNo);/////////////////////
 					
 					Map map = new HashMap();
 					map.put("assignment", assignment);//
@@ -295,7 +302,7 @@ public class AssignmentController {
 			Date date = new Date();
 			String sdfDate = sdf.format(date);
 			
-			//조인관계 오류남 -------------------------------------------------
+			//
 			assignment= new Assignment(assignment.getAssignmentNo(),
 													teacherId,
 													assignment.getAssignmentTitle(),
@@ -308,9 +315,8 @@ public class AssignmentController {
 													teacher,
 													assignment.getAssignmentDeadline(),
 													fileName,
-													1); 
+													assignment.getLectureNo()); 
 			service.update(assignment);
-			
 		
 			System.out.println("과제글 수정 ok");
 			return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
@@ -364,7 +370,7 @@ public class AssignmentController {
 			Date date = new Date();
 			String sdfDate = sdf.format(date);
 			
-			//조인관계 오류남 -------------------------------------------------
+		    //
 			assignment= new Assignment(assignment.getAssignmentNo(),
 													studentId,
 													assignment.getAssignmentTitle(),
@@ -377,7 +383,7 @@ public class AssignmentController {
 													student,
 													assignment.getAssignmentDeadline(),
 													fileName,
-													1);
+													assignment.getLectureNo());
 			service.update(assignment);
 			
 			System.out.println("과제글 수정 ok");
@@ -411,16 +417,11 @@ public class AssignmentController {
 		
 			//답글 작성 폼 (assignment_detail.jsp ->assignment_replyRegister.jsp)글상세페이지에서 답변하기버튼클릭 -> 답변폼으로 온다
 			@RequestMapping("/assignment_replyRegister")
-			public ModelAndView replyRegister(int assignmentNo){
+			public ModelAndView replyRegister(int assignmentNo,int lectureNo){
 				
 				Map map = new HashMap();
-				
-				/*List getLectureList = lectureService.getLectureList();//getLectureList이름으로 lecture테이블조회!
-*/				Assignment assignment = service.selectNo(assignmentNo);
-				
-				/*map.put("getLectureList",getLectureList);//getLectureList로 넘김
-*/				map.put("assignment",assignment);
-				
+				Assignment assignment = service.selectNo(assignmentNo,lectureNo);
+				map.put("assignment",assignment);
 				
 				System.out.println("답글 작성폼 ok");	
 				return new ModelAndView("assignment/assignment_replyRegister.tiles",map);
@@ -491,7 +492,7 @@ public class AssignmentController {
 				
 				assignment.setAssignmentFile(fileName); //파일!
 				
-				assignment.setLectureNo(lectureNo);//-----------------------------------조인관계이거 문제됨!
+				assignment.setLectureNo(lectureNo);
 				
 				service.replyReplyReplyAddStep(assignment);
 
@@ -508,7 +509,6 @@ public class AssignmentController {
 		//위에 학생 답글-----------------------------------------------------------------------------------------------------------------
 		
 		
-			
 			
 			//파일-다운로드처리
 			@RequestMapping("/download")

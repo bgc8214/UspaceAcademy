@@ -6,7 +6,7 @@
 
 
 <h3>내정보 | 과제게시판 | 등록하기</h3>
-<hr/>
+<hr/>																																												<!--  ★여기assignment_registerSuccess까지만있었움,,,,,  -->
 <form method="POST"       <%-- file --%>enctype="multipart/form-data"     action="/UspaceAcademy/assignment/assignment_registerSuccess.do"> <!--  폼으로 묶기* -->
 
 
@@ -14,17 +14,6 @@
 	<caption></caption>
 	<tbody>
 	
-<tr><!--  1   -->
-<th scope="col">강의명</th>
-<td class="title">
-!
-<%-- <select id="lectureTitle" name="lectureTitle"> 
-<c:forEach items="${requestScope.getLectureList}"  var="getLectureList"><!--  컨트롤러에서 보낸값 -->
-<option>${getLectureList.lectureTitle}</option>
-</c:forEach>
-</select> --%>
-</td>
-</tr>
 
 
 

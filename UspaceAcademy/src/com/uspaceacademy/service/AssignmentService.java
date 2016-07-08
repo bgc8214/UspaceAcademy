@@ -98,13 +98,13 @@ public class AssignmentService {
 		}
 		
 		//5.삭제ㅇ
-		public int delete(int assignmentNo){
-			return dao.deleteByNo(assignmentNo);
+		public int delete(int assignmentNo,int lectureNo){
+			return dao.deleteByNo(assignmentNo,lectureNo);
 		}
 		
 		//6.세부조회ㅇ
-		public Assignment selectNo(int assignmentNo){
-			return dao.selectNo(assignmentNo);
+		public Assignment selectNo(int assignmentNo, int lectureNo){
+			return dao.selectNo(assignmentNo,lectureNo);
 		}
 
 		

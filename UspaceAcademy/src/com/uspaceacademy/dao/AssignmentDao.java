@@ -109,15 +109,22 @@ public class AssignmentDao {
 		
 		
 		//5. (no로) 삭제  ㅇ
-		public int deleteByNo(int assignmentNo){
-		return session.delete(namespace+"deleteByNo", assignmentNo);// mapper에서 deleteByNo 로함 잘보기 *
+		public int deleteByNo(int assignmentNo,int lectureNo){
+			Map map = new HashMap<>();
+			map.put("assignmentNo", assignmentNo);
+			map.put("lectureNo",lectureNo);
+		return session.delete(namespace+"deleteByNo", map);// mapper에서 deleteByNo 로함 잘보기 *
 		}
 		
 		
 		
 		//6. no로 조회 ( 세부조회할때) ㅇ
-		public Assignment selectNo(int assignmentNo){
-			return session.selectOne(namespace+"selectNo", assignmentNo); 
+		public Assignment selectNo(int assignmentNo, int lectureNo){
+			Map map = new HashMap<>();
+			map.put("assignmentNo", assignmentNo);
+			map.put("lectureNo", lectureNo);
+			
+			return session.selectOne(namespace+"selectNo", map); 
 		}
 		
 		
