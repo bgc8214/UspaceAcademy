@@ -63,7 +63,7 @@
 					</c:forEach>
 
 					<c:choose>
-						<c:when test="${requestScope.diff<=0 && requestScope.dummy=='0'}">
+						<c:when test="${requestScope.diff<=0 && requestScope.dummy=='0'&& requestScope.dummy1 =='1'}">
 							<td align="center"><input id="btn" type="submit" value="등록" class="btn btn-success"></td>
 						</c:when>
 						<c:otherwise><td></td></c:otherwise>
