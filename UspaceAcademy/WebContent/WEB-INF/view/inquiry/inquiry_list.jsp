@@ -39,7 +39,7 @@ $(document).ready(function(){
 			<td>조회수</td>
 		</tr>
 	</thead>
-			
+			<!-- <img src="image\lock.jpg" width="9" height="12"> -->
 	<tbody id="tbody1">
 		<input id="page" type="hidden" value="${param.page }">
 		<c:forEach items="${requestScope.inquiryList}" var="list">
@@ -53,13 +53,17 @@ $(document).ready(function(){
 							<c:choose>
 								<c:when test="${list.advancedId eq sessionScope.login_info.studentId}">
 									<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
-									&advancedSecret=${list.advancedSecret}">${list.advancedTitle } 비밀글</a>
+									&advancedSecret=${list.advancedSecret}">${list.advancedTitle } 비밀글 </a>
 								</c:when>
 								<c:otherwise>
 									<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
 									&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글</a>
 								</c:otherwise>
 							</c:choose>
+						</c:if>
+						<c:if test="${sessionScope.memberType == 'teacher' or sessionScope.memberType == null}">
+							<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
+							&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글 </a>
 						</c:if>
 					</c:when>
 					<c:otherwise>

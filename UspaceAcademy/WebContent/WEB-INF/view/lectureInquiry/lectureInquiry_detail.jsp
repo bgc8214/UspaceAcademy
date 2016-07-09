@@ -40,7 +40,7 @@ $(document).ready(function(){
 	</tr>
 	<tr>
 		<td>
-			내용: ${requestScope.lectureInquiryDetail.advancedContent}
+			내용<br> ${requestScope.lectureInquiryDetail.advancedContent}
 		</td>
 	</tr>
 </table>

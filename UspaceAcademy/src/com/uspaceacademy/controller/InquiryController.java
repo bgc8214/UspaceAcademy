@@ -172,13 +172,22 @@ public class InquiryController {
 		Object member = session.getAttribute("memberType");	
 		
 		System.out.println("비밀: " + advancedSecret);
+		Inquiry inquiry111 = service.selectByAdvancedNoWithComment(advancedNo);
+		System.out.println("inquiry111: " + inquiry111);
 		
 		//비밀글일 경우
 		if(secret.equals("true")){
 			member = session.getAttribute("memberType");
 			
+			System.out.println("비밀!!");
+			
+			//비회원일 경우
+			if(member.equals(null)){
+				return new ModelAndView("/inquiry/inquiryList.do");
+			}
+			
 			//학생일 경우
-			if(member.equals("student")){
+			else if(member.equals("student")){
 				Student student = (Student)session.getAttribute("login_info");
 				Inquiry findInquiry = service.selectByAdvancedNoWithComment(advancedNo);
 				String id = findInquiry.getAdvancedId();
@@ -228,7 +237,7 @@ public class InquiryController {
 			}			
 			
 			else
-				return new ModelAndView("main.tiles");
+				return new ModelAndView("/inquiry/inquiryList.do");	
 		}
 		
 		//비밀글이 아닐 경우
@@ -237,7 +246,7 @@ public class InquiryController {
 			member = session.getAttribute("memberType");			
 			
 			//학생, 강사, 관리자일 경우
-			if(member.equals("student")||member.equals("teacher")||member.equals("administrator")){
+			if(member.equals("student")||member.equals("teacher")||member.equals("administrator")||member.equals(null)){
 				
 				Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo);
 				
@@ -257,11 +266,11 @@ public class InquiryController {
 			}
 			
 			else
-				return new ModelAndView("main.tiles");
+				return new ModelAndView("/inquiry/inquiryList.do");	
 		}		
 		
 		else
-			return new ModelAndView("main.tiles");
+			return new ModelAndView("/inquiry/inquiryList.do");	
 	}
 	
 	//글 등록폼

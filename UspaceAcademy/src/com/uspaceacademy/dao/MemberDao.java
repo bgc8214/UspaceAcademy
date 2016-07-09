@@ -22,6 +22,23 @@ public class MemberDao
 		this.session=session;
 	}
 	
+	public List selectSalaryList(){
+		return session.selectList("memberMapper.selectSalaryList");
+	}
+	
+	public Teacher selectSalaryByTeacherId(String teacherId) {
+		return session.selectOne("memberMapper.selectSalaryByTeacherId", teacherId);
+	}
+	
+	public int insertSalary(Teacher teacher)
+	{
+		return session.insert("memberMapper.insertSalary", teacher);
+	}
+	
+	public int updateSalary(Teacher teacher) {
+		return session.update("memberMapper.updateSalary", teacher);
+	}
+	
 	
 	public int insertStudent(Student student){ //학생 등록
 		return session.insert("memberMapper.insertStudent", student);

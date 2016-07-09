@@ -21,6 +21,29 @@ public class MemberService
 	@Autowired
 	private MemberDao dao;
 	
+	public List selectSalaryList()
+	{
+		return dao.selectSalaryList();
+	}
+	
+	public Teacher selectSalaryByTeacherId(String teacherId) //강사 아이디 찾기
+	{
+		return dao.selectSalaryByTeacherId(teacherId);
+	}
+	
+	public void insertSalary(Teacher teacher)
+	{
+		System.out.println(dao.insertSalary(teacher)+" 추가");		
+	}
+	
+	public int updateSalary(Teacher teacher) {
+		System.out.println("Service : " + teacher);
+		
+		return dao.updateSalary(teacher);
+	}
+	
+	
+	
 	public void insertStudent(Student student)
 	{
 		

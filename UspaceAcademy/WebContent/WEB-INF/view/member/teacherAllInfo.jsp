@@ -27,6 +27,7 @@ $(document).ready(function() {
 			<th>전화번호</th>
 			<th>주소</th>
 			<th>강의하는 과목</th>
+			<!-- <th>월급 관리</th> -->
 			<th>회원 탈퇴</th>
 		<tr>
 	</thead>
@@ -37,8 +38,8 @@ $(document).ready(function() {
 				<td align="center">${teacher.teacherEmail}</td>
 				<td align="center">${teacher.teacherPhoneNo}</td>
 				<td align="center">${teacher.teacherAddress}</td>
-
 				<td><a href="/UspaceAcademy/member/selectAllByTeacherId2.do?teacherId=${teacher.teacherId}">${teacher.teacherSubject}</a></td>
+				<%-- <td><a href="/UspaceAcademy/member/selectSalaryByTeacherId.do?teacherId=${teacher.teacherId}">${teacher.teacherName} 강사님</td> --%>
 				<td><a href="/UspaceAcademy/member/deleteTeacherByAdmin.do?teacherId=${teacher.teacherId}"><button id="remove" class="btn btn-danger">강사 탈퇴</button></a></td>
 
 			</tr>	
@@ -84,7 +85,7 @@ $(document).ready(function() {
 <p>
 
 <div class="boardBottom" align="center">
-<!-- 학생이름으로 검색  -->
+<!-- 강사이름으로 검색  -->
 <form action="/UspaceAcademy/member/searchByteacherName.do">
 
 <input type="text" name="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="이름으로 검색" class="btn btn-info">
