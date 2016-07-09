@@ -4,6 +4,13 @@
 tr.dummy, td.dummy{
 	border:0px;
 }
+
+	button#registerBtn {
+		position :relative;
+		position : absolute;
+		right:250px;
+	}
+
 </style>
 <script type="text/javascript">
 var tmp;//이벤트소스를 저장하기 위한 변수
@@ -97,15 +104,10 @@ $(document).ready(function(){
 		"beforeSend":function(){
 		}
 	});
-	$(document).ready(effect);
-	function effect() {
-		$("tr:eq(2)").css("background-color", "#FFD9FA");
-	}
-	
 })
 </script>
 
-<h3 class="pageTlt">검색된 강의 목록</h3>
+<h3 class="pageTlt">강의 목록</h3>
 <hr>
 
 <table class="table table-bordered">
@@ -140,8 +142,45 @@ $(document).ready(function(){
 	</c:forEach>
 	</tbody>
 </table>
+<p>
 
-
+<div class="pageNav" align="center">
+	<%--◀이전 페이지 그룹 처리 --%>
+	<c:choose>
+		<c:when test="${requestScope.paging.previousPageGroup }">
+			<a href="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${requestScope.paging.beginPage - 1}" class="prevPage">
+			<strong>이전</strong>
+			</a>
+		</c:when>
+		<c:otherwise><strong>이전</strong></c:otherwise>
+	</c:choose>
+	<%--페이지 처리 --%>
+	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
+		<c:choose>
+			<c:when test="${page == requestScope.paging.page }">
+			 <strong>${page }</strong>
+			</c:when>
+			<c:otherwise>
+				<a href="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${page }">
+				<strong>${page }</strong>		
+				</a>
+			</c:otherwise>
+		</c:choose>
+	&nbsp;&nbsp;
+	</c:forEach>
+	<%--다음 페이지 그룹 처리 ▶--%>
+	<c:choose>
+		<c:when test="${requestScope.paging.nextPageGroup }">
+			<a href="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${requestScope.paging.endPage + 1}" class="nextPage">
+			<strong>다음</strong>
+			</a>
+		</c:when>
+		<c:otherwise><strong>다음</strong></c:otherwise>
+	</c:choose>
+	</div>
+<br>
+<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button class="btn btn-success" id="registerBtn">강의 등록</button></a>
+<br>
 
 <br>
 <!-- 검색관련 -->

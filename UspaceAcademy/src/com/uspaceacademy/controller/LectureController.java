@@ -408,7 +408,8 @@ public class LectureController {
 	@RequestMapping("lectureAll.do")
 	public ModelAndView adminLectureCheck(@RequestParam(defaultValue="1") int page) {
 		Map map = new HashMap<>();
-		map = lectureService.selectAdminLectureService();
+		map = lectureService.selectAdminLectureService(page);
+		map.put("page", page);
 //		System.out.println(map);
 		return new ModelAndView("lecture/admin_lectureList.tiles", map);
 	}

@@ -11,7 +11,7 @@ $(document).ready(function() {
 		}
 	})
 	
-	$("#remove").on("click", function() {
+	$("#ex").on("click", "button", function() {
 		return confirm("강제탈퇴 시키시겠습니까?");
 	})
 });
@@ -30,7 +30,7 @@ $(document).ready(function() {
 			<th>회원 탈퇴</th>
 		<tr>
 	</thead>
-	<tbody>
+	<tbody id="ex">
 		<c:forEach items="${requestScope.teacherAllList}" var="teacher"> 
 			<tr>
 				<td align="center">${teacher.teacherName}</td>
@@ -52,20 +52,20 @@ $(document).ready(function() {
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
 			<a href="/UspaceAcademy/member/teacherAll.do?page=${requestScope.paging.beginPage-1}" class="prevPage">
-					<span><strong>이전</strong></span>
+					<strong>이전</strong>
 			</a>
 		</c:when>
-		<c:otherwise><span><strong>이전</strong></span></c:otherwise>
+		<c:otherwise><strong>이전</strong></c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 	<span><strong>${page }</strong></span>
+			 	<strong>${page }</strong>
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/member/teacherAll.do?page=${page}">
-					<span><strong>${page }</strong></span>
+					<strong>${page }</strong>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -75,10 +75,10 @@ $(document).ready(function() {
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
 			<a href="/UspaceAcademy/member/teacherAll.do?&page=${requestScope.paging.endPage + 1}" class="nextPage">
-				<span><strong>다음</strong></span>
+				<strong>다음</strong>
 			</a>
 		</c:when>
-		<c:otherwise><span><strong>다음</strong></span></c:otherwise>
+		<c:otherwise><strong>다음</strong></c:otherwise>
 	</c:choose>
 </div>
 <p>

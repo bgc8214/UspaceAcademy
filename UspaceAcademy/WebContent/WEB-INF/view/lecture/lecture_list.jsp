@@ -1,8 +1,19 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style type="text/css">
-tr.dummy, td.dummy{
-	border:0px;
+tr.dummy, td.dummy {
+	border: 0px;
+}
+
+#zzimBtn {
+	position: fixed;
+	left: 20px;
+}
+
+#payList {
+	position: relative;
+	position: absolute;
+	left: -470px;
 }
 </style>
 <script type="text/javascript">
@@ -106,10 +117,6 @@ $(document).ready(function(){
 		"beforeSend":function(){
 		}
 	});
-	$(document).ready(effect);
-	function effect() {
-		$("tr:eq(2)").css("background-color", "#FFE08C");
-	}
 	$("#searchBtn").on("click", function() {
 		if(!$("input[name=keyword]").val()){
 			alert("키워드를 입력하세요.");
@@ -139,7 +146,7 @@ $(document).ready(function(){
 			<td>${lectureList.lectureNo }</td><td>${lectureList.lectureSubject }</td><td>${lectureList.lectureTitle }</td>
 			<td class="teacherId">${lectureList.teacherId2 }</td><td>${lectureList.lectureStartDate }</td><td>${lectureList.lectureEndDate }</td>
 			<td>${lectureList.lectureDay }</td><td>${lectureList.lectureStartTime } ~ ${lectureList.lectureEndTime }</td>
-			<td><span class="current">${lectureList.lectureCurrentStudent }</span> / <span class="total">${lectureList.lectureTotalStudent }</span></td>
+			<td>${lectureList.lectureCurrentStudent } / ${lectureList.lectureTotalStudent }</td>
 		</tr>
 </c:forEach>
 </tbody>
@@ -150,23 +157,21 @@ $(document).ready(function(){
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.beginPage - 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}" class="prevPage">
-			<span><strong>이전</strong></span>
+			<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.paging.beginPage - 1}" class="prevPage">
+			<strong>이전</strong>
 			</a>
 		</c:when>
-		<c:otherwise><span><strong>이전</strong></span></c:otherwise>
+		<c:otherwise><strong>이전</strong></c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 <span>${page }
-			 
-			 </span>
+			 <strong>${page }</strong> 
 			</c:when>
 			<c:otherwise>
-				<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${page }&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
-					<span><strong>${page }</strong></span>
+				<a href="/UspaceAcademy/lecture/lectureList.do?page=${page }">
+					<strong>${page }</strong>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -175,11 +180,11 @@ $(document).ready(function(){
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.endPage + 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}" class="nextPage">
-			<span><strong>다음</strong></span>
+			<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.paging.endPage + 1}" class="nextPage">
+			<strong>다음</strong>
 			</a>
 		</c:when>
-		<c:otherwise><span><strong>다음</strong></span></c:otherwise>
+		<c:otherwise><strong>다음</strong></c:otherwise>
 	</c:choose>
 	</div>
 <br>
@@ -190,8 +195,8 @@ $(document).ready(function(){
 		<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button class="btn btn-success">강의 등록</button></a>
 	</c:if>
 	<c:if test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/lecture/zzimList.do?page=${param.page }"><button class="btn btn-success">찜 목록</button></a>
-		<a href="/UspaceAcademy/lecture/applyList.do?page=${param.page }"><button class="btn btn-warning">결제 목록</button></a>
+		<a href="/UspaceAcademy/lecture/zzimList.do?page=${param.page }"><button class="btn btn-success" id="zzimBtn">찜 목록</button></a>
+		<a href="/UspaceAcademy/lecture/applyList.do?page=${param.page }"><button class="btn btn-warning" id="payList">결제 목록</button></a>
 	</c:if>
 </span>
 
