@@ -1,4 +1,10 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
+<style type="text/css">
+</style>
 
-
-메인페이지<br>
+<!DOCTYPE html>
+<html>
+<body>
+<img src="image/main.jpg">
+</body>
+</html>
