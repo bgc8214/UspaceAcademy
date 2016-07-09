@@ -22,6 +22,23 @@ public class MemberDao
 		this.session=session;
 	}
 	
+	public List selectSalaryList(){
+		return session.selectList("memberMapper.selectSalaryList");
+	}
+	
+	public Teacher selectSalaryByTeacherId(String teacherId) {
+		return session.selectOne("memberMapper.selectSalaryByTeacherId", teacherId);
+	}
+	
+	public int insertSalary(Teacher teacher)
+	{
+		return session.insert("memberMapper.insertSalary", teacher);
+	}
+	
+	public int updateSalary(Teacher teacher) {
+		return session.update("memberMapper.updateSalary", teacher);
+	}
+	
 	
 	public int insertStudent(Student student){ //학생 등록
 		return session.insert("memberMapper.insertStudent", student);
@@ -186,6 +203,12 @@ public class MemberDao
 	public int deleteAttendanceForTeacher(int lectureNo2) {	
 		System.out.println("강의번호로 출석부 삭제 DAO");
 		return session.delete("attendanceMapper.deleteByAttendanceForTeacher", lectureNo2);
+	}
+	
+	// 강사 탈퇴를 위해 강사의 강좌번호로 과제 게시판 삭제
+	public int deleteTeacherInfoDao(int lectureNo) {
+		System.out.println("강의번호로 과제게시판 삭제");
+		return session.delete("assignmentMapper.deleteTeacherInfo", lectureNo);
 	}
 	
 }

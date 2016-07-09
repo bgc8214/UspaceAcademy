@@ -152,9 +152,10 @@ public class LectureService {
 	}
 	
 	// 관리자용 강의목록 조회
-	public Map selectAdminLectureService() {
+	public Map selectAdminLectureService(int page) {
 		Map map = new HashMap<>();
-		map.put("lectureList", lectureDao.selectAdminLectureDao());
+		map.put("lectureList", lectureDao.selectAdminLectureDao(page));
+		map.put("paging", new PagingBean(lectureDao.selectCountAdminLectureInfoDao(), page));
 		return map;
 	}
 	

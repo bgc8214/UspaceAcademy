@@ -21,6 +21,29 @@ public class MemberService
 	@Autowired
 	private MemberDao dao;
 	
+	public List selectSalaryList()
+	{
+		return dao.selectSalaryList();
+	}
+	
+	public Teacher selectSalaryByTeacherId(String teacherId) //강사 아이디 찾기
+	{
+		return dao.selectSalaryByTeacherId(teacherId);
+	}
+	
+	public void insertSalary(Teacher teacher)
+	{
+		System.out.println(dao.insertSalary(teacher)+" 추가");		
+	}
+	
+	public int updateSalary(Teacher teacher) {
+		System.out.println("Service : " + teacher);
+		
+		return dao.updateSalary(teacher);
+	}
+	
+	
+	
 	public void insertStudent(Student student)
 	{
 		
@@ -106,8 +129,9 @@ public class MemberService
 	/* 순서
 	 * 1. lecture 테이블에서 강사가 강의하고 있는 강의 번호 조회
 	 * 2. student_lecture_join 테이블에서 강의번호로 삭제
-	 * 3. lecture 테이블 - 강사 아이디로 삭제
-	 * 4. teacher 테이블에서 삭제
+	 * 3. 과제게시판 강의번호로 삭제
+	 * 4. lecture 테이블 - 강사 아이디로 삭제
+	 * 5. teacher 테이블에서 삭제
 	 * -> 탈퇴
 	 */
 	public int removeTeacher(String teacherId) {
@@ -117,6 +141,7 @@ public class MemberService
 		for(int i=0; i<list.size(); i++) {
 			System.out.println(dao.deleteAttendanceForTeacher((int)list.get(i)));	// 강의번호로 출석부 테이블의 강사의 강좌 출석부 정보 삭제
 			System.out.println(dao.deleteByLectureNo((int)list.get(i)));	// 학생_강의 테이블 강의번호로 삭제
+			System.out.println(dao.deleteTeacherInfoDao((int)list.get(i))); // 과제게시판 강의번호로 삭제
 //			dao.deleteByLectureNo((int)list.get(i));
 		}
 		System.out.println("강의 테이블에서 강사번호로 강의 삭제 Service");

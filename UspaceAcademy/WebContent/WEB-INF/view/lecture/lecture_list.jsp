@@ -1,8 +1,19 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style type="text/css">
-tr.dummy, td.dummy{
-	border:0px;
+tr.dummy, td.dummy {
+	border: 0px;
+}
+
+#zzimBtn {
+	position: fixed;
+	left: 20px;
+}
+
+#payList {
+	position: relative;
+	position: absolute;
+	left: -470px;
 }
 </style>
 <script type="text/javascript">
@@ -24,7 +35,7 @@ $(document).ready(function(){
 				$('<tr class="dummy"><td colspan=8" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">'+txt+'</textarea></td></tr>').insertAfter(tmp);
 
 				 */
- 				$('<tr class="dummy"><td colspan="8" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
+ 				$('<tr class="dummy"><td colspan="9" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
 				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : "+list[0].lecturePrice+"<br>";
 					tmp.next().children().eq(0).append(txt);
 					if(list[1]=="student"){
@@ -40,7 +51,7 @@ $(document).ready(function(){
 					if(list[1]=="administrator"){
 						var txt2 = tmp.children().eq(0).text();
 						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?page="+$("#page").val()+"&lectureNo="+txt2+"&codeType=teacherSubject><button class='btn btn-warning'>강의수정</button></a>"+
-								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+">&nbsp;&nbsp;<button class='btn btn-danger'>강의삭제</button></a>";
+								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+">&nbsp;&nbsp;<button id='removeBtn' class='btn btn-danger'>강의삭제</button></a>";
 						tmp.next().children().eq(0).append($(temp2));
 					}
 				
@@ -77,6 +88,9 @@ $(document).ready(function(){
 	$(".lectureList").on("mouseout", function(){
         this.style.backgroundColor = 'white';
 	});
+	$("#removeBtn").on("click", function() {
+		return confirm("강의를 삭제하시겠습니까?")
+	})
 	var ids="";
 	var temp=$(".teacherId");
 	for(var i=0;i<$(".teacherId").length;i++){
@@ -103,10 +117,12 @@ $(document).ready(function(){
 		"beforeSend":function(){
 		}
 	});
-	$(document).ready(effect);
-	function effect() {
-		$("tr:eq(2)").css("background-color", "#FFE08C");
-	}
+	$("#searchBtn").on("click", function() {
+		if(!$("input[name=keyword]").val()){
+			alert("키워드를 입력하세요.");
+			return false;
+		}
+	})
 	
 })
 </script>
@@ -120,8 +136,7 @@ $(document).ready(function(){
 
 <thead>
 <tr>
-	<th>강의번호</th><th>강의과목</th><th>강의명</th><th>강사</th><th>강의기간</th><th>수강요일</th><th>강의시간</th>
-	<th>수강인원</th>
+	<th>강의번호</th><th>과목</th><th>강의명</th><th>강사</th><th>강의시작일</th><th>강의종료일</th><th>강의요일</th><th>강의시간</th><th>수강인원</th>
 </tr>
 </thead>
 <tbody>
@@ -129,9 +144,9 @@ $(document).ready(function(){
 <c:forEach items="${requestScope.lectureList }" var="lectureList">
 		<tr class="lectureList">
 			<td>${lectureList.lectureNo }</td><td>${lectureList.lectureSubject }</td><td>${lectureList.lectureTitle }</td>
-			<td class="teacherId">${lectureList.teacherId2 }</td><td>${lectureList.lectureStartDate } ~ ${lectureList.lectureEndDate }</td>
+			<td class="teacherId">${lectureList.teacherId2 }</td><td>${lectureList.lectureStartDate }</td><td>${lectureList.lectureEndDate }</td>
 			<td>${lectureList.lectureDay }</td><td>${lectureList.lectureStartTime } ~ ${lectureList.lectureEndTime }</td>
-			<td><span class="current">${lectureList.lectureCurrentStudent }</span> / <span class="total">${lectureList.lectureTotalStudent }</span></td>
+			<td>${lectureList.lectureCurrentStudent } / ${lectureList.lectureTotalStudent }</td>
 		</tr>
 </c:forEach>
 </tbody>
@@ -142,23 +157,21 @@ $(document).ready(function(){
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.beginPage - 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}" class="prevPage">
-			<span><strong>이전</strong></span>
+			<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.paging.beginPage - 1}" class="prevPage">
+			<strong>이전</strong>
 			</a>
 		</c:when>
-		<c:otherwise><span><strong>이전</strong></span></c:otherwise>
+		<c:otherwise><strong>이전</strong></c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 <span>${page }
-			 
-			 </span>
+			 <strong>${page }</strong> 
 			</c:when>
 			<c:otherwise>
-				<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${page }&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
-					<span><strong>${page }</strong></span>
+				<a href="/UspaceAcademy/lecture/lectureList.do?page=${page }">
+					<strong>${page }</strong>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -167,11 +180,11 @@ $(document).ready(function(){
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/lecture/searchLectureByKeyword.do?page=${requestScope.paging.endPage + 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}" class="nextPage">
-			<span><strong>다음</strong></span>
+			<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.paging.endPage + 1}" class="nextPage">
+			<strong>다음</strong>
 			</a>
 		</c:when>
-		<c:otherwise><span><strong>다음</strong></span></c:otherwise>
+		<c:otherwise><strong>다음</strong></c:otherwise>
 	</c:choose>
 	</div>
 <br>
@@ -182,8 +195,8 @@ $(document).ready(function(){
 		<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button class="btn btn-success">강의 등록</button></a>
 	</c:if>
 	<c:if test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/lecture/zzimList.do?page=${param.page }"><button class="btn btn-success">찜 목록</button></a>
-		<a href="/UspaceAcademy/lecture/applyList.do?page=${param.page }"><button class="btn btn-warning">결제 목록</button></a>
+		<a href="/UspaceAcademy/lecture/zzimList.do?page=${param.page }"><button class="btn btn-success" id="zzimBtn">찜 목록</button></a>
+		<a href="/UspaceAcademy/lecture/applyList.do?page=${param.page }"><button class="btn btn-warning" id="payList">결제 목록</button></a>
 	</c:if>
 </span>
 
@@ -212,8 +225,8 @@ $(document).ready(function(){
 				<option value="teacherSubject">과목</option>
 				<option value="teacherName">강사</option>
 			</select>
-		<input type="text" name="keyword">
-		<input type="submit" value="검색" class="btn btn-info">
+		<input type="text" name="keyword" placeholder="입력하세요.">
+		<input id="searchBtn" type="submit" value="검색" class="btn btn-info">
 		</div>	
 	</form>
 	</c:otherwise>

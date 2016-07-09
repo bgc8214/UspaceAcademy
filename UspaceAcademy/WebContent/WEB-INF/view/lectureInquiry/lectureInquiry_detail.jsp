@@ -10,21 +10,21 @@ function effect(){
 	$("tr:eq(2)").css("background-color", "palegreen");
 }
 
-/* $(document).ready(function(){
+$(document).ready(function(){
 	$("#insert").on("click", function(){
-		if(!$("input[name=commentContent]").val()){
+		if($("textarea[name=commentContent]").val()==""){
 			alert("검색할 내용을 입력하세요!");
 			
 			return false;
 		}
 	});
-}) */
+});
 
 </script>
 
-<h2 align="center">상세보기</h2>
+<h2 class="pageTlt">상세보기</h2>
 
-<table border="" class="table table-bordered">
+<table border="" class="table table-bordered form-table">
 	<tr>
 		<td>
 			no: ${requestScope.lectureInquiryDetail.advancedNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -40,16 +40,16 @@ function effect(){
 	</tr>
 	<tr>
 		<td>
-			내용: ${requestScope.lectureInquiryDetail.advancedContent}
+			내용<br> ${requestScope.lectureInquiryDetail.advancedContent}
 		</td>
 	</tr>
 </table>
 
 <p>
 
-<h4 align="center">댓글보기</h4>
+<h4 class="pageTlt">댓글 보기</h4>
 
-<table class="table table-bordered">
+<table class="table table-bordered form-table">
 <c:forEach items="${requestScope.commentList}" var="list">
 <%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
 	<tr>
@@ -57,7 +57,7 @@ function effect(){
 			<%-- 댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --%>
 			글쓴이: ${list.commentWriter}&nbsp;&nbsp;&nbsp;
 			글 등록일:${list.commentDate}<br>
-			내용:
+			내용<br>
 			${list.commentContent}<br><br>
 			
 			<c:choose>
@@ -65,14 +65,26 @@ function effect(){
 					<c:if test="${list.commentWriter eq sessionScope.login_info.studentId}">
 						<a href="/UspaceAcademy/lectureInquiry/updateCommentForm.do?commentNo=${list.commentNo }
 						&advancedNo2=${requestScope.lectureInquiryDetail.advancedNo}&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}">
-						<button>수정</button></a>
+						<button>댓글 수정</button></a>
 						<a href="/UspaceAcademy/lectureInquiry/deleteComment.do?commentNo=${list.commentNo }&advancedNo2=${requestScope.lectureInquiryDetail.advancedNo}
-						&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}"><button>삭제</button></a><br>
+						&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}"><button>댓글 삭제</button></a><br>
 					</c:if>
 				</c:when>
+				
+				<c:when test="${sessionScope.memberType=='teacher'}">
+					<c:if test="${list.commentWriter eq sessionScope.login_info.teacherId}">
+						<a href="/UspaceAcademy/lectureInquiry/updateCommentForm.do?commentNo=${list.commentNo }
+						&advancedNo2=${requestScope.lectureInquiryDetail.advancedNo}&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}">
+						<button>댓글 수정</button></a>
+						<a href="/UspaceAcademy/lectureInquiry/deleteComment.do?commentNo=${list.commentNo }&advancedNo2=${requestScope.lectureInquiryDetail.advancedNo}
+						&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}"><button>댓글 삭제</button></a><br>
+					</c:if>
+				</c:when>
+				
 				<c:otherwise>
 					<c:if test="${sessionScope.memberType=='administrator'}">
-						<a href="/UspaceAcademy/inquiry/deleteComment.do"><button>댓글 삭제</button></a>
+						<a href="/UspaceAcademy/inquiry/deleteComment.do?commentNo=${list.commentNo }&advancedNo2=${requestScope.lectureInquiryDetail.advancedNo}
+						&lectureNo2=${requestScope.lectureInquiryDetail.lectureNo2}"><button>댓글 삭제</button></a>
 					</c:if>
 				</c:otherwise>
 			</c:choose>
@@ -81,7 +93,7 @@ function effect(){
 </c:forEach>
 </table>
 
-<h4 align="center">댓글 작성</h4>
+<h4 class="pageTlt" align="center">댓글 작성</h4>
 <form action="/UspaceAcademy/lectureInquiry/insertComment.do" >
 <input type="hidden" value="${requestScope.lectureInquiryDetail.advancedNo}" name="advancedNo2">
 <input type="hidden" value="${requestScope.lectureInquiryDetail.lectureNo2}" name="lectureNo2">

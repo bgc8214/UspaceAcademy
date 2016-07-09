@@ -5,12 +5,6 @@
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 
-$(document).ready(effect);
-function effect(){
-	$("tr:eq(2)").css("background-color", "palegreen");
-
-}
-
 //폼체크
 $(document).ready(function(){
 	$("#search").on("click", function(){
@@ -20,34 +14,51 @@ $(document).ready(function(){
 			return false;
 		}
 	});
+	
+	$("#tbody1").on("click", "tr", function() {
+	})
 });
 
 </script>
 
-<h2>1:1문의 게시판</h2><br>
+<h2 class="pageTlt">1:1문의 게시판</h2><br>
 
-<table border='1' class="table table-bordered">
+<table border='1' class="table table-bordered table-hover">
 	<thead>
 		<tr>
-			<td>글번호</td>			
+			<!-- <td>글번호</td> -->			
 			<td>제목</td>
 			<td>글쓴이</td>
 			<td>글 등록일</td>
 			<td>조회수</td>
 		</tr>
 	</thead>
-			
-	<tbody>
+			<!-- <img src="image\lock.jpg" width="9" height="12"> -->
+	<tbody id="tbody1">
 		<input id="page" type="hidden" value="${param.page }">
 		<c:forEach items="${requestScope.inquiryList}" var="list">
 			<input type="hidden" id="secret" value="${list.advancedSecret}">
 			<tr>
-				<td>${list.advancedNo }</td>
+				<%-- <td>${list.advancedNo }</td> --%>
 				<td>
 					<c:choose>
 					<c:when test="${list.advancedSecret}">
-						<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
-						&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글</a>
+						<c:if test="${sessionScope.memberType == 'student'}">
+							<c:choose>
+								<c:when test="${list.advancedId eq sessionScope.login_info.studentId}">
+									<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
+									&advancedSecret=${list.advancedSecret}">${list.advancedTitle } 비밀글 </a>
+								</c:when>
+								<c:otherwise>
+									<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
+									&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글</a>
+								</c:otherwise>
+							</c:choose>
+						</c:if>
+						<c:if test="${sessionScope.memberType == 'teacher' or sessionScope.memberType == null or sessionScope.memberType == 'administrator'}">
+							<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
+							&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글 </a>
+						</c:if>
 					</c:when>
 					<c:otherwise>
 						<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }

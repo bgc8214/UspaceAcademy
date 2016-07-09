@@ -1,5 +1,7 @@
 package com.uspaceacademy.vo;
 
+import java.util.List;
+
 public class Teacher
 {
 	private String teacherId;
@@ -11,9 +13,33 @@ public class Teacher
 	private String teacherSubject;
 	private int teacherSalary;
 	
+	private List<Lecture> lectureList;
+	
 	public Teacher()
 	{
 		
+	}
+	
+	public Teacher(String teacherId, String teacherPassword, String teacherName, String teacherEmail,
+			String teacherPhoneNo, String teacherAddress, String teacherSubject, int teacherSalary, List lectureList)
+	{
+		super();
+		this.teacherId = teacherId;
+		this.teacherPassword = teacherPassword;
+		this.teacherName = teacherName;
+		this.teacherEmail = teacherEmail;
+		this.teacherPhoneNo = teacherPhoneNo;
+		this.teacherAddress = teacherAddress;
+		this.teacherSubject = teacherSubject;
+		this.teacherSalary = teacherSalary;
+		this.lectureList = lectureList;
+	}
+	
+	public Teacher(String teacherId, int teacherSalary)
+	{
+		super();
+		this.teacherId = teacherId;
+		this.teacherSalary = teacherSalary;		
 	}
 
 	public Teacher(String teacherId, String teacherPassword, String teacherName, String teacherEmail,
@@ -28,6 +54,14 @@ public class Teacher
 		this.teacherAddress = teacherAddress;
 		this.teacherSubject = teacherSubject;
 		this.teacherSalary = teacherSalary;
+	}	
+
+	public List<Lecture> getLectureList() {
+		return lectureList;
+	}
+
+	public void setLectureList(List<Lecture> lectureList) {
+		this.lectureList = lectureList;
 	}
 
 	public String getTeacherId()
@@ -115,13 +149,14 @@ public class Teacher
 		return "Teacher [teacherId=" + teacherId + ", teacherPassword=" + teacherPassword + ", teacherName="
 				+ teacherName + ", teacherEmail=" + teacherEmail + ", teacherPhoneNo=" + teacherPhoneNo
 				+ ", teacherAddress=" + teacherAddress + ", teacherSubject=" + teacherSubject + ", teacherSalary="
-				+ teacherSalary + "]";
+				+ teacherSalary + ", lectureList=" + lectureList + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((lectureList == null) ? 0 : lectureList.hashCode());
 		result = prime * result + ((teacherAddress == null) ? 0 : teacherAddress.hashCode());
 		result = prime * result + ((teacherEmail == null) ? 0 : teacherEmail.hashCode());
 		result = prime * result + ((teacherId == null) ? 0 : teacherId.hashCode());
@@ -142,6 +177,11 @@ public class Teacher
 		if (getClass() != obj.getClass())
 			return false;
 		Teacher other = (Teacher) obj;
+		if (lectureList == null) {
+			if (other.lectureList != null)
+				return false;
+		} else if (!lectureList.equals(other.lectureList))
+			return false;
 		if (teacherAddress == null) {
 			if (other.teacherAddress != null)
 				return false;
@@ -181,5 +221,4 @@ public class Teacher
 			return false;
 		return true;
 	}
-
 }

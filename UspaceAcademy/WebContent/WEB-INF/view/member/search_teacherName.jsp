@@ -59,20 +59,20 @@
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
 			<a href="/UspaceAcademy/member/searchByteacherName.do?page=${requestScope.paging.beginPage-1}&name=${requestScope.name}" class="prevPage">
-			◀
+			<strong>이전</strong>
 			</a>
 		</c:when>
-		<c:otherwise>◀</c:otherwise>
+		<c:otherwise><strong>이전</strong></c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 <span><strong>${page }</strong></span>
+			 <strong>${page }</strong>
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/member/searchByteacherName.do?page=${page}&name=${requestScope.name}">
-					<span><strong>${page}</strong></span>
+					<strong>${page}</strong>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -82,10 +82,10 @@
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
 			<a href="/UspaceAcademy/member/searchByteacherName.do?&page=${requestScope.paging.endPage + 1}&name=${requestScope.name}" class="nextPage">
-			▶
+			<strong>다음</strong>
 			</a>
 		</c:when>
-		<c:otherwise>▶</c:otherwise>
+		<c:otherwise><strong>다음</strong></c:otherwise>
 	</c:choose>
 </div>
 <p>

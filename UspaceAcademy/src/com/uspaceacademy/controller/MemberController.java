@@ -7,22 +7,17 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
-import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,7 +31,7 @@ import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.service.MemberService;
 import com.uspaceacademy.validaotor.StudentValidator;
 import com.uspaceacademy.validaotor.TeacherValidator;
-import com.uspaceacademy.vo.Code;
+import com.uspaceacademy.vo.Lecture;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
 
@@ -60,6 +55,99 @@ public class MemberController
 	 * 
 	 * return "member/student_register_form.tiles"; }
 	 */
+	
+	//월급리스트 조회
+	@RequestMapping("/selectSalaryList.do")
+	public ModelAndView selectSalaryList() {
+		List teacherSalaryList = service.selectSalaryList();
+
+		List lectureList = lectureService.getLectureList();
+
+
+		
+		return new ModelAndView("member/teacherSalary_list.tiles", "teacherSalaryList", teacherSalaryList);
+	}
+	
+	//강사아이디로 월급 조회
+	@RequestMapping("/selectSalaryByTeacherId.do")
+	public ModelAndView selectSalaryByTeacherId(String teacherId) {
+		Teacher teacherDetail = service.selectSalaryByTeacherId(teacherId);
+		
+		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", teacherDetail);
+	}
+	
+	//월급 등록 폼
+	@RequestMapping("/insertSalaryForm.do")
+	public ModelAndView insertSalaryForm(Teacher teacher)
+	{		
+		return new ModelAndView("member/teacherSalary_insert.tiles", "teacher", teacher);
+	}
+	
+	//월급 등록하기
+	@RequestMapping("/insertSalary.do")
+	public String insertSalary(@ModelAttribute Teacher teacher, BindingResult errors)
+	{
+		// 검증 - StudentValidator
+		TeacherValidator validator = new TeacherValidator();
+		validator.validate(teacher, errors);
+
+		if (errors.hasErrors())
+		{
+			// 에러 응답 페이지로 이동
+			return "/member/insertSalaryForm.do?teacher=" + teacher;
+		}
+		
+		service.insertSalary(teacher);
+
+		return "redirect:/member/redirectInsertSalary.do?teacherId=" + teacher.getTeacherId();
+	}
+
+	//월급 리다이렉트 방식으로 등록
+	@RequestMapping("/redirectInsertSalary.do")
+	public ModelAndView redirectInsertSalary(String teacherId) // 새로고침 시 더 등록 안되도록 redirect 처리
+	{
+		System.out.println("리다이렉트");
+		Teacher teacherDetail = service.findTeacherById(teacherId);
+
+		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", teacherDetail);
+	}
+	
+	//월급 수정 폼
+	@RequestMapping("/updateSalaryForm.do")
+	public ModelAndView updateSalaryForm(Teacher teacher){
+		
+		return new ModelAndView("member/teacherSalary_update.tiles", "teacher", teacher);
+	}
+	
+	//월급 수정하기
+	@RequestMapping("/updateSalary.do")
+	public String updateSalary(@ModelAttribute("teacher") Teacher teacher, HttpSession session, BindingResult errors) {		
+		
+		TeacherValidator validator = new TeacherValidator();
+		validator.validate(teacher, errors);
+
+		if (errors.hasErrors())
+		{
+			// 에러 응답 페이지로 이동
+			return "/member/updateSalaryForm.do?teacher=" + teacher;
+		}
+			service.updateSalary(teacher);
+		
+			return "redirect:/member/updateSalary.do?teacherId=" + teacher.getTeacherId();
+	}
+	
+	//월급 수정(리다이렉트)
+	@RequestMapping("/redirectUpdateSalary.do")
+	public ModelAndView redirectUpdateSalary(String teacherId) // 새로고침 시 더 등록 안되도록 redirect 처리
+	{
+		System.out.println("리다이렉트");
+		Teacher teacherDetail = service.findTeacherById(teacherId);
+
+		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", teacherDetail);
+	}
+	
+	
+	
 
 	@RequestMapping("/studentRegister.do")
 	public String studentRegister(@ModelAttribute Student student, String addr1, String addr2, BindingResult errors)
@@ -535,8 +623,7 @@ public class MemberController
 	
 	//관리자가 강사 강제 탈퇴
 	@RequestMapping("/deleteTeacherByAdmin.do")
-	public String deleteTeacherByAdmin(String teacherId,HttpSession session) {
-		
+	public String deleteTeacherByAdmin(String teacherId, HttpSession session) {
 		service.removeTeacher(teacherId);
 		return "/member/teacherAll.do";
 	}
@@ -579,7 +666,6 @@ public class MemberController
 	@RequestMapping("/selectAllByTeacherId.do")
 	public ModelAndView selectAllByTeacherId(HttpSession session) {
 		Teacher teacher = (Teacher)session.getAttribute("login_info");
-		teacher.getTeacherId();
 		
 		String teacherId = teacher.getTeacherId();
 		
@@ -594,6 +680,6 @@ public class MemberController
 		
 		List selectAllByTeacherId = lectureService.selectAllByTeacherId(teacherId);
 
-		return new ModelAndView("member/teacher_lectureInfo.tiles", "lectureList", selectAllByTeacherId);
+		return new ModelAndView("member/teacher_lectureInfo2.tiles", "lectureList", selectAllByTeacherId);
 	}
 }

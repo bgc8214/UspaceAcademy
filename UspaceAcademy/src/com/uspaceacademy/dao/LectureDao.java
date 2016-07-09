@@ -195,9 +195,17 @@ public class LectureDao {
 	}
 
 	// 관리자용 강의 목록 조회
-	public List selectAdminLectureDao() {
-		return session.selectList("lecture.selectAdminLectureList");
+	public List selectAdminLectureDao(int page) {
+		Map map = new HashMap<>();
+		map.put("page", page);
+		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
+		return session.selectList("lecture.selectAdminLectureList", map);
 	}
+	// 관리자용 강의 목록 조회 페이징 헬퍼
+	public int selectCountAdminLectureInfoDao() {
+		return session.selectOne("lecture.selectCountAdminLectureInfo");
+	}
+	
 	
 	//................영주: 과목lectureSubject으로 강의명lectureTitle 조회해옴................
 	public List selectLectureTitleByLectureSubject(String lectureSubject){

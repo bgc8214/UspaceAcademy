@@ -14,6 +14,21 @@ span {
 	color: red;
 }
 </style>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#btn").on("click", function() {
+			if(!$("input[name=basicTitle]").val()) {
+				alert("공지제목을 입력하세요.");
+				return false;
+			}
+			if(!$("textarea[name=basicContent]").val()) {
+				alert("공지내용을 입력하세요.");
+				return false;
+			}
+		})
+	})
+
+</script>
 <h3 class="pageTlt">공지사항 수정</h3>
 <hr>
 <form action="/UspaceAcademy/notice/noticeUpdate.do?page=${param.page}" method="post">
@@ -33,6 +48,6 @@ span {
 			<td><textarea name="basicContent" class="form-control">${requestScope.notice.basicContent}</textarea><span class="error"><form:errors path="updateForm.basicContent"/></span></td>
 	</tbody>
 </table>
-<input type="submit" value="수정" class="btn btn-primary">
+<input type="submit" value="수정" class="btn btn-primary" id="btn">
 </form>
 

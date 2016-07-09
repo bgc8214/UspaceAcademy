@@ -13,14 +13,14 @@ $(document).ready(function() {
 			"dataType":"json", //	응답데이터 타입 지정. text는 default
 			"success":function(faq) {
 				$("tbody tr.dummy").remove();
- 				$('<tr class="dummy"><td colspan="7" class="dummy"><textarea rows="10" cols="50" readonly="readonly">답변 :'+faq.basicContent+'</textarea></td></tr>').insertAfter(tmp); // 이벤트 소스의 다음 형제로 추가
+ 				$('<tr class="dummy"><td colspan="7" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">답변 :'+faq.basicContent+'</textarea></td></tr>').insertAfter(tmp); // 이벤트 소스의 다음 형제로 추가
 				
 			
 				tmp.children().eq(3).text(faq.basicHit); 
 				tmp.next().children().eq(0).append("<br>"); 
 				if("${sessionScope.memberType}"=='administrator') {
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+${requestScope.page}+"><button class='updateFAQ'>FAQ수정</button></a>"));
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+${requestScope.page}+"><button class='deleteFAQ'>FAQ삭제</button></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+${requestScope.page}+"><button class='btn btn-warning'>FAQ수정</button></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+${requestScope.page}+"><button class='btn btn-danger'>FAQ삭제</button></a>"));
 				}
 			},
 			"error":function(xhr, status, errorMsg) {
@@ -32,7 +32,7 @@ $(document).ready(function() {
 		});
 	});
 	$(".faqList").on("mouseover", function() {
-		$(this).css("background-color", "#FFB2D9");
+		$(this).css("background-color", "#FAF4C0");
 
 	});
 
@@ -50,7 +50,7 @@ $(document).ready(function() {
 	
 	$(document).ready(effect);
 	function effect() {
-		$("tr:eq(2)").css("background-color", "#FFC19E")
+		$("tr:eq(2)").css("background-color", "#FFC19E");
 	}	
 })
 
@@ -64,14 +64,13 @@ $(document).ready(function() {
 
 
 <hr>
-	<table border="2" width="600" class="table table-borered">
+	<table class="table table-borered">
 		<thead>
 			<tr>
 				<th>No</th>
 				<th>FAQ제목</th>
 				<th>등록일</th>
 				<th>조회수</th>
-				<th>타입</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -87,7 +86,6 @@ $(document).ready(function() {
 						<td>${faq.basicTitle}</td>
 						<td>${faq.basicDate}</td>
 						<td>${faq.basicHit}</td>
-						<td>${faq.basicType}</td>
 					</tr>
 				</c:forEach>
 			</c:if>
@@ -97,25 +95,25 @@ $(document).ready(function() {
 	
 	
 	
-	<div align="center">
+	<div align="center" class="pageNav">
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/FAQ/FAQTitleSearch.do?page=${requestScope.paging.beginPage-1}&title=${requestScope.title}">
-			◀
+			<a href="/UspaceAcademy/FAQ/FAQTitleSearch.do?page=${requestScope.paging.beginPage-1}&title=${requestScope.title}" class="prevPage">
+			<strong>이전</strong>
 			</a>
 		</c:when>
-		<c:otherwise>◀</c:otherwise>
+		<c:otherwise><strong>이전</strong></c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 [${page }]
+			 <strong>${page }</strong>
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/FAQ/FAQTitleSearch.do?page=${page}&title=${requestScope.title}">
-					${page}
+					<strong>${page}</strong>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -125,10 +123,10 @@ $(document).ready(function() {
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
 			<a href="/UspaceAcademy/FAQ/FAQTitleSearch.do?&page=${requestScope.paging.endPage + 1}&title=${requestScope.title}">
-			▶
+			<strong>다음</strong>
 			</a>
 		</c:when>
-		<c:otherwise>▶</c:otherwise>
+		<c:otherwise><strong>다음</strong></c:otherwise>
 	</c:choose>
 	</div>
 <p>

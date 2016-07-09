@@ -10,6 +10,12 @@
    teacher_phone_no,teacher_address , teacher_subject, teacher_salary
    </sql>
    
+   <sql id="column-basic-teacher-lecture">
+   t.teacher_password, t.teacher_name , t.teacher_email, t.teacher_phone_no, t.teacher_address, t.teacher_subject, t.teacher_salary,
+   l.lecture_no, l.lecture_title, l.lecture_description, l.lecture_start_time, l.lecture_end_time, l.lecture_day, l.lecture_start_date,
+   l.lecture_end_date, l.lecture_price, l.lecture_total_student, l.lecture_current_student, l.lecture_subject
+   </sql>
+   
    <resultMap type="Student" id="student-basic">
        <id column="student_id" property="studentId"/>
       <result column="student_password" property="studentPassword"/>
@@ -30,6 +36,58 @@
       <result column="teacher_subject" property="teacherSubject"/>
       <result column="teacher_salary" property="teacherSalary"/>
     </resultMap>
+    
+    <resultMap type="Lecture" id="lecture-basic">
+ 		<id column="lecture_no" property="lectureNo"/>
+		<result column="lecture_title" property="lectureTitle"/>
+		<result column="lecture_description" property="lectureDescription"/>
+		<result column="lecture_start_time" property="lectureStartTime"/>
+		<result column="lecture_end_time" property="lectureEndTime"/>
+		<result column="lecture_day" property="lectureDay"/>
+		<result column="lecture_start_date" property="lectureStartDate"/>
+		<result column="lecture_end_date" property="lectureEndDate"/>
+		<result column="lecture_price" property="lecturePrice"/>
+		<result column="lecture_total_student" property="lectureTotalStudent"/>
+		<result column="lecture_current_student" property="lectureCurrentStudent"/>
+		<result column="lecture_subject" property="lectureSubject"/>
+		<result column="teacher_id2" property="teacherId2"/>
+ 	</resultMap>
+    
+   	<resultMap type="teacher" id="teacher-lecture-resultmap" extends="teacher-basic">
+		<collection property="lectureList" ofType="lecture" resultMap="lecture-basic"/><!-- bookMapper의 resultMap 참조 -->
+	</resultMap>
+    
+<!--    <select id="selectSalaryList" resultMap="teacher-lecture-resultmap">
+      SELECT <include refid="column-basic-teacher-lecture"/>
+      FROM teacher t, lecture l
+      where t.teacher_id = l.teacher_id2
+   </select> -->
+   
+   <select id="selectSalaryList" resultMap="teacher-basic">
+      SELECT <include refid="column-basic-teacher"/>
+      FROM teacher
+   </select>
+    
+   <select id="selectSalaryByTeacherId" resultMap="teacher-basic" parameterType="String">
+      SELECT <include refid="column-basic-teacher"/>
+      FROM teacher
+      WHERE teacher_id = #{teacherId}   
+   </select>
+   
+   <insert id="insertSalary" parameterType="teacher">
+      INSERT INTO teacher
+      VALUES
+      (#{teacherId},#{teacherPassword},#{teacherName},#{teacherEmail},#{teacherPhoneNo},#{teacherAddress},#{teacherSubject},#{teacherSalary})
+   </insert>
+   
+   <update id="updateSalary" parameterType="teacher">
+   	update teacher
+   	set teacher_salary = #{teacherSalary}
+   	where teacher_id = #{teacherId}
+   </update>
+   
+   
+   
     
    <select id="selectStudentByID" resultMap="student-basic" parameterType="String">
       SELECT <include refid="column-basic-student"/>

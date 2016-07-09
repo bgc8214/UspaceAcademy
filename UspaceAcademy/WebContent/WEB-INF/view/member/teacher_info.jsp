@@ -9,7 +9,7 @@ $(document).ready(function(){
 })
 </script>
 <h3 class="pageTlt">개인정보</h3>
-<table class="table table-striped">
+<table class="table table-bordered form-table">
 	<tbody>
 		<tr>
 			<th>아이디</th>

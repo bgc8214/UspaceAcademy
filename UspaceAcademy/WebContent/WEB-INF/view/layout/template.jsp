@@ -46,30 +46,29 @@ $(document).ready(function(){
 		this.style.cursor = 'pointer';
 	});
 	
-	
-	
 })
 
 </script>
 
 <style type="text/css">
-header{
-	min-width : 1080px;
- 	background-color:yellow;
+  header{
+/* 	min-width : 1080px;
+ 	background-color:pink;
 	text-align:center;
-	padding: 5px;
-}
-/* nav{
-	line-height: 50px;
-	background-color:lightgray;
-	padding: 15px;
-	min-height:700px;
-	width:250px;
-	float:left;
-} */
+	padding: 5px;  */
+
+} 
+	nav{
+		line-height: 50px;
+		background-color:lightgray;
+		padding: 15px;
+		min-height:700px;
+		width:250px;
+		float:left;
+	}  
 section{
 	padding: 15px;
-	min-height:400px;
+	min-height:722px;
 	float:left;
 	min-width : 1080px;
 	color: #191919; /* 글자색거의모든 */ 
