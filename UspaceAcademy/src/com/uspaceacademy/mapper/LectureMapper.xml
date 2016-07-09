@@ -247,23 +247,35 @@
  	</select>
 
 	<!-- 관리자용 강의 리스트 조회 -->
-	<select id="selectAdminLectureList" resultMap="lecture-basic">
-		select * 
+	<select id="selectAdminLectureList" resultMap="lecture-basic" parameterType="map">
+		SELECT <include refid="column-basic"/>
+		FROM (
+			SELECT ceil(rownum/#{itemsPerPage}) page, <include refid="column-basic"/>
+			FROM (
+				SELECT <include refid="column-basic"/>
+				FROM lecture
+				ORDER BY lecture_no DESC
+			)
+		
+		)
+		WHERE page = #{page}
+	</select>
+	<select id="selectCountAdminLectureInfo" resultType="_int">
+		select count(lecture_no)
 		from lecture
-		order by lecture_no desc
 	</select>
 
 
 	<!-- 영주   :   과목lectureSubject으로 강의명lectureTitle 조회해옴 -->
 	<select id="selectLectureTitleByLectureSubject" parameterType="string" resultMap="lecture-basic">
-	SELECT <include refid="column-basic"/>
-	FROM 	lecture
-	WHERE  lecture_subject=#{value}
+		SELECT <include refid="column-basic"/>
+		FROM 	lecture
+		WHERE  lecture_subject=#{value}
 	</select>
 
 
 
-	<!-- 강의 리스트 페이징(강의명으로 검색) -->
+	<!-- 강의 리스트 페이징(강의명으로 검색) 관리자-->
  	<select id="selectLectureListByLectureTitleA" parameterType="map" resultMap="lecture-basic">
  		SELECT <include refid="column-basic"/>
  		FROM   (

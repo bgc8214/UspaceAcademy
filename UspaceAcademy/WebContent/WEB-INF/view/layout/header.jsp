@@ -1,6 +1,238 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style>
+	body{padding-top:60px;}
+	form#loginForm {
+		position :relative;
+		position : absolute;
+		left:750px;
+		color : white;
+		top : 14px;
+	}
+
+	#aa{
+		color:black;
+	}
+	
+	div#bb {
+		background: blue;
+		color : green;
+	}
+	span#bb {
+		position :relative;
+		position : absolute;
+		left:750px;
+		color : white;
+		top : 10px;
+	}
+}
+</style>
+
+<c:choose>
+	<c:when test="${sessionScope.memberType==null }">
+		<div class="navbar navbar-inverse navbar-fixed-top" >
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand">UspaceAcademy</a>
+				</div>
+				<div>
+					<ul class="nav navbar-nav">
+						<li class="down"><a class="dropdown-toggle"
+							data-toggle="dropdown">학원소개</a>
+							<ul class="dropdown-menu">
+								<li><a href="/UspaceAcademy/academyIntroduce.do">학원소개</a></li>
+								<li><a href="/UspaceAcademy/roadIntroduce.do">오시는길</a></li>
+								<li><a href="/UspaceAcademy/teacherIntroduce.do">강사소개</a></li>
+							</ul></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li><a href="/UspaceAcademy/lecture/lectureList.do">개설강좌</a></li>
+						<li><a
+							href="/UspaceAcademy/lectureReview/lecture_review_list.do">수강후기</a></li>
+						<li><a href="/UspaceAcademy/notice/list.do?type=공지사항">공지사항</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li class="down"><a class="dropdown-toggle"
+							data-toggle="dropdown">고객센터</a>
+							<ul class="dropdown-menu">
+								<li><a href="/UspaceAcademy/FAQ/list.do?type=FAQ">FAQ</a></li>
+								<li><a
+									href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의">1:1문의</a></li>
+							</ul>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li class="down"><a class="dropdown-toggle"
+							data-toggle="dropdown">회원가입</a>
+							<ul class="dropdown-menu">
+								<li><a href="/UspaceAcademy/member/studentRegisterForm.do">강사가입</a></li>
+								<li><a
+									href="/UspaceAcademy/member/teacherRegisterForm.do?codeType=teacherSubject">학생가입</a></li>
+							</ul>
+					</ul>
+					<ul class="nav navbar-nav">
+						
+						<c:choose>
+	<c:when test="${sessionScope.memberType==null }">
+		<!-- 로그인 안했을 때 -->
+
+		<form action="/UspaceAcademy/member/login.do" method="post" id="loginForm">
+			ID : <input type="text" name="id" placeholder="id를 입력하세요" id="aa"> PASSWORD :<input
+				type="password" name="password" placeholder="비밀번호를 입력하세요" id="aa"> <input type="submit"
+				value="login" class="btn btn-success">
+		</form>
+	</c:when>
+	<c:otherwise>
+		<!-- 로그인시 각각 회원 종류에 맞게 환영인사. -->
+		<c:choose>
+			<c:when test="${sessionScope.memberType=='student' }">
+		<span id="bb">${sessionScope.login_info.studentName } 님 환영합니다.
+			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
+		</span>
+			</c:when>
+			<c:when test="${sessionScope.memberType=='teacher' }">
+		<span id="bb">	
+			${sessionScope.login_info.teacherName } 님 환영합니다.
+			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
+		</span>
+			</c:when>
+			<c:when test="${sessionScope.memberType=='administrator' }">
+		<span id="bb">	
+			${sessionScope.login_info } 님 환영합니다.
+			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
+		</span>
+			</c:when>
+		</c:choose>
+	</c:otherwise>
+</c:choose>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</c:when>
+	<c:otherwise>
+		<div class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand">UspaceAcademy</a>
+				</div>
+				<div>
+					<ul class="nav navbar-nav">
+						<li class="down"><a class="dropdown-toggle"
+							data-toggle="dropdown">학원소개</a>
+							<ul class="dropdown-menu">
+								<li><a href="/UspaceAcademy/academyIntroduce.do">학원소개</a></li>
+								<li><a href="/UspaceAcademy/roadIntroduce.do">오시는길</a></li>
+								<li><a href="/UspaceAcademy/teacherIntroduce.do">강사소개</a></li>
+							</ul></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<c:choose>
+							<c:when test="${sessionScope.memberType=='administrator'}">
+								<li><a href="/UspaceAcademy/lecture/lectureAll.do">개설강좌</a></li>
+								<!-- 관리자 -->
+							</c:when>
+							<c:otherwise>
+								<li><a href="/UspaceAcademy/lecture/lectureList.do">개설강좌</a></li>
+							</c:otherwise>
+						</c:choose>
+						<li><a
+							href="/UspaceAcademy/lectureReview/lecture_review_list.do">수강후기</a></li>
+						<li><a href="/UspaceAcademy/notice/list.do?type=공지사항">공지사항</a></li>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li class="down"><a class="dropdown-toggle"
+							data-toggle="dropdown">고객센터</a>
+							<ul class="dropdown-menu">
+								<li><a href="/UspaceAcademy/FAQ/list.do?type=FAQ">FAQ</a></li>
+								<li><a
+									href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의">1:1문의</a></li>
+							</ul>
+					</ul>
+					<ul class="nav navbar-nav">
+						<li class="down"><a class="dropdown-toggle"
+							data-toggle="dropdown">마이페이지</a>
+							<ul class="dropdown-menu">
+								<c:choose>
+									<c:when test="${sessionScope.memberType=='teacher' }">
+										<!-- 강사 로그인 -->
+										<li><a href="/UspaceAcademy/teacherInfo.do">내정보</a></li>
+										<li><a
+											href="/UspaceAcademy/member/selectAllByTeacherId.do">내강좌</a></li>
+									</c:when>
+									<c:when test="${sessionScope.memberType=='student'}">
+										<!-- 학생 로그인 -->
+										<li><a href="/UspaceAcademy/studentInfo.do">내정보</a></li>
+										<li><a
+											href="/UspaceAcademy/attendance/studentLectureInfo.do">내강좌</a></li>
+										<li><a href="/UspaceAcademy/lecture/zzimList.do">장바구니</a></li>
+										<li><a href="/UspaceAcademy/lecture/applyList.do">결제목록</a></li>
+									</c:when>
+									<c:otherwise>
+										<li><a href="/UspaceAcademy/member/studentAll.do">학생관리</a></li>
+										<li><a href="/UspaceAcademy/member/teacherAll.do">강사관리</a></li>
+										<li><a href="/UspaceAcademy/lecture/lectureAll.do">강의관리</a></li>
+									</c:otherwise>
+								</c:choose>
+							</ul></li>
+					</ul>
+					<ul class="nav navbar-nav">
+
+						<c:choose>
+							<c:when test="${sessionScope.memberType==null }">
+								<!-- 로그인 안했을 때 -->
+
+								<form action="/UspaceAcademy/member/login.do" method="post"
+									id="loginForm">
+									ID : <input type="text" name="id" placeholder="id를 입력하세요"
+										id="aa"> PASSWORD :<input type="password"
+										name="password" placeholder="비밀번호를 입력하세요" id="aa"> <input
+										type="submit" value="login" class="btn btn-success">
+								</form>
+							</c:when>
+							<c:otherwise>
+								<!-- 로그인시 각각 회원 종류에 맞게 환영인사. -->
+								<c:choose>
+									<c:when test="${sessionScope.memberType=='student' }">
+										<span id="bb">${sessionScope.login_info.studentName } 님
+											환영합니다. <a href="/UspaceAcademy/member/logout.do"><button
+													class="btn btn-success">로그아웃</button></a>
+										</span>
+									</c:when>
+									<c:when test="${sessionScope.memberType=='teacher' }">
+										<span id="bb"> ${sessionScope.login_info.teacherName }
+											님 환영합니다. <a href="/UspaceAcademy/member/logout.do"><button
+													class="btn btn-success">로그아웃</button></a>
+										</span>
+									</c:when>
+									<c:when test="${sessionScope.memberType=='administrator' }">
+										<span id="bb"> ${sessionScope.login_info } 님 환영합니다. <a
+											href="/UspaceAcademy/member/logout.do"><button
+													class="btn btn-success">로그아웃</button></a>
+										</span>
+									</c:when>
+								</c:choose>
+							</c:otherwise>
+						</c:choose>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<form>
+			<input type="hidden" id="memberType"
+				value="${sessionScope.memberType }">
+		</form>
+	</c:otherwise>
+</c:choose>
+
+
+<!-- 바꿔본게 위 -->
+
+
+
+
+
+<%-- <style>
 button {
 	border: /* 1x */ /* solid */ #FFFFFF; /*---테두리 정의---*/
 	background-Color: #FFFFFF; /*--백그라운드 정의---*/
@@ -25,7 +257,7 @@ form {
 	margin-right: auto;
 }
 </style>
-<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<!-- <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 	$(document)
 			.ready(
@@ -104,7 +336,7 @@ form {
 											}
 										});
 					});
-</script>
+</script> -->
 
 
 <c:choose>
@@ -189,36 +421,4 @@ form {
 	</c:otherwise>
 </c:choose>
 
-<br>
-
-<c:choose>
-	<c:when test="${sessionScope.memberType==null }">
-		<!-- 로그인 안했을 때 -->
-
-		<form action="/UspaceAcademy/member/login.do" method="post">
-			ID : <input type="text" name="id"> PASSWORD : <input
-				type="password" name="password"> <input type="submit"
-				value="login" class="btn btn-success">
-		</form>
-	</c:when>
-	<c:otherwise>
-		<!-- 로그인시 각각 회원 종류에 맞게 환영인사. -->
-		<c:choose>
-			<c:when test="${sessionScope.memberType=='student' }">
-			${sessionScope.login_info.studentName } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
-			</c:when>
-			<c:when test="${sessionScope.memberType=='teacher' }">
-			${sessionScope.login_info.teacherName } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
-			</c:when>
-			<c:when test="${sessionScope.memberType=='administrator' }">
-			${sessionScope.login_info } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
-			</c:when>
-		</c:choose>
-	</c:otherwise>
-</c:choose>
-
-
-
+<br> --%>

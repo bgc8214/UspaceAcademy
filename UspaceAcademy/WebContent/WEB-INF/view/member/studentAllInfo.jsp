@@ -10,21 +10,21 @@
 			}
 		});
 		
-		$("#remove").on("click", function() {
-			return confirm("강제탈퇴 시키시겠습니까?");
+		$("#ex").on("click", "button",  function() {
+			return confirm("강제 탈퇴 시키시겠습니까?");
 		});
+		
 	});
-	
 	$(document).ready(effect);
 	function effect() {
-		$("tr:eq(2)").css("background-color", "#6CC0FF");
-	
-	}
+		$("tr:eq(1)").css("background-color", "#FFC19E");
+	}	
+
 
 </script>
 <h3 class="pageTlt">모든 학생의 정보</h3>
 <hr>
-<table class="table">
+<table class="table table-bordered">
 	<thead>
 		<tr>
 			<th>학생이름</th>
@@ -34,7 +34,7 @@
 			<th>회원 탈퇴</th>
 		<tr>
 	</thead>
-	<tbody>
+	<tbody id="ex">
 		<c:forEach items="${requestScope.studentAllList}" var="student"> 
 			<tr>
 			
@@ -42,7 +42,7 @@
 				<td align="center">${student.studentEmail}</td>
 				<td align="center">${student.studentPhoneNo}</td>
 				<td align="center">${student.studentAddress}</td>				
-				<td><a href="/UspaceAcademy/member/deleteStudentByAdmin.do?studentId=${student.studentId}"><button id="remove" class="btn btn-danger">학생 탈퇴</button></a></td>
+				<td><a href="/UspaceAcademy/member/deleteStudentByAdmin.do?studentId=${student.studentId}"><button id="removeBtn" class="btn btn-danger">학생 탈퇴</button></a></td>
 			</tr>	
 		</c:forEach>
 		
@@ -57,20 +57,20 @@
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
 			<a href="/UspaceAcademy/member/studentAll.do?page=${requestScope.paging.beginPage-1}" class="prevPage">
-			이전
+			<strong>이전</strong>
 			</a>
 		</c:when>
-		<c:otherwise>이전</c:otherwise>
+		<c:otherwise><strong>이전</strong></c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-				<span><strong>${page}</strong></span>	
+				<strong>${page}</strong>
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/member/studentAll.do?page=${page}">
-				<span><strong>${page}</strong></span>	
+				<strong>${page}</strong>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -80,10 +80,10 @@
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
 			<a href="/UspaceAcademy/member/studentAll.do?&page=${requestScope.paging.endPage + 1}" class="nextPgae">
-			다음
+			<strong>다음</strong>
 			</a>
 		</c:when>
-		<c:otherwise>다음</c:otherwise>
+		<c:otherwise><strong>다음</strong></c:otherwise>
 	</c:choose>
 </div>
 <p>

@@ -1,5 +1,12 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+	button#registerBtn {
+		position :relative;
+		position : absolute;
+		left:390px;
+	}
+</style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -57,20 +64,20 @@ $(document).ready(function() {
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
 			<a href="/UspaceAcademy/notice/noticeSearch.do?page=${requestScope.paging.beginPage-1}&keyword=${requestScope.keyword}" class="prevPage">
-			이전
+			<strong>이전</strong>
 			</a>
 		</c:when>
-		<c:otherwise>이전</c:otherwise>
+		<c:otherwise><strong>이전</strong></c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 <span><strong>${page}</strong></span> 
+			 <strong>${page}</strong>
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/notice/noticeSearch.do?page=${page}&keyword=${requestScope.keyword}">
-				<span><strong>${page}</strong></span>
+				<strong>${page}</strong>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -80,18 +87,22 @@ $(document).ready(function() {
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
 			<a href="/UspaceAcademy/notice/noticeSearch.do??&page=${requestScope.paging.endPage + 1}&keyword=${requestScope.keyword}" class="nextPage">
-			다음
+			<strong>다음</strong>
 			</a>
 		</c:when>
-		<c:otherwise>다음</c:otherwise>
+		<c:otherwise><strong>다음</strong></c:otherwise>
 	</c:choose>
 </div>
 <p>
-
-<a href="/UspaceAcademy/notice/list.do?type=공지사항"><button class="btn btn-success">공지사항리스트</button></a>
+<!-- 관리자용 공지사항 등록 버튼 -->
+<span class="notciceRegister">
+	<c:if test="${sessionScope.memberType=='administrator'}">
+		<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button id="registerBtn" class="btn btn-success">공지사항 등록</button></a>
+	</c:if>
+</span>
 
 <!-- 공지사항 제목+내용으로 검색 -->
-<div class="boardBottom" style="position: absolute; right: 750px; bottom: 300px;">
+<div class="boardBottom">
 	<form action="/UspaceAcademy/notice/noticeSearch.do" method="post">
 		<fieldset>
 			<input type="text" name="keyword" placeholder="제목+내용을 입력하세요"/>

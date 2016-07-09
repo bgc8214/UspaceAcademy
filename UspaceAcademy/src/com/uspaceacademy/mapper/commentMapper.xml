@@ -14,13 +14,12 @@
 <!-- 	<resultMap type="comment" id="comment-inquiry-resultmap" extends="comment-resultmap">
 		<association property="advancedNo2" javaType="inquiry" resultMap="inquiryMapper.inquiry-resultmap"/>
 	</resultMap> -->
-	
-	
-	<!-- 글번호로 조회하기(조인) -->
+	 	
+	<!-- 글번호로 조회하기(조인)
 	<select id="selectByCommentNo" parameterType="_int" resultMap="comment-resultmap">
 		<include refid="inquiryMapper.inquiry-comment-join-select"/>
 		and i.advanced_no = #{advancedNo}
-	</select>
+	</select> -->
 	
 	<!-- 댓글 등록 -->
 	<insert id="insertComment" parameterType="Comment">

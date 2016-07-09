@@ -1,5 +1,14 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+	button#studentListBtn {
+		position :relative;
+		position : absolute;
+		right: 670px;
+		top : 313px;
+	}
+</style>
+
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -12,7 +21,7 @@
 	});
 	$(document).ready(effect);
 	function effect() {
-		$("tr:eq(2)").css("background-color", "#FFE08C");
+		$("tr:eq(1)").css("background-color", "#FFD9EC");
 	}
 
 	
@@ -20,7 +29,7 @@
 
 <h3 class="pageTlt">수강생 정보</h3>
 <hr>
-<table border="2" width="1000" class="table-bordered table-hover">
+<table border="2" class="table table-borered">
 	<thead>
 		<tr>
 			<th align="center">학생이름</th>
@@ -53,20 +62,20 @@
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
 			<a href="/UspaceAcademy/member/searchBystudentName.do?page=${requestScope.paging.beginPage-1}&name=${requestScope.name}" class="prevPage">
-			이전
+			<strong>이전</strong>
 			</a>
 		</c:when>
-		<c:otherwise>이전</c:otherwise>
+		<c:otherwise><strong>이전</strong></c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
 		<c:choose>
 			<c:when test="${page == requestScope.paging.page }">
-			 <span><strong>${page }</strong></span>
+			<strong>${page }</strong>
 			</c:when>
 			<c:otherwise>
 				<a href="/UspaceAcademy/member/searchBystudentName.do?page=${page}&name=${requestScope.name}">
-					<span><strong>${page }</strong></span>
+					<strong>${page }</strong>
 				</a>
 			</c:otherwise>
 		</c:choose>
@@ -76,14 +85,14 @@
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
 			<a href="/UspaceAcademy/member/searchBystudentName.do?&page=${requestScope.paging.endPage + 1}&name=${requestScope.name}" class="nextPage">
-			다음
+			<strong>다음</strong>
 			</a>
 		</c:when>
-		<c:otherwise>다음</c:otherwise>
+		<c:otherwise><strong>다음</strong></c:otherwise>
 	</c:choose>
 	</div>
 <p>
-<div align="center">
+<div>
 <!-- 학생이름으로 검색  -->
 <form action="/UspaceAcademy/member/searchBystudentName.do">
 	<input type="text" name="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="이름으로 검색" class="btn btn-primary">
@@ -91,5 +100,5 @@
 </div>
 
 
-<a href="/UspaceAcademy/member/studentAll.do"><button class="btn btn-success">학생정보목록</button></a>
+<a href="/UspaceAcademy/member/studentAll.do"><button class="btn btn-success" id="studentListBtn">학생정보목록</button></a>
 
