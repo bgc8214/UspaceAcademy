@@ -172,6 +172,7 @@
 										<li><a href="/UspaceAcademy/member/studentAll.do">학생관리</a></li>
 										<li><a href="/UspaceAcademy/member/teacherAll.do">강사관리</a></li>
 										<li><a href="/UspaceAcademy/lecture/lectureAll.do">강의관리</a></li>
+										<!-- <li><a href="/UspaceAcademy/member/selectSalaryList.do">재정관리</a></li> -->
 									</c:otherwise>
 								</c:choose>
 							</ul></li>

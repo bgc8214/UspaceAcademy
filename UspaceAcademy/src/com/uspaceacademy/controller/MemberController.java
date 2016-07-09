@@ -59,13 +59,18 @@ public class MemberController
 	//월급리스트 조회
 	@RequestMapping("/selectSalaryList.do")
 	public ModelAndView selectSalaryList() {
+		
+		Map map = new HashMap<>();
+		
 		List teacherSalaryList = service.selectSalaryList();
-
 		List lectureList = lectureService.getLectureList();
+		
+		map.put("teacherSalaryList", teacherSalaryList);
+		map.put("lectureList", lectureList);
 
 
 		
-		return new ModelAndView("member/teacherSalary_list.tiles", "teacherSalaryList", teacherSalaryList);
+		return new ModelAndView("member/teacherSalary_list.tiles", map);
 	}
 	
 	//강사아이디로 월급 조회
@@ -114,36 +119,53 @@ public class MemberController
 	
 	//월급 수정 폼
 	@RequestMapping("/updateSalaryForm.do")
-	public ModelAndView updateSalaryForm(Teacher teacher){
+	public ModelAndView updateSalaryForm(String teacherId){		
+		Teacher teacherDetail = service.selectSalaryByTeacherId(teacherId);		
 		
-		return new ModelAndView("member/teacherSalary_update.tiles", "teacher", teacher);
+		return new ModelAndView("member/teacherSalary_update.tiles", "teacherDetail", teacherDetail);
 	}
 	
 	//월급 수정하기
 	@RequestMapping("/updateSalary.do")
-	public String updateSalary(@ModelAttribute("teacher") Teacher teacher, HttpSession session, BindingResult errors) {		
+	public String updateSalary(@ModelAttribute("teacher") Teacher teacher, @RequestParam String teacherId, HttpSession session, BindingResult errors) {		
 		
-		TeacherValidator validator = new TeacherValidator();
-		validator.validate(teacher, errors);
-
-		if (errors.hasErrors())
-		{
-			// 에러 응답 페이지로 이동
-			return "/member/updateSalaryForm.do?teacher=" + teacher;
-		}
-			service.updateSalary(teacher);
 		
-			return "redirect:/member/updateSalary.do?teacherId=" + teacher.getTeacherId();
+//		teacher = new Teacher(teacher.getTeacherId(), teacher.getTeacherSalary());
+		Teacher updateTeacher = service.selectSalaryByTeacherId(teacherId);
+		System.out.println("월급정보객체: " + updateTeacher);
+		
+//		updateTeacher = new Teacher(teacherId, teacher.getTeacherSalary());
+		
+		updateTeacher.setTeacherSalary(teacher.getTeacherSalary());
+		System.out.println("월급: " + updateTeacher);
+		
+//		TeacherValidator validator = new TeacherValidator();
+//		validator.validate(updateTeacher, errors);
+//
+//		if (errors.hasErrors())
+//		{
+//			// 에러 응답 페이지로 이동
+//			return "/member/updateSalaryForm.do?teacherId=" + teacherId;
+//		}
+		
+		service.updateSalary(updateTeacher);
+	
+//		return "redirect:/member/redirectUpdateSalary.do";
+		return "redirect:/member/redirectUpdateSalary.do?teacherId=" + teacherId;
+//		return "/member/selectSalaryByTeacherId.do?teacherId=" + teacherId;
+//		return "member/teacherSalary_detail.tiles";
 	}
 	
 	//월급 수정(리다이렉트)
 	@RequestMapping("/redirectUpdateSalary.do")
 	public ModelAndView redirectUpdateSalary(String teacherId) // 새로고침 시 더 등록 안되도록 redirect 처리
-	{
-		System.out.println("리다이렉트");
-		Teacher teacherDetail = service.findTeacherById(teacherId);
-
+	{		
+		Teacher teacherDetail = service.selectSalaryByTeacherId(teacherId);
+		
+//		return "/member/selectSalaryByTeacherId.do?teacherId=" + teacherId;
+//		return new ModelAndView("/member/selectSalaryByTeacherId.do?teacherId=" + teacherId);
 		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", teacherDetail);
+//		return "/member/teacherAllInfo.do";
 	}
 	
 	
@@ -664,7 +686,7 @@ public class MemberController
 	
 	//강사가 마이페이지에서 내 강좌 보여주기 
 	@RequestMapping("/selectAllByTeacherId.do")
-	public ModelAndView selectAllByTeacherId(HttpSession session) {
+	public ModelAndView selectAllByTeacherId(HttpSession session) {		
 		Teacher teacher = (Teacher)session.getAttribute("login_info");
 		
 		String teacherId = teacher.getTeacherId();

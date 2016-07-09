@@ -205,4 +205,11 @@ public class LectureService {
 		map.put("paging", new PagingBean(lectureList.size(), page));
 		return map;
 	}
+	
+	
+	//찜목록 삭제
+	public int removeZzimList(String studentId3, int lectureNo3) {
+		
+		return lectureDao.removeZzimList(studentId3, lectureNo3);
+	}
 }

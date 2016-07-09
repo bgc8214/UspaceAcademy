@@ -160,6 +160,8 @@ public class LectureInquiryController {
 	//게시판 전체 목록
 	@RequestMapping("/lectureInquiryList")
 	public ModelAndView lectureInquiryList(@RequestParam(defaultValue="1") int page, int lectureNo2, String lectureTitle){	
+		System.out.println("강의번호:!! " + lectureNo2);
+		
 		Map map = service.selectAllByPaging(page, lectureNo2);
 		map.put("page", page);
 		map.put("lectureNo2", lectureNo2);

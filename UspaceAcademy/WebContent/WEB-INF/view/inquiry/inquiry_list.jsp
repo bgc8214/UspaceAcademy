@@ -47,17 +47,17 @@ $(document).ready(function(){
 							<c:choose>
 								<c:when test="${list.advancedId eq sessionScope.login_info.studentId}">
 									<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
-									&advancedSecret=${list.advancedSecret}">${list.advancedTitle } 비밀글 </a>
+									&advancedSecret=${list.advancedSecret}">${list.advancedTitle } <img width="15" height="15" src="/UspaceAcademy/image/lock.jpg"> </a>
 								</c:when>
 								<c:otherwise>
 									<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
-									&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글</a>
+									&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } <img width="15" height="15" src="/UspaceAcademy/image/lock.jpg"></a>
 								</c:otherwise>
 							</c:choose>
 						</c:if>
-						<c:if test="${sessionScope.memberType == 'teacher' or sessionScope.memberType == null or sessionScope.memberType == 'administrator'}">
+						<c:if test="${sessionScope.memberType == 'teacher' or sessionScope.memberType == 'administrator'}">
 							<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
-							&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글 </a>
+							&advancedSecret=${list.advancedSecret}">${list.advancedTitle } <img width="15" height="15" src="/UspaceAcademy/image/lock.jpg"></a>
 						</c:if>
 					</c:when>
 					<c:otherwise>

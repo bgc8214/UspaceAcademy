@@ -35,6 +35,12 @@ $(document).ready(function(){
 			<th>과목</th>
 			<td>${sessionScope.login_info.teacherSubject}</td>	
 		</tr>
+		<tr>
+			<th>월급 정보</th>
+			<td>
+				<a href="/UspaceAcademy/member/selectSalaryByTeacherId.do?teacherId=${sessionScope.login_info.teacherId}">${teacher.teacherName} 강사님</a>
+			</td>	
+		</tr>
 	</tbody>
 </table>
 <p>

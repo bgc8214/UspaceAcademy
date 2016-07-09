@@ -264,6 +264,15 @@ public class LectureDao {
 		return session.selectOne("lecture.selectCountContentsByTeacherIdA", teacherId2);
 	}
 	
+	//찜목록 삭제
+	public int removeZzimList(String studentId3, int lectureNo3) {
+		Map map = new HashMap<>();
+		
+		map.put("studentId3", studentId3);
+		map.put("lectureNo3", lectureNo3);		
+		
+		return session.delete("lecture.removeZzimList", map);
+	}
 	
 }
 

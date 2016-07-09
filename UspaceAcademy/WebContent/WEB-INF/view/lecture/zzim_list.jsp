@@ -25,6 +25,10 @@ $(document).ready(function(){
 	function effect() {
 		$("tr:eq(2)").css("background-color", "#D4F4FA");
 	}
+	
+	$("#removeZzim").on("click", function(){
+		return confirm("정말 삭제하시겠습니까?");
+	});
 
 })
 
@@ -37,7 +41,7 @@ $(document).ready(function(){
 <thead>
 <tr>
 	<th>강의선택</th><th>강의번호</th><th>강의과목</th><th>강의명</th><th>강의기간</th><th>수강요일</th><th>강의시간</th>
-	<th>수강인원</th>
+	<th>수강인원</th><th>장바구니 삭제</th>
 </tr>
 </thead>
 <input type="hidden" name="page" value="${requestScope.page }">
@@ -48,13 +52,16 @@ $(document).ready(function(){
 				<td>${zzim.lectureStartDate } ~ ${zzim.lectureEndDate }</td><td>${zzim.lectureDay }</td>
 				<td>${zzim.lectureStartTime } ~ ${zzim.lectureEndTime }</td>
 				<td>${zzim.lectureCurrentStudent } / ${zzim.lectureTotalStudent }</td>
+				<td>
+					<a href="/UspaceAcademy/lecture/removeZzimList.do?studentId3=${requestScope.studentId3 }&lectureNo3=${zzim.lectureNo }">
+					<input id="removeZzim" class="btn btn-info" type="button" value="장바구니 삭제"></a>
+				</td>
 			</tr>
 	</c:forEach>
 </tbody>
 </table>
 <div align="right">
 <input class="btn btn-warning" id="submit" type="submit" value="결제하기">
-&nbsp;<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><input class="btn btn-info" type="button" value="장바구니 삭제"></a>
 &nbsp;<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><input class="btn btn-info" type="button" value="강의목록"></a>
 </div>
 </form>

@@ -47,7 +47,8 @@ $(document).ready(function(){
 					<c:choose>
 					<c:when test="${list.advancedSecret}">
 						<a href="/UspaceAcademy/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
-						&advancedSecret=${list.advancedSecret}&lectureNo2=${list.lectureNo2 }" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글</a>
+						&advancedSecret=${list.advancedSecret}&lectureNo2=${list.lectureNo2 }" onclick="alert('비밀글 입니다.');">${list.advancedTitle }
+						 <img width="15" height="15" src="/UspaceAcademy/image/lock.jpg"></a>
 					</c:when>
 					<c:otherwise>
 						<a href="/UspaceAcademy/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
