@@ -5,12 +5,6 @@
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 
-$(document).ready(effect);
-function effect(){
-	$("tr:eq(2)").css("background-color", "palegreen");
-
-}
-
 //폼체크
 $(document).ready(function(){
 	$("#search").on("click", function(){
@@ -61,7 +55,7 @@ $(document).ready(function(){
 								</c:otherwise>
 							</c:choose>
 						</c:if>
-						<c:if test="${sessionScope.memberType == 'teacher' or sessionScope.memberType == null}">
+						<c:if test="${sessionScope.memberType == 'teacher' or sessionScope.memberType == null or sessionScope.memberType == 'administrator'}">
 							<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
 							&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } 비밀글 </a>
 						</c:if>

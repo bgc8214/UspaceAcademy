@@ -10,11 +10,6 @@
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 	
-$(document).ready(effect);
-function effect(){
-	$("tr:eq(2)").css("background-color", "palegreen");
-}
-
 //폼체크
 $("#modify").on("click", function(){
 	if($("textarea[name=commentContent]").val()==""){
