@@ -4,7 +4,7 @@ import java.util.List;
 
 public class FileBoard {
 
-		private String title; //private String fname;
+		private String title; //private String fname; //사용안함
 		//private String content;
 		private List upfile; //upload된 파일들을 저장할 property.  List<MultipartFile> //private MultipartFile uploadFile;
 		 

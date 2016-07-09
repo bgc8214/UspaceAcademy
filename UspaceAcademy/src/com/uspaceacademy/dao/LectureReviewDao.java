@@ -163,7 +163,7 @@ public class LectureReviewDao{
 	//14. 강의명으로 검색 lectureTitle / 강의리스트페이징 selectPagingLectureTitle
 	public List selectPagingLectureTitle(String lectureTitle, int page){
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("lectuerTitle", lectureTitle);
+		map.put("lectureTitle", lectureTitle);
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
 		System.out.println("===========lectureTitle디에이오11=======:"+lectureTitle);

@@ -77,7 +77,7 @@ line-height:140%;
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?page=${requestScope.paging.beginPage - 1}">
+			<a href="/UspaceAcademy/lectureReview/lecture_review_search.do?page=${requestScope.paging.beginPage - 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
 			◀
 			</a>
 		</c:when>
@@ -90,7 +90,7 @@ line-height:140%;
 			 [${page }]
 			</c:when>
 			<c:otherwise>
-				<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?page=${page }">
+				<a href="/UspaceAcademy/lectureReview/lecture_review_search.do?page=${page }&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
 					${page }
 				</a>
 			</c:otherwise>
@@ -100,7 +100,7 @@ line-height:140%;
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?&page=${requestScope.paging.endPage + 1}">
+			<a href="/UspaceAcademy/lectureReview/lecture_review_search.do?&page=${requestScope.paging.endPage + 1}&searchType=${requestScope.searchType}&keyword=${requestScope.keyword}">
 			▶
 			</a>
 		</c:when>
