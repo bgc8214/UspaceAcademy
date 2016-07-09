@@ -1,14 +1,14 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <style>
-	body{padding-top:60px;}
+	body{padding-top:100px;}
 	form#loginForm {
 		position :relative;
 		position : absolute;
 		left:750px;
-		color : white;
+		color : black;
 		top : 14px;
+		bold;
 	}
 
 	#aa{
@@ -23,15 +23,16 @@
 		position :relative;
 		position : absolute;
 		left:750px;
-		color : white;
+		color : black;
 		top : 10px;
+		bold;
 	}
 }
 </style>
 
 <c:choose>
 	<c:when test="${sessionScope.memberType==null }">
-		<div class="navbar navbar-inverse navbar-fixed-top" >
+		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #e3f2fd;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand">UspaceAcademy</a>
@@ -108,10 +109,10 @@
 					</ul>
 				</div>
 			</div>
-		</div>
+		</nav>
 	</c:when>
 	<c:otherwise>
-		<div class="navbar navbar-inverse navbar-fixed-top">
+		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #e3f2fd;'">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand">UspaceAcademy</a>
@@ -217,7 +218,7 @@
 					</ul>
 				</div>
 			</div>
-		</div>
+		</nav>
 		<form>
 			<input type="hidden" id="memberType"
 				value="${sessionScope.memberType }">

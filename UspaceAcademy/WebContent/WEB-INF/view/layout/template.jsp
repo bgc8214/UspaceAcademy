@@ -51,21 +51,21 @@ $(document).ready(function(){
 </script>
 
 <style type="text/css">
-  header{
-/* 	min-width : 1080px;
+/*   header{
+	min-width : 1080px;
  	background-color:pink;
 	text-align:center;
-	padding: 5px;  */
+	padding: 5px;  
 
-} 
-	nav{
+}  */
+/*  	nav{
 		line-height: 50px;
 		background-color:lightgray;
 		padding: 15px;
 		min-height:700px;
 		width:250px;
 		float:left;
-	}  
+	}  */
 section{
 	padding: 15px;
 	min-height:722px;
@@ -74,9 +74,9 @@ section{
 	color: #191919; /* 글자색거의모든 */ 
 }
 footer{
-	font: 13px 맑은고딕;
+	font: 13px 맑은고딕  bold;
 	color: #8C8C8C;
-	background-color:#F8F8F8;
+	background-color:#e3f2fd;
 	padding-top:20px;
 	text-align:center;
 	height:100px;
@@ -92,10 +92,10 @@ footer{
 		<tiles:insertAttribute name="header"/> <!-- name속성에 put-attribute 태그의 name 속성값을 호출. -->
 	</header>
 	
-	<%-- <nav>
-		<tiles:insertAttribute name="nav"/>
+	<nav>
+	<%-- 	<tiles:insertAttribute name="nav"/> --%>
 	</nav>
-	 --%>
+
 	<section>
 		<tiles:insertAttribute name="body"/>
 	</section>

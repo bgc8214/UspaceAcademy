@@ -1,12 +1,10 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-	button#registerBtn {
-		position :relative;
-		position : absolute;
-		left:390px;
-		bottom:35px;
-	}
+button#registerBtn {
+	position: fixed;
+	right: 650px;
+}
 </style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
@@ -57,11 +55,6 @@ $(document).ready(function() {
 		}
 	})
 })
-	$(document).ready(effect);
-	function effect() {
-		$("tr:eq(2)").css("background-color", "#E0FF8B");
-	}
-
 </script>
 <h3 class="pageTlt">FAQ</h3>
 <hr>
