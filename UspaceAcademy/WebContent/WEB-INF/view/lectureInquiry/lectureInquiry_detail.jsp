@@ -13,7 +13,7 @@ function effect(){
 $(document).ready(function(){
 	$("#insert").on("click", function(){
 		if($("textarea[name=commentContent]").val()==""){
-			alert("검색할 내용을 입력하세요!");
+			alert("댓글 내용을 입력하세요!");
 			
 			return false;
 		}

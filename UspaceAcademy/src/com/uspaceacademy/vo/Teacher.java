@@ -2,6 +2,8 @@ package com.uspaceacademy.vo;
 
 import java.util.List;
 
+import javax.validation.constraints.Min;
+
 public class Teacher
 {
 	private String teacherId;
@@ -11,6 +13,7 @@ public class Teacher
 	private String teacherPhoneNo;
 	private String teacherAddress;
 	private String teacherSubject;
+	@Min(1)
 	private int teacherSalary;
 	
 	private List<Lecture> lectureList;

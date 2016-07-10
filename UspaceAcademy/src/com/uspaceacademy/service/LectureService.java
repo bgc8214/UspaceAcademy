@@ -69,6 +69,13 @@ public class LectureService {
 		lectureDao.updateLectureByNo(lecture);
 		return lectureDao.insertStudentLectureJoin(studentId, lectureNo, zzim);
 	}
+	//강의 결제하기 위한 서비스(강의 현재인원 +0) -> 찜목록
+	@Transactional(rollbackFor=Exception.class)
+	public int chargeLecture2(String studentId, int lectureNo, String zzim) {
+		Lecture lecture = lectureDao.selectLectureByNo(lectureNo);
+		
+		return lectureDao.insertStudentLectureJoin(studentId, lectureNo, zzim);
+	}
 	//로그인한 수강생이 등록한 찜 목록을 보여주기 위한 서비스
 	public List getStudentLectureJoinList(String studentId, String zzimOption) {
 		return lectureDao.selectStudentLectureJoinList(studentId, zzimOption);

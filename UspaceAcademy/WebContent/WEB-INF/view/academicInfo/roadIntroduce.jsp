@@ -99,3 +99,5 @@ var tMarker = new nhn.api.map.Marker(oIcon, { title : 'UspaceAcademy', point:oSe
  oMap.addOverlay(tMarker); 
  </script> 
 
+<img src="/UspaceAcademy/image/direction.jpg">
+
