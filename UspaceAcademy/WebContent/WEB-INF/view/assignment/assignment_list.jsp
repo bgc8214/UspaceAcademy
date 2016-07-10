@@ -4,17 +4,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <style type="text/css">
-caption{/* 안됨 */
+/* caption{/* 안됨
 font-family: 맑은고딕;
 color: #00F;
 font-weight: bold;
 font-size: 50px;
 margin-bottom: 10px;
 }
-.table_list{/* table_list전체적용 */
+.table_list{/* table_list전체적용
 width:100%;
 font-size: 16px;
-/* text-align: center; */
+/* text-align: center;
 }
 .table_list thead tr th{ 
 height :35px;
@@ -47,7 +47,7 @@ text-overflow: ellipsis;
 }
 .table_list tbody tr td .title a:hover{
 text-decoration: underline;
-}
+} */
 </style>
 
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
@@ -59,17 +59,17 @@ text-decoration: underline;
 		
 	});
 	
-	$(document).ready(effect);
+/* 	$(document).ready(effect);
 	function effect() {
 		$("tr:eq(2)").css("background-color", "#6CC0FF");
 	
-	}
+	} */
 </script>
 			
 			
 <h3>내정보 | 과제게시판</h3>
 <hr/>
-<table class="table_list" summary="영주" cellpacing="0">
+<table border='1' class="table table-bordered table-hover">
 	<caption></caption>
 	<thead>
 		<tr>
