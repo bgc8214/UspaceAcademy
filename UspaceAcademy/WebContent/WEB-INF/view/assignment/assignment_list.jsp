@@ -81,10 +81,11 @@ text-decoration: underline;
 					</c:forEach>
 		</select> --%>
 		
-			<th scope="col">번호</th>
-			<th scope="col">제목</th>
+			<!-- <th scope="col">번호</th> -->
 			<th scope="col">아이디</th>
 			<th scope="col">이름</th>
+			<th scope="col">제목</th>
+			
 			<th scope="col">작성일</th>
 			<th scope="col">마감일</th>
 			<th scope="col">조회수</th>
@@ -97,8 +98,13 @@ text-decoration: underline;
 			<tr onclick="location.href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}'"  style="cursor:pointer;"  class="assignment">
 				
 				<!--  1.번호 -->
-				<td class="num"  align="center">${assignment.assignmentNo}</td>
-
+				<%-- <td class="num"  align="center">${assignment.assignmentNo}</td> --%>
+				
+				<!-- 3.아이디 -->
+				<td class="title" align="center">${assignment.assignmentWriterId}</td>
+				<!-- 4. 이름 -->
+				<td class="title">${assignment.assignmentWriter}</td>
+				
 				<!-- 2.제목 -->
 				<td class="title"  align="center">
 				<c:if test="${assignment.replyLevel>1}">
@@ -109,8 +115,11 @@ text-decoration: underline;
 				</c:if> 
 				<!--  학생이고 , 내가 쓴글(로그인한 아이디랑 글쓴이의 아이디 비교)이라면 - 볼수있다 -->
 				<!-- 학생은 자기가 쓴글&강사가 쓴글 만 볼 수 있게 하기 (강사는 모든글 볼수 있음) -->
+				<!--  (1.강사는 모든글 볼수 있음) -->
+				<!--  (2.학생이고 자기가 쓴글일경우만-상세들어가짐) -->
+				<!--  (3.그냥글이면 보여짐 (답글이아니면) - 선생글 봐야해서 해줌 ) -->
 				<c:choose>
-				<c:when test="${sessionScope.memberType=='teacher'}"><!--  (강사는 모든글 볼수 있음) -->
+				<c:when test="${sessionScope.memberType=='teacher'}">
 				<a href='/UspaceAcademy/assignment/assignment_detail.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}'>${assignment.assignmentTitle}</a>
 				</c:when>
   				<c:when test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentId==assignment.assignmentWriterId}"><!-- eq -->
@@ -124,10 +133,7 @@ text-decoration: underline;
 				</c:otherwise>
 				</c:choose>
 				</td>
-				<!-- 3.아이디 -->
-				<td class="title" align="center">${assignment.assignmentWriterId}</td>
-				<!-- 4. 이름 -->
-				<td class="title">${assignment.assignmentWriter}</td>
+				
 				<!-- 5.날짜 -->
 				<td class="num">${assignment.assignmentDate}</td>
 				<!-- 6.마감일 -->
@@ -139,12 +145,15 @@ text-decoration: underline;
 	</tbody>		
 </table>
 
+
+
+
 <!-- --------------------------------------------------------------------------------------------------------- -->
 
 <!-- 강사만 과제글 등록가능 -->
 <span class="lectureRegister">
 	<c:if test="${sessionScope.memberType=='teacher'}">
-		<a href="/UspaceAcademy/assignment/assignment_register.do?lectureNo=${requestScope.lectureNo}"><button>과제글 등록</button></a><!--  과제글 등록폼으로 이동 -->
+		<a href="/UspaceAcademy/assignment/assignment_register.do?lectureNo=${requestScope.lectureNo}"><button>과제 등록</button></a><!--  과제글 등록폼으로 이동 -->
 	</c:if>																																											
 </span>
 

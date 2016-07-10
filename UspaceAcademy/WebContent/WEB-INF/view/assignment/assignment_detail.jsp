@@ -115,17 +115,19 @@ td{
 <a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
 </c:if>
 
-<c:if test="${sessionScope.memberType=='student'}">
-<%-- <c:if test="${sessionScope.memberType=='student'&&assignment.assignmentWriter==requestScope.memberType.teacher}"> --%>
-<a href="/UspaceAcademy/assignment/assignment_replyRegister.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>답글달기</button></a>
+<c:choose>
+	<c:when test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentId==assignment.assignmentWriterId}">
 <a href="/UspaceAcademy/assignment/assignment_modifyFormStudent.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
 <a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
-	</c:if>																																											
+	</c:when> 	
+	<c:when test="${sessionScope.memberType=='student'&&assignment.replyLevel>1 == false}"> <!--  학생만답글달수있고 & & 강사글에만 답글달기 기능있음(저뜻 : 답글false-> 그냥글일경우만 : 답글버튼있다 -->
+	<a href="/UspaceAcademy/assignment/assignment_replyRegister.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>답글달기</button></a>																																									
+	</c:when> 
+</c:choose>
+
 </span>
-
+<!-- 전체볼수있는 - 버튼 -->
 <a href="/UspaceAcademy/assignment/assignment_list.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>전체목록</button></a>
-
-
 <!-- --------------------------------------------------------------------------------------------------------- -->	
 <%-- 
 사진 파일명 ${requestScope.imageName }
