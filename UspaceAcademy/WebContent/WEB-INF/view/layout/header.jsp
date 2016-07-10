@@ -43,7 +43,7 @@
 </script>
 <c:choose>
 	<c:when test="${sessionScope.memberType==null }">
-		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: yellow;'>
+		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #FFD9EC;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand">UspaceAcademy</a>
@@ -123,7 +123,7 @@
 		</nav>
 	</c:when>
 	<c:otherwise>
-		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: yellow;'">
+		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #FFD9EC;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand">UspaceAcademy</a>

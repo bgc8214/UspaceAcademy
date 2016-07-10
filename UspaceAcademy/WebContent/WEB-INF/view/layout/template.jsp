@@ -76,15 +76,11 @@ section{
 	color: #191919; /* 글자색거의모든 */ 
 }
 footer{
-	font: 13px 맑은고딕  bold;
-	color: #8C8C8C;
-	background-color:yellow;
  	padding-top:70px; 
 	text-align:center;
 	height:100px;
 	max-width : 1918px;
 	clear:both;
-	text-align:center;
 }
 </style>
 </head>

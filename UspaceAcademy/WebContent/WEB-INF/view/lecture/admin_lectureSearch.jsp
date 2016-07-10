@@ -141,11 +141,11 @@ $(document).ready(function(){
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${requestScope.paging.beginPage - 1}" class="prevPage">
-			<strong>이전</strong>
+			<a href="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${requestScope.paging.beginPage - 1}">
+			이전
 			</a>
 		</c:when>
-		<c:otherwise><strong>이전</strong></c:otherwise>
+		<c:otherwise>이전</c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
@@ -164,11 +164,11 @@ $(document).ready(function(){
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${requestScope.paging.endPage + 1}" class="nextPage">
-			<strong>다음</strong>
+			<a href="/UspaceAcademy/lecture/searchLectureByKeywordA.do?page=${requestScope.paging.endPage + 1}">
+			다음
 			</a>
 		</c:when>
-		<c:otherwise><strong>다음</strong></c:otherwise>
+		<c:otherwise>다음</c:otherwise>
 	</c:choose>
 	</div>
 <br>
