@@ -45,4 +45,9 @@ public class InquiryCommentService {
 	public int increaseCommentNo(){
 		return dao.increaseCommentNo();
 	}
+	
+	// 질문 게시판의 글 번호로 comment 삭제
+	public int deleteAllCommentService(int advancedNo2) {
+		return dao.deleteAllCommentDao(advancedNo2);
+	}
 }

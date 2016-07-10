@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.uspaceacademy.dao.InquiryCommentDao;
 import com.uspaceacademy.dao.LectureDao;
+import com.uspaceacademy.dao.LectureInquiryDao;
 import com.uspaceacademy.dao.MemberDao;
 import com.uspaceacademy.util.PagingBean;
 import com.uspaceacademy.vo.Lecture;
@@ -27,6 +29,10 @@ public class LectureService {
 	private LectureDao lectureDao;
 	@Autowired
 	private MemberDao memberDao;
+	@Autowired
+	private LectureInquiryDao lectureInquiryDao;
+	@Autowired
+	private InquiryCommentDao commentDao;
 	
 	//모든 강의 목록 조회
 	public List getLectureList(){
@@ -55,8 +61,19 @@ public class LectureService {
 	}
 	//강의 삭제하기 위한 서비스(출석, 학생_강의_조인테이블, 강의)
 	public int removeLectureByNo(int lectureNo) {
+		System.out.println("강의 삭제 (Service)- "+lectureNo);
+/*		
+		// 강의 번호로 질문 게시판의 질문 번호 조회
+		List list = lectureInquiryDao.selectAdvancedNoDao(lectureNo);
+		
+		System.out.println(list);
+		for(int i=0; i<list.size(); i++) {
+			commentDao.deleteAllCommentDao(list.get(i).get);
+		}
+		*/
 		lectureDao.deleteAttendance(lectureNo);				// 참조관계 있는 출석 컬럼부터 삭제
 		lectureDao.deleteStudentLectureJoin(lectureNo);		// 참조관계 있는 학생_강의_조인테이블 컬럼 삭제
+		lectureDao.deleteInquiryByLectureNoDao(lectureNo);	// 강의 질문 게시판 삭제
 		return lectureDao.deleteLectureByNo(lectureNo);		// 마지막으로 강의 테이블에서 삭제
 	}
 	//강의 결제하기 위한 서비스(강의 현재인원 +1)
@@ -67,6 +84,13 @@ public class LectureService {
 		lecture.setLectureCurrentStudent(lecture.getLectureCurrentStudent()+1);
 		//새로 +1한 것을 업데이트
 		lectureDao.updateLectureByNo(lecture);
+		return lectureDao.insertStudentLectureJoin(studentId, lectureNo, zzim);
+	}
+	//강의 결제하기 위한 서비스(강의 현재인원 +0) -> 찜목록
+	@Transactional(rollbackFor=Exception.class)
+	public int chargeLecture2(String studentId, int lectureNo, String zzim) {
+		Lecture lecture = lectureDao.selectLectureByNo(lectureNo);
+		
 		return lectureDao.insertStudentLectureJoin(studentId, lectureNo, zzim);
 	}
 	//로그인한 수강생이 등록한 찜 목록을 보여주기 위한 서비스

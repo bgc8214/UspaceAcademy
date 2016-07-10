@@ -184,6 +184,7 @@ span.errors {
 
 <h3 class="pageTlt">강의 등록폼</h3>
 <hr>
+<div align="center">
 <form action="/UspaceAcademy/lecture/registerLecture.do" method="post" class="form-horizontal">
 <table class="table">
 	<tr>
@@ -259,5 +260,6 @@ span.errors {
 		</select>
  	</tr>
 </table>
-	<input id="submit1" type="submit" value="강의 등록" class="btn btn-success">
+		<input id="submit1" type="submit" value="강의 등록" class="btn btn-success">
 </form>
+</div>

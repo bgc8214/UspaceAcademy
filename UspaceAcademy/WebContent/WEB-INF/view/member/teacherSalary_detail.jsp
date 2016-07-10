@@ -33,10 +33,11 @@
 
 <c:choose>
 	<c:when test="${sessionScope.memberType=='administrator'}">
+
 		<div align="right">
-		<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }"><button class="btn btn-success">월급 등록</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }"><button class="btn btn-warning">월급 수정</button></a>
-	</div>
+			<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }"><button class="btn btn-success">월급 등록</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }"><button class="btn btn-warning">월급 수정</button></a>
+		</div>
 	</c:when>
 </c:choose>
 	

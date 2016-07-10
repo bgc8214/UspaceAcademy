@@ -172,7 +172,8 @@ public class LectureInquiryDao {
 		Map map = new HashMap();
 		
 		map.put("advancedType", advancedType);
-		map.put("advancedContent", advancedTitle);
+		map.put("advancedTitle", advancedTitle);
+		map.put("lectureNo2", lectureNo2);
 		
 		return session.selectOne("lectureInquiryMapper.selectTitleCountContents", map);
 	}
@@ -245,5 +246,10 @@ public class LectureInquiryDao {
 		map.put("lectureNo2", lectureNo2);
 		
 		return session.selectList("lectureInquiryMapper.selectRownum", map);
+	}
+	// 강의 게시판 번호로 모든 질문 번호 조회
+	public List selectAdvancedNoDao(int lectureNo2) {
+//		System.out.println(session.selectList("lectureInquiryMapper.selectAdvancedNo", lectureNo2));
+		return session.selectList("lectureInquiryMapper.selectAdvancedNo", lectureNo2);
 	}
 }

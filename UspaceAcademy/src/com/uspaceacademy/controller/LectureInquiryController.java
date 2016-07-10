@@ -34,7 +34,7 @@ public class LectureInquiryController {
 	
 	//댓글 작성
 	@RequestMapping("/insertComment")
-	public ModelAndView insertComment(String commentContent, int advancedNo2, int lectureNo2, HttpSession session){
+	public String insertComment(String commentContent, int advancedNo2, int lectureNo2, HttpSession session){
 		
 		int commentNo = service.increaseCommentNo();
 		String commentDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
@@ -58,8 +58,9 @@ public class LectureInquiryController {
 			map.put("lectureInquiryDetail", lectureInquiry);
 			map.put("commentList", commentList);		
 			
-			return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
-			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
+//			return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+//			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
+			return "/lectureInquiry/insertCommentRedirect.do?advancedNo2=" + advancedNo2 + "&lectureNo2=" + lectureNo2;
 		}
 		
 		else if(member.equals("teacher")){	
@@ -78,8 +79,9 @@ public class LectureInquiryController {
 			map.put("commentList", commentList);		
 			
 //			return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", map);
-			return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
-			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
+//			return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+//			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
+			return "/lectureInquiry/insertCommentRedirect.do?advancedNo2=" + advancedNo2 + "&lectureNo2=" + lectureNo2;
 		}
 		
 		else if(member.equals("administrator")){	
@@ -97,13 +99,29 @@ public class LectureInquiryController {
 			map.put("lectureInquiryDetail", lectureInquiry);
 			map.put("commentList", commentList);
 			
-			return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
-			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
+//			return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+//			+ lectureInquiry.getAdvancedSecret() + "&lectureNo2=" + lectureNo2, map);
+			return "/lectureInquiry/insertCommentRedirect.do?advancedNo2=" + advancedNo2 + "&lectureNo2=" + lectureNo2;
 		}
 		
 		else
-			return new ModelAndView("main.tiles");
+			return "main.tiles";
 	}
+	
+	//댓글 등록하기 리다이렉트
+	@RequestMapping("/insertCommentRedirect")
+	public ModelAndView insertCommentRedirect(int advancedNo2, int lectureNo2){
+		LectureInquiry lectureInquiry = service.selectByAdvancedNoWithComment(advancedNo2, lectureNo2);
+		List commentList = service.commentList(advancedNo2);
+		
+		Map map = new HashMap<>();
+		map.put("lectureInquiryDetail", lectureInquiry);
+		map.put("commentList", commentList);
+
+//		return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret=" + 
+//		lectureInquiry.getAdvancedSecret() + "&lectureNo2" + lectureNo2);
+		return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", map);
+	}	
 	
 	//댓글 수정폼
 	@RequestMapping("/updateCommentForm")
@@ -123,11 +141,11 @@ public class LectureInquiryController {
 	
 	//댓글 수정하기
 	@RequestMapping("/updateComment")
-	public ModelAndView updateComment(int commentNo, int advancedNo2, int lectureNo2, String commentContent){
+	public String updateComment(int commentNo, int advancedNo2, int lectureNo2, String commentContent){
 		String commentType = "강의질문댓글";
 		String commentDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
 		
-		LectureInquiry lecturInquiry = service.selectByAdvancedNoWithComment(advancedNo2, lectureNo2);
+//		LectureInquiry lectureInquiry = service.selectByAdvancedNoWithComment(advancedNo2, lectureNo2);
 
 		Comment comment = new Comment(commentNo, commentContent, commentDate, commentType, advancedNo2);
 		System.out.println(comment);
@@ -135,8 +153,24 @@ public class LectureInquiryController {
 		int updateComment = service.updateComment(comment);	
 		System.out.println(updateComment);
 
-		return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret=" + 
-		lecturInquiry.getAdvancedSecret() + "&lectureNo2" + lectureNo2);
+//		return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret=" + 
+//		lectureInquiry.getAdvancedSecret() + "&lectureNo2" + lectureNo2);
+		return "/lectureInquiry/updateCommentRedirect.do?advancedNo2=" + advancedNo2 + "&lectureNo2=" + lectureNo2;
+	}	
+	
+	//댓글 수정하기 리다이렉트
+	@RequestMapping("/updateCommentRedirect")
+	public ModelAndView updateCommentRedirect(int advancedNo2, int lectureNo2){
+		LectureInquiry lectureInquiry = service.selectByAdvancedNoWithComment(advancedNo2, lectureNo2);
+		List commentList = service.commentList(advancedNo2);
+		
+		Map map = new HashMap<>();
+		map.put("lectureInquiryDetail", lectureInquiry);
+		map.put("commentList", commentList);
+
+//		return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret=" + 
+//		lectureInquiry.getAdvancedSecret() + "&lectureNo2" + lectureNo2);
+		return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", map);
 	}	
 	
 	//댓글 삭제하기
@@ -351,7 +385,13 @@ public class LectureInquiryController {
 	//등록 redirect 처리
 	@RequestMapping("/registerLectureInquiryRedirect")
 	public ModelAndView registerLectureInquiryRedirect(int advancedNo, int lectureNo2, @RequestParam(defaultValue="1") int page){
+		service.selectAllByPaging(page, lectureNo2);
 		LectureInquiry lectureInquiryDetail = service.selectByAdvancedNoWithComment(advancedNo, lectureNo2);	
+		List commentList = service.commentList(advancedNo);
+		
+		Map map = new HashMap<>();
+		map.put("lectureInquiryDetail", lectureInquiryDetail);
+		map.put("commentList", commentList);
 		
 		System.out.println("re No: " + advancedNo + "lecture: " + lectureNo2);
 
@@ -438,11 +478,17 @@ public class LectureInquiryController {
 	//수정 redirect 처리
 	@RequestMapping("/updateLectureInquiryRedirect")
 	public ModelAndView updateLectureInquiryRedirect(int advancedNo, int lectureNo2, @RequestParam(defaultValue="1") int page){
+		service.selectAllByPaging(page, lectureNo2);
 		LectureInquiry lectureInquiryDetail = service.selectByAdvancedNoWithComment(advancedNo, lectureNo2);	
+		List commentList = service.commentList(advancedNo);
 		
-		System.out.println("re No: " + advancedNo + "lecture: " + lectureNo2);
+		Map map = new HashMap<>();
+		map.put("lectureInquiryDetail", lectureInquiryDetail);
+		map.put("commentList", commentList);
+		
+		System.out.println("re No11: " + advancedNo + "lecture: " + lectureNo2);
 
-		return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", "lectureInquiryDetail", lectureInquiryDetail);
+		return new ModelAndView("lectureInquiry/lectureInquiry_detail.tiles", map);
 	}
 	
 	//삭제하기

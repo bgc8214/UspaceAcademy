@@ -59,6 +59,10 @@ $(document).ready(function(){
 							<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
 							&advancedSecret=${list.advancedSecret}">${list.advancedTitle } <img width="15" height="15" src="/UspaceAcademy/image/lock.jpg"></a>
 						</c:if>
+						<c:if test="${sessionScope.memberType == null}">
+							<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }
+							&advancedSecret=${list.advancedSecret}" onclick="alert('비밀글 입니다.');">${list.advancedTitle } <img width="15" height="15" src="/UspaceAcademy/image/lock.jpg"></a>
+						</c:if>
 					</c:when>
 					<c:otherwise>
 						<a href="/UspaceAcademy/inquiry/selectByAdvancedNoWithComment.do?advancedNo=${list.advancedNo }

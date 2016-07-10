@@ -263,5 +263,5 @@ span.errors {
 					</c:forEach>
 			</select>
 	</table>
-<input type="submit" value="강의 수정" id="btn" class="btn btn-success">
+<input type="submit" value="강의 수정" id="btn" class="btn btn-warning">
 </form>

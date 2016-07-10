@@ -97,7 +97,6 @@ footer{
 	<nav>
 	<%-- 	<tiles:insertAttribute name="nav"/> --%>
 	</nav>
-
 	<section>
 		<tiles:insertAttribute name="body"/>
 	</section>

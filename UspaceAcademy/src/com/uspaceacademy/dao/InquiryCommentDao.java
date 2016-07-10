@@ -49,4 +49,9 @@ public class InquiryCommentDao {
 	public int increaseCommentNo(){
 		return session.selectOne("commentMapper.increaseCommentNo");
 	}
+	
+	// 강의 삭제 하기 위해서 강의질문 번호로 comment 삭제
+	public int deleteAllCommentDao(int advancedNo2) {
+		return session.delete("commentMapper.deleteAllComment", advancedNo2);
+	}
 }

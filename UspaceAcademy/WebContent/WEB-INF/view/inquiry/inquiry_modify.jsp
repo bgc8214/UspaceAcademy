@@ -20,6 +20,11 @@ $(document).ready(function(){
 			return false;
 		}
 	});
+	
+    $("#resetButton").click(function() {  
+    	$("input[name=advancedTitle]").val('');
+    	$("textarea[name=advancedContent]").val('');
+    }); 
 });
 
 </script>
@@ -45,7 +50,7 @@ $(document).ready(function(){
 		</td>
 	</tr>
 	<tr>
-		<td align="center"><input id="modify" type="submit" value="등록"> <input type="reset" value="초기화"></td>
+		<td align="center"><input id="modify" type="submit" value="등록"> <input id="resetButton" type="button" value="초기화"></td>
 	</tr>	
 </table>
 </form>

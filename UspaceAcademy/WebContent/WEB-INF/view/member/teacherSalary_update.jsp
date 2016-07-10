@@ -20,7 +20,15 @@
 				
 				return false;
 			}			
+			if(isNaN($("input[name=teacherSalary]").val())){
+				alert("숫자만 입력하세요!");
+				return false;
+			}
 		});
+		
+	    $("#resetButton").click(function() {  
+	    	$("input[name=teacherSalary]").val('');
+	    }); 
 	});
 </script>
 <h3 class="pageTlt">월급</h3>
@@ -41,13 +49,14 @@
 		<td>${requestScope.teacherDetail.teacherSubject }</td>
 	</tr>
 	<tr>
+
 		<th>월급</th>
 		<td><input type="text" name="teacherSalary" size="70" value="${requestScope.teacherDetail.teacherSalary }">
 			<span class="error"> <form:errors path="teacher.teacherSalary" delimiter="//" /></span></td>
-	</tr>
 </table>
 
-	<input id="insert" type="submit" value="등록" class="btn btn-success">&nbsp;&nbsp;<input type="reset" value="초기화" class="btn btn-info">
+	<input id="insert" type="submit" value="등록" class="btn btn-success">&nbsp;&nbsp;
+	<input type="reset" id="resetButton" value="초기화" class="btn btn-info">
 
 </form>
 </div>

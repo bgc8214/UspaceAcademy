@@ -4,12 +4,6 @@
 
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
-	
-$(document).ready(effect);
-function effect(){
-	$("tr:eq(2)").css("background-color", "palegreen");
-
-}
 
 //폼체크
 $(document).ready(function(){
@@ -24,16 +18,17 @@ $(document).ready(function(){
 
 </script>
 
-<h2 class="pageTlt">${requestScope.lectureNo2}번 ${requestScope.lectureTitle} 강의 질문 게시판</h2><br>
+<h3 class="pageTlt">${requestScope.lectureNo2}번 ${requestScope.lectureTitle} 강의 질문 게시판</h3>
+<hr>
 
 <table border='1' class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<!-- <td>글번호</td> -->			
-			<td>제목</td>
-			<td>글쓴이</td>
-			<td>글 등록일</td>
-			<td>조회수</td>
+			<th>제목</th>
+			<th>글쓴이</th>
+			<th>글 등록일</th>
+			<th>조회수</th>
 		</tr>
 	</thead>
 			
@@ -64,8 +59,8 @@ $(document).ready(function(){
 	</tbody>
 	
 </table>
-
 <p>
+<div align="center">
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
@@ -98,9 +93,11 @@ $(document).ready(function(){
 		</c:when>
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
+	</div>
 <p>
 
 <!-- 검색관련 -->
+<div align="left">
 <form action="/UspaceAcademy/lectureInquiry/searchByKeyword.do?page=${param.page }" method="post">
 	<input type="hidden" value="${requestScope.lectureNo2 }" name="lectureNo2">
 	<select name="searchType">
@@ -109,14 +106,16 @@ $(document).ready(function(){
 		<!-- <option value="advancedId">글쓴이</option> -->
 	</select>
 	<input type="text" name="keyword">
-	<input id="search" type="submit" value="검색">
+	<input id="search" type="submit" value="검색" class="class btn-info">
 </form>
-
+</div>
 <br>
 
 <c:choose>
 	<c:when test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/lectureInquiry/registerLectureInquiryForm.do?lectureNo2=${requestScope.lectureNo2 }">질문하기 등록</a>
+		<div align="right">
+		<a href="/UspaceAcademy/lectureInquiry/registerLectureInquiryForm.do?lectureNo2=${requestScope.lectureNo2 }"><button class="btn btn-success">질문하기 등록</button></a>
+		</div>
 	</c:when>
 </c:choose>
 
