@@ -78,7 +78,7 @@ function idCheck()
 <table class="table table-bordered form-table">
 	<tr>
 		<th>ID</th>
-		<td><input type="text" name="teacherId" onclick="idCheck();" value="${requestScope.teacher.teacherId }"><span class="error">
+		<td><input type="text" name="teacherId" onclick="idCheck();" value="${requestScope.teacher.teacherId }" readonly="readonly"><span class="error">
 		<form:errors path="teacher.teacherId" delimiter="//"/> <!-- BindingResult의 에러메세지 출력 -->
 		
 		</span></td>
