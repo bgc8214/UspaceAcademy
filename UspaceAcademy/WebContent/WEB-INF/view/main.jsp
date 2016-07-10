@@ -1,4 +1,5 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
+
 <style type="text/css">
 </style>
 
@@ -6,6 +7,9 @@
 <html>
 <body>
 <!-- <img src="image/main.jpg"> -->
-<img src="/UspaceAcademy/image/main.jpg">
+<img align="middle" src="/UspaceAcademy/image/main_img.jpg">
 </body>
 </html>
+
+<!-- <img src="/UspaceAcademy/image/main.jpg"> -->
+

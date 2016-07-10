@@ -48,32 +48,39 @@ span.errors{
 		});
 	});
 </script>
-
+<h3 class="pageTlt">질문등록</h3>
+<p>
 <form action="/UspaceAcademy/lectureInquiry/registerLectureInquiry.do" method="post">
 <input type="hidden" name="lectureNo2" value="${requestScope.lectureNo2 }">
-<table border="1">
+<table class="table table-borered">
 	<tr>
+		<th>제목</th>
+		<td><input type="text" name="advancedTitle" size="70" value="${requestScope.lectureInquiryValidate.advancedTitle }">
+				<span class="error"><form:errors path="lectureInquiry.advancedTitle" delimiter="//" /></span></td>
 		<td>
-			제목: <input type="text" name="advancedTitle" size="70" value="${requestScope.lectureInquiryValidate.advancedTitle }">
-				<span class="error"><form:errors path="lectureInquiry.advancedTitle" delimiter="//" /></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<label>공개글 : <input type="radio" name="advancedSecret" value="false" checked="checked"></label>
-				<span class="error"><form:errors path="lectureInquiry.advancedSecret" delimiter="//"/></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<label >비밀글 : <input type="radio" name="advancedSecret" value="true"></label>
+			<label>공개글<input type="radio" name="advancedSecret" value="false" checked="checked"></label> 	
 				<span class="error"><form:errors path="lectureInquiry.advancedSecret" delimiter="//"/></span>
-
 		</td>
-	</tr>
-	<tr>
 		<td>
-			내용: <textarea rows="20" cols="100" name="advancedContent">${requestScope.lectureInquiryValidate.advancedTitle }</textarea>
-				<span class="error"> <form:errors path="lectureInquiry.advancedContent" delimiter="//" /></span>
-			
+			<label >비밀글 : <input type="radio" name="advancedSecret" value="true"></label>
+				<span class="error"><form:errors path="lectureInquiry.advancedSecret" delimiter="//"/></span>
 		</td>
 	</tr>
 	<tr>
-		<td><input id="insert" type="submit" value="등록"><input type="reset" value="초기화"></td>
-	</tr>	
+		<td colspan="6">
+			<label>내용</label>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="6">
+			<textarea rows="20" cols="100" name="advancedContent" class="form-control">${requestScope.lectureInquiryValidate.advancedTitle }</textarea>
+				<span class="error"> <form:errors path="lectureInquiry.advancedContent" delimiter="//" /></span>
+		</td>
+	</tr>
 </table>
+<div align="right">
+<input id="insert" type="submit" value="등록" class="btn btn-success">&nbsp;&nbsp;&nbsp;<input type="reset" value="초기화" class="btn btn-default">
+</div>
 </form>
 
-<a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=${requestScope.lectureNo2 }">전체 목록보기</a>
+<a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=${requestScope.lectureNo2 }"><button class="btn btn-info">전체 목록보기</button></a>

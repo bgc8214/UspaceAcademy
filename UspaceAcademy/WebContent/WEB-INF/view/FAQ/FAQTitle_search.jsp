@@ -1,5 +1,11 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+button#faq {
+	position: fixed;
+	right: 650px;
+}
+</style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 var tmp;
@@ -46,12 +52,6 @@ $(document).ready(function() {
 			return false;
 		}
 	})
-	
-	
-	$(document).ready(effect);
-	function effect() {
-		$("tr:eq(2)").css("background-color", "#FFC19E");
-	}	
 })
 
 
@@ -61,8 +61,7 @@ $(document).ready(function() {
 
 
 
-
-
+<h3 class-"pageTlt">FAQ</h3>
 <hr>
 	<table class="table table-borered">
 		<thead>
@@ -142,4 +141,4 @@ $(document).ready(function() {
 </div><br>
 
 
-<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button class="btn btn-success">FAQ리스트</button></a>
+<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button class="btn btn-success" id="faq">FAQ리스트</button></a>

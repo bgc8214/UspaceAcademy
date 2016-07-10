@@ -181,6 +181,7 @@ public class LectureController {
 	@RequestMapping("/removeLectureByNo.do")
 	public String removeLectureByNo(int lectureNo, @RequestParam(defaultValue="1") int page){
 		//삭제하는 서비스 부름
+		System.out.println("controller - "+lectureNo);
 		int flag = lectureService.removeLectureByNo(lectureNo);
 		return "/lecture/lectureAll.do?page="+page;
 	}

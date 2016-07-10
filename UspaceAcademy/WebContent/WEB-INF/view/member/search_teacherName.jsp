@@ -17,15 +17,10 @@
 			$(this).css("background-color", "white");
 		}) */
 	});
-	
-	$(document).ready(effect);
-	function effect() {
-		$("tr:eq(2)").css("background-color", "#FFD9EC");
-	}
 </script>
 <h3 class="pageTlt">강사 정보</h3>
 <hr>
-<table border="2" width="1000" class="table">
+<table class="table">
 	<thead>
 		<tr>
 			<th>강사이름</th>

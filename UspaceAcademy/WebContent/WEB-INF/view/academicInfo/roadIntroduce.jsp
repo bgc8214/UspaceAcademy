@@ -1,5 +1,6 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
-
+<h3 class="pagTlt">오시는 길</h3>
+<hr>
 <script type="text/javascript" src="http://openapi.map.naver.com/openapi/v2/maps.js?clientId=Jt9x7JfeaD89Dftwr7Zc"></script> 
 <div id='map' style="position:relative; left:50px; top:0; border:1px solid #ccc; "></div> 
 <script type="text/javascript">
