@@ -6,7 +6,7 @@
 
 <style type="text/css">
 
-body{
+/* body{
 min-width:1400px;
 }
 body, code{
@@ -27,48 +27,46 @@ border: 1px solid #d7d5d5;
 color: #353535;
 font-size: 11px;
 line-height:140%;
-}
+} */
 
 </style>
 <h3>수강후기</h3>
 <hr/>
 
 <body id="main"> 
-<div class="boardList">
- 	<table border="1" summary>
+<table border='1' class="table table-bordered table-hover">
 		<thead>
 			<tr>
 				<th scope="col">글번호</th>
-				<th scope="col">아이디</th><!--  id추가  -->
-				<th scope="col">이름</th>
+				<th scope="col">제목</th>
 				<th scope="col">강의과목</th>
 				<th scope="col">강의명</th>
-				<th scope="col">제목</th>
+				<th scope="col">아이디</th><!--  id추가  -->
+				<th scope="col">이름</th>
 				<th scope="col">날짜</th>
 				<th scope="col">조회수</th>
 			</tr>
 		</thead>
 		
-		<tbody>
+		<tbody id="tbody1">
 		
 		<%-- <form><input id="page" type="hidden" value="${param.page}"></form> <!-- ?????????????지워????? --> --%>
 		
 			<c:forEach var="lectureListReview" items="${requestScope.lectureListReview}">
 				<tr>
 					<td>${lectureListReview.reviewNo}</td><!--  글번호 -->
-					<td>${lectureListReview.reviewWriterId}</td><!--  id추가  -->
-					<td>${lectureListReview.reviewWriter}</td><!-- 이름 -->
-					<td class="category">${lectureListReview.lectureSubject}</td><!-- 강의과목  -->
-					<td class="left">${lectureListReview.lectureTitle}</td><!-- 강의명  -->   
 					<td><a href="/UspaceAcademy/lectureReview/lecture_review_detail.do?reviewNo=${lectureListReview.reviewNo}"> <!--  한개값넘겨줄때 ? 물음표,  여러개 넘겨줄때 & 앤드.   -->
 							${lectureListReview.reviewTitle}</a></td><!-- 제목  -->
+					<td class="category">${lectureListReview.lectureSubject}</td><!-- 강의과목  -->
+					<td class="left">${lectureListReview.lectureTitle}</td><!-- 강의명  -->  
+					<td>${lectureListReview.reviewWriterId}</td><!--  id추가  -->
+					<td>${lectureListReview.reviewWriter}</td><!-- 이름 -->
 					<td>${lectureListReview.reviewDate}</td><!-- 날짜  -->
 					<td>${lectureListReview.reviewHit}</td><!-- 조회수  -->
 				</tr>
 			</c:forEach>
 		</tbody>	
 	</table>
-</div>
 </body>
 
 
