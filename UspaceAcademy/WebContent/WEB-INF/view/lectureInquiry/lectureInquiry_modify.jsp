@@ -4,6 +4,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
+
+<link href="/UspaceAcademy/jQuery/jquery-ui.min.css" rel="stylesheet">
+<link href="/UspaceAcademy/jQuery/jquery-ui.structure.min.css" rel="stylesheet">
+<link href="/UspaceAcademy/jQuery/jquery-ui.theme.min.css" rel="stylesheet">
+
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -20,14 +26,18 @@ $(document).ready(function(){
 			return false;
 		}
 	});
-});
+	
+    $("#resetButton").click(function() {  
+    	$("input[name=advancedTitle]").val('');
+    	$("textarea[name=advancedContent]").val('');
+    });  
+}); 
 
 </script>
 
-<form action="/UspaceAcademy/lectureInquiry/updateLectureInquiry.do" method="post" name="updateLectureInquiry">
+<form action="/UspaceAcademy/lectureInquiry/updateLectureInquiry.do" method="post" id="form">
 <input type="hidden" name="advancedNo" value="${requestScope.lectureInquiryDetail.advancedNo }">
 <input type="hidden" name="lectureNo2" value="${requestScope.lectureInquiryDetail.lectureNo2 }">
-<input type="hidden" name="advancedSecret" value="${requestScope.lectureInquiryDetail.advancedSecret }">
 
 <table border="1">
 	<tr>
@@ -47,7 +57,7 @@ $(document).ready(function(){
 		</td>
 	</tr>
 	<tr>
-		<td align="center"><input id="modify" type="submit" value="등록"> <input type="reset" value="초기화"></td>
+		<td><input id="modify" type="submit" value="등록"><input id="resetButton" type="button" value="초기화"></td>
 	</tr>	
 </table>
 </form>

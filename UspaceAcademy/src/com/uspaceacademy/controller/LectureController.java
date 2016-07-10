@@ -292,9 +292,10 @@ public class LectureController {
 		}else{
 			
 			//찜 여부는 결제를 직접하므로 true("1")로들어감.
-			int flag = lectureService.chargeLecture(student.getStudentId(), lectureNo, "1");
+			int flag = lectureService.chargeLecture2(student.getStudentId(), lectureNo, "1");
 			System.out.println(flag+"개의 강의를 찜하였습니다 - 대영 -");
 			//List lectureList = lectureService.getLectureList();
+//			lectureService.removeLectureFromApplyListByLectureNo(student.getStudentId(), lectureNo);
 			
 			return "redirect:/lecture/zzimList.do?page="+page;
 		}
@@ -463,7 +464,7 @@ public class LectureController {
 	@RequestMapping("/removeZzimList.do")
 	public String removeZzimList(String studentId3, int lectureNo3){
 		lectureService.removeZzimList(studentId3, lectureNo3);
-		lectureService.removeLectureFromApplyListByLectureNo(studentId3, lectureNo3);
+//		lectureService.removeLectureFromApplyListByLectureNo(studentId3, lectureNo3);
 		
 		return "/lecture/zzimList.do";
 	}

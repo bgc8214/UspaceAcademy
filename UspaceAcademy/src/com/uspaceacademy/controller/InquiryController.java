@@ -358,11 +358,17 @@ public class InquiryController {
 	//등록 redirect 처리
 	@RequestMapping("/registerInquiryRedirect")
 	public ModelAndView registerInquiryRedirect(int advancedNo, @RequestParam(defaultValue="1") int page){
+		service.selectAllByPaging(page);
 		Inquiry inquiryDetail = service.selectByAdvancedNoWithComment(advancedNo);	
+		List commentList = service.commentList(advancedNo);
+		
+		Map map = new HashMap<>();
+		map.put("inquiryDetail", inquiryDetail);
+		map.put("commentList", commentList);
 		
 		System.out.println("re No: " + advancedNo);
 
-		return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", inquiryDetail);
+		return new ModelAndView("inquiry/inquiry_detail.tiles", map);
 	}
 	
 	//등록, 수정했을 때 상세페이지 보기
@@ -443,11 +449,17 @@ public class InquiryController {
 	//수정 redirect 처리
 	@RequestMapping("/updateInquiryRedirect")
 	public ModelAndView updateInquiryRedirect(int advancedNo, @RequestParam(defaultValue="1") int page){
+		service.selectAllByPaging(page);
 		Inquiry inquiryDetail = service.selectByAdvancedNoWithComment(advancedNo);	
+		List commentList = service.commentList(advancedNo);
+		
+		Map map = new HashMap<>();
+		map.put("inquiryDetail", inquiryDetail);
+		map.put("commentList", commentList);
 		
 		System.out.println("re No: " + advancedNo);
 
-		return new ModelAndView("inquiry/inquiry_detail.tiles", "inquiryDetail", inquiryDetail);
+		return new ModelAndView("inquiry/inquiry_detail.tiles", map);
 	}
 	
 	//삭제하기

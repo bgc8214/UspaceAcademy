@@ -13,7 +13,15 @@
 				
 				return false;
 			}			
+			if(isNaN($("input[name=teacherSalary]").val())){
+				alert("숫자만 입력하세요!");
+				return false;
+			}
 		});
+		
+	    $("#resetButton").click(function() {  
+	    	$("input[name=teacherSalary]").val('');
+	    }); 
 	});
 </script>
 
@@ -34,7 +42,7 @@
 		</td>
 	</tr>
 	<tr>
-		<td><input id="insert" type="submit" value="등록"><input type="reset" value="초기화"></td>
+		<td><input id="insert" type="submit" value="등록"><input id="resetButton" type="button" value="초기화"></td>
 	</tr>	
 </table>
 </form>

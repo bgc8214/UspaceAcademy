@@ -33,7 +33,6 @@
 
 <c:choose>
 	<c:when test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }">월급 등록</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }">월급 수정</a>
 	</c:when>
 </c:choose>

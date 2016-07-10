@@ -172,7 +172,8 @@ public class LectureInquiryDao {
 		Map map = new HashMap();
 		
 		map.put("advancedType", advancedType);
-		map.put("advancedContent", advancedTitle);
+		map.put("advancedTitle", advancedTitle);
+		map.put("lectureNo2", lectureNo2);
 		
 		return session.selectOne("lectureInquiryMapper.selectTitleCountContents", map);
 	}
