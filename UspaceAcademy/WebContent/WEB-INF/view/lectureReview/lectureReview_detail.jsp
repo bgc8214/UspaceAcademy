@@ -2,42 +2,55 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %><!-- ??????? -->
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><!-- ??????? -->
+<style type="text/css">
 
-<h3>수강후기|상세보기</h3>
 
-
+</style>
+<h3>수강후기|  상세보기</h3>
 <hr/>
-	<table border="2">
-		<thead>
-			<tr>
-				<td>글번호</td>
-				<td>아이디</td>
-				<td>이름</td>
-				<td>강의과목</td>
-				<td>강의명</td>
-				<td>제목</td>
-				<td>글내용</td>
-				<td>날짜</td>
-				<td>조회수</td>
-			</tr>
-		</thead>
-		<tbody>
-				<tr>
-					<td>${requestScope.lectureListReview.reviewNo}</td><!--  오류난거메모 : 상세페이지니까 반복문 돌리면 안됨 -->
- 					<td>${requestScope.lectureListReview.reviewWriterId}</td>
- 					<td>${requestScope.lectureListReview.reviewWriter}</td>
-					<td>${requestScope.lectureListReview.lectureSubject}</td>
-					<td>${requestScope.lectureListReview.lectureTitle}</td>
-					<td>${requestScope.lectureListReview.reviewTitle}</td>
-					<td>${requestScope.lectureListReview.reviewContent}</td>
-					<td>${requestScope.lectureListReview.reviewDate}</td>
-					<td>${requestScope.lectureListReview.reviewHit}</td> 
-				</tr>
+<table class="table table-bordered form-table">
+<tbody></tbody>
+	<tr>
+		<th>글번호</th>
+		<td>${requestScope.lectureListReview.reviewNo}&nbsp;<!--  오류난거메모 : 상세페이지니까 반복문 돌리면 안됨 -->
+		<th>아이디</th>
+		<td>${requestScope.lectureListReview.reviewWriterId}&nbsp;</td>
+		<th>이름</th>
+		<td>${requestScope.lectureListReview.reviewWriter}&nbsp;</td>
+		</td>
+	</tr>
 
-		</tbody>	
-	</table>
+	<tr>
+		<th>강의과목</th>
+		<td>${requestScope.lectureListReview.lectureSubject}&nbsp;
+		<th>강의명</th>
+		<td>${requestScope.lectureListReview.lectureTitle}&nbsp;</td>
+		<th>날짜</th>
+		<td>${requestScope.lectureListReview.reviewDate}&nbsp;</td>
+		</td>
+	</tr>
+</table>
+
+
+
+<table class="table table-bordered form-table">
+	<tr>
+		<th>제목</th>
+		<td>${requestScope.lectureListReview.reviewTitle}</td>
+	</tr>
+
+	<tr>
+		<th>내용</th>
+		<td>${requestScope.lectureListReview.reviewContent}<br><br><br><br><br><br></td>
+	</tr>
+</table>
+
+
+
+<input type="hidden" name="reviewHit" value="${requestScope.lectureListReview.reviewHit}">
 	
-
+	
+	
 	
 <!-- --------------------------------------------------------------------------------------------------------- -->
 
