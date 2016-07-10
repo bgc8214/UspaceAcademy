@@ -1,14 +1,14 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<style>
+table#tb {
+	width: 700px;
+	heiht: 100px;
+}
+</style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
-	
-$(document).ready(effect);
-function effect(){
-	$("tr:eq(2)").css("background-color", "palegreen");
-}
 
 $(document).ready(function(){
 	$("#insert").on("click", function(){
@@ -22,59 +22,65 @@ $(document).ready(function(){
 
 </script>
 
-<h2 class="pageTlt">상세보기</h2>
-
-<table border="" class="table table-bordered form-table">
+<h3 class="pageTlt">상세보기</h3>
+<hr>
+<table class="table table-bordered form-table" id="tb">
 	<tr>
-		<td>
-			<%-- no: ${requestScope.inquiryDetail.advancedNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --%>
-			글쓴이: ${requestScope.inquiryDetail.advancedId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			글 등록일:${requestScope.inquiryDetail.advancedDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			조회수: ${requestScope.inquiryDetail.advancedHit}
-		</td>
+		<th>글쓴이</th>
+		<td>${requestScope.inquiryDetail.advancedId}</td>
+		<th>글 등록일</th>
+		<td>${requestScope.inquiryDetail.advancedDate}</td>
+		<th>조회수</th>
+		<td>${requestScope.inquiryDetail.advancedHit}</td>
 	</tr>
 	<tr>
-		<td>
-			제목: ${requestScope.inquiryDetail.advancedTitle}
-		</td>
+		<th>제목</th>
+		<td colspan="6"> ${requestScope.inquiryDetail.advancedTitle}</td>
 	</tr>
 	<tr>
-		<td>
-			내용<br><br>
-			 ${requestScope.inquiryDetail.advancedContent}
+		<th>내용</th>
+		<td colspan="6"><textarea rows="20" cols="100" readonly="readonly" class="form-control">${requestScope.inquiryDetail.advancedContent}</textarea>
 		</td>
 	</tr>
 </table>
-
+<p>
+<div align="right">
+<a href="/UspaceAcademy/inquiry/inquiryList.do"><button class="btn btn-primary">전체 목록</button></a>
+</div>
 <p>
 
-<h4 class="pageTlt">댓글 보기</h4>
-
+<h3 class="pageTlt">댓글 보기</h3>
+<hr>
 <table class="table table-bordered form-table">
 <c:forEach items="${requestScope.commentList}" var="list">
 <%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
 	<tr>
-		<td>
-			<%-- 댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --%>
-			글쓴이: ${list.commentWriter}&nbsp;&nbsp;&nbsp;
-			글 등록일:${list.commentDate}<br>
-			내용<br>
-			${list.commentContent}<br><br>
-			
+		<th>글쓴이</th>
+		<td>${list.commentWriter}</td>
+		<th>글 등록일</th>
+		<td>${list.commentDate}</td>
+	</tr>	
+	<tr>
+		<th>내용</th>
+		<td colspan="3"><textarea rows="5" cols="50" readonly="readonly" class="form-control">${list.commentContent}</textarea>
+			</td>
+	</tr>
+	<tr>
+		<td colspan="6">		
 			<c:choose>
 				<c:when test="${sessionScope.memberType=='student'}">
 					<c:if test="${list.commentWriter eq sessionScope.login_info.studentId}">
 						<a href="/UspaceAcademy/inquiry/updateCommentForm.do?commentNo=${list.commentNo }
 						&advancedNo2=${requestScope.inquiryDetail.advancedNo}">
-						<button>댓글 수정</button></a>
+						<button class="btn btn-warning">댓글 수정</button></a>
 						<a href="/UspaceAcademy/inquiry/deleteComment.do?commentNo=${list.commentNo }
-						&advancedNo2=${requestScope.inquiryDetail.advancedNo}"><button>댓글 삭제</button></a><br>
+						&advancedNo2=${requestScope.inquiryDetail.advancedNo}"><button class="btn btn-danger">댓글 삭제</button></a><br>
 					</c:if>
 				</c:when>
 				<c:otherwise>
 					<c:if test="${sessionScope.memberType=='administrator'}">
 						<a href="/UspaceAcademy/inquiry/deleteComment.do?commentNo=${list.commentNo }
-						&advancedNo2=${requestScope.inquiryDetail.advancedNo}"><button>댓글 삭제</button></a>
+						&advancedNo2=${requestScope.inquiryDetail.advancedNo}"><button class="btn btn-danger">댓글 삭제</button></a>
 					</c:if>
 				</c:otherwise>
 			</c:choose>
@@ -83,14 +89,15 @@ $(document).ready(function(){
 </c:forEach>
 </table>
 
-<h4 align="center">댓글 작성</h4>
+<h3 class="pageTlt">댓글 작성</h3>
+<hr>
 <form action="/UspaceAcademy/inquiry/insertComment.do" >
 <input type="hidden" value="${requestScope.inquiryDetail.advancedNo}" name="advancedNo2">
 	<table>
 		<tr>
 			<td>
-				<textarea id="commentContent" name="commentContent" cols="50" rows="5"></textarea>
-				<input id="insert" type="submit" value="댓글 입력">
+				<textarea id="commentContent" name="commentContent" cols="50" rows="5" class="form-control"></textarea>
+				<input id="insert" type="submit" value="댓글 입력" class="btn btn-success">
 			</td>
 		</tr>
 	</table>
@@ -112,4 +119,3 @@ $(document).ready(function(){
 	</c:otherwise>
 </c:choose>
 
-<a href="/UspaceAcademy/inquiry/inquiryList.do">전체 목록</a>

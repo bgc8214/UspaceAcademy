@@ -3,7 +3,12 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<style>
+table#tb {
+	width: 700px;
+	heiht: 100px;
+}
+</style>
 <script type="text/javascript">
 
 $(document).ready(function(){
@@ -32,27 +37,30 @@ $(document).ready(function(){
 <form action="/UspaceAcademy/inquiry/updateInquiry.do" method="post" name="updateInquiry">
 <input type="hidden" name="advancedNo" value="${requestScope.inquiryDetail.advancedNo }">
 
-<table border="1">
+<table class="table table-bordered" id="tb">
 	<tr>
+		<th>제목</th>
 		<td>
-			제목: <input type="text" name="advancedTitle" size="70" value="${requestScope.inquiryDetail.advancedTitle }">
-			<span class="error"> <form:errors path="updateInquiry.advancedTitle" delimiter="//" /></span>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	<label>공개글 : <input type="radio" name="advancedSecret" value="false" checked="checked"></label>
+		<input type="text" name="advancedTitle" size="70" value="${requestScope.inquiryDetail.advancedTitle }">
+			 <span class="error"> <form:errors path="updateInquiry.advancedTitle" delimiter="//" /></span></td>
+		<td>
+			<label>공개글 : <input type="radio" name="advancedSecret" value="false" checked="checked"></label>
 			<span class="error"><form:errors path="updateInquiry.advancedSecret" delimiter="//"/></span>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	<label>비밀글 : <input type="radio" name="advancedSecret" value="true"></label>
 			<span class="error"><form:errors path="updateInquiry.advancedSecret" delimiter="//"/></span>			
 		</td>
 	</tr>	
 	<tr>
-		<td>
-			내용: <textarea rows="20" cols="100" name="advancedContent">${requestScope.inquiryDetail.advancedContent }</textarea>
+		<td colspan="3">
+			내용: <textarea rows="20" cols="100" name="advancedContent" class="form-control">${requestScope.inquiryDetail.advancedContent }</textarea>
 			<span class="error"> <form:errors path="updateInquiry.advancedContent" delimiter="//" /></span>
 		</td>
 	</tr>
-	<tr>
-		<td align="center"><input id="modify" type="submit" value="등록"> <input id="resetButton" type="button" value="초기화"></td>
-	</tr>	
 </table>
+<div align="right">
+	<input id="modify" type="submit" value="등록" class="btn btn-success"> 
+		<input id="resetButton" type="button" value="초기화" class="btn btn-default">
+</div>
 </form>
 
-<a href="/UspaceAcademy/inquiry/inquiryList.do">전체 목록보기</a>
+<a href="/UspaceAcademy/inquiry/inquiryList.do"><button class="btn btn-primary">전체 목록보기</button></a>
