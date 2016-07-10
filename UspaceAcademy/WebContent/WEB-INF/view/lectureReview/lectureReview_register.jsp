@@ -12,21 +12,19 @@
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	//폼체크
-	 $("#ok").on("click",function(){
-		 	 	if(!$("input[name=reviewTitle]").val()){
-		 			alert("제목을 입력하세요");
-		 			return false;
-		 		}
-		 		if($("textarea[name=reviewContent]").val()==""){
-		 			alert("내용을 입력하세요");
-		 			return false;
-		 		}
-		 	});
-		 });
-
-	
-	
+	 	//폼체크
+		  $("#ok").on("click",function(){
+			 	 	if(!$("input[name=reviewTitle]").val()){
+			 			alert("제목을 입력하세요");
+			 			return false;
+			 		}
+			 		if($("textarea[name=reviewContent]").val()==""){
+			 			alert("내용을 입력하세요");
+			 			return false;
+			 		}
+			 	}); 
+			 
+	 
 	$("#lectureSubject").on("change", function(){
 	var tmp = $(this);
 	$.ajax({
@@ -46,9 +44,9 @@ $(document).ready(function(){
 		"beforeSend":function(){
 			$("#lectureTitle").empty();
 		}
-	})
-	}) //과목에따른 강의명   //●오류: 오타조심!!
-
+	});
+});                 //과목에따른 강의명   //●오류: 오타조심!!
+});                //●오류: 가로닫는거 위치랑 갯수 (위아래)조심!
 
 </script>
 

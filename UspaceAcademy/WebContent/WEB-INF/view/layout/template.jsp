@@ -56,7 +56,7 @@ $(document).ready(function(){
  	background-color:pink;
 	text-align:center;
 	padding: 5px;  */
-
+	
 } 
 	nav{
 		line-height: 50px;
