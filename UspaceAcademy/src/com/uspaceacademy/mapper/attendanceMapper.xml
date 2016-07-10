@@ -126,4 +126,10 @@
 	<delete id="deleteByAttendanceForTeacher" parameterType="_int">
 		delete from attendance where lecture_no2 = #{value}
 	</delete>
+
+	<delete id="deleteAttendanceByStudentId" parameterType="_int">
+		delete from attendance where student_id2 = #{studentId2}
+	</delete>
+	
+	
 </mapper> 

@@ -344,6 +344,10 @@
  		FROM   lecture
  		WHERE  teacher_id2 = #{teacherId2}
  	</select>
+ 	
+ 	<delete id="removeZzimList" parameterType="map">
+ 		delete from student_lecture_join where student_id3 = #{studentId3} and lecture_no3 = #{lectureNo3}
+ 	</delete>
 
 
 </mapper>

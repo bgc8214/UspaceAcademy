@@ -4,52 +4,20 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<style type="text/css">
-span.errors{
-	color:red
-}
-
-</style>
-<script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
-
-<link href="/UspaceAcademy/jQuery/jquery-ui.min.css" rel="stylesheet">
-<link href="/UspaceAcademy/jQuery/jquery-ui.structure.min.css" rel="stylesheet">
-<link href="/UspaceAcademy/jQuery/jquery-ui.theme.min.css" rel="stylesheet">
-
 <script type="text/javascript">
 	$(document).ready(function(){
 		//폼체크
 		$("#insert").on("click", function(){
-			if(!$("input[name=advancedTitle]").val()){
-				alert("제목을 입력하세요!");
+			if(!$("input[name=teacherSalary]").val()){
+				alert("숫자를 입력하세요!");
 				
 				return false;
-			}
-			if($("textarea[name=advancedContent]").val()==""){
-				alert("내용을 입력하세요!");
-				
-				return false;
-			}
-			
-/* 			var flag = false;
-			$("input[type=radio]").each(function(index, item){
-				
-				if(item.checked==true){
-					flag = true;
-				}
-			})
-			if(!flag){
-				alert("비밀글 여부를 선택하세요!");
-				return false;
-			}else{
-				return true;
-			} */
-			
+			}			
 		});
 	});
 </script>
 
-<form action="/UspaceAcademy/teacher/insertSalary.do" method="post">
+<form action="/UspaceAcademy/teacher/updateSalary.do" method="post">
 <table border="1">
 	<tr>
 		<td>
@@ -68,5 +36,3 @@ span.errors{
 	</tr>	
 </table>
 </form>
-
-<a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=${requestScope.lectureNo2 }">전체 목록보기</a>

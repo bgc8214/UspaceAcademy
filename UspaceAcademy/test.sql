@@ -1,3 +1,19 @@
+-- just test
+drop table test_table;
+create table test_table(
+	test_id varchar2(5) primary key,
+	test_name varchar2(30) null,
+	test_type varchar2(30) null
+);
+insert into test_table(test_id) values('id-2');
+insert into test_table values('id-2', '몰라', '더몰라');
+update TEST_TABLE set test_name='알아' where test_id='id-2'
+select * from TEST_TABLE
+
+delete from attendance where student_id = 'student3' and  lecture_no2 = 2
+delete from student_lecture_join where student_id3 = 'student3' and lecture_no3 = 2
+
+
 -- 강사 - 내강좌 정보 
 select distinct l.lecture_no, l.lecture_title, l.lecture_start_date, l.lecture_end_date 
 from lecture l, STUDENT_LECTURE_JOIN sl

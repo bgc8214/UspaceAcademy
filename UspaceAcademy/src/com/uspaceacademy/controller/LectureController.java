@@ -314,6 +314,8 @@ public class LectureController {
 		map.put("zzimList", zzimList);
 		map.put("page", page);
 		map.put("errorMessage", errorMessage);
+		map.put("studentId3", student.getStudentId());
+		
 		return new ModelAndView("lecture/zzim_list.tiles", map);
 	
 	}
@@ -456,4 +458,13 @@ public class LectureController {
 		}
 		return new ModelAndView("lecture/admin_lectureSearch.tiles", map);
 	}	
+	
+	//찜목록 삭제
+	@RequestMapping("/removeZzimList.do")
+	public String removeZzimList(String studentId3, int lectureNo3){
+		lectureService.removeZzimList(studentId3, lectureNo3);
+		lectureService.removeLectureFromApplyListByLectureNo(studentId3, lectureNo3);
+		
+		return "/lecture/zzimList.do";
+	}
 }

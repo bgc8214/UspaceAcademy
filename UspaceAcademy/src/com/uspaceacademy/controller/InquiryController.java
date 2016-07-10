@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.InquiryService;
@@ -171,13 +172,14 @@ public class InquiryController {
 
 		Object member = session.getAttribute("memberType");	
 		
+		System.out.println("타입: " + member);
+		
 		System.out.println("비밀: " + advancedSecret);
 		Inquiry inquiry111 = service.selectByAdvancedNoWithComment(advancedNo);
 		System.out.println("inquiry111: " + inquiry111);
 		
 		//비밀글일 경우
 		if(secret.equals("true")){
-			member = session.getAttribute("memberType");
 			
 			System.out.println("비밀!!");
 			
@@ -241,12 +243,16 @@ public class InquiryController {
 		}
 		
 		//비밀글이 아닐 경우
-		else if(secret.equals("false")){
+		if(secret.equals("false")){
 			
-			member = session.getAttribute("memberType");			
+			System.out.println("찍히나");
+			
+			member = session.getAttribute("memberType");	
 			
 			//학생, 강사, 관리자일 경우
-			if(member.equals("student")||member.equals("teacher")||member.equals("administrator")||member.equals(null)){
+			if(member.equals("student")||member.equals("teacher")||member.equals("administrator")){
+				
+				System.out.println("여기선 찍히나");
 				
 				Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo);
 				
