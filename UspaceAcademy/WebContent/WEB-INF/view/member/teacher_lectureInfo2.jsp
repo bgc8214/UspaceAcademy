@@ -2,16 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
-<script type="text/javascript">
 
-$(document).ready(effect);
-function effect(){
-	$("tr:eq(2)").css("background-color", "violet");
-
-}
-</script>
-
-<table border="4" class="table table-bordered">
+<table class="table table-bordered">
 
 <thead>
 <tr>

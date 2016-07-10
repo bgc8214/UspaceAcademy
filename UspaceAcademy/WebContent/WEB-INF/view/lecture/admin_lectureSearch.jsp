@@ -4,13 +4,6 @@
 tr.dummy, td.dummy{
 	border:0px;
 }
-
-	button#registerBtn {
-		position :relative;
-		position : absolute;
-		right:250px;
-	}
-
 </style>
 <script type="text/javascript">
 var tmp;//이벤트소스를 저장하기 위한 변수
@@ -179,7 +172,9 @@ $(document).ready(function(){
 	</c:choose>
 	</div>
 <br>
-<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button class="btn btn-success" id="registerBtn">강의 등록</button></a>
+<div align="right">
+<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button class="btn btn-success">강의 등록</button></a>
+</div>
 <br>
 
 <br>

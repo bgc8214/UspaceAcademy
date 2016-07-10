@@ -2,8 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<h2 class="pageTlt">${requestScope.teacherDetail.teacherName } 강사님 월급 정보</h2>
-<br>
+<h3 class="pageTlt">${requestScope.teacherDetail.teacherName } 강사님 월급 정보</h3>
+<hr>
 
 <table border='1' class="table table-bordered table-hover">
 	<thead>
@@ -33,8 +33,10 @@
 
 <c:choose>
 	<c:when test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }">월급 등록</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }">월급 수정</a>
+		<div align="right">
+		<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }"><button class="btn btn-success">월급 등록</button></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a href="/UspaceAcademy/member/updateSalaryForm.do?teacherId=${requestScope.teacherDetail.teacherId }"><button class="btn btn-warning">월급 수정</button></a>
+	</div>
 	</c:when>
 </c:choose>
 	

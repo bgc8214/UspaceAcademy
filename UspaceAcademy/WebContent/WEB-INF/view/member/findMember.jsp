@@ -70,6 +70,7 @@ $(document).ready(function(){
 
 	
 </script>
+<div align="center">
 <h3 class="pageTlt">아이디 찾기</h3>
 <hr>
 <form class="form-inline" role="form">
@@ -84,6 +85,8 @@ $(document).ready(function(){
 	</table>
 </form>
 <hr>
+<p>
+<p>
 <h3 class="pageTlt">비밀번호 찾기</h3>
 <hr>
 <form class="form-inline" role="form">
@@ -97,6 +100,6 @@ $(document).ready(function(){
 		</tr>
 	</table>
 </form>
-
+</div>
 
 

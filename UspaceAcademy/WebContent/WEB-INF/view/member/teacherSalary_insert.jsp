@@ -18,7 +18,7 @@
 </script>
 
 <form action="/UspaceAcademy/teacher/updateSalary.do" method="post">
-<table border="1">
+<table border="1" class="table table-bordered form-table">
 	<tr>
 		<td>
 			아이디: ${teacherDetail.teacherId }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

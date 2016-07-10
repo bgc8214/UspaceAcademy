@@ -1,13 +1,15 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <style>
-	body{padding-top:100px;}
+	nav{padding-left: 200px;}
+	body{padding-top:20px;}
 	form#loginForm {
+		padding-left : 200px;
 		position :relative;
 		position : absolute;
 		left:750px;
 		color : black;
-		top : 14px;
+		top : 12px;
 		bold;
 	}
 
@@ -20,6 +22,7 @@
 		color : green;
 	}
 	span#bb {
+		padding-left: 200px;
 		position :relative;
 		position : absolute;
 		left:750px;
@@ -29,10 +32,18 @@
 	}
 }
 </style>
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("div").on("mouseover", function() {
+			this.style.cursor = 'pointer';
+		})
+	})
 
+</script>
 <c:choose>
 	<c:when test="${sessionScope.memberType==null }">
-		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #e3f2fd;'>
+		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: yellow;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand">UspaceAcademy</a>
@@ -112,7 +123,7 @@
 		</nav>
 	</c:when>
 	<c:otherwise>
-		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #e3f2fd;'">
+		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: yellow;'">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand">UspaceAcademy</a>

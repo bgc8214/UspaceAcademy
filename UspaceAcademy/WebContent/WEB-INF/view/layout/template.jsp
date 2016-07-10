@@ -51,16 +51,14 @@ $(document).ready(function(){
 </script>
 
 <style type="text/css">
-/*   header{
-	min-width : 1080px;
- 	background-color:pink;
+   header{
+	padding-left : 250px;
+	max-width : 1918px;
 	text-align:center;
-}  */
-/*  	nav{
-	padding: 5px;  */
-	
-} 
-	nav{
+	height:38px;
+}
+ /*  
+ nav{
 
 		line-height: 50px;
 		background-color:lightgray;
@@ -68,22 +66,23 @@ $(document).ready(function(){
 		min-height:700px;
 		width:250px;
 		float:left;
-	}  
+	}   */
 section{
-	padding: 15px;
+	padding-left: 400px;
 	min-height:722px;
+	max-width : 1000px;
 	float:left;
-	min-width : 1080px;
+	max-width : 1918px;
 	color: #191919; /* 글자색거의모든 */ 
 }
 footer{
 	font: 13px 맑은고딕  bold;
 	color: #8C8C8C;
-	background-color:#e3f2fd;
-	padding-top:20px;
+	background-color:yellow;
+ 	padding-top:70px; 
 	text-align:center;
 	height:100px;
-	min-width : 1080px;
+	max-width : 1918px;
 	clear:both;
 	text-align:center;
 }
