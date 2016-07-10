@@ -1,17 +1,17 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<style>
+table#tb {
+	width:700px;
+	height:100px;
+}
+</style>
+
 <h3 class="pageTlt">${sessionScope.login_info.teacherName} - 강의목록</h3>
 <hr>
-<script type="text/javascript">
-$(document).ready(effect);
-function effect() {
-	$("tr:eq(2)").css("background-color", "#DAD9FF");
 
-}
-</script>
-
-
-<table class="table table-responsive">
+<table class="table table-responsive" id="tb">
 	<thead>
 
 		<th>강의번호</th><th>강의명</th><th>강의시작일</th><th>강의종료일</th><th>출석</th><!-- <th>현재수강인원/총수강인원</th> -->

@@ -1,6 +1,12 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<style>
+table#tb {
+	width:700px;
+	height:100px;
+}
+</style>
 <script type="text/javascript">
 	// select 폼 체크
 	function selectCheck() {
@@ -20,7 +26,7 @@
 </script> 
 <h3 class="pageTlt">출결</h3>
 <hr>
-<table class="table table-bordered">
+<table class="table table-bordered" id="tb">
 	<tr>
 		<th>일차 | 학생</th>
 		<c:forEach items="${requestScope.studentInfoList}" var="list">

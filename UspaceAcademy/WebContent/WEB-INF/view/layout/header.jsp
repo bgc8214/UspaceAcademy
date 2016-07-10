@@ -30,6 +30,10 @@
 		top : 10px;
 		bold;
 	}
+	table#tb {
+		width:700px;
+		height:100px;
+	}
 }
 </style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>

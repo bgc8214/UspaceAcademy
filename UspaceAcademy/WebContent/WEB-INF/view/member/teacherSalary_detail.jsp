@@ -5,7 +5,7 @@
 <h3 class="pageTlt">${requestScope.teacherDetail.teacherName } 강사님 월급 정보</h3>
 <hr>
 
-<table border='1' class="table table-bordered table-hover">
+<table border='1' class="table table-bordered table-hover" id="tb">
 	<thead>
 		<tr>
 			<!-- <td>글번호</td> -->			

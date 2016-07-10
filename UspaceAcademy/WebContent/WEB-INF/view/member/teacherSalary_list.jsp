@@ -15,7 +15,7 @@ function effect(){
 
 <h2 class="pageTlt">월급 관리</h2><br>
 
-<table border='1' class="table table-bordered table-hover">
+<table border='1' class="table table-bordered table-hover" id="tb">
 	<thead>
 		<tr>
 			<!-- <td>글번호</td> -->	

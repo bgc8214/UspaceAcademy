@@ -1,7 +1,12 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<style>
+table#tb {
+	width:700px;
+	height:100px;
+}
+</style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
 <script type="text/javascript">
 
@@ -16,7 +21,7 @@ $(document).ready(function(){
 
 <h3 class="pageTly">출석부 조회&수정 페이지!!(총 강좌 일수 - ${requestScope.diffDays })</h3>
 <hr>
-<table class="table table-responsive">
+<table class="table table-responsive" id="tb">
 	<tr>
 		<th>일차 | 학생</th>
 		<c:forEach items="${requestScope.studentInfoList}" var="list">

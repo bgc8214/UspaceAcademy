@@ -14,7 +14,7 @@ $(document).ready(function(){
 
 <h3 class="pageTlt">결제하기 폼</h3>
 <hr>
-<table class="table table-bordered form-table">
+<table class="table table-bordered form-table" id="tb">
 	<tbody>
 		<tr>
 			<th>강의명</th>

@@ -21,7 +21,7 @@ $(document).ready(function(){
 <h3 class="pageTlt">${requestScope.lectureNo2}번 ${requestScope.lectureTitle} 강의 질문 게시판</h3>
 <hr>
 
-<table border='1' class="table table-bordered table-hover">
+<table id="tb" class="table table-bordered table-hover">
 	<thead>
 		<tr>
 			<!-- <td>글번호</td> -->			
