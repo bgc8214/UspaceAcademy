@@ -1,9 +1,9 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-button#faq {
-	position: fixed;
-	right: 650px;
+table#tb {
+	width: 700px;
+	heiht: 100px;
 }
 </style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
@@ -61,9 +61,9 @@ $(document).ready(function() {
 
 
 
-<h3 class-"pageTlt">FAQ</h3>
+<h3 class="pageTlt">FAQ</h3>
 <hr>
-	<table class="table table-borered">
+	<table class="table table-borered" id="tb">
 		<thead>
 			<tr>
 				<th>No</th>
@@ -129,16 +129,18 @@ $(document).ready(function() {
 	</c:choose>
 	</div>
 <p>
+
+<div align="right">
+	<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button class="btn btn-success" >FAQ리스트</button></a>
+</div>
+
 <!-- 제목으로 검색 -->
 <div class="boardBottom" align="center">
 <form action="/UspaceAcademy/FAQ/FAQTitleSearch.do" method="post">
 	<fieldset>
-		<dd><input type="text" name="title" placeholder="제목을 입력하세요"/>
+		<dt><input type="text" name="title" placeholder="제목을 입력하세요"/>
 			<input id="btn" type="submit" value="제목으로 검색" class="btn btn-info">
-		</dd>
+		</dt>
 	</fieldset>
 </form>
-</div><br>
-
-
-<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button class="btn btn-success" id="faq">FAQ리스트</button></a>
+</div>

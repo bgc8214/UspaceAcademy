@@ -1,10 +1,10 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <style type="text/css">
-table {
-	
+table#tb {
+	width: 700px;
+	heiht: 100px;
 }
-
 span, td, th {
 	padding: 5px;
 }
@@ -34,7 +34,7 @@ span {
 
 <form action="/UspaceAcademy/notice/noticeWrite.do" method="post">
 <input type="hidden" name="basicType" value="${requestScope.codeName}">
-	<table class="table table-bordered form-table">
+	<table class="table table-bordered form-table" id="tb">
 		<tbody>
 			<tr>
 				<th>제목</th>
@@ -42,9 +42,11 @@ span {
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea name="basicContent" class="form-control">${requestScope.notice.basicContent}</textarea><span class="error"><form:errors path="notice.basicContent" /></span></td>
+				<td><textarea rows="15" name="basicContent" class="form-control">${requestScope.notice.basicContent}</textarea><span class="error"><form:errors path="notice.basicContent" /></span></td>
 			</tr>
 		</tbody>
 	</table><p>
+	<div align="right">
 	<input id="btn" type="submit" value="전송" class="btn btn-info">
+	</div>
 </form>	

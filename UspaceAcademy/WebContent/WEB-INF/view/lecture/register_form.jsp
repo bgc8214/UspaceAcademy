@@ -16,10 +16,11 @@ span.errors {
 .ui-datepicker-calendar>tbody td:last-child a {
 	COLOR: blue;
 }
-#submit1{
-	position: fixed;
-	right: 650px;
+table#tb {
+	width: 700px;
+	heiht: 100px;
 }
+
 </style>
 <script type="text/javascript"
 	src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
@@ -186,7 +187,7 @@ span.errors {
 <hr>
 <div align="center">
 <form action="/UspaceAcademy/lecture/registerLecture.do" method="post" class="form-horizontal">
-<table class="table">
+<table class="table" id="tb">
 	<tr>
 		<th>강의명  </th>
 		<td><input type="text" name="lectureTitle"><span class="errors"><form:errors path="lecture.lectureTitle" delimiter="//" /></span></td>
@@ -260,6 +261,8 @@ span.errors {
 		</select>
  	</tr>
 </table>
-		<input id="submit1" type="submit" value="강의 등록" class="btn btn-success">
+<div align="right">
+		<input type="submit" value="강의 등록" class="btn btn-success">
+</div>
 </form>
 </div>

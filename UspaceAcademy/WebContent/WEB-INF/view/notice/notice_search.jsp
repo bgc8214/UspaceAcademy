@@ -1,9 +1,10 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-button#registerBtn {
-	position: fixed;
-	right: 650px;
+table#tb {
+	width: 700px;
+	heiht: 100px;
+
 }
 </style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
@@ -28,7 +29,7 @@ $(document).ready(function() {
 </script>
 <h3 class="pageTlt">검색된 페이지</h3>
 <hr>
-	<table class="table table-bordered">
+	<table class="table table-bordered" id="tb">
 		<thead>
 			<tr>
 				<th>공지제목</th>
@@ -92,7 +93,9 @@ $(document).ready(function() {
 <!-- 관리자용 공지사항 등록 버튼 -->
 <span class="notciceRegister">
 	<c:if test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button id="registerBtn" class="btn btn-success">공지사항 등록</button></a>
+		<div align="right">
+			<a href="/UspaceAcademy/notice/codeList.do?codeNames=공지사항"><button class="btn btn-success">공지사항 등록</button></a>
+		</div>
 	</c:if>
 </span>
 

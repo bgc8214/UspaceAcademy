@@ -1,10 +1,10 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <style type="text/css">
-table {
-	
+table#tb {
+	width: 700px;
+	heiht: 100px;
 }
-
 span, td, th {
 	padding: 5px;
 }
@@ -33,7 +33,7 @@ $(document).ready(function() {
 
 <form action="/UspaceAcademy/FAQ/FAQWrite.do" method="post">
 <input type="hidden" name="basicType" value="${requestScope.codeName}">
-	<table class="table table-bordered form-table">
+	<table class="table table-bordered form-table" id="tb">
 		<tbody>
 			<tr>
 				<th>제목</th>
@@ -41,9 +41,11 @@ $(document).ready(function() {
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td><textarea name="basicContent" class="form-control">${requestScope.FAQForm.basicContent}</textarea><span class="error"><form:errors path="FAQForm.basicContent" /></span>
+				<td><textarea rows="15" name="basicContent" class="form-control">${requestScope.FAQForm.basicContent}</textarea><span class="error"><form:errors path="FAQForm.basicContent" /></span>
 			</tr>
 		</tbody>
 	</table>
-		<input id="btn" type="submit" value="전송" class="btn btn-info">
+	<div align="right">
+		<input id="btn" type="submit" value="전송" class="btn btn-success">
+	</div>	
 </form>

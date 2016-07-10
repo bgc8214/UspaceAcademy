@@ -21,8 +21,9 @@ $(document).ready(function(){
 			"success":function(list){
 				
 				$("tbody tr.dummy").remove(); //먼저 dummy class의 tr을 지워주고
-				$('<tr class="dummy"><td colspan="10" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
-				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : \\"+list[0].lecturePrice+"<br>";
+				$('<tr class="dummy"><td colspan="10" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">세부내용'+list[0].lectureTitle+'</textarea></td></tr>').insertAfter(tmp);
+//				$('<tr class="dummy"><td colspan="10" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
+//				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : \\"+list[0].lecturePrice+"<br>";
 					tmp.next().children().eq(0).append(txt);
 /* 					if(list[1]=="student"){
 						var txt = tmp.children().eq(0).text();

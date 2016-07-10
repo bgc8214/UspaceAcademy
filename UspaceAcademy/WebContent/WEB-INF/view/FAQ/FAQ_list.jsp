@@ -1,9 +1,9 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-button#registerBtn {
-	position: fixed;
-	right: 650px;
+table#tb {
+	width: 700px;
+	heiht: 100px;
 }
 </style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
@@ -58,7 +58,7 @@ $(document).ready(function() {
 </script>
 <h3 class="pageTlt">FAQ</h3>
 <hr>
-	<table class="table table-bordered">
+	<table class="table table-bordered" id="tb">
 		<thead>
 			<tr>
 				<th>No</th>
@@ -116,6 +116,16 @@ $(document).ready(function() {
 	</c:choose>
 </div>
 <p>
+<!-- 관리자용 FAQ 등록 버튼 -->
+<span class="FAQRegister"> 
+	<c:if test="${sessionScope.memberType=='administrator'}">
+	<div align="right">
+		<a href="/UspaceAcademy/FAQ/codeList.do?codeNames=FAQ"><button class="btn btn-success">FAQ등록</button></a>
+	</div>
+	</c:if>
+</span>	
+<p>
+
 <!-- 제목으로 검색 -->
 <div class="boardBottom">
 <form action="/UspaceAcademy/FAQ/FAQTitleSearch.do" method="post">
@@ -126,10 +136,5 @@ $(document).ready(function() {
 </form>
 </div><br>
 
-<!-- 관리자용 FAQ 등록 버튼 -->
-<span class="FAQRegister"> 
-	<c:if test="${sessionScope.memberType=='administrator'}">
-		<a href="/UspaceAcademy/FAQ/codeList.do?codeNames=FAQ"><button class="btn btn-success" id="registerBtn">FAQ등록</button></a>
-	</c:if>
-</span>	
+
 
