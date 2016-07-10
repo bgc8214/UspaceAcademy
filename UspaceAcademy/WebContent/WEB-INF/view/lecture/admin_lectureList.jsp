@@ -21,37 +21,16 @@ $(document).ready(function(){
 			"success":function(list){
 				
 				$("tbody tr.dummy").remove(); //먼저 dummy class의 tr을 지워주고
-				$('<tr class="dummy"><td colspan="10" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">세부내용'+list[0].lectureTitle+'</textarea></td></tr>').insertAfter(tmp);
-//				$('<tr class="dummy"><td colspan="10" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
-//				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : \\"+list[0].lecturePrice+"<br>";
-					tmp.next().children().eq(0).append(txt);
-/* 					if(list[1]=="student"){
-						var txt = tmp.children().eq(0).text();
-						var temp="<span id='error'><font color='red'><b>수강 인원이 가득찼습니다</b></font></span>";
-						if(list[0].lectureCurrentStudent<list[0].lectureTotalStudent){
-							temp = "<a href="+"/UspaceAcademy/lecture/applyLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureApply'>수강신청</button></a>"+
-								   	   "<a id='zzim' href="+"/UspaceAcademy/lecture/zzimLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureZzim'>찜하기</button></a>";
-						
-						}
-						tmp.next().children().eq(0).append($(temp)); 
-					}*/
+				$("tbody tr.dummy1").remove();
+				$('<tr class="dummy"><td colspan="5"><label>강의제목&nbsp;&nbsp;</label>'+list[0].lectureTitle+'</td><td colspan="5"><label>수강료&nbsp;&nbsp;</label>'+list[0].lecturePrice+'</tr><tr class="dummy1"><td colspan="10" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">'+list[0].lectureDescription+'</textarea></td></tr>').insertAfter(tmp);
+				tmp.next().children().eq(0).append();
+
 					if(list[1]=="administrator"){
 						var txt2 = tmp.children().eq(0).text();
 						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?lectureNo="+txt2+"&codeType=teacherSubject><button class='btn btn-warning'>강의수정</button></a>"+
 								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?lectureNo="+txt2+"><button id='removeBtn' class='btn btn-danger'>강의삭제</button></a>";
-						tmp.next().children().eq(0).append($(temp2));
+						tmp.next().next().children().eq(0).append($(temp2));
 					}
-				
-/*	정훈 - 강의일수 확인을 위해서...
-				var start_String = list[0].lectureStartDate;
-				var end_String = list[0].lectureEndDate;
-				var start_Array = start_String.split("/");
-				var end_Array = end_String.split("/");
-				var start_date = new Date(start_Array[0], Number(start_Array[1])-1, start_Array[2]);
-				var end_date = new Date(end_Array[0], Number(end_Array[1])-1, end_Array[2]);
-				var between_day = (end_date.getTime() - start_date.getTime())/1000/60/60/24;
-				alert("강의일수 - " +(between_day+1));		
- */	 
 			},
 			"error":function(xhr, status, errorMsg){
 				alert("오류가 발생했습니다."+status+", "+errorMsg);

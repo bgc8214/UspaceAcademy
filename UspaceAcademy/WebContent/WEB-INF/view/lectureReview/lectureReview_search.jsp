@@ -28,14 +28,27 @@ color: #353535;
 font-size: 11px;
 line-height:140%;
 }
+table#tb {
+	width: 700px;
+	heiht: 100px;
+}
 
 </style>
-<h3>수강후기</h3>
-<hr/>
+<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#ex").on("click", "tr", function() {
+			alert("상세페이지로 이동합니다.");
+		})
+	})
+</script>
+
+<h3 class="pageTlt">수강후기</h3>
+<hr>
 
 <body id="main"> 
 <div class="boardList">
- 	<table border="1" summary>
+ 	<table border="1" class="table table-bordered" id="tb">
 		<thead>
 			<tr>
 				<th scope="col">글번호</th>
@@ -49,12 +62,12 @@ line-height:140%;
 			</tr>
 		</thead>
 		
-		<tbody>
+		<tbody id="ex">
 		
 		<%-- <form><input id="page" type="hidden" value="${param.page}"></form> <!-- ?????????????지워????? --> --%>
 		
 			<c:forEach var="lectureListReview" items="${requestScope.lectureListReview}">
-				<tr>
+				<tr onclick="location.href='/UspaceAcademy/lectureReview/lecture_review_detail.do?reviewNo=${lectureListReview.reviewNo}'" style="cursor:pointer;">
 					<td>${lectureListReview.reviewNo}</td><!--  글번호 -->
 					<td>${lectureListReview.reviewWriterId}</td><!--  id추가  -->
 					<td>${lectureListReview.reviewWriter}</td><!-- 이름 -->
@@ -74,6 +87,7 @@ line-height:140%;
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
 <p>
+	<div align="center">
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
@@ -106,6 +120,7 @@ line-height:140%;
 		</c:when>
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
+	</div>
 <p>
 <!-- --------------------------------------------------------------------------------------------------------- -->
 
@@ -115,11 +130,13 @@ line-height:140%;
 		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>후기 등록</button></a><!--  수강후기 등록폼으로 이동 -->
 	</c:if>	 --%>																																								<!-- 코드타입 여기서 넘겨줌!!!!!!!!!!!!!, 이동하고자하는 컨트롤러(리퀘스트 매핑).do적기, controller에서 jsp로 전달하는 구문써야함 -->
 	<c:if test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button>후기 등록</button></a>
+	<div align="right">
+		<a href="/UspaceAcademy/lectureReview/lecture_review_register.do?codeType=teacherSubject"><button class="btn btn-success">후기 등록</button></a>
+	</div>
 	</c:if>
 </span>
 <!-- 전체 목록으로 돌아가기 -->
-<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button>전체목록</button></a>
+<a href="/UspaceAcademy/lectureReview/lecture_review_list.do?reviewNo"><button class="btn btn-primary">전체목록</button></a>
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
 <p>
@@ -131,9 +148,7 @@ line-height:140%;
 	<option value="lectureTitle">강의명</option>
 </select>
 <input type="text" name="keyword"><!--  검색할때 keyword -->
-<input type="submit" value="검색">
-
-
+<input type="submit" value="검색" class="btn btn-info">
 
 </form>
 

@@ -5,8 +5,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %><!-- ??????? -->
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%><!--  밸리 해주려면 이거선언* -->
 <style type="text/css">
-
-
+table#tb {
+	width: 800px;
+	heiht: 100px;
+}
 </style>
 
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
@@ -51,14 +53,8 @@ $(document).ready(function(){
 </script>
 
 
-
-
-
-
-
 <title>lectureReview_modify.jsp</title>
-<h2>수강후기|수정</h2>
-
+<h3 class="pageTlt">수강후기|수정</h3>
 
 
 <form method="POST" action="/UspaceAcademy/lectureReview/lecture_review_modify.do"> <!--  폼으로 묶기* -->
@@ -68,41 +64,41 @@ $(document).ready(function(){
 <input type="hidden" name="reviewWriter" value="${requestScope.lectureListReview.reviewWriter}">
 <input type="hidden" name="reviewDate" value="${requestScope.lectureListReview.reviewDate }">
 <input type="hidden" name="reviewHit" value="${requestScope.lectureListReview.reviewHit }">
- 
-<hr/>
+ <table class="table table-bordered" id="tb">
 			<tr>
-				<td><!-- 강의과목 --></td>
-				<td><!-- 강의명 --></td>
-				<td><!-- 제목 --></td>
-				<td><!-- 글내용 --></td>
-			</tr>
-		<tbody>
-
-				<tr>
+				<th>과목</th>
+				<td>
 				<select name="lectureSubject" id="lectureSubject">
 					<c:forEach items="${requestScope.codeType }" var="code"> <!--  컨트롤러* -->
 					<option value="${code.codeName }">${code.codeName }</option> <!--  vo ??* -->
 					</c:forEach>
 					<span class="error"><form:errors path="lec.lectureSubject"/></span>
-					</select>
-					
+				</select>
+				</td>
+				<th>강의명</th>
+				<td>
 					<!--  강의명(lecture(개설강좌)에서 가져옴) -->
 					<select id="lectureTitle" name="lectureTitle">
 					<c:forEach items="${requestScope.lectureTitle}"  var="lectureReviewList">
 					<option value="${lectureReviewList.lectureTitle}">${lectureReviewList.lectureTitle}</option>
 					</c:forEach>
 					</select>
-					
-
-
-					<td><input type="text" name="reviewTitle" value="${requestScope.lectureListReview.reviewTitle }" name="title" size="70" placeholder="제목을 입력하세요" required="required"><span class="error"><form:errors path="lec.reviewTitle" delimiter="//"/></span></td><!-- 작성  -->
-					<td><textarea rows="20" cols="100" name="reviewContent" placeholder="입력하세요">${requestScope.lectureListReview.reviewContent }</textarea><span class="error"><form:errors path="lec.reviewContent" delimiter="//"/></span></td><!-- 작성  -->
+				</td>
+			</tr>
+				<tr>
+					<th>제목</th>
+					<td colspan="3"><input type="text" name="reviewTitle" value="${requestScope.lectureListReview.reviewTitle }" name="title" size="70" placeholder="제목을 입력하세요" required="required"><span class="error"><form:errors path="lec.reviewTitle" delimiter="//"/></span></td><!-- 작성  -->
 				</tr>
-
+				<tr>
+					<th>내용</th>	
+					<td colspan="3"><textarea rows="20" cols="100" name="reviewContent" placeholder="입력하세요">${requestScope.lectureListReview.reviewContent }</textarea><span class="error"><form:errors path="lec.reviewContent" delimiter="//"/></span></td><!-- 작성  -->
+				</tr>
 		</tbody>	
 	</table> 
-	<input id="ok" type="submit" value="후기 수정 완료">
-	<input type="reset" value="초기화"/> 
+	<div align="right">
+	<input id="ok" type="submit" value="후기 수정 완료" class="btn btn-warning">
+	<input type="reset" value="초기화" class="btn btn-default"> 
+	</div>
 </form>
 
 

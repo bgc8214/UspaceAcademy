@@ -1,7 +1,12 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
+<style>
+table#tb {
+	width: 700px;
+	heiht: 100px;
+}
+</style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 
@@ -21,9 +26,10 @@ $(document).ready(function(){
 
 </script>
 
-<h2 class="pageTlt">1:1문의 게시판</h2><br>
+<h3 class="pageTlt">1:1문의 게시판</h3>
+<hr>
 
-<table border='1' class="table table-bordered table-hover">
+<table class="table table-bordered table-hover" id="tb">
 	<thead>
 		<tr>
 			<!-- <td>글번호</td> -->			
@@ -80,6 +86,7 @@ $(document).ready(function(){
 </table>
 
 <p>
+<div align="center">
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
@@ -112,6 +119,16 @@ $(document).ready(function(){
 		</c:when>
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
+</div>
+<p>
+
+<c:choose>
+	<c:when test="${sessionScope.memberType=='student'}">
+	<div align="right">
+		<a href="/UspaceAcademy/inquiry/registerInquiryForm.do"><button class="btn btn-success">질문하기 등록</button></a>
+	</div>
+	</c:when>
+</c:choose>
 <p>
 
 <!-- 검색관련 -->
@@ -122,16 +139,10 @@ $(document).ready(function(){
 		<!-- <option value="advancedId">글쓴이</option> -->
 	</select>
 	<input type="text" name="keyword">
-	<input id="search" type="submit" value="검색">
+	<input id="search" type="submit" value="검색" class="btn btn-primary">
 </form>
 
 <br>
-
-<c:choose>
-	<c:when test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/inquiry/registerInquiryForm.do">질문하기 등록</a>
-	</c:when>
-</c:choose>
 
 
 

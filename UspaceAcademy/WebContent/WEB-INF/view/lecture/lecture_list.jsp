@@ -4,17 +4,6 @@
 tr.dummy, td.dummy {
 	border: 0px;
 }
-
-#zzimBtn {
-	position: fixed;
-	left: 20px;
-}
-
-#payList {
-	position: relative;
-	position: absolute;
-	left: -470px;
-}
 </style>
 <script type="text/javascript">
 var tmp;//이벤트소스를 저장하기 위한 변수
@@ -28,25 +17,19 @@ $(document).ready(function(){
 			"dataType":"json", //응답데이터 타입 지정. text는 default
 			"success":function(list){	
 				$("tbody tr.dummy").remove(); //먼저 dummy class의 tr을 지워주고
-/* 				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : \\"+list[0].lecturePrice+"<br>";
+				$("tbody tr.dummy1").remove();
+				$('<tr class="dummy"><td colspan="5"><label>강의제목&nbsp;&nbsp;</label>'+list[0].lectureTitle+'</td><td colspan="5"><label>수강료&nbsp;&nbsp;</label>'+list[0].lecturePrice+'</tr><tr class="dummy1"><td colspan="10" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">'+list[0].lectureDescription+'</textarea></td></tr>').insertAfter(tmp);
+				tmp.next().children().eq(0).append();
 				
-				$('<tr class="dummy"><td colspan=8" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">강의제목 '+list[0].lectureTitle+'<br>세부 내용 : '+list[0].lectureDescription+"<br>강의 가격 : "+list[0].lecturePrice+'</textarea></td></tr>').insertAfter(tmp);
-
-				$('<tr class="dummy"><td colspan=8" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">'+txt+'</textarea></td></tr>').insertAfter(tmp);
-
-				 */
- 				$('<tr class="dummy"><td colspan="9" class="dummy"></td></tr>').insertAfter(tmp); //이벤트소스의 다음 형제로 추가해준다.
-				var txt = "강의 제목 : "+list[0].lectureTitle+"<br>세부 내용 : "+list[0].lectureDescription+"<br>강의 가격 : "+list[0].lecturePrice+"<br>";
-					tmp.next().children().eq(0).append(txt);
-					if(list[1]=="student"){
+				if(list[1]=="student"){
 						var txt = tmp.children().eq(0).text();
 						var temp="<span id='error'><font color='red'><b>수강 인원이 가득찼습니다</b></font></span>";
 						if(list[0].lectureCurrentStudent<list[0].lectureTotalStudent){
-							temp = "<a href="+"/UspaceAcademy/lecture/applyLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureApply'>수강신청</button></a>"+
-								   	   "<a id='zzim' href="+"/UspaceAcademy/lecture/zzimLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='lectureZzim'>찜하기</button></a>";
+							temp = "<a href="+"/UspaceAcademy/lecture/applyLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='btn btn-success'>수강신청</button></a>"+
+								   	   "<a id='zzim' href="+"/UspaceAcademy/lecture/zzimLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt+"><button class='btn btn-warning'>찜하기</button></a>";
 						
 						}
-						tmp.next().children().eq(0).append($(temp));
+						tmp.next().next().children().eq(0).append($(temp));
 					}
 					if(list[1]=="administrator"){
 						var txt2 = tmp.children().eq(0).text();
@@ -195,8 +178,10 @@ $(document).ready(function(){
 		<a href="/UspaceAcademy/lecture/registerForm.do?codeType=teacherSubject"><button class="btn btn-success">강의 등록</button></a>
 	</c:if>
 	<c:if test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/lecture/zzimList.do?page=${param.page }"><button class="btn btn-success" id="zzimBtn">찜 목록</button></a>
-		<a href="/UspaceAcademy/lecture/applyList.do?page=${param.page }"><button class="btn btn-warning" id="payList">결제 목록</button></a>
+		<div align="left">
+			<a href="/UspaceAcademy/lecture/zzimList.do?page=${param.page }"><button class="btn btn-warning">찜 목록</button></a>
+			<a href="/UspaceAcademy/lecture/applyList.do?page=${param.page }"><button class="btn btn-danger">결제 목록</button></a>
+		</div>	
 	</c:if>
 </span>
 

@@ -9,8 +9,12 @@
 	font-weight:bold;   /*--폰트 굵기---*/
 	color:#ff0080;    /*--폰트 색깔---*/
 	width:130;height:30;  /*--버튼 크기---*/
-
 }
+table#tb {
+	width: 950px;
+	heiht: 100px;
+}
+
 </style>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -37,7 +41,7 @@ $(document).ready(function(){
 <h2>${sessionScope.login_info.studentName }님의 찜 목록</h2>
 <font color="red" size="5">${requestScope.errorMessage}</font>
 <form class="form" method="post" action="/UspaceAcademy/lecture/applyFromZzimList.do?page=${requestScope.page }">
-<table border="3" class="table table-hover">
+<table class="table table-hover" id="tb">
 <thead>
 <tr>
 	<th>강의선택</th><th>강의번호</th><th>강의과목</th><th>강의명</th><th>강의기간</th><th>수강요일</th><th>강의시간</th>
@@ -61,7 +65,7 @@ $(document).ready(function(){
 </tbody>
 </table>
 <div align="right">
-<input class="btn btn-warning" id="submit" type="submit" value="결제하기">
+<input class="btn btn-danger" id="submit" type="submit" value="결제하기">
 &nbsp;<a href="/UspaceAcademy/lecture/lectureList.do?page=${requestScope.page }"><input class="btn btn-info" type="button" value="강의목록"></a>
 </div>
 </form>
