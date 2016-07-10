@@ -1,4 +1,3 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 
-
-메인페이지<br>
+<img src="image/main.jpg">

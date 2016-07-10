@@ -55,17 +55,20 @@ $(document).ready(function(){
 	min-width : 1080px;
  	background-color:pink;
 	text-align:center;
-	padding: 5px;  
-
 }  */
 /*  	nav{
+	padding: 5px;  */
+	
+} 
+	nav{
+
 		line-height: 50px;
 		background-color:lightgray;
 		padding: 15px;
 		min-height:700px;
 		width:250px;
 		float:left;
-	}  */
+	}  
 section{
 	padding: 15px;
 	min-height:722px;
