@@ -86,8 +86,10 @@ $(document).ready(function(){
 
 </tbody>
 </table>
-	<input id="ok" type="submit" value="과제등록완료">
-	<input type="reset" value="초기화"/> 
+	<div align="center">
+		<input id="ok" type="submit" value="과제등록완료" class="btn btn-success">
+		<input type="reset" value="초기화" class="btn btn-default"> 
+	</div>
 </form>
 
 
