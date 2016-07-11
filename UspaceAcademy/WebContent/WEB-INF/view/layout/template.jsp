@@ -81,6 +81,7 @@ footer{
 	height:100px;
 	max-width : 1918px;
 	clear:both;
+	padding-left : 300px;
 }
 </style>
 </head>

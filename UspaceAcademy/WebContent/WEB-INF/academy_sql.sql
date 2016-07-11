@@ -11,6 +11,7 @@ create table code_table(
 -- 2.관리자ㅇ
 drop table administrator;
 create table administrator(
+	administrator_id varchar2(15) primary key,
 	administrator_password varchar2(50) not null
 );
 ------------------------------------------------------------------------------------------------------------------------------------------------------
