@@ -232,7 +232,7 @@ CREATE TABLE attendance(
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 ------------------------------------------------------------------------------------------------------------------------------------------------------
--- 0 . code_table insert하는 구문 
+-- 0 . code_table insert하는 구문  ( -> 이거하려면 출결table지웠다가 다시해야함)
 insert into CODE_TABLE values(code_table_seq.nextval, '공지사항', 'basic_board');
 insert into CODE_TABLE values(code_table_seq.nextval, 'FAQ', 'basic_board');
 insert into CODE_TABLE values(code_table_seq.nextval, '국어', 'teacherSubject');

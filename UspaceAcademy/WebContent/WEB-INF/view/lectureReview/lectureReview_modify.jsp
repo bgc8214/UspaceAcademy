@@ -14,8 +14,8 @@ table#tb {
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-	//폼체크
-	 $("#ok").on("click",function(){
+ 	//폼체크
+	  $("#ok").on("click",function(){
 		 	 	if(!$("input[name=reviewTitle]").val()){
 		 			alert("제목을 입력하세요");
 		 			return false;
@@ -24,32 +24,32 @@ $(document).ready(function(){
 		 			alert("내용을 입력하세요");
 		 			return false;
 		 		}
-		 	});
-		 });
+		 	}); 
 	
 
 	
-	$("#lectureSubject").on("change",function(){
-		var tmp = $(this);
-		$.ajax({
-			"url":"/UspaceAcademy/lectureReview/selectLectureTitleByLectureSubject.do",
-			"type":"POST",
-			"data":"lectureSubject="+tmp.val(),
-			"dataType":"json",
-			"success":function(list){
-				for(var i = 0; i<list.length; i++){
-					var lectureTitle = list[i].lectureTitle;
-					$("#lectureTitle").append("<option>"+lectureTitle+"</option>");
-				}
-			}, //오류메세지
-			"error":function(xhr,status,errorMsg){
-				alert("오류가발생했습니다"+status+","+errorMsg);
-			},
-			"beforeSend":function(){
-				$("#lectureTitle").empty();
+$("#lectureSubject").on("change", function(){
+	var tmp = $(this);
+	$.ajax({
+		"url":"/UspaceAcademy/lectureReview/selectLectureTitleByLectureSubject.do",
+		"type":"POST", 
+		"data":"lectureSubject="+tmp.val(),
+		"dataType":"json",
+		"success":function(list){
+			for(var i=0; i<list.length; i++){
+				var lectureTitle = list[i].lectureTitle;
+				$("#lectureTitle").append("<option>"+lectureTitle+"</option>");
 			}
-		})
-	})
+		},
+		"error":function(xhr,status,errorMsg){
+			alert("오류가발생했습니다"+status+","+errorMsg);
+		},
+		"beforeSend":function(){
+			$("#lectureTitle").empty();
+		}
+	});
+});                 //과목에따른 강의명   //●오류: 오타조심!!
+});                //●오류: 가로닫는거 위치랑 갯수 (위아래)조심!
 </script>
 
 
