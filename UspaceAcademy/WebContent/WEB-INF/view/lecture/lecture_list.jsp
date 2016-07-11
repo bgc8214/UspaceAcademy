@@ -65,7 +65,7 @@ $(document).ready(function(){
 	
 	$(".lectureList").on("mouseover", function(){
 		this.style.cursor = 'pointer';
-        this.style.backgroundColor = '#dcfac9';
+        this.style.backgroundColor = '#D8EFF1';
 	});
 	
 	$(".lectureList").on("mouseout", function(){

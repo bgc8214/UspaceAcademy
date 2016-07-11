@@ -20,7 +20,7 @@ table#tb {
 			alert("상세페이지로 이동합니다");
 		})
 		$(".noticeList").on("mouseover", function() {
-			$(this).css("background-color", "#FFD9FA");
+			$(this).css("background-color", "#D8EFF1");
 		});
 		$(".noticeList").on("mouseout", function() {
 			$(this).css("background-color", "white");
