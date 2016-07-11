@@ -13,7 +13,7 @@ table#tb {
 $(document).ready(function(){
 	$("#insert").on("click", function(){
 		if($("textarea[name=commentContent]").val()==""){
-			alert("검색할 내용을 입력하세요!");
+			alert("댓글 내용을 입력하세요!");
 			
 			return false;
 		}
@@ -44,6 +44,20 @@ $(document).ready(function(){
 	</tr>
 </table>
 <p>
+<c:choose>
+	<c:when test="${sessionScope.memberType=='student'}">
+		<c:if test="${requestScope.inquiryDetail.advancedId eq sessionScope.login_info.studentId}">
+			<a href="/UspaceAcademy/inquiry/updateInquiryForm.do?advancedNo=${requestScope.inquiryDetail.advancedNo }"><button class="btn btn-warning">글 수정</button></a>&nbsp;&nbsp;&nbsp;
+			<a href="/UspaceAcademy/inquiry/deleteInquiry.do?advancedNo=${requestScope.inquiryDetail.advancedNo }"><button class="btn btn-danger">글 삭제</button></a>&nbsp;&nbsp;&nbsp;
+		</c:if>
+	</c:when>
+	<c:otherwise>
+		<c:if test="${sessionScope.memberType=='administrator'}">
+			<a href="/UspaceAcademy/inquiry/deleteInquiry.do?advancedNo=${requestScope.inquiryDetail.advancedNo }"><button class="btn btn-danger">글 삭제</button></a>&nbsp;&nbsp;&nbsp;
+		</c:if>
+	</c:otherwise>
+</c:choose>
+
 <div align="right">
 <a href="/UspaceAcademy/inquiry/inquiryList.do"><button class="btn btn-primary">전체 목록</button></a>
 </div>
@@ -105,17 +119,4 @@ $(document).ready(function(){
 
 <p>
 
-<c:choose>
-	<c:when test="${sessionScope.memberType=='student'}">
-		<c:if test="${requestScope.inquiryDetail.advancedId eq sessionScope.login_info.studentId}">
-			<a href="/UspaceAcademy/inquiry/updateInquiryForm.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">글 수정</a>&nbsp;&nbsp;&nbsp;
-			<a href="/UspaceAcademy/inquiry/deleteInquiry.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">글 삭제</a>&nbsp;&nbsp;&nbsp;
-		</c:if>
-	</c:when>
-	<c:otherwise>
-		<c:if test="${sessionScope.memberType=='administrator'}">
-			<a href="/UspaceAcademy/inquiry/deleteInquiry.do?advancedNo=${requestScope.inquiryDetail.advancedNo }">글 삭제</a>&nbsp;&nbsp;&nbsp;
-		</c:if>
-	</c:otherwise>
-</c:choose>
 
