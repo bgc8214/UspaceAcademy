@@ -29,12 +29,9 @@ create table teacher(
 	teacher_salary number not null
 );
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-insert into teacher values('11111', '11111', '강사1111', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
-insert into teacher values('111111', '111111', '강사1-6개', 'as@naver.com', '010-6266-5153', '서울시 서초구', '영어', 1000000);
-insert into teacher values('teacher', '1234', '강사2222', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
-insert into teacher values('id-10', '1111', '홍길동', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
-insert into teacher values('id-11', '1111', '홍일일', 'asd@naver.com', '010-6366-5153', '서울시 서초구', '영어', 1000000);
-insert into teacher values('id-12', '1111', '홍이이', 'a@naver.com', '010-6666-5153', '서울시 서초구', '수학', 1000000);
+insert into teacher values('teacher1', '1234', '김국어', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
+insert into teacher values('teacher2', '1234', '김영어', 'as@naver.com', '010-6266-5153', '서울시 서초구', '영어', 1000000);
+insert into teacher values('teacher3', '1234', '김수학', 'as@naver.com', '010-6266-5153', '서울시 서초구', '수학', 1000000);
 select * from teacher;
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 -- 4.학생
@@ -48,11 +45,10 @@ CREATE TABLE student(
 	student_address varchar2(100) not null --주소
 );
 ------------------------------------------------------------------------------------------------------------------------------------------------------
-insert into STUDENT values('id-1','1111','이영주','iidd1@kosta.com','010-1111-1111','경기도 용인시 처인구 고림동');
-insert into STUDENT values('id-2','2222','김수진','iidd2@kosta.com','010-1111-2222','경기도 수원시 장안구 파장동');
-insert into STUDENT values('id-3','3333','황경희','iidd3@kosta.com','010-1111-3333','경기도 안산시 상록구 본오동');
-insert into STUDENT values('id-4','4444','김세은','iidd4@kosta.com','010-1111-4444','서울시 서대문구 은평동');
-insert into STUDENT values('22222','22222','학생입니다','iidd4@kosta.com','010-1111-4444','서울시 서대문구 은평동');
+insert into STUDENT values('student1','1234','이영주','iidd1@kosta.com','010-1111-1111','경기도 용인시 처인구 고림동');
+insert into STUDENT values('student2','1234','김수진','iidd2@kosta.com','010-1111-2222','경기도 수원시 장안구 파장동');
+insert into STUDENT values('student3','1234','황경희','iidd3@kosta.com','010-1111-3333','경기도 안산시 상록구 본오동');
+insert into STUDENT values('student4','1234','김세은','iidd4@kosta.com','010-1111-4444','서울시 서대문구 은평동');
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 -- 5.FAQ, 공지사항ㅇ
 drop table basic_board;
@@ -242,7 +238,8 @@ insert into CODE_TABLE values(code_table_seq.nextval, 'FAQ', 'basic_board');
 insert into CODE_TABLE values(code_table_seq.nextval, '국어', 'teacherSubject');
 insert into CODE_TABLE values(code_table_seq.nextval, '영어', 'teacherSubject');
 insert into CODE_TABLE values(code_table_seq.nextval, '수학', 'teacherSubject');
-
+drop sequence CODE_TABLE_seq;
+create sequence CODE_TABLE_seq nocache;
 
 --끝
 --아래x
