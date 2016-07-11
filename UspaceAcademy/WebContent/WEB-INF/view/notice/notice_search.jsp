@@ -1,11 +1,10 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
-	button#registerBtn {
-		position :relative;
-		position : absolute;
-		left:390px;
-	}
+button#registerBtn {
+	position: fixed;
+	right: 650px;
+}
 </style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
@@ -26,10 +25,6 @@ $(document).ready(function() {
 		$(this).css("background-color", "white");
 	});
 });
-	$(document).ready(effect);
-	function effect() {
-		$("tr:eq(2)").css("background-color", "#E8D9FF");
-	}
 </script>
 <h3 class="pageTlt">검색된 페이지</h3>
 <hr>

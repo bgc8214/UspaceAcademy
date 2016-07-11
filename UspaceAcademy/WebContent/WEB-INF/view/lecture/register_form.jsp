@@ -16,6 +16,10 @@ span.errors {
 .ui-datepicker-calendar>tbody td:last-child a {
 	COLOR: blue;
 }
+#submit1{
+	position: fixed;
+	right: 650px;
+}
 </style>
 <script type="text/javascript"
 	src="/UspaceAcademy/jQuery/jquery-ui.min.js"></script>
@@ -176,52 +180,86 @@ span.errors {
 
 			$('#lectureEndTime').timepicker({timeFormat:'H:i','minTime':'09:00','maxTime': '23:00'}); //lectureEndTime 시간 기본 설정
 		})
-
 	</script>
-
-
 
 <h3 class="pageTlt">강의 등록폼</h3>
 <hr>
+<div align="center">
 <form action="/UspaceAcademy/lecture/registerLecture.do" method="post" class="form-horizontal">
-	강의명 : <input type="text" name="lectureTitle"><span
-		class="errors"><form:errors path="lecture.lectureTitle"
-			delimiter="//" /></span><br> 
-	강의 설명 : <textarea rows="10" cols="20" name="lectureDescription"></textarea>	<span class="errors"><form:errors path="lecture.lectureDescription" delimiter="//" /></span><br> 
-	강의 시작시간 : <input type="text" id="lectureStartTime" name="lectureStartTime"><span class="errors"><form:errors path="lecture.lectureStartTime" delimiter="//" /></span><br>
-	강의 종료시간 : <input type="text" id="lectureEndTime" name="lectureEndTime"><span class="errors"><form:errors path="lecture.lectureEndTime" delimiter="//" /></span><br>
-	<%-- 강의 요일 : <input type="text" name="lectureDay"><span class="errors"><form:errors path="lecture.lectureDay" delimiter="//"/></span><br> --%>
-	강의 요일 :<label> 월 <input type="checkbox" name="lectureDay2"	value='월'></label> 
-			<label> 화 <input type="checkbox" name="lectureDay2" value='화'></label>
-			 <label> 수 <input type="checkbox" name="lectureDay2" value='수'></label> 
-			 <label>
-		목 <input type="checkbox" name="lectureDay2" value='목'>
-	</label> <label> 금 <input type="checkbox" name="lectureDay2" value='금'></label>
-	<label> 토 <input type="checkbox" name="lectureDay2" value='토'></label>
-	<label> 일 <input type="checkbox" name="lectureDay2" value='일'></label>
-	<font color="red">${param.errorMessage }</font><br> 강의 수강료 : <input
-		type="text" name="lecturePrice"><span class="errors"><form:errors
-			path="lecture.lecturePrice" delimiter="//" /></span><br> 강의 수강인원 : <input
-		type="text" name="lectureTotalStudent"><span class="errors"><form:errors
-			path="lecture.lectureTotalStudent" delimiter="//" /></span><br> <input
-		type="hidden" name="lectureCurrentStudent" value="0"><span
-		class="errors"><form:errors
-			path="lecture.lectureCurrentStudent" delimiter="//" /></span><br> 강의
-	시작일 : <input id="bt1" type="text" name="lectureStartDate"
-		readonly="readonly"><span class="errors"><form:errors
-			path="lecture.lectureStartDate" delimiter="//" /></span><br> 강의 종료일 :
-	<input id="bt2" type="text" name="lectureEndDate" readonly="readonly"><span
-		class="errors"><form:errors path="lecture.lectureEndDate"
-			delimiter="//" /></span><br> 강의 종류 : <select id="subject"
-		name="lectureSubject">
+<table class="table">
+	<tr>
+		<th>강의명  </th>
+		<td><input type="text" name="lectureTitle"><span class="errors"><form:errors path="lecture.lectureTitle" delimiter="//" /></span></td>
+	</tr>
+	<tr>
+		<th>강의설명  </th>
+		<td><textarea name="lectureDescription" class="form-control"></textarea><span class="errors"><form:errors path="lecture.lectureDescription" delimiter="//" /></span></td>
+	</tr>
+	<tr> 
+		<th>강의 시작시간</th>
+		<td><input type="text" id="lectureStartTime" name="lectureStartTime"><span class="errors"><form:errors path="lecture.lectureStartTime" delimiter="//" /></span></td>	
+	</tr>
+	<tr>
+		<th>강의 종료시간</th>
+		<td><input type="text" id="lectureEndTime" name="lectureEndTime"><span class="errors"><form:errors path="lecture.lectureEndTime" delimiter="//" /></span></td>
+	</tr>
+	<tr>
+		<th>강의 요일</th>
+		<td>
+		<div id="dummy">
+		 	일<input type="checkbox" name="lectureDay2" value='일'>
+
+		 	월 <input type="checkbox" name="lectureDay2" value='월'>
+		
+			 화 <input type="checkbox" name="lectureDay2" value='화'>
+		
+			수 <input type="checkbox" name="lectureDay2" value='수'>	
+		
+			 목 <input type="checkbox" name="lectureDay2" value='목'>
+		
+			금 <input type="checkbox" name="lectureDay2" value='금'>	
+		
+			토 <input type="checkbox" name="lectureDay2" value='토'>
+				<font color="red">${param.errorMessage }</font></div>
+		</td>
+		
+	</tr>
+	<tr>
+		<th>수강료</th>
+		<td><input type="text" name="lecturePrice"><span class="errors"><form:errors path="lecture.lecturePrice" delimiter="//" /></span></td>
+ 	</tr>
+ 	<tr>
+ 		<th>수강인원</th>
+ 		<td><input type="text" name="lectureTotalStudent"><span class="errors"><form:errors path="lecture.lectureTotalStudent" delimiter="//" /></span></td>
+ 	</tr>	
+ 	<input type="hidden" name="lectureCurrentStudent" value="0"><span class="errors"><form:errors path="lecture.lectureCurrentStudent" delimiter="//" /></span>
+ 	<tr>
+ 		<th>강의시작일</th>
+ 		<td><input id="bt1" type="text" name="lectureStartDate" readonly="readonly"><span class="errors"><form:errors path="lecture.lectureStartDate" delimiter="//" /></span>	
+ 	</tr>
+ 	<tr>
+ 		<th>강의종료일</th>
+ 		<td><input id="bt2" type="text" name="lectureEndDate" readonly="readonly"><span class="errors"><form:errors path="lecture.lectureEndDate" delimiter="//" /></span>
+ 	</tr>
+ 	<tr>
+ 		<th>강의 종류</th>
+ 		<td>
+ 		<select id="subject" name="lectureSubject">
 		<c:forEach items="${requestScope.codeList }" var="code">
 			<option>${code.codeName }</option>
 		</c:forEach>
-	</select> 강의 강사 : <select id="teacher" name="teacherId2">
+		</select>
+		</td>
+ 	</tr>
+ 	<tr>
+		<th>강사</th>
+		<td><select id="teacher" name="teacherId2">
 		<c:forEach items="${requestScope.teacherList }" var="teacher">
 			<option value="${teacher.teacherId }">${teacher.teacherName }</option>
 		</c:forEach>
-	</select>
-	<p>
-		<input id="submit1" type="submit" value="강의 등록">
+		</select>
+ 	</tr>
+</table>
+		<input id="submit1" type="submit" value="강의 등록" class="btn btn-success">
 </form>
+</div>

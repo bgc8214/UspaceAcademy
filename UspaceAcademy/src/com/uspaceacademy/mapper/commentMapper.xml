@@ -45,4 +45,8 @@
 		select comment_board_seq.nextval from dual
 	</select>
 	
+	<!-- 강의 삭제 시 모든 항목 들이 삭제 -->
+	<delete id="deleteAllComment">
+		delete from comment_table where advanced_no2= #{advancedNo2} 
+	</delete>
 </mapper>

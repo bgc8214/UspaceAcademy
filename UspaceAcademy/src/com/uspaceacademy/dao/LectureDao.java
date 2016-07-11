@@ -67,6 +67,7 @@ public class LectureDao {
 	
 	//lecture 삭제
 	public int deleteLectureByNo(int lectureNo) {
+		System.out.println("DAO - "+lectureNo);
 		return session.delete("lecture.deleteLectureByNo", lectureNo);
 	}
 	//학생-강의 조인테이블에 insert(수강신청이나 찜 등록할 때 사용)
@@ -272,6 +273,10 @@ public class LectureDao {
 		map.put("lectureNo3", lectureNo3);		
 		
 		return session.delete("lecture.removeZzimList", map);
+	}
+	
+	public int deleteInquiryByLectureNoDao(int lectureNo2) {
+		return session.delete("lectureInquiryMapper.deleteInquiryByLectureNo", lectureNo2);
 	}
 	
 }

@@ -72,7 +72,7 @@
  	<!-- id로 강의 삭제하기 -->
  	<delete id="deleteLectureByNo" parameterType="_int">
  		DELETE FROM lecture
- 		WHERE  lecture_no = #{value}
+ 		WHERE  lecture_no = #{lectureNo}
  	</delete>
  	
  	<!-- 조인테이블에 정보 넣어주기(결제를 통해서) -->

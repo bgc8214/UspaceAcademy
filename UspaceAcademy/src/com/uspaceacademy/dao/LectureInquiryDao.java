@@ -247,4 +247,9 @@ public class LectureInquiryDao {
 		
 		return session.selectList("lectureInquiryMapper.selectRownum", map);
 	}
+	// 강의 게시판 번호로 모든 질문 번호 조회
+	public List selectAdvancedNoDao(int lectureNo2) {
+//		System.out.println(session.selectList("lectureInquiryMapper.selectAdvancedNo", lectureNo2));
+		return session.selectList("lectureInquiryMapper.selectAdvancedNo", lectureNo2);
+	}
 }
