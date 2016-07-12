@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<img id="image" src="image/academyIntroduce.jpg">
+<img id="image" src="image/academyIntro.jpg">
 
 
 <c:if test="${sessionScope.memberType=='administrator' }">
