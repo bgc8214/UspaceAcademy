@@ -103,6 +103,7 @@ public class AttendanceController {
 		
 		int diffDays = realLectureDay(lecture.getLectureStartDate(), lecture.getLectureEndDate(), lecture.getLectureDay());	// 강의 일수 구하기
 //		System.out.println("강의일수 - "+diffDays);
+		
 		Map map = new HashMap<>();
 		map.put("diffDays", diffDays);		// 강의일수
 		map.put("studentInfoList", studentInfoList);	// 강사가 선택된 강의를 수강 중인 학생 정보
@@ -117,6 +118,7 @@ public class AttendanceController {
 	}
 	
 	// 강사가 학생의 출결 등록
+	
 	@RequestMapping("/attendanceRegister.do")
 	public String attendanceRegister(int day, String [] attendanceState, int lectureNo, @ModelAttribute Lecture lecture, HttpSession session) throws ParseException, UnsupportedEncodingException {
 		List<Student> list = service.selectLectureStudentInfoService(lectureNo);	// 특정강의를 수강중인 학생 정보를 가진 객체 List
