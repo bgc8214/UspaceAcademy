@@ -95,7 +95,7 @@ $(document).ready(function(){
 					<c:if test="${sessionScope.memberType=='administrator'}">
 						<a href="/UspaceAcademy/inquiry/updateCommentForm.do?commentNo=${list.commentNo }
 						&advancedNo2=${requestScope.inquiryDetail.advancedNo}">
-						<button>댓글 수정</button></a>
+						<button class="btn btn-warning">댓글 수정</button></a>
 						<a href="/UspaceAcademy/inquiry/deleteComment.do?commentNo=${list.commentNo }
 						&advancedNo2=${requestScope.inquiryDetail.advancedNo}"><button class="btn btn-danger">댓글 삭제</button></a>
 					</c:if>
