@@ -1,6 +1,6 @@
 <%@page contentType="text/html; charset=UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<style>
+<style>/*50번째 130번째 줄 색 바꾸기  */
 	nav{padding-left: 200px;}
 	body{padding-top:20px;}
 	form#loginForm {
@@ -50,7 +50,7 @@
 </script>
 <c:choose>
 	<c:when test="${sessionScope.memberType==null }">
-		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #FFD9EC;'>
+		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #3A487F;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="/UspaceAcademy/main.do" id="ff">UspaceAcademy</a>
@@ -130,7 +130,7 @@
 		</nav>
 	</c:when>
 	<c:otherwise>
-		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #FFD9EC;'>
+		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #3A487F;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<a class="navbar-brand" href="/UspaceAcademy/main.do">UspaceAcademy</a>

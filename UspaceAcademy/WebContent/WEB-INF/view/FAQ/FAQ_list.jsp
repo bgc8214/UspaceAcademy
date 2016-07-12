@@ -39,7 +39,7 @@ $(document).ready(function() {
 		});
 	});
 	$(".faqList").on("mouseover", function() {
-		$(this).css("background-color", "#FAF4C0");
+		$(this).css("background-color", "#D8EFF1");
 		this.style.cursor = 'pointer';
 
 	});
