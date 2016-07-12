@@ -33,12 +33,12 @@
 });
 </script>
 
-<h3>내정보 | 과제게시판 | 답글등록</h3>
-<hr/>
+<h3 class="pageTlt">내정보 | 과제게시판 | 답글등록</h3>
+<hr>
 <form method="POST"      <%-- file --%>enctype="multipart/form-data"       action="/UspaceAcademy/assignment/assignment_replyRegisterSuccess.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"> <!--  폼으로 묶기* -->
 
 
-<table class="table_list" summary="영주" cellpacing="0">
+<table class="table table-bordered" summary="영주" id="tb">
 	<caption></caption>
 	<tbody>
 	
@@ -83,9 +83,10 @@
 
 </tbody>
 </table>
-
-	<input id="ok" type="submit" value="답글작성완료">
-	<input type="reset" value="초기화"/> 
+<div align="right">
+	<input id="ok" type="submit" value="답글작성완료" class="btn btn-success">
+	<input type="reset" value="초기화" class="btn btn-default"> 
+</div>
 </form>
 
 

@@ -80,7 +80,7 @@ function idCheck()
 		<tr>
 			<th>ID</th>
 			<td><input type="text" name="studentId" onclick="idCheck();"
-				value="${requestScope.student.studentId }" id="studentId"><span
+				value="${requestScope.student.studentId }" id="studentId" readonly="readonly"><span
 				class="error"> <form:errors path="student.studentId"
 						delimiter="//" /> <!-- BindingResult의 에러메세지 출력 -->
 

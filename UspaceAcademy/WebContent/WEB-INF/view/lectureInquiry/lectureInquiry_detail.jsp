@@ -1,6 +1,11 @@
 <%@ page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+table#tx {
+	width:500px;
+}
+</style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
@@ -16,7 +21,7 @@ $(document).ready(function(){
 
 <h3 class="pageTlt">상세보기</h3>
 <hr>
-<table border="" class="table table-bordered form-table">
+<table class="table table-bordered form-table">
 	<tr>
 		<th>No </th>
 		<td>${requestScope.lectureInquiryDetail.advancedNo}</td>
@@ -68,17 +73,21 @@ $(document).ready(function(){
 
 <h4 class="pageTlt">댓글 보기</h4>
 <hr>
-<table class="table table-bordered form-table">
+<table class="table table-bordered form-table" id="tx">
 <c:forEach items="${requestScope.commentList}" var="list">
-<%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
 	<tr>
-		<td>
-			<%-- 댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --%>
-			글쓴이: ${list.commentWriter}&nbsp;&nbsp;&nbsp;
-			글 등록일:${list.commentDate}<br>
-			내용<br>
-			${list.commentContent}<br><br>
-			
+		<th>글쓴이</th>
+		<td>${list.commentWriter}</td>
+		<th>글 등록일</th>
+		<td>${list.commentDate}</td>
+	</tr>
+	<tr>
+		<th>내용</th>
+		<td colspan="4"><textarea rows="5" cols="30" class="form-control" readonly="readonly">${list.commentContent}</textarea></td>
+	</tr>
+	<tr>
+		<td colspan="5">
+			<div align="center">
 			<c:choose>
 				<c:when test="${sessionScope.memberType=='student'}">
 					<c:if test="${list.commentWriter eq sessionScope.login_info.studentId}">
@@ -110,6 +119,7 @@ $(document).ready(function(){
 					</c:if>
 				</c:otherwise>
 			</c:choose>
+			</div>
 		</td>
 	</tr>
 </c:forEach>

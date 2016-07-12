@@ -6,7 +6,7 @@
 <h3>${requestScope.lectureNo2}번 ${requestScope.lectureTitle} 강의 질문 게시판</h3>
 <hr>
 
-<table border='1' class="table table-bordered">
+<table id="tb" class="table table-bordered">
 	<thead>
 		<tr>
 			<!-- <td>글번호</td> -->			

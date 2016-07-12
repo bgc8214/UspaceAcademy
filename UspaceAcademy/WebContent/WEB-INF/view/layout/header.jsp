@@ -30,6 +30,10 @@
 		top : 10px;
 		bold;
 	}
+	table#tb {
+		width:900px;
+		height:100px;
+	}
 }
 </style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
@@ -77,9 +81,9 @@
 						<li class="down"><a class="dropdown-toggle"
 							data-toggle="dropdown">회원가입</a>
 							<ul class="dropdown-menu">
-								<li><a href="/UspaceAcademy/member/studentRegisterForm.do">강사가입</a></li>
+								<li><a href="/UspaceAcademy/member/teacherRegisterForm.do?codeType=teacherSubject">강사가입</a></li>
 								<li><a
-									href="/UspaceAcademy/member/teacherRegisterForm.do?codeType=teacherSubject">학생가입</a></li>
+									href="/UspaceAcademy/member/studentRegisterForm.do">학생가입</a></li>
 							</ul>
 					</ul>
 					<ul class="nav navbar-nav">

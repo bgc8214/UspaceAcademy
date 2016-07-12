@@ -1,30 +1,25 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-<script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
-<script type="text/javascript">
-	
-$(document).ready(effect);
-function effect(){
-	$("tr:eq(2)").css("background-color", "palegreen");
+<style>
+table#tb {
+	width: 700px;
+	heiht: 100px;
 }
-
-</script>
+</style>
 
 <h2>1:1문의 게시판</h2><br>
 
-<table border='1' class="table table-bordered">
+<table  class="table table-bordered" id="tb">
 	<thead>
 		<tr>
 			<!-- <td>글번호</td> -->			
-			<td>제목</td>
-			<td>글쓴이</td>
-			<td>글 등록일</td>
-			<td>조회수</td>
+			<th>제목</th>
+			<th>글쓴이</th>
+			<th>글 등록일</th>
+			<th>조회수</th>
 		</tr>
-	</thead>
-			
+	</thead>	
 	<tbody>
 		<input id="page" type="hidden" value="${param.page }">
 			<c:forEach items="${requestScope.inquiryList}" var="list">
@@ -54,6 +49,8 @@ function effect(){
 </table>
 
 <p>
+
+<div align="center">
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
@@ -86,7 +83,21 @@ function effect(){
 		</c:when>
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
+	</div>
 <p>
+
+<div align="right">
+<c:choose>
+	<c:when test="${sessionScope.memberType=='student'}">
+		<a href="/UspaceAcademy/inquiry/registerInquiryForm.do"><button class="btn btn-success">질문하기 등록</button></a>
+	</c:when>
+</c:choose>
+
+<a href="/UspaceAcademy/inquiry/inquiryList.do"><button class="btn btn-info">전체 목록</button></a>
+	</div>
+
+
+
 
 <!-- 검색관련 -->
 <form action="/UspaceAcademy/inquiry/searchByKeyword.do?page=${param.page }" method="post">
@@ -96,16 +107,7 @@ function effect(){
 		<!-- <option value="advancedId">글쓴이</option> -->
 	</select>
 	<input type="text" name="keyword">
-	<input id="search" type="submit" value="검색">
+	<input id="search" type="submit" value="검색" class="btn btn-info">
 </form>
 
 <br>
-
-<c:choose>
-	<c:when test="${sessionScope.memberType=='student'}">
-		<a href="/UspaceAcademy/inquiry/registerInquiryForm.do">질문하기 등록</a>
-	</c:when>
-</c:choose>
-
-<a href="/UspaceAcademy/inquiry/inquiryList.do">전체 목록</a>
-	

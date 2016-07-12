@@ -1,4 +1,10 @@
 <%@page contentType="text/html;charset=utf-8"%>
+<style>
+table#tb {
+	width:700px;
+	height:100px;
+}
+</style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 var tmp;//이벤트소스를 저장하기 위한 변수
@@ -9,7 +15,8 @@ $(document).ready(function(){
 })
 </script>
 <h3 class="pageTlt">개인정보</h3>
-<table class="table table-bordered form-table">
+<hr>
+<table class="table table-bordered form-table" id="tb">
 	<tbody>
 		<tr>
 			<th>아이디</th>

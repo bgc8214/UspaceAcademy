@@ -1,9 +1,15 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<style>
+table#tb{
+	width:1000px;
+	height:100px;
+}
+</style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
-
-<table class="table table-bordered">
+<h3 class="pageTlt">강의</h3>
+<hr>
+<table class="table table-bordered" id="tb">
 
 <thead>
 <tr>
@@ -35,7 +41,7 @@
 				<td align="center"><a href="/UspaceAcademy/attendance/attendanceSearch.do?lectureNo=${lectureList.lectureNo}&lectureStartDate=${lectureList.lectureStartDate}
 				&lectureEndDate=${lectureList.lectureEndDate}&lectureDay=${lectureList.lectureDay}"><button class="btn btn-success">출석보기</button></a></td>
 				<td align="center">
-					<a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=${lectureList.lectureNo}&lectureTitle=${lectureList.lectureTitle }"><button>강의 질문 게시판</button></a>
+					<a href="/UspaceAcademy/lectureInquiry/lectureInquiryList.do?lectureNo2=${lectureList.lectureNo}&lectureTitle=${lectureList.lectureTitle }"><button class="btn btn-primary">강의 질문 게시판</button></a>
 				</td>
 				<td align="center"><a href="/UspaceAcademy/assignment/assignment_list.do?lectureNo=${lectureList.lectureNo}"><button class="btn btn-warning">과제게시판</button></a></td>
 

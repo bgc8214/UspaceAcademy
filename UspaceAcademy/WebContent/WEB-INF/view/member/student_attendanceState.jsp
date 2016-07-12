@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <h3 class="pageTlt">출결 상태</h3>
 <hr>
-<table class="table table-bordered">
+<table class="table table-bordered" id="tb">
 <thead>
 	<tr>
 		<th>일차</th>

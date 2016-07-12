@@ -42,7 +42,7 @@ $(document).ready(function(){
 
 <form method="POST"       <%-- file --%>enctype="multipart/form-data"      action="/UspaceAcademy/assignment/assignment_modify.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"> <!--  폼으로 묶기* -->
 
-<table class="table_list" summary="영주" cellpacing="0">
+<table class="table table-bordered" summary="영주" id="tb">
 	<caption></caption>
 	<tbody>
 
@@ -94,8 +94,10 @@ $(document).ready(function(){
 
 </tbody>
 </table>
-	<input id="ok" type="submit" value="수정완료">
-	<input type="reset" value="초기화"/> 
+<div align="right">
+	<input id="ok" type="submit" value="수정완료 " class="btn btn-warning">
+	<input type="reset" value="초기화" class="btn btn-default"> 
+</div>
 </form>
 
 

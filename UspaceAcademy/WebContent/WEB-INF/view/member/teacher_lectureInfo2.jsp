@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
-
+<h3 class="pageTlt">강의목록</h3>
+<hr>
 <table class="table table-bordered">
 
 <thead>

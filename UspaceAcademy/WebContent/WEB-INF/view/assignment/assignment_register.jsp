@@ -40,7 +40,7 @@ $(document).ready(function(){
 <form method="POST"       <%-- file --%>enctype="multipart/form-data"     action="/UspaceAcademy/assignment/assignment_registerSuccess.do"> <!--  폼으로 묶기* -->
 
 
-<table class="table_list" summary="영주" cellpacing="0">
+<table class="table_list" summary="영주" id="tb">
 	<caption></caption>
 	<tbody>
 	

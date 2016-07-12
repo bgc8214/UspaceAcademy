@@ -1,5 +1,12 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+table#tb {
+	width:700px;
+	heigth:100px;	
+}
+</style>
+
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -20,7 +27,7 @@
 </script>
 <h3 class="pageTlt">강사 정보</h3>
 <hr>
-<table class="table">
+<table class="table table-bordered" id="tb">
 	<thead>
 		<tr>
 			<th>강사이름</th>
@@ -53,11 +60,11 @@
 	<div class="pageNav" align="center">
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/member/searchByteacherName.do?page=${requestScope.paging.beginPage-1}&name=${requestScope.name}" class="prevPage">
-			<strong>이전</strong>
+			<a href="/UspaceAcademy/member/searchByteacherName.do?page=${requestScope.paging.beginPage-1}&name=${requestScope.name}">
+			이전
 			</a>
 		</c:when>
-		<c:otherwise><strong>이전</strong></c:otherwise>
+		<c:otherwise>이전</c:otherwise>
 	</c:choose>
 	<%--페이지 처리 --%>
 	<c:forEach begin="${requestScope.paging.beginPage }" end="${requestScope.paging.endPage }" var="page">
@@ -76,21 +83,23 @@
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/member/searchByteacherName.do?&page=${requestScope.paging.endPage + 1}&name=${requestScope.name}" class="nextPage">
-			<strong>다음</strong>
+			<a href="/UspaceAcademy/member/searchByteacherName.do?&page=${requestScope.paging.endPage + 1}&name=${requestScope.name}">
+			다음
 			</a>
 		</c:when>
-		<c:otherwise><strong>다음</strong></c:otherwise>
+		<c:otherwise>다음</c:otherwise>
 	</c:choose>
 </div>
 <p>
-<div align="center">
-<!-- 학생이름으로 검색  -->
-<form action="/UspaceAcademy/member/searchByteacherName.do">
-	<input type="text" name="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="이름으로 검색" class="btn btn-primary">
-</form>
+<div align="right">
+	<a href="/UspaceAcademy/member/teacherAll.do"><button class="btn btn-success">강사정보목록</button></a><p>
 </div>
 
-<a href="/UspaceAcademy/member/teacherAll.do"><button class="btn btn-success">강사정보목록</button></a><p>
+<div align="left">
+<!-- 학생이름으로 검색  -->
+<form action="/UspaceAcademy/member/searchByteacherName.do">
+	<input type="text" name="name">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="btn" type="submit" value="이름으로 검색" class="btn btn-info">
+</form>
+</div>
 
 

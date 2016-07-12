@@ -3,14 +3,6 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<style>
-	#tb {
-		width:500px;
-	}
-	#th {
-		width:100px;
-	}
-</style>
 <script type="text/javascript">
 	$(document).ready(function(){
 		//폼체크

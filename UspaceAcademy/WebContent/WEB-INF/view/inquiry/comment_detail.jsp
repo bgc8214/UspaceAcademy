@@ -2,10 +2,12 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-/*
-	파일명이 잘못됐지만 이거 댓글 수정 jsp입니다.
-*/
-
+<style>
+table#tb {
+	width: 700px;
+	heiht: 100px;
+}
+</style>
 
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
@@ -21,50 +23,55 @@ $("#modify").on("click", function(){
 
 </script>
 
-<h2 class="pageTlt">상세보기</h2>
+<h3 class="pageTlt">상세보기</h3>
+<hr>
 
-<table border="" class="table table-bordered form-table">
+<table border="" class="table table-bordered form-table" id="tb">
 	<tr>
-		<td>
-			no: ${requestScope.inquiryDetail.advancedNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			글쓴이: ${requestScope.inquiryDetail.advancedId}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			글 등록일:${requestScope.inquiryDetail.advancedDate}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			조회수: ${requestScope.inquiryDetail.advancedHit}
-		</td>
+		<th>No</th>
+		<td>${requestScope.inquiryDetail.advancedNo}</td>
+		<th>글쓴이</th>
+		<td>${requestScope.inquiryDetail.advancedId}</td>
+		<th>글 등록일</th>
+		<td>${requestScope.inquiryDetail.advancedDate}</td>
+		<th>조회수</th>
+		<td>${requestScope.inquiryDetail.advancedHit}</td>
 	</tr>
 	<tr>
-		<td>
-			제목: ${requestScope.inquiryDetail.advancedTitle}
-		</td>
+		<th>제목</th>
+		<td colspan="7">${requestScope.inquiryDetail.advancedTitle}</td>
 	</tr>
 	<tr>
-		<td>
-			내용: ${requestScope.inquiryDetail.advancedContent}
+		<th>내용</th>
+		<td colspan="7"><textarea rows="20" cols="100" class="form-control" readonly="readonly">${requestScope.inquiryDetail.advancedContent}</textarea>
 		</td>
 	</tr>
 </table>
 
 <p>
 
-<h4 class="pageTlt">댓글 보기</h4>
+<h3 class="pageTlt">댓글 보기</h3>
+<hr>
 
 <table class="table table-bordered form-table">
 <c:forEach items="${requestScope.commentList}" var="list">
 <%-- <input name="commentNO" type="hidden" value="${list.commentNo }"> --%>
 	<tr>
-		<td>
-			<%-- 댓글 번호: ${list.commentNo}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --%>
-			글쓴이: ${list.commentWriter}&nbsp;&nbsp;&nbsp;
-			글 등록일:${list.commentDate}<br>
-			내용:
-			${list.commentContent}<br><br>
-		</td>
+		<th>글쓴이</th>
+		<td>${list.commentWriter}</td>
+		<th>글 등록일</th>
+		<td>${list.commentDate}</td>
+	</tr>
+	<tr>
+	<th>내용</th>
+	<td colspan="3"><textarea rows="5" cols="50" readonly="readonly" class="form-control">${list.commentContent}</textarea></td>
 	</tr>
 </c:forEach>
 </table>
 
-<h4 class="pageTlt">댓글 수정</h4>
-<form action="/UspaceAcademy/inquiry/updateComment.do" >
+<h3 class="pageTlt">댓글 수정</h3>
+<hr>
+<form action="/UspaceAcademy/inquiry/updateComment.do" method="post">
 <input type="hidden" value="${requestScope.comment.commentNo}" name="commentNo">
 <input type="hidden" value="${requestScope.inquiryDetail.advancedNo}" name="advancedNo2">
 
@@ -72,10 +79,10 @@ $("#modify").on("click", function(){
 		<tr>
 			<td>
 				<textarea id="commentContent" name="commentContent" cols="50" rows="5">${requestScope.comment.commentContent }</textarea>
-				<input id="modify" type="submit" value="댓글 입력">
 			</td>
 		</tr>
 	</table>
+<input id="modify" type="submit" value="댓글 수정" class="btn btn-warning">
 </form>
 
 <p>

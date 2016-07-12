@@ -2,8 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <style type="text/css">
-table {
-	
+table#tb {
+	width:700px;
+	height:100px;
 }
 
 span, td, th {
@@ -60,7 +61,7 @@ function checkValue() {
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <form action="/UspaceAcademy/member/updateTeacher.do" name="update_form" method="post" onsubmit="return checkValue();">
 <input type="hidden" name="baseAddress" value="${sessionScope.login_info.teacherAddress}">
-<table border="3" width="500" class="table table-striped">
+<table class="table table-striped" id="tb">
 	<tr>
 		<th>아이디</th>
 		<td><input type="text"  name="teacherId" value="${sessionScope.login_info.teacherId}" readonly="readonly"></td>

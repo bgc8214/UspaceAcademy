@@ -29,14 +29,16 @@ $(document).ready(function(){
 <h3 class="pageTlt">1:1문의 게시판</h3>
 <hr>
 
+
+
 <table class="table table-bordered table-hover" id="tb">
 	<thead>
 		<tr>
 			<!-- <td>글번호</td> -->			
-			<td>제목</td>
-			<td>글쓴이</td>
-			<td>글 등록일</td>
-			<td>조회수</td>
+			<th>제목</th>
+			<th>글쓴이</th>
+			<th>글 등록일</th>
+			<th>조회수</th>
 		</tr>
 	</thead>
 			<!-- <img src="image\lock.jpg" width="9" height="12"> -->

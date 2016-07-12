@@ -69,7 +69,7 @@ text-decoration: underline;
 			
 <h3>내정보 | 과제게시판</h3>
 <hr/>
-<table border='1' class="table table-bordered table-hover">
+<table id="tb" class="table table-bordered table-hover">
 	<caption></caption>
 	<thead>
 		<tr>
@@ -153,12 +153,13 @@ text-decoration: underline;
 <!-- 강사만 과제글 등록가능 -->
 <span class="lectureRegister">
 	<c:if test="${sessionScope.memberType=='teacher'}">
-		<a href="/UspaceAcademy/assignment/assignment_register.do?lectureNo=${requestScope.lectureNo}"><button>과제 등록</button></a><!--  과제글 등록폼으로 이동 -->
+		<a href="/UspaceAcademy/assignment/assignment_register.do?lectureNo=${requestScope.lectureNo}"><button class="btn btn-success">과제 등록</button></a><!--  과제글 등록폼으로 이동 -->
 	</c:if>																																											
 </span>
 
 <!-- --------------------------------------------------------------------------------------------------------- -->
 <p>
+<div align="center">
 	<%--◀이전 페이지 그룹 처리 --%>
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
@@ -191,6 +192,7 @@ text-decoration: underline;
 		</c:when>
 		<c:otherwise>▶</c:otherwise>
 	</c:choose>
+	</div>	
 <p>
 <!-- --------------------------------------------------------------------------------------------------------- -->
 

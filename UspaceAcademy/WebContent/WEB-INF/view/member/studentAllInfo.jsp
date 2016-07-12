@@ -1,5 +1,11 @@
 <%@page contentType="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<style>
+table#tb {
+	width:700px;
+	heigth:100px;	
+}
+</style>
 <script type="text/javascript" src="/UspaceAcademy/jQuery/jQuery.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -24,7 +30,7 @@
 </script>
 <h3 class="pageTlt">모든 학생의 정보</h3>
 <hr>
-<table class="table table-bordered">
+<table class="table table-bordered" id="tb">
 	<thead>
 		<tr>
 			<th>학생이름</th>

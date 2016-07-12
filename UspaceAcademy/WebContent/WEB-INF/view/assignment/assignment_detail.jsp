@@ -5,6 +5,9 @@
 <h3>내정보 | <a href="/UspaceAcademy/assignment/assignment_list.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}">과제게시판</a> | 상세보기</h3>
 <hr/>
 <style type="text/css">
+#thx {
+	width: 150px;
+}
 table{
 /* table-layout: fixed;
 border:1px solid #dcdcdc;
@@ -36,7 +39,7 @@ td{
 
 
 
-<table class="table table-bordered form-table">
+<table class="table table-bordered form-table" id="tb">
 	<caption></caption>
 <tbody>
 
@@ -70,7 +73,7 @@ td{
 
 <table class="table table-bordered form-table">
 <tr>
-<th scope="col">제목</th>	
+<th id="thx">제목</th>	
 <td>${assignment.assignmentTitle}</td>
 </tr> 
 
@@ -111,23 +114,23 @@ td{
 <!-- 강사이고 강사본인이 쓴 글일경우만    -    삭제버튼,수정버튼 클릭가능(로그인한아이디랑 작성글아이디비교 -->
 <span class="assignmentRegister">
 	<c:if test="${sessionScope.memberType=='teacher'&&assignment.assignmentWriterId==sessionScope.login_info.teacherId}"><!-- ok 강사 본인글만 삭제,수정할 수 있음 -->
-<a href="/UspaceAcademy/assignment/assignment_modifyForm.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_modifyForm.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button class="btn btn-warning">수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button class="btn btn-danger">삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
 </c:if>
 
 <c:choose>
 	<c:when test="${sessionScope.memberType=='student'&&sessionScope.login_info.studentId==assignment.assignmentWriterId}">
-<a href="/UspaceAcademy/assignment/assignment_modifyFormStudent.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
-<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_modifyFormStudent.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button class="btn btn-warning">수정버튼</button></a><!-- 수정할때도 No값 넘겨줘야함*  -->
+<a href="/UspaceAcademy/assignment/assignment_delete.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button class="btn btn-danger">삭제버튼</button></a><!-- 삭제할때 No값 넘겨줘야함*  -->
 	</c:when> 	
 	<c:when test="${sessionScope.memberType=='student'&&assignment.replyLevel>1 == false}"> <!--  학생만답글달수있고 & & 강사글에만 답글달기 기능있음(저뜻 : 답글false-> 그냥글일경우만 : 답글버튼있다 -->
-	<a href="/UspaceAcademy/assignment/assignment_replyRegister.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>답글달기</button></a>																																									
+	<a href="/UspaceAcademy/assignment/assignment_replyRegister.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button class="btn btn-success">답글달기</button></a>																																									
 	</c:when> 
 </c:choose>
 
 </span>
 <!-- 전체볼수있는 - 버튼 -->
-<a href="/UspaceAcademy/assignment/assignment_list.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button>전체목록</button></a>
+<a href="/UspaceAcademy/assignment/assignment_list.do?assignmentNo=${assignment.assignmentNo}&lectureNo=${assignment.lectureNo}"><button class="btn btn-primary">전체목록</button></a>
 <!-- --------------------------------------------------------------------------------------------------------- -->	
 <%-- 
 사진 파일명 ${requestScope.imageName }
