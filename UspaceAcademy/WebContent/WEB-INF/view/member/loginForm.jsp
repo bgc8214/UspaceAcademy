@@ -3,7 +3,7 @@
 <hr>
 <div align="center">
 <form action="/UspaceAcademy/member/login.do" method="post">
-<table>
+<table id="tb">
 	<tr>
 		<td><label>ID</label></td>
 		<td><input type="text" name="id"  style="width:200px" placeholder="아이디를 입력하세요"><font color="red"> ${requestScope.idError }</font></td>
@@ -13,7 +13,10 @@
 		<td><input type="password" name="password"  style="width:200px" placeholder="비밀번호를 입력하세요"><font color="red">  ${requestScope.passwordError }</font></td>
 	</tr>
 </table>
-	<input type="submit" value="login" class="btn btn-success">
+
+	<div align="center">
+		<input type="submit" value="login" class="btn btn-success">
+	</div>
 </form>
 </div>
 

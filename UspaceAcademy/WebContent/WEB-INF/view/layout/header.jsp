@@ -41,7 +41,7 @@
 	$(document).ready(function() {
 		$("div").on("mouseover", function() {
 			this.style.cursor = 'pointer';
-		})
+		})/
 	})
 
 </script>
@@ -50,7 +50,7 @@
 		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #FFD9EC;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand">UspaceAcademy</a>
+					<a class="navbar-brand" href="/UspaceAcademy/main.do">UspaceAcademy</a>
 				</div>
 				<div>
 					<ul class="nav navbar-nav">
@@ -130,7 +130,7 @@
 		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #FFD9EC;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand">UspaceAcademy</a>
+					<a class="navbar-brand" href="/UspaceAcademy/main.do">UspaceAcademy</a>
 				</div>
 				<div>
 					<ul class="nav navbar-nav">
