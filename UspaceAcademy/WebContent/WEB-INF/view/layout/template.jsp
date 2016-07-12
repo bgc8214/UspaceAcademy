@@ -15,7 +15,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 <script src="/UspaceAcademy/js/common.js"></script>
-<!-- <link rel="stylesheet" type="text/css" href="/css/common.css"/> -->
+
 <link href="/UspaceAcademy/css/common.css" rel="stylesheet" type="text/css">
 
 <link rel="stylesheet" href="/UspaceAcademy/jQuery/jquery.timepicker.css" type="text/css"/>
