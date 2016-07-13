@@ -43,14 +43,11 @@ public class AssignmentController {
 	
 	
 	
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	
-	//●오류났던거 적기 : 답글게시판으로 변경하는 과정에서 - mapper에 replyGetList -  where절에 ,콤마안찍어줬고, resultMap안적어줬음 그리고 아래 map.put("assignment")로했는데 jsp에서 이름다르게 뿌려줘서 그랬음.
-	//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때)            ok
+																																																				//●오류났던거 적기 : 답글게시판으로 변경하는 과정에서 - mapper에 replyGetList -  where절에 ,콤마안찍어줬고, resultMap안적어줬음 그리고 아래 map.put("assignment")로했는데 jsp에서 이름다르게 뿌려줘서 그랬음.
+	//과제게시판 - 목록보기(마이페이지에서 - 내강좌 눌렀을때)    
 		@RequestMapping("/assignment_list.do")
 		public ModelAndView list(@RequestParam(defaultValue="1") int page, int lectureNo){  //@RequestParam(defaultValue="1") 디폴트값일때 1을 넣어라
-			
-			System.out.println("assignment_list강의번호: " + lectureNo);/////////////////////////
 			
 			Map map = service.selectPagingCount(page,lectureNo);
 			map.put("page", page);//
@@ -69,22 +66,16 @@ public class AssignmentController {
 
 		// 과제게시판 - 상세조회(assignment_list.jsp -> assignment_detail.jsp)    
 		@RequestMapping("/assignment_detail")
-		public ModelAndView detail(String assignmentNo, int lectureNo){ //●오류났던거적기 : 여기서 lectureNo 안넘겨줬었음.
+		public ModelAndView detail(String assignmentNo, int lectureNo){ 																												//●오류났던거적기 : 여기서 lectureNo 안넘겨줬었음.
 			int num = Integer.parseInt(assignmentNo);
 			Assignment assignment = service.selectNo(num,lectureNo);// no값으로 게시물 찾아옴
 			
-			System.out.println("assignment_detail 강의번호: " + lectureNo);/////////////////////////
-			System.out.println("assignment_detail 글번호: " + assignmentNo);/////////////////////////
-			System.out.println("assignment_detail num: " + num);/////////////////////////
 			service.selectHit(assignment); // 조회수 증가시키기
-			System.out.println("service.selectHit(assignment) : " + service.selectHit(assignment));/////////////////////////
 			assignment.setLectureNo(lectureNo);
-			
-			System.out.println("assignment_detail assignment: " + assignment);/////////////////////////
 			
 			return new ModelAndView("assignment/assignment_detail.tiles", "assignment", assignment);
 		}
-		//●오류났던거 적기 :  생성자?(detail(){가로안)에 이거 넣어 줘서 HttpSession session, HttpRequest request
+																																																			//●오류났던거 적기 :  생성자?(detail(){가로안)에 이거 넣어 줘서 HttpSession session, HttpRequest request
 
 
 		
@@ -99,7 +90,7 @@ public class AssignmentController {
 		
 		
 
-		//과제글 작성 폼 (assignment_list.jsp ->assignment_register.jsp)                     //ok
+		//과제글 작성 폼 (assignment_list.jsp ->assignment_register.jsp)        
 		@RequestMapping("/assignment_register")
 		public ModelAndView registerForm(int lectureNo){
 			
@@ -136,9 +127,7 @@ public class AssignmentController {
 				return new ModelAndView("assignment/assignment_register.tiles");
 			}
 	
-			//파일 																			-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
-			System.out.println("assignment_registerSuccess,board"+fileBoard);
-			
+			//파일 	-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
 			ArrayList fileNames = new ArrayList();
 			
 			List upfile = fileBoard.getUpfile();//fileBoard(vo)에 upfile이라는 <List>
@@ -158,10 +147,8 @@ public class AssignmentController {
 					}
 				}
 			}
-			modelMap.addAttribute("fileNames",fileNames);             	  //~~
-			modelMap.addAttribute("title", fileBoard.getTitle());             //~~
-			
-			System.out.println("과제글 작성하고 등록ok");
+			modelMap.addAttribute("fileNames",fileNames);     
+			modelMap.addAttribute("title", fileBoard.getTitle());          
 			
 			//글번호
 			int num = service.selectNextNo();
@@ -169,20 +156,18 @@ public class AssignmentController {
 			assignment= new Assignment
 					(num,assignment.getAssignmentWriterId(),assignment.getAssignmentTitle(),
 							assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),
-							assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),fileName,assignment.getLectureNo()); //fileName->파일이름넘겨줌
+							assignment.getAssignmentWriter(),assignment.getAssignmentDeadline(),
+							fileName,assignment.getLectureNo()); //fileName->파일이름넘겨줌
 			
 			assignment.setReplyFamily(num); 
-			
-			System.out.println(fileName+"파일이름"); //
-			
 			service.insert(assignment);
 
 		return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment);
 		}
-		//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 이상 x		
-		/*	assignment.setReplyStep(num);//??
-			assignment.setReplyLevel(num);//??
-			└●오류났던거 적기:  강사가 새로 과제글 등록한글에 학생이 답글쓴거 안달림(db에서 확인해보면 replyFamily값이 0으로 박혀서그럼, 새로운글 등록할때(여기)도 replyFamily,replyStep,replyLevel 넘겨줘야됨  -> 해결: assignment.setReplyFamily(num); 해주고 replyStep,replyLevel도 넘겨줘야함*/
+																																																	//Assignment assignment 하면안되고 assignment= 하기 똑같은거1개 이상 x		
+																																																	/*	assignment.setReplyStep(num);//??
+																																																	assignment.setReplyLevel(num);//??
+																																																	└●오류났던거 적기:  강사가 새로 과제글 등록한글에 학생이 답글쓴거 안달림(db에서 확인해보면 replyFamily값이 0으로 박혀서그럼, 새로운글 등록할때(여기)도 replyFamily,replyStep,replyLevel 넘겨줘야됨  -> 해결: assignment.setReplyFamily(num); 해주고 replyStep,replyLevel도 넘겨줘야함*/
 
 		
 		
@@ -202,14 +187,8 @@ public class AssignmentController {
 					
 				service.delete(assignmentNo,lectureNo);     
 					
-				System.out.println("과제글 삭제 ok");
-				
-			
 			return "/assignment/assignment_list.do?letureNo="+lectureNo;
 			}
-		
-		
-		
 		
 		
 		
@@ -225,8 +204,8 @@ public class AssignmentController {
 		public ModelAndView modifyForm(int assignmentNo, int lectureNo){  
 			Assignment assignment = service.selectNo(assignmentNo,lectureNo);
 
-			Map map = new HashMap();
-			map.put("assignment", assignment);//
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("assignment", assignment);
 			
 			System.out.println("과제글 수정 폼 ok");
 			return new ModelAndView("assignment/assignment_modify.tiles",map); 
@@ -234,10 +213,10 @@ public class AssignmentController {
 		//학생 : 과제글 수정폼(답글 상세조회에서 수정하기 눌렀을때 - modify폼으로감)
 				@RequestMapping("/assignment_modifyFormStudent")  
 				public ModelAndView modifyFormStudent(int assignmentNo,int lectureNo){  
-					Assignment assignment = service.selectNo(assignmentNo,lectureNo);/////////////////////
+					Assignment assignment = service.selectNo(assignmentNo,lectureNo);
 					
-					Map map = new HashMap();
-					map.put("assignment", assignment);//
+					Map<String,Object> map = new HashMap<String,Object>();
+					map.put("assignment", assignment);
 					
 					System.out.println("과제글 수정 폼 ok");
 					return new ModelAndView("assignment/assignment_modify_student.tiles",map); 
@@ -254,7 +233,7 @@ public class AssignmentController {
 		
 		
 		
-		 //강사 : 수정
+		 // 강사 : 수정
 		@RequestMapping("/assignment_modify") //assignment_modify.jsp에서 (강사가)수정완료 눌렀을때																  //파일
 		public ModelAndView modify(@ModelAttribute("lec") @Valid Assignment assignment,BindingResult errors, HttpSession session, @ModelAttribute com.uspaceacademy.vo.FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
 			
@@ -269,9 +248,7 @@ public class AssignmentController {
 			return new ModelAndView("assignment/assignment_modify.tiles");
 			}
 			
-			//파일 																			-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
-			System.out.println("assignment_modify,board"+fileBoard);
-			
+			//파일 	-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
 			ArrayList fileNames = new ArrayList(); //~~
 			
 			List upfile = fileBoard.getUpfile();//fileBoard(vo)에 upfile이라는 <List>
@@ -291,11 +268,11 @@ public class AssignmentController {
 					}
 				}
 			}
-			modelMap.addAttribute("fileNames",fileNames);             	  //~~
-			modelMap.addAttribute("title", fileBoard.getTitle());             //~~
+			modelMap.addAttribute("fileNames",fileNames);          
+			modelMap.addAttribute("title", fileBoard.getTitle());      
 
 			Teacher t = (Teacher)session.getAttribute("login_info");
-			String teacher = t.getTeacherName(); //오류났던거 적기 : getAssignmentWriter안돼서 session에서 getTeacherName가져옴.
+			String teacher = t.getTeacherName(); 																																				//오류났던거 적기 : getAssignmentWriter안돼서 session에서 getTeacherName가져옴.
 			String teacherId = t.getTeacherId();
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -322,12 +299,10 @@ public class AssignmentController {
 			return new ModelAndView("assignment/assignment_detail.tiles","assignment",assignment); //과제글 수정완료 버튼누르면 내가 수정한내용 detail에서 보여짐
 		}
 
-		//학생 : 수정
+		// 학생 : 수정
 		@RequestMapping("/assignment_modify_student") //assignment_modify.jsp에서 (강사가)수정완료 눌렀을때																  //파일
 		public ModelAndView modifyStudent(@ModelAttribute("lec") @Valid Assignment assignment,BindingResult errors, HttpSession session, @ModelAttribute com.uspaceacademy.vo.FileBoard fileBoard,ModelMap modelMap, HttpServletRequest request) throws IOException{
-			
-			HashMap<String,Object> map = new HashMap<String,Object>();
-			
+																																																				//HashMap<String,Object> map = new HashMap<String,Object>();
 			String fileName = null; //파일
 			
 			//validator
@@ -337,8 +312,7 @@ public class AssignmentController {
 			return new ModelAndView("assignment/assignment_modify_student.tiles");
 			}
 			
-			//파일 																			-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
-			System.out.println("assignment_modify,board"+fileBoard);
+			//파일 	-실제파일은 uploadFile파일에 저장하고  파일이름을 db에 저장해서 불러옴, 테이블에assignment_file추가 vo추가 mapper추가 등등해줌.
 			
 			ArrayList fileNames = new ArrayList(); //~~
 			
@@ -359,11 +333,11 @@ public class AssignmentController {
 					}
 				}
 			}
-			modelMap.addAttribute("fileNames",fileNames);             	  //~~
-			modelMap.addAttribute("title", fileBoard.getTitle());             //~~
+			modelMap.addAttribute("fileNames",fileNames);         
+			modelMap.addAttribute("title", fileBoard.getTitle());     
 			//
 			Student s = (Student)session.getAttribute("login_info");
-			String student = s.getStudentName(); //오류났던거 적기 : getAssignmentWriter안돼서 session에서 getTeacherName가져옴.
+			String student = s.getStudentName(); 
 			String studentId = s.getStudentId();
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -395,14 +369,6 @@ public class AssignmentController {
 		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
 
 		
 		
@@ -419,14 +385,14 @@ public class AssignmentController {
 			@RequestMapping("/assignment_replyRegister")
 			public ModelAndView replyRegister(int assignmentNo,int lectureNo){
 				
-				Map map = new HashMap();
+				Map<String,Object> map = new HashMap<String,Object>();
 				Assignment assignment = service.selectNo(assignmentNo,lectureNo);
 				map.put("assignment",assignment);
 				
 				System.out.println("답글 작성폼 ok");	
 				return new ModelAndView("assignment/assignment_replyRegister.tiles",map);
 			}
-			//●오류났던거 적기 : 여기에서도 정보 넘겨줘야함(여기에 아무것도 안적어 줬었음), 새글+수정 합친 개념 - 글번호랑 다른것들 가져와야됨 - 가져와서 뿌려주고 이거 같이 넘겨야됨	
+																																																	//●오류났던거 적기 : 여기에서도 정보 넘겨줘야함(여기에 아무것도 안적어 줬었음), 새글+수정 합친 개념 - 글번호랑 다른것들 가져와야됨 - 가져와서 뿌려주고 이거 같이 넘겨야됨	
 		
 		
 		
@@ -499,41 +465,34 @@ public class AssignmentController {
 				System.out.println("답글  작성하고 등록ok");
 				return new ModelAndView("assignment/assignment_detail.tiles","assignment", assignment); //답글작성완료하면 상세페이지로 돌아가기*
 			}
-			//=잘못된것 : 아래꺼 지워주기 어짜피 위에서Assignment assignment, 넘겨받기때문에 다시 new생성해서 보낼필요없음
-			//=●오류났던거 적기 : 답글로 등록되야 하는데 새글로등록됨 ->해결: no값 그대로 넘겨야 하는데 new생성해서 num값 넣어줘서 새글이 되니까 답글이 안달렸던것.
-			//=assignment= new Assignment(num,0,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),0,assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),student,assignment.getAssignmentDeadline(),5);
-			//>●오류났던거 적기 :  답글등록하고 상세페이지뿌려줘야하는데 안나왔었음 -> 해결 : service에 replyReplyReplyAddStep메서드 내가 map에 넣어서 리턴! 해줬었는데 - 이렇게하면 assignment가 넘어가는게 아니라 숫자1이 넘어감 -> 해결 : replyReplyReplyAddStep메서드 void 로 바꿔주고 리턴없앰, 여기 컨트롤러에서도 맵지워주고 "assignment"로 넘겨줌.
+																																																			//=잘못된것 : 아래꺼 지워주기 어짜피 위에서Assignment assignment, 넘겨받기때문에 다시 new생성해서 보낼필요없음
+																																																			//=●오류났던거 적기 : 답글로 등록되야 하는데 새글로등록됨 ->해결: no값 그대로 넘겨야 하는데 new생성해서 num값 넣어줘서 새글이 되니까 답글이 안달렸던것.
+																																																			//=assignment= new Assignment(num,0,assignment.getAssignmentTitle(),assignment.getAssignmentContent(),sdfDate,assignment.getAssignmentHit(),0,assignment.getReplyFamily(),assignment.getReplyStep(),assignment.getReplyLevel(),student,assignment.getAssignmentDeadline(),5);
+																																																			//>●오류났던거 적기 :  답글등록하고 상세페이지뿌려줘야하는데 안나왔었음 -> 해결 : service에 replyReplyReplyAddStep메서드 내가 map에 넣어서 리턴! 해줬었는데 - 이렇게하면 assignment가 넘어가는게 아니라 숫자1이 넘어감 -> 해결 : replyReplyReplyAddStep메서드 void 로 바꿔주고 리턴없앰, 여기 컨트롤러에서도 맵지워주고 "assignment"로 넘겨줌.
 			
 
-			
 		//위에 학생 답글-----------------------------------------------------------------------------------------------------------------
 		
-		
+
 			
+			
+			
+			
+/*			
 			//파일-다운로드처리
 			@RequestMapping("/download")
 			public ModelAndView download(@RequestParam String fileName){
-			 /*
+			 
 			 * 	 View-Name : downloadView
 			 * 	 Model(View에 전달할 값) : "downFile" - 파일명 downFile-abc.txt
-			 */
+			 
 
 			return new ModelAndView("downloadView", "downFile", fileName);
 			}
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+			
+		*/
 		
 		
 		
