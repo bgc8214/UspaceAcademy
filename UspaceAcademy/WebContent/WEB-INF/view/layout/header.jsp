@@ -8,7 +8,7 @@
 		position :relative;
 		position : absolute;
 		left:750px;
-		color : black;
+		color : white;
 		top : 12px;
 		bold;
 	}
@@ -26,13 +26,16 @@
 		position :relative;
 		position : absolute;
 		left:750px;
-		color : black;
+		color : white;
 		top : 10px;
 		bold;
 	}
 	table#tb {
 		width:900px;
 		height:100px;
+	}
+	#ff {
+		color : white;
 	}
 }
 </style>
@@ -50,12 +53,12 @@
 		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #3A487F;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/UspaceAcademy/main.do">UspaceAcademy</a>
+					<a class="navbar-brand" href="/UspaceAcademy/main.do" id="ff">UspaceAcademy</a>
 				</div>
 				<div>
 					<ul class="nav navbar-nav">
 						<li class="down"><a class="dropdown-toggle"
-							data-toggle="dropdown">학원소개</a>
+							data-toggle="dropdown" id="ff">학원소개</a>
 							<ul class="dropdown-menu">
 								<li><a href="/UspaceAcademy/academyIntroduce.do">학원소개</a></li>
 								<li><a href="/UspaceAcademy/roadIntroduce.do">오시는길</a></li>
@@ -63,23 +66,23 @@
 							</ul></li>
 					</ul>
 					<ul class="nav navbar-nav">
-						<li><a href="/UspaceAcademy/lecture/lectureList.do">개설강좌</a></li>
+						<li><a href="/UspaceAcademy/lecture/lectureList.do" id="ff">개설강좌</a></li>
 						<li><a
-							href="/UspaceAcademy/lectureReview/lecture_review_list.do">수강후기</a></li>
-						<li><a href="/UspaceAcademy/notice/list.do?type=공지사항">공지사항</a></li>
+							href="/UspaceAcademy/lectureReview/lecture_review_list.do" id="ff">수강후기</a></li>
+						<li><a href="/UspaceAcademy/notice/list.do?type=공지사항" id="ff">공지사항</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 						<li class="down"><a class="dropdown-toggle"
-							data-toggle="dropdown">고객센터</a>
+							data-toggle="dropdown" id="ff">고객센터</a>
 							<ul class="dropdown-menu">
-								<li><a href="/UspaceAcademy/FAQ/list.do?type=FAQ">FAQ</a></li>
+								<li><a href="/UspaceAcademy/FAQ/list.do?type=FAQ" id="ff">FAQ</a></li>
 								<li><a
-									href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의">1:1문의</a></li>
+									href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의" id="ff">1:1문의</a></li>
 							</ul>
 					</ul>
 					<ul class="nav navbar-nav">
 						<li class="down"><a class="dropdown-toggle"
-							data-toggle="dropdown">회원가입</a>
+							data-toggle="dropdown" id="ff">회원가입</a>
 							<ul class="dropdown-menu">
 								<li><a href="/UspaceAcademy/member/teacherRegisterForm.do?codeType=teacherSubject">강사가입</a></li>
 								<li><a
@@ -103,19 +106,19 @@
 		<c:choose>
 			<c:when test="${sessionScope.memberType=='student' }">
 		<span id="bb">${sessionScope.login_info.studentName } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
+			<a href="/UspaceAcademy/member/logout.do" id="ff"><button class="btn btn-success">로그아웃</button></a>
 		</span>
 			</c:when>
 			<c:when test="${sessionScope.memberType=='teacher' }">
 		<span id="bb">	
 			${sessionScope.login_info.teacherName } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
+			<a href="/UspaceAcademy/member/logout.do" id="ff"><button class="btn btn-success">로그아웃</button></a>
 		</span>
 			</c:when>
 			<c:when test="${sessionScope.memberType=='administrator' }">
 		<span id="bb">	
 			${sessionScope.login_info } 님 환영합니다.
-			<a href="/UspaceAcademy/member/logout.do"><button class="btn btn-success">로그아웃</button></a>
+			<a href="/UspaceAcademy/member/logout.do" id="ff"><button class="btn btn-success">로그아웃</button></a>
 		</span>
 			</c:when>
 		</c:choose>
@@ -130,12 +133,12 @@
 		<nav class="navbar navbar-light navbar-fixed-top" style='background-color: #3A487F;'>
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="/UspaceAcademy/main.do">UspaceAcademy</a>
+					<a class="navbar-brand" href="/UspaceAcademy/main.do" id="ff">UspaceAcademy</a>
 				</div>
 				<div>
 					<ul class="nav navbar-nav">
 						<li class="down"><a class="dropdown-toggle"
-							data-toggle="dropdown">학원소개</a>
+							data-toggle="dropdown" id="ff">학원소개</a>
 							<ul class="dropdown-menu">
 								<li><a href="/UspaceAcademy/academyIntroduce.do">학원소개</a></li>
 								<li><a href="/UspaceAcademy/roadIntroduce.do">오시는길</a></li>
@@ -145,20 +148,20 @@
 					<ul class="nav navbar-nav">
 						<c:choose>
 							<c:when test="${sessionScope.memberType=='administrator'}">
-								<li><a href="/UspaceAcademy/lecture/lectureAll.do">개설강좌</a></li>
+								<li><a href="/UspaceAcademy/lecture/lectureAll.do" id="ff">개설강좌</a></li>
 								<!-- 관리자 -->
 							</c:when>
 							<c:otherwise>
-								<li><a href="/UspaceAcademy/lecture/lectureList.do">개설강좌</a></li>
+								<li><a href="/UspaceAcademy/lecture/lectureList.do" id="ff">개설강좌</a></li>
 							</c:otherwise>
 						</c:choose>
 						<li><a
-							href="/UspaceAcademy/lectureReview/lecture_review_list.do">수강후기</a></li>
-						<li><a href="/UspaceAcademy/notice/list.do?type=공지사항">공지사항</a></li>
+							href="/UspaceAcademy/lectureReview/lecture_review_list.do" id="ff">수강후기</a></li>
+						<li><a href="/UspaceAcademy/notice/list.do?type=공지사항" id="ff">공지사항</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 						<li class="down"><a class="dropdown-toggle"
-							data-toggle="dropdown">고객센터</a>
+							data-toggle="dropdown" id="ff">고객센터</a>
 							<ul class="dropdown-menu">
 								<li><a href="/UspaceAcademy/FAQ/list.do?type=FAQ">FAQ</a></li>
 								<li><a
@@ -167,7 +170,7 @@
 					</ul>
 					<ul class="nav navbar-nav">
 						<li class="down"><a class="dropdown-toggle"
-							data-toggle="dropdown">마이페이지</a>
+							data-toggle="dropdown" id="ff">마이페이지</a>
 							<ul class="dropdown-menu">
 								<c:choose>
 									<c:when test="${sessionScope.memberType=='teacher' }">
@@ -200,7 +203,7 @@
 								<!-- 로그인 안했을 때 -->
 
 								<form action="/UspaceAcademy/member/login.do" method="post"
-									id="loginForm">
+									id="loginForm" id="ff">
 									ID : <input type="text" name="id" placeholder="id를 입력하세요"
 										id="aa"> PASSWORD :<input type="password"
 										name="password" placeholder="비밀번호를 입력하세요" id="aa"> <input
