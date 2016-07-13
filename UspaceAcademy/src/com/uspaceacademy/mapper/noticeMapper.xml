@@ -4,6 +4,7 @@
 <sql id="notice-columns">
 	basic_no, basic_writer, basic_title, basic_content, basic_date, basic_hit, basic_type
 </sql>
+
 <resultMap type="notice" id="notice-resultMap">
 	<id column="basic_no" property="basicNo"/>
 	<result column="basic_writer" property="basicWriter"/>
@@ -13,19 +14,27 @@
 	<result column="basic_hit" property="basicHit"/>
 	<result column="basic_type" property="basicType"/>
 </resultMap>
+
+<!-- 공지사항 등록 -->
 <insert id="insert_notice" parameterType="notice">
 	insert into basic_board
 	values(#{basicNo}, #{basicWriter}, #{basicTitle}, #{basicContent}, #{basicDate}, #{basicHit}, #{basicType})
 </insert>
+
+<!-- 공지사항 번호 sequence 처리 -->
 <select id="selectNextNo" resultType="_int">
 	select basic_board_seq.nextval from dual
 </select>
+
+<!-- 공지사항 전체 조회 -->
 <select id="selectList" resultMap="notice-resultMap" parameterType="string">
 	select <include refid="notice-columns"/> 
 	from basic_board
 	where basic_type = #{basicType}
 	order by basic_no desc
 </select>
+
+<!-- 공지사항 수정 -->
 <update id="update_notice" parameterType="notice">
 	update basic_board
 	set basic_title = #{basicTitle},
@@ -34,14 +43,20 @@
 		basic_hit = #{basicHit}
 	where basic_no  = #{basicNo}
 </update>
+
+<!-- 공지사항 삭제 -->
 <delete id="delete_notice" parameterType="_int">
 	delete from basic_board where basic_no = #{basicNo}
 </delete>
+
+<!-- 공지사항 찾기 -->
 <select id="select_byno" parameterType="_int" resultMap="notice-resultMap">
 	select <include refid="notice-columns"></include>
 	from basic_board
 	where basic_no = #{basicNo}
 </select>
+
+<!-- 공지사항 조회수 조회 -->
 <select id="select_hit" parameterType="_int" resultType="_int">
 	select basic_hit
 	from basic_board
@@ -82,6 +97,7 @@ FROM basic_board WHERE basic_type=#{basicType} and (basic_content like '%'||#{ke
 SELECT count(basic_no) 
 FROM basic_board 
 WHERE basic_type = #{basicType} and 
-(basic_content like '%'||#{keyword}||'%' or basic_title like '%'||#{keyword}||'%') </select>
+(basic_content like '%'||#{keyword}||'%' or basic_title like '%'||#{keyword}||'%') 
+</select>
 
 </mapper> 

@@ -32,7 +32,7 @@ span {
 <h3 class="pageTlt">공지사항 등록</h3>
 <hr>
 
-<form action="/UspaceAcademy/notice/noticeWrite.do" method="post">
+<form action="/UspaceAcademy/notice/noticeRegister.do" method="post">
 <input type="hidden" name="basicType" value="${requestScope.codeName}">
 	<table class="table table-bordered form-table" id="tb">
 		<tbody>

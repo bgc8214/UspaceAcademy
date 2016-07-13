@@ -31,7 +31,7 @@ $(document).ready(function() {
 <h3 class="pageTlt">FAQ 등록</h3>
 <hr>
 
-<form action="/UspaceAcademy/FAQ/FAQWrite.do" method="post">
+<form action="/UspaceAcademy/FAQ/FAQRegister.do" method="post">
 <input type="hidden" name="basicType" value="${requestScope.codeName}">
 	<table class="table table-bordered form-table" id="tb">
 		<tbody>

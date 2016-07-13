@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.uspaceacademy.service.CodeService;
 import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.service.MemberService;
 import com.uspaceacademy.validaotor.LectureValidator;
@@ -33,6 +35,9 @@ public class LectureController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private CodeService codeService;
 	
 	//강의 목록 전체조회(페이징)
 	@RequestMapping("/lectureList.do")

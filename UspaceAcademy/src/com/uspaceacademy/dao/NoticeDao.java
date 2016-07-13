@@ -24,7 +24,7 @@ public class NoticeDao
 	}
 	
 	// 공지사항 게시물 insert
-	public int insertNotice(Notice notice) {
+	public int insertNoticeDao(Notice notice) {
 		return session.insert(namespace+"insert_notice", notice);
 	}
 	
@@ -34,27 +34,21 @@ public class NoticeDao
 	}
 	
 	// 공지사항 게시물 전체조회
-	public List noticeList(String type) {
-//		System.out.println("dao : "+type);
+	public List noticeListDao(String type) {
 		return session.selectList(namespace+"selectList", type);
 	}
-	
-	// codeTable에서 name값 가져오기
-	public List selectCode(String code) {
-		return session.selectList("codeTable.selectCodeName", code);
-	}
-	
+
 	// 공지사항 게시물 수정
-	public int updateNotice(Notice notice) {
+	public int updateNoticeDao(Notice notice) {
 		return session.update(namespace+"update_notice", notice);
 	}
 	
 	// 공지사항 게시물 삭제
-	public int deleteNotice(int no) {
+	public int deleteNoticeDao(int no) {
 		return session.delete(namespace+"delete_notice", no);
 	}
 	
-	public Notice selectByNo(int no) {
+	public Notice selectNoticeByNoDao(int no) {
 		return session.selectOne(namespace+"select_byno", no);
 	}
 	
@@ -63,7 +57,7 @@ public class NoticeDao
 	}
 	
 	// 공지 게시판 페이징 처리
-	public List selectListPage(int page, String type) {
+	public List selectListPageDao(int page, String type) {
 		Map map = new HashMap<>();
 		map.put("page", page);
 		map.put("itemsPerPage", Constants.ITEMS_PER_PAGE);
@@ -77,7 +71,7 @@ public class NoticeDao
 	}
 	
 	// 검색엔진 페이징 처리
-	public List noticeSearch(String keyword, int page) {
+	public List noticeSearchDao(String keyword, int page) {
 		Map map = new HashMap<>();
 		map.put("basicType", "공지사항");
 		map.put("keyword", keyword);

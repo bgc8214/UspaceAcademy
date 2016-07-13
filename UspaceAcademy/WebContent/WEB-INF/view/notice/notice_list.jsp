@@ -67,7 +67,7 @@ table#tb {
 			${page}
 			</c:when>
 			<c:otherwise>
-				<a href="/UspaceAcademy/notice/list.do?page=${page}&type=공지사항">
+				<a href="/UspaceAcademy/notice/noticeList.do?page=${page}&type=공지사항">
 				${page}
 				</a>
 			</c:otherwise>
@@ -77,7 +77,7 @@ table#tb {
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/notice/list.do?&page=${requestScope.paging.endPage + 1}&type=공지사항">
+			<a href="/UspaceAcademy/notice/noticeList.do?&page=${requestScope.paging.endPage + 1}&type=공지사항">
 			다음
 			</a>
 		</c:when>

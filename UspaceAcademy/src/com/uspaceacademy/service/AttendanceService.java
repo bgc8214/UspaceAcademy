@@ -23,16 +23,16 @@ public class AttendanceService {
 	
 	// 강사가 선택한 강의의 학생 정보 조회를 위한..
 	public List selectLectureStudentInfoService(int lectureNo3) {
-		return dao.selectLectureStudentInfo(lectureNo3);
+		return dao.selectLectureStudentInfoDao(lectureNo3);
 	}
 	
 	// 출석등록
-	public int attendanceRegisterService(int day, String[] attendanceState, int lectureNo, List<Student> list) {
+	public int attendanceInsertService(int day, String[] attendanceState, int lectureNo, List<Student> list) {
 		
 		for(int i=0; i<attendanceState.length; i++) {
 			
 			Attendance attendance = new Attendance(attendanceState[i], day, list.get(i).getStudentId(), lectureNo);
-			dao.attendanceRegisterDao(attendance);
+			dao.attendanceInsertDao(attendance);
 			
 		}
 		return 1;
@@ -45,32 +45,20 @@ public class AttendanceService {
 	
 	// 출결 조회
 	public List attendanceStateService(int lectureNo) {
-		int max = dao.maxDay(lectureNo);		// DB에 등록된 출결의 최종날짜 -> 추가된 인원에 대한 날짜 구별시에도 사용
+		int max = dao.lastAttendanceRegisterDayDao(lectureNo);		// DB에 등록된 출결의 최종날짜 -> 추가된 인원에 대한 날짜 구별시에도 사용
 		
-		List studentList = dao.selectLectureStudentInfo(lectureNo);		// 강의 수강 중인 학생 정보 정렬된  ASC
-				
-//		int studentSize = studentList.size();
+		List studentList = dao.selectLectureStudentInfoDao(lectureNo);		// 강의 수강 중인 학생 정보 정렬된  ASC
 		
 		ArrayList<List> list = new ArrayList();
 
 		for(int i=1; i<=max; i++) 
 			 list.add(dao.attendanceStateDao(lectureNo, i));
-/*	
- * 	// 학생 추가시 확인 을 위해서 하는 것 - 일단 보류
-		for(int i=0; i<list.size()-1; i++) {			
-			if(list.get(i).size() != list.get(i+1).size()) {
-				int num = list.get(i+1).size() - list.get(i).size();		// 학생 추가 인원
-				for(int j=0; j<num; j++) {
-					list.get(i).add("결석");
-				}
 
-			}
-		}*/
 		return list;
 	}
 	
 	// 일차별(하루) 출석 수정
-	public int attendanceStateModify(int lectureNo, int lectureDay, String attendanceState, List list) {
+	public int attendanceStateUpdateService(int lectureNo, int lectureDay, String attendanceState, List list) {
 		for(int i=0; i<list.size(); i++) 
 			dao.attendanceUpdateDao(lectureNo, lectureDay, attendanceState.split(",")[i], ((Student) list.get(i)).getStudentId());
 		

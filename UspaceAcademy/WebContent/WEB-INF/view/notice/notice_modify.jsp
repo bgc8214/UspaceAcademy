@@ -32,7 +32,7 @@ span {
 </script>
 <h3 class="pageTlt">공지사항 수정</h3>
 <hr>
-<form action="/UspaceAcademy/notice/noticeUpdate.do?page=${param.page}" method="post">
+<form action="/UspaceAcademy/notice/noticeModify.do?page=${param.page}" method="post">
 <input type="hidden" name="basicNo" value="${requestScope.notice.basicNo}">
 <input type="hidden" name="basicDate" value="${requestScope.notice.basicDate}">
 <input type="hidden" name="basicType" value="${requestScope.notice.basicType}">

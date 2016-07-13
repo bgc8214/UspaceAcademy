@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.uspaceacademy.service.CodeService;
 import com.uspaceacademy.service.FAQService;
 import com.uspaceacademy.validaotor.FAQValidator;
 import com.uspaceacademy.vo.Code;
@@ -34,22 +35,18 @@ public class FAQController
 	@Autowired
 	private FAQService service;
 	
+	@Autowired
+	private CodeService codeService;
+	
 	// 코드테이블 name과 일치할 때만 구분 값 넣기
 	@RequestMapping("/codeList.do")
-	public ModelAndView codeSearch(String codeNames) {
-		List codeList = service.searchCode("basic_board");
-		for(int i=0; i<codeList.size(); i++) {
-			Code c = (Code) codeList.get(i);
-			if(codeNames.equals(c.getCodeName())) {
-				value = c.getCodeName();
-			}
-		}		
-		return new ModelAndView("FAQ/FAQ_form.tiles", "codeName", value);
+	public ModelAndView codeSearch(String codeName) {
+		return new ModelAndView("FAQ/FAQ_form.tiles", "codeName", codeService.searchCode(codeName));
 	}
 	
 	// FAQ 게시물 등록
-	@RequestMapping("/FAQWrite.do")
-	public String FAQAdd(@RequestParam(defaultValue="1") int page, String type,@ModelAttribute("FAQForm") FAQ faq, BindingResult errors) {
+	@RequestMapping("/FAQRegister.do")
+	public String FAQRegister(@RequestParam(defaultValue="1") int page, String type,@ModelAttribute("FAQForm") FAQ faq, BindingResult errors) {
 		FAQValidator validator = new FAQValidator();
 		validator.validate(faq, errors);
 		boolean error = errors.hasErrors();
@@ -61,9 +58,9 @@ public class FAQController
 			return "/FAQ/codeList.do?codeNames="+faq.getBasicType();
 		}
 		FAQ faq1 = new FAQ(service.selectSeq(), "administrator", faq.getBasicTitle(), faq.getBasicContent(), new SimpleDateFormat("yyyy-MM-dd kk:mm").format(new Date()), 0, faq.getBasicType());
-		service.register(faq1);
-		List list = service.FAQAll(faq.getBasicType());
-		return "redirect:/FAQ/list.do?type="+faq.getBasicType();
+		service.insertFAQService(faq1);
+		List list = service.FAQListService(faq.getBasicType());
+		return "redirect:/FAQ/FAQList.do?type="+faq.getBasicType();
 	}
 	
 	@RequestMapping("/FAQRedirect.do")
@@ -72,17 +69,17 @@ public class FAQController
 	}
 	
 	
-	// FAQ Paiging 리스트
-	@RequestMapping("/list.do")
-	public ModelAndView FAQAllList(@RequestParam(defaultValue="1") int page, String type, HttpSession session) {
-		Map map = service.FAQPagingList(page, type);
+	// FAQ Paging 리스트
+	@RequestMapping("/FAQList.do")
+	public ModelAndView FAQPagingList(@RequestParam(defaultValue="1") int page, String type, HttpSession session) {
+		Map map = service.selectFAQPagingListService(page, type);
 		map.put("page", page);
 		return new ModelAndView("FAQ/FAQ_list.tiles", map);
 	}
 	
 	// FAQ 수정
-	@RequestMapping("/FAQUpdate.do")
-	public ModelAndView FAQModify(@RequestParam(defaultValue="1") int page, @ModelAttribute("FAQForm") FAQ faq, BindingResult errors) {
+	@RequestMapping("/FAQModify.do")
+	public String FAQModify(@RequestParam(defaultValue="1") int page, @ModelAttribute("FAQForm") FAQ faq, BindingResult errors) {
 	// 검증
 		FAQValidator validator = new FAQValidator();
 		validator.validate(faq, errors);
@@ -92,43 +89,43 @@ public class FAQController
 		System.out.printf("FAQ 수정 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n", error, errorCount);
 		
 		if(errors.hasErrors()) {
-			return new ModelAndView("/FAQ/FAQUpdateForm.do?no="+faq.getBasicNo()+"&hit="+faq.getBasicHit()+"&page="+page);
+			return "redirect:/FAQ/FAQModifyForm.do?no="+faq.getBasicNo()+"&hit="+faq.getBasicHit()+"&page="+page;
 		}
 
 		FAQ faq1 = new FAQ(faq.getBasicNo(), faq.getBasicTitle(), faq.getBasicContent(), new SimpleDateFormat("yyyy-MM-dd kk:mm").format(new Date()), faq.getBasicHit());
-		service.modifyFAQ(faq1);
-//		System.out.println(faq1.getBasicType());
+		service.updateFAQService(faq1);
 		
-		Map map = service.FAQPagingList(page, "FAQ");
-		return new ModelAndView("FAQ/FAQ_list.tiles", map);
+		Map map = service.selectFAQPagingListService(page, "FAQ");
+		return "redirect:/FAQ/FAQModifyRedirect.do?type="+"FAQ";
 	}
 	
-	@RequestMapping("/FAQUpdateRedirect.do")
-	public String FAQRedirectUpdate(String type) {	// 새로고침 시 더 등록 안되도록 redirect 처리
+	@RequestMapping("/FAQModifyRedirect.do")
+	public String FAQModifyRedirect(String type) {	// 새로고침 시 더 등록 안되도록 redirect 처리
 		System.out.println("수정 리다이렉트 "+type);
-		return "redirect:/FAQ/list.do?type="+type;
+		return "redirect:/FAQ/FAQList.do?type="+type;
 	}
 	
 	// FAQ 삭제
-	@RequestMapping("/FAQDelete.do")
+	@RequestMapping("/FAQRemove.do")
 	public ModelAndView FAQRemove(@RequestParam(defaultValue="1") int page, int no, String type) {
-		service.deleteFAQ(no);
-		Map map = service.FAQPagingList(page, type);
+		service.deleteFAQService(no);
+		Map map = service.selectFAQPagingListService(page, type);
 		return new ModelAndView("FAQ/FAQ_list.tiles", map);
 	}
 	
+	// 조회수 올리기
 	@RequestMapping("/findFAQByNo.do") 
 	@ResponseBody
 	public FAQ getFAQByNo(int no, int hit) {
 		FAQ faq = service.selectByNo(no);
 		faq.setBasicHit(++hit);
-		service.modifyFAQ(faq);
+		service.updateFAQService(faq);
 		return faq;
 	}
 	
-	// 수정 폼 가기전에 no로 vo 가져오기
-	@RequestMapping("/FAQUpdateForm.do")
-	public ModelAndView FAQUpdateForm(int no, int hit, @RequestParam(defaultValue="1") int page) {
+	// 수정 폼 가기전에 no로 FAQ객체 가져오기
+	@RequestMapping("/FAQModifyForm.do")
+	public ModelAndView FAQModifyForm(int no, int hit, @RequestParam(defaultValue="1") int page) {
 		FAQ faq = service.selectByNo(no);
 		faq.setBasicHit(hit);
 		HashMap map = new HashMap();
@@ -143,15 +140,14 @@ public class FAQController
 		FAQ faq = service.selectByNo(no);
 		int val = faq.getBasicHit();
 		faq.setBasicHit(++val);
-		service.modifyFAQ(faq);
+		service.updateFAQService(faq);
 		return new ModelAndView("FAQ/FAQ_detail.tiles", "faq", faq);
 	}
 	
 	// FAQ Title로 검색엔진
 	@RequestMapping("/FAQTitleSearch.do")
-	public ModelAndView FAQTitleSearch(@RequestParam(defaultValue="1") int page, String title) {
-//		System.out.println(title);
-		Map map = service.FAQTitleSearch(title, "FAQ", page); 
+	public ModelAndView selectFAQByTitleList(@RequestParam(defaultValue="1") int page, String title) {
+		Map map = service.selectFAQByTitleService(title, "FAQ", page); 
 		map.put("page", page);
 		map.put("title", title);
 		return new ModelAndView("FAQ/FAQTitle_search.tiles", map);

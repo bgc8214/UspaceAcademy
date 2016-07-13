@@ -29,12 +29,12 @@ public class AttendanceDao {
 	}
 	
 	// 강사가 선택한 강좌를 수강하는 학생의 정보를 가져오기 위해서....
-	public List selectLectureStudentInfo(int lectureNo3) {
+	public List selectLectureStudentInfoDao(int lectureNo3) {
 		return session.selectList(namespace+"selectLectureStudentInfo", lectureNo3);
 	}
 	
 	// 강사가 특정 강좌의 일차(별) 출석 등록
-	public int attendanceRegisterDao(Attendance attendance) {
+	public int attendanceInsertDao(Attendance attendance) {
 		return session.insert(namespace+"attendanceRegister", attendance);
 	}
 	
@@ -45,8 +45,8 @@ public class AttendanceDao {
 	}
 	
 	// 한 강좌의 학생들의 출결정보가 등록된 최종 날짜
-	public int maxDay(int lectureNo) {
-		return session.selectOne(namespace+"maxLectureDay", lectureNo);
+	public int lastAttendanceRegisterDayDao(int lectureNo) {
+		return session.selectOne(namespace+"lastAttendanceRegisterDay", lectureNo);
 	}
 	
 	// 일차(1) 출석 상태 조회
@@ -54,7 +54,6 @@ public class AttendanceDao {
 		Map map =  new HashMap<>();
 		map.put("lectureNo", lectureNo);
 		map.put("lectureDay", lectureDay);
-//		System.out.println("DAO  "+session.selectList(namespace+"lectureAttendanceState", map));
 		return session.selectList(namespace+"lectureAttendanceState", map);
 	}
 	

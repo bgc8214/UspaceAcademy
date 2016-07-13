@@ -16,7 +16,7 @@ span {
 }
 </style>
 <h3 class="pageTlt">FAQ 수정</h3>
-<form action="/UspaceAcademy/FAQ/FAQUpdate.do?page=${page}" method="post" id="tb">
+<form action="/UspaceAcademy/FAQ/FAQModify.do?page=${page}" method="post" id="tb">
 <input type="hidden" name="basicNo" value="${requestScope.faq.basicNo}">
 <input type="hidden" name="basicDate" value="${requestScope.faq.basicDate}">
 <input type="hidden" name="basicHit" value="${requestScope.faq.basicHit}">

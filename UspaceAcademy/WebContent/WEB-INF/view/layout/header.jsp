@@ -69,13 +69,13 @@
 						<li><a href="/UspaceAcademy/lecture/lectureList.do" id="ff">개설강좌</a></li>
 						<li><a
 							href="/UspaceAcademy/lectureReview/lecture_review_list.do" id="ff">수강후기</a></li>
-						<li><a href="/UspaceAcademy/notice/list.do?type=공지사항" id="ff">공지사항</a></li>
+						<li><a href="/UspaceAcademy/notice/noticeList.do?type=공지사항" id="ff">공지사항</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 						<li class="down"><a class="dropdown-toggle"
 							data-toggle="dropdown" id="ff">고객센터</a>
 							<ul class="dropdown-menu">
-								<li><a href="/UspaceAcademy/FAQ/list.do?type=FAQ" id="ff">FAQ</a></li>
+								<li><a href="/UspaceAcademy/FAQ/FAQList.do?type=FAQ" id="ff">FAQ</a></li>
 								<li><a
 									href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의" id="ff">1:1문의</a></li>
 							</ul>
@@ -157,13 +157,13 @@
 						</c:choose>
 						<li><a
 							href="/UspaceAcademy/lectureReview/lecture_review_list.do" id="ff">수강후기</a></li>
-						<li><a href="/UspaceAcademy/notice/list.do?type=공지사항" id="ff">공지사항</a></li>
+						<li><a href="/UspaceAcademy/notice/noticeList.do?type=공지사항" id="ff">공지사항</a></li>
 					</ul>
 					<ul class="nav navbar-nav">
 						<li class="down"><a class="dropdown-toggle"
 							data-toggle="dropdown" id="ff">고객센터</a>
 							<ul class="dropdown-menu">
-								<li><a href="/UspaceAcademy/FAQ/list.do?type=FAQ">FAQ</a></li>
+								<li><a href="/UspaceAcademy/FAQ/FAQList.do?type=FAQ">FAQ</a></li>
 								<li><a
 									href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의">1:1문의</a></li>
 							</ul>

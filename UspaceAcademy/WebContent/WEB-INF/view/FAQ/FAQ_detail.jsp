@@ -5,6 +5,6 @@
 FAQ내용 <br>
 <textarea rows="45" cols="100" readonly="readonly">${requestScope.faq.basicContent}</textarea>
 <p>
-<a href="/UspaceAcademy/FAQ/list.do?type=${requestScope.faq.basicType}"><button class="listFAQ">FAQ리스트</button></a>
-<a href="/UspaceAcademy/FAQ/FAQUpdateForm.do?no=${requestScope.faq.basicNo}&hit=${requestScoipe.faq.basicHit"><button class="updateFAQ">FAQ수정</button></a>
-<a href="/UspaceAcademy/FAQ/FAQDelete.do?no=${requestScope.faq.basicNo}&type=${requestScope.faq.basicType}"><button class="deleteFAQ">FAQ삭제</button></a>
+<a href="/UspaceAcademy/FAQ/FAQList.do?type=${requestScope.faq.basicType}"><button class="listFAQ">FAQ리스트</button></a>
+<a href="/UspaceAcademy/FAQ/FAQModifyForm.do?no=${requestScope.faq.basicNo}&hit=${requestScoipe.faq.basicHit"><button class="updateFAQ">FAQ수정</button></a>
+<a href="/UspaceAcademy/FAQ/FAQRemove.do?no=${requestScope.faq.basicNo}&type=${requestScope.faq.basicType}"><button class="deleteFAQ">FAQ삭제</button></a>

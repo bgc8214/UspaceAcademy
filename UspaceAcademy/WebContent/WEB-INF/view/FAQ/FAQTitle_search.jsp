@@ -25,8 +25,8 @@ $(document).ready(function() {
 				tmp.children().eq(3).text(faq.basicHit); 
 				tmp.next().children().eq(0).append("<br>"); 
 				if("${sessionScope.memberType}"=='administrator') {
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+${requestScope.page}+"><button class='btn btn-warning'>FAQ수정</button></a>"));
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+${requestScope.page}+"><button class='btn btn-danger'>FAQ삭제</button></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQModifyForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+${requestScope.page}+"><button class='btn btn-warning'>FAQ수정</button></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQRemove.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+${requestScope.page}+"><button class='btn btn-danger'>FAQ삭제</button></a>"));
 				}
 			},
 			"error":function(xhr, status, errorMsg) {
@@ -38,7 +38,8 @@ $(document).ready(function() {
 		});
 	});
 	$(".faqList").on("mouseover", function() {
-		$(this).css("background-color", "#FAF4C0");
+		$(this).css("background-color", "#D8EFF1");
+		this.style.cursor = 'pointer';
 
 	});
 
@@ -131,7 +132,7 @@ $(document).ready(function() {
 <p>
 
 <div align="right">
-	<a href="/UspaceAcademy/FAQ/list.do?type=FAQ"><button class="btn btn-success" >FAQ리스트</button></a>
+	<a href="/UspaceAcademy/FAQ/FAQList.do?type=FAQ"><button class="btn btn-success" >FAQ리스트</button></a>
 </div>
 
 <!-- 제목으로 검색 -->

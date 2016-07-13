@@ -43,7 +43,7 @@ public class AttendanceController {
 		Map map = new HashMap<>();
 		map.put("list", list);
 		System.out.println("강의 목록 조회 " +list);
-		return new ModelAndView("attendance/lecture_list.tiles", map);
+		return new ModelAndView("attendance/teacher_lecture_list.tiles", map);
 		
 	}
 
@@ -81,15 +81,13 @@ public class AttendanceController {
 			String registerDay = code.getCodeName();
 			
 			if(today.equals(registerDay)) {
-				System.out.println("오늘 날짜와 전 날짜가 같아요");
-				dummy = "1";
+
+				dummy = "1";	// 오늘 날짜와 전 날짜가 같은 경우
 			}
-		}
-		else {
-			System.out.println("출석 목록 이 없습니다.");
 		}
 		
 		String day = new SimpleDateFormat("E").format(currentDate);	// 오늘 요일
+		
 		String dummy1 = "0";
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).equals(day)) {
@@ -102,7 +100,6 @@ public class AttendanceController {
 		List attendanceList = service.attendanceStateService(lecture.getLectureNo());			// 출석 상태 조회		
 		
 		int diffDays = realLectureDay(lecture.getLectureStartDate(), lecture.getLectureEndDate(), lecture.getLectureDay());	// 강의 일수 구하기
-//		System.out.println("강의일수 - "+diffDays);
 		
 		Map map = new HashMap<>();
 		map.put("diffDays", diffDays);		// 강의일수
@@ -118,12 +115,11 @@ public class AttendanceController {
 	}
 	
 	// 강사가 학생의 출결 등록
-	
 	@RequestMapping("/attendanceRegister.do")
 	public String attendanceRegister(int day, String [] attendanceState, int lectureNo, @ModelAttribute Lecture lecture, HttpSession session) throws ParseException, UnsupportedEncodingException {
 		List<Student> list = service.selectLectureStudentInfoService(lectureNo);	// 특정강의를 수강중인 학생 정보를 가진 객체 List
-		service.attendanceRegisterService(day, attendanceState, lectureNo, list);	// 강의 날짜, 출결상태, 강의번호, 특정강의를 수강중인 학생 정보를 가진 객체 List
-		System.out.println(lecture.getLectureDay());
+		service.attendanceInsertService(day, attendanceState, lectureNo, list);	// 강의 날짜, 출결상태, 강의번호, 특정강의를 수강중인 학생 정보를 가진 객체 List
+
 		// 코드 테이블에서 sequence 번호
 		String num = Integer.toString(lectureNo);	// 강의번호 문자로 변환
 		String seq = Integer.toString(service.selectSeq());	// 시퀀스 문자로 변환
@@ -136,7 +132,6 @@ public class AttendanceController {
 			System.out.println("코드 테이블에 출결 정보가 존재하므로 최종 출석 등록 날짜 수정");
 			System.out.println(service.updateAttendanceDayService(new Code(seq, new SimpleDateFormat("yyyy/MM/dd").format(new Date()), num)));
 		}
-			System.out.println("출결등록 Redirect 전..."+lecture.getLectureDay());	
 		return "redirect:/attendance/attendanceRedirect.do?startDate="+lecture.getLectureStartDate()+"&endDate="+lecture.getLectureEndDate()+"&lectureDay="+URLEncoder.encode(lecture.getLectureDay(),"UTF-8")+"&lectureNo="+lecture.getLectureNo();
 	}
 	
@@ -162,11 +157,9 @@ public class AttendanceController {
 	
 	// 일자(하루씩) 출결 수정
 	@RequestMapping("/updateAttendance.do")
-	public String modifyAttendance(int lectureNo, int day, String startDate, String endDate, String lectureDay, @RequestParam String attendanceState) throws UnsupportedEncodingException {
+	public String attendanceModify(int lectureNo, int day, String startDate, String endDate, String lectureDay, @RequestParam String attendanceState) throws UnsupportedEncodingException {
 		List<Student> list = service.selectLectureStudentInfoService(lectureNo);	// 강의를 수강중인 학생 정보(학생id로 오름차순 정렬된)
-		service.attendanceStateModify(lectureNo, day, attendanceState, list);	// 수정
-//		System.out.println(lectureDay);
-//		System.out.println("리다이렉트 전"+ lectureDay);
+		service.attendanceStateUpdateService(lectureNo, day, attendanceState, list);	// 수정
 		return "redirect:/attendance/attendanceUpdateRedirect.do?startDate="+startDate+"&endDate="+endDate+"&lectureNo="+lectureNo+"&lectureDay="+URLEncoder.encode(lectureDay,"UTF-8");
 	}
 	
@@ -174,7 +167,7 @@ public class AttendanceController {
 	@RequestMapping("/attendanceUpdateRedirect.do")
 	public ModelAndView modifyRedirect(String startDate, String endDate, int lectureNo, String lectureDay) throws ParseException {
 		int diffDays = realLectureDay(startDate, endDate, lectureDay);
-		System.out.println("리다이렉트"+lectureDay);
+
 		List studentInfoList = service.selectLectureStudentInfoService(lectureNo);	// 강사가 선택한 강좌의 학생 정보
 		List attendanceList = service.attendanceStateService(lectureNo);			// 출석 상태 조회
 		
@@ -192,8 +185,7 @@ public class AttendanceController {
 	
 	// 학생이 수강중인 강의 정보
 	@RequestMapping("/studentLectureInfo.do")
-	public ModelAndView studentLectInfo(HttpSession session) {
-		
+	public ModelAndView studentLectInfo(HttpSession session) {	
 		Student student = (Student)session.getAttribute("login_info");
 		List studentLectureInfo =  service.studentLectureInfoService(student.getStudentId());
 		return new ModelAndView("member/student_lectureInfo.tiles", "studentLectureInfo", studentLectureInfo);
@@ -204,7 +196,7 @@ public class AttendanceController {
 	public ModelAndView studentAttendance(int lectureNo2, HttpSession session) {
 		Student student = (Student)session.getAttribute("login_info");
 		List attendanceStateList = service.studentAttendanceStateService(lectureNo2, student.getStudentId());
-		return new ModelAndView("member/student_attendanceState.tiles",	"attendanceStateList", attendanceStateList);
+		return new ModelAndView("attendance/student_attendanceState.tiles",	"attendanceStateList", attendanceStateList);
 	}
 	
 	// 실제 강의 일수를 계산하는 Method
@@ -231,10 +223,6 @@ public class AttendanceController {
 
 		// 총일수에서 실제 강의 일수 구하기
 		int intervalDay = (eCal.get(Calendar.DAY_OF_YEAR) - sCal.get(Calendar.DAY_OF_YEAR))+1;	// 총일수 
-		System.out.println("총일차수 - "+ intervalDay);
-		System.out.println("강의 요일  "+list);
-		System.out.println("요일 숫자 표기"+sCal.get(Calendar.DAY_OF_WEEK));
-		System.out.println("요일 수 "+list.size());
 
 		String confirmDay="";
 		int count=0;	// 요일 count
@@ -269,7 +257,6 @@ public class AttendanceController {
 			}
 			sCal.add(Calendar.DATE, 1);	// 하루 증가
 		}
-		System.out.println("실 강의 일수 "+ count);
 		return count;
 	}
 }

@@ -25,8 +25,8 @@ $(document).ready(function() {
 				tmp.children().eq(3).text(faq.basicHit); 
 				tmp.next().children().eq(0).append("<br>"); 
 				if("${sessionScope.memberType}"=='administrator') {
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQUpdateForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+$("#page").val()+"><button class='btn btn-warning'>FAQ수정</button></a>"));
-					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQDelete.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+$("#page").val()+"><button class='btn btn-danger'>FAQ삭제</button></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQModifyForm.do?no="+tmp.children().eq(0).text()+"&hit="+faq.basicHit+"&page="+$("#page").val()+"><button class='btn btn-warning'>FAQ수정</button></a>"));
+					tmp.next().children().eq(0).append($("<a href="+"/UspaceAcademy/FAQ/FAQRemove.do?no="+tmp.children().eq(0).text()+"&type="+faq.basicType+"&page="+$("#page").val()+"><button class='btn btn-danger'>FAQ삭제</button></a>"));
 
 				}
 			},
@@ -85,7 +85,7 @@ $(document).ready(function() {
 <div class="pageNav" align="center">
 	<c:choose>
 		<c:when test="${requestScope.paging.previousPageGroup }">
-			<a href="/UspaceAcademy/FAQ/list.do?page=${requestScope.paging.beginPage-1}&type=FAQ" class="prevPage">
+			<a href="/UspaceAcademy/FAQ/FAQList.do?page=${requestScope.paging.beginPage-1}&type=FAQ" class="prevPage">
 			<!-- ◀ --><strong>이전</strong>
 			</a>
 		</c:when>
@@ -98,7 +98,7 @@ $(document).ready(function() {
 			<strong>${page}</strong>
 			</c:when>
 			<c:otherwise>
-				<a href="/UspaceAcademy/FAQ/list.do?page=${page}&type=FAQ">
+				<a href="/UspaceAcademy/FAQ/FAQList.do?page=${page}&type=FAQ">
 				<strong>${page}</strong>
 				</a>
 			</c:otherwise>
@@ -108,7 +108,7 @@ $(document).ready(function() {
 	<%--다음 페이지 그룹 처리 ▶--%>
 	<c:choose>
 		<c:when test="${requestScope.paging.nextPageGroup }">
-			<a href="/UspaceAcademy/FAQ/list.do?&page=${requestScope.paging.endPage + 1}&type=FAQ" class="nextPage">
+			<a href="/UspaceAcademy/FAQ/FAQList.do?&page=${requestScope.paging.endPage + 1}&type=FAQ" class="nextPage">
 			<!-- ▶ --><strong>다음</strong>
 			</a>
 		</c:when>

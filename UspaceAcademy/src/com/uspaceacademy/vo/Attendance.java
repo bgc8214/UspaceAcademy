@@ -2,7 +2,6 @@ package com.uspaceacademy.vo;
 
 import java.io.Serializable;
 
-// 출석 관련 Vo
 public class Attendance implements Serializable {
 	private String attendanceState;
 	private int lectureDay;

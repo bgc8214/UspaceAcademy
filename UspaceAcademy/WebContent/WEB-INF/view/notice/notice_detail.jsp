@@ -29,10 +29,10 @@ table#tb {
 			<!-- 관리자용 공지사항 등록 버튼 -->
 			<span class="lectureRegister">
 			<td colspan="2">
-				<a href="/UspaceAcademy/notice/list.do?type=${requestScope.notice.basicType}"><button class="btn btn-success">공지사항 전체</button></a>
+				<a href="/UspaceAcademy/notice/noticeList.do?type=${requestScope.notice.basicType}"><button class="btn btn-success">공지사항 전체</button></a>
 				<c:if test="${sessionScope.memberType=='administrator'}">
-				<a href="/UspaceAcademy/notice/noticeUpdateForm.do?no=${requestScope.notice.basicNo}&page=${param.page}"><button class="btn btn-primary">공지사항 수정</button></a>
-				<a href="/UspaceAcademy/notice/noticeDelete.do?no=${requestScope.notice.basicNo}&type=${requestScope.notice.basicType}&page=${param.page}"><button class="btn btn-danger">공지사항 삭제</button></a>	
+				<a href="/UspaceAcademy/notice/noticeModifyForm.do?no=${requestScope.notice.basicNo}&page=${param.page}"><button class="btn btn-primary">공지사항 수정</button></a>
+				<a href="/UspaceAcademy/notice/noticeRemove.do?no=${requestScope.notice.basicNo}&type=${requestScope.notice.basicType}&page=${param.page}"><button class="btn btn-danger">공지사항 삭제</button></a>	
 				</c:if>
 			</td>	
 			</span>
