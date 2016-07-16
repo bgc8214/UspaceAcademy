@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <style>
 table#tb {
-	width:700px;
+	width:1000px;
 	heigth:100px;	
 }
 </style>

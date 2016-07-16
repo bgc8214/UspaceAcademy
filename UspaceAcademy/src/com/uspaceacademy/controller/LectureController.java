@@ -45,7 +45,7 @@ public class LectureController {
 		//원래 방식
 		//List lectureList = lectureService.getLectureList();
 		Map map = lectureService.getLectureList(page);
-		List codeList = lectureService.searchCode("teacherSubject");
+		List codeList = codeService.searchCodeNameByType("teacherSubject");
 		map.put("page", page);
 		map.put("codeList", codeList); 
 		return new ModelAndView("lecture/lecture_list.tiles", map);
@@ -65,7 +65,7 @@ public class LectureController {
 	//관리자가 강의를 등록하기 폼을 조회하기 위한 컨트롤러
 	@RequestMapping("/registerForm.do")
 	public ModelAndView registerLecture(String codeType){
-		List codeList = lectureService.searchCode(codeType);
+		List codeList = codeService.searchCodeNameByType(codeType);
 		List teacherList = memberService.getTeacherBySubject("국어");//default값인 국어선생님들을 옵션으로 뿌려줌
 		Map map = new HashMap();
 		map.put("codeList", codeList);
@@ -110,11 +110,6 @@ public class LectureController {
 			int lectureNo = -1;//어차피 sequence를 사용할 것이므로 -1 세팅
 			int lectureCurrentStudent = 0; // 초기 학생은 0명
 			
-			
-			/*Lecture lecture = new Lecture(lectureNo, lectureTitle, lectureDescription, lectureStartTime, 
-					lectureEndTime, lectureDay, lectureStartDate, lectureEndDate, lecturePrice, 
-					lectureTotalStudent, lectureCurrentStudent, lectureSubject, teacherId2);*/
-	
 			lecture.setLectureDay(lectureDay);
 			lecture.setLectureNo(lectureNo);
 			lecture.setLectureCurrentStudent(lectureCurrentStudent);
@@ -136,7 +131,7 @@ public class LectureController {
 	@RequestMapping("/getModifyForm.do")
 	public ModelAndView getLectureModifyForm(int lectureNo, String codeType){
 		Lecture lecture = lectureService.getLectureByNo(lectureNo);
-		List codeList = lectureService.searchCode(codeType);
+		List codeList = codeService.searchCodeNameByType(codeType);
 		List teacherList = memberService.getTeacherBySubject(lecture.getLectureSubject());
 		String lectureDay = lecture.getLectureDay();
 		List lectureDayList = new ArrayList();
@@ -282,8 +277,8 @@ public class LectureController {
 		Student student = (Student) session.getAttribute("login_info");
 		
 	
-		StudentLectureJoin studentLectureJoin = lectureService.getOneStudentLectureJoin(student.getStudentId(), lectureNo, "0");
-		StudentLectureJoin studentLectureJoin2 = lectureService.getOneStudentLectureJoin(student.getStudentId(), lectureNo, "1");
+		StudentLectureJoin studentLectureJoin = lectureService.getOneStudentLectureJoin(student.getStudentId(), lectureNo, "0");		// 찜목록
+		StudentLectureJoin studentLectureJoin2 = lectureService.getOneStudentLectureJoin(student.getStudentId(), lectureNo, "1");		// 수강신청 목록에 존재
 		if(studentLectureJoin!=null){
 			//1. 결제목록에 있는 것인가
 			System.out.println("이미 결제목록에 있는 것을 찜하려고함 -대영-");
@@ -376,7 +371,7 @@ public class LectureController {
 			map.put("keyword", keyword);
 		}else{
 			map = lectureService.getLectureList(page);
-			List codeList = lectureService.searchCode("teacherSubject");
+			List codeList = codeService.searchCodeNameByType("teacherSubject");
 			map.put("page", page);
 			map.put("codeList", codeList); 
 			map.put("searchType", searchType);
@@ -389,12 +384,13 @@ public class LectureController {
 		}
 		return new ModelAndView("lecture/lecture_list.tiles", map);
 	}
+	
 	//강사ID를 강사이름으로 변경해서 보여주는 ajax요청을 받음
 	@RequestMapping("/convertTeacherIdToTeacherName.do")
 	@ResponseBody
 	public List	converTeacherIdToTeacherName(@RequestParam(required=false) String teacherIds){
 		List teacherNameList = new ArrayList();
-		System.out.println(teacherIds);
+//		System.out.println(teacherIds);
 		if(teacherIds!=null&& (!teacherIds.trim().isEmpty())){
 		String[] teacherIdArray = teacherIds.split(",");
 			for(int i=0;i<teacherIdArray.length;i++){
@@ -452,7 +448,7 @@ public class LectureController {
 			map.put("keyword", keyword);
 		}else{
 			map = lectureService.getLectureList(page);
-			List codeList = lectureService.searchCode("teacherSubject");
+			List codeList = codeService.searchCodeNameByType("teacherSubject");
 			map.put("page", page);
 			map.put("codeList", codeList); 
 			map.put("searchType", searchType);

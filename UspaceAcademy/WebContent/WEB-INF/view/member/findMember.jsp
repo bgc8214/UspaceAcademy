@@ -20,13 +20,11 @@ $(document).ready(function(){
 					if(!$("#name").val()){
 						alert("이름을 입력하세요");
 						$("#name").focus();
-						
 						return false;
 					}
 					if(!$("#phoneNo").val()){
 						alert("핸드폰 번호를 입력하세요");
 						$("#phoneNo").focus();
-						
 						return false;
 					}
 					

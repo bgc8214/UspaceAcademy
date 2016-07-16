@@ -61,7 +61,7 @@ public class MemberDao
 	
 	//영주 1
 	public List selectCode(String code) { //코드 목록 조회
-		return session.selectList("codeTable.selectCodeName", code);
+		return session.selectList("codeMapper.selectCodeName", code);
 	}
 	
 	public Student findStudentById(String id) //아이디로 학생 조회

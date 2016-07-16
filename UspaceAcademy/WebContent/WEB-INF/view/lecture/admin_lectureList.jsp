@@ -36,11 +36,7 @@ $(document).ready(function(){
 				alert("오류가 발생했습니다."+status+", "+errorMsg);
 			},
 			"beforeSend":function(){
-				/*if(!$("#id").val()){	
-					alert("조회할 ID를 입력하세요");
-					$("#id").focus();
-					return false;
-				}*/
+				
 			}
 		})
 		

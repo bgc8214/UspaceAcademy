@@ -31,11 +31,6 @@ public class FAQService
 		return dao.FAQListDao(type);
 	}
 	
-	// 코드 값 search
-	public List searchCode(String code) {
-		return dao.selectCode(code);
-	}
-	
 	// 공지사항 수정
 	public int updateFAQService(FAQ faq) {
 		return dao.updateFAQDao(faq);

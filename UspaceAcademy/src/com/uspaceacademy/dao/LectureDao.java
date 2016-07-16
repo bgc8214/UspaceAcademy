@@ -35,7 +35,7 @@ public class LectureDao {
 	}
 	//code리스트 조회
 	public List selectCode(String codeType){
-		return session.selectList("codeTable.selectCodeName",codeType);
+		return session.selectList("codeMapper.selectCodeName",codeType);
 	}
 	
 	//lecture시퀀스 조회

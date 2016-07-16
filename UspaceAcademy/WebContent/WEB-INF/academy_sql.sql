@@ -1,33 +1,33 @@
 --생성할때 순서대로 하기.
 
--- 1.코드테이블ㅇ
+-- 1.코드테이블
 drop table code_table;
-create table code_table(
-	code_id varchar2(5) primary key,
-	code_name varchar2(30) not null,
-	code_type varchar2(30) not null
+create table code_table(			 	-- 코드 테이블 
+	code_id varchar2(5) primary key, 	-- 코드 
+	code_name varchar2(30) not null, 	-- 코드 이름
+	code_type varchar2(30) not null  	-- 코드 종류
 );
 
 -- 2.관리자ㅇ
 drop table administrator;
-create table administrator(
-	administrator_id varchar2(15) primary key,
-	administrator_password varchar2(50) not null
+create table administrator(							-- 관리자 테이블
+	administrator_id varchar2(15) primary key,		-- 관리자 아이디
+	administrator_password varchar2(50) not null	-- 관리자 비밀번호
 );
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 insert into administrator values('admin', '1234');
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 -- 3.강사ㅇ
 drop table teacher cascade constraint;
-create table teacher(
-	teacher_id varchar2(50) primary key,
-	teacher_password varchar2(50) not null,
-	teacher_name varchar2(100) not null,
-	teacher_email varchar2(100) not null,
-	teacher_phone_no varchar2(13) not null,
-	teacher_address varchar2(100) not null,
-	teacher_subject varchar2(50) not null,
-	teacher_salary number not null
+create table teacher(							-- 강사회원 테이블
+	teacher_id varchar2(50) primary key,		-- 강사회원 아이디
+	teacher_password varchar2(50) not null,		-- 강사회원 비밀번호
+	teacher_name varchar2(100) not null,		-- 강사회원 이름
+	teacher_email varchar2(100) not null,		-- 강사회원 이메일
+	teacher_phone_no varchar2(13) not null,		-- 강사회원 핸드폰번호
+	teacher_address varchar2(100) not null,		-- 강사회원 주소
+	teacher_subject varchar2(50) not null,		-- 강사회원 강의 과목
+	teacher_salary number not null				-- 강사회원 월급
 );
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 insert into teacher values('teacher1', '1234', '김국어', 'as@naver.com', '010-6266-5153', '서울시 서초구', '국어', 1000000);
@@ -37,13 +37,13 @@ select * from teacher;
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 -- 4.학생
 DROP table student cascade constraint;
-CREATE TABLE student(
-	student_id varchar2(50) primary key, --학생아이디 primary key
-	student_password varchar2(50) not null, --비밀번호
-	student_name varchar2(100) not null, --이름
-	student_email varchar2(100) not null,  --이메일
-	student_phone_no varchar2(13) not null, --핸드폰번호
-	student_address varchar2(100) not null --주소
+CREATE TABLE student(							-- 학생회원 테이블
+	student_id varchar2(50) primary key, 		-- 학생회원 아이디 
+	student_password varchar2(50) not null, 	-- 학생회원 비밀번호
+	student_name varchar2(100) not null, 		-- 학생회원 이름
+	student_email varchar2(100) not null,  		-- 학생회원 이메일
+	student_phone_no varchar2(13) not null, 	-- 학생회원 핸드폰번호
+	student_address varchar2(100) not null 		-- 학생회원 주소
 );
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 insert into STUDENT values('student1','1234','이영주','iidd1@kosta.com','010-1111-1111','경기도 용인시 처인구 고림동');
@@ -53,50 +53,50 @@ insert into STUDENT values('student4','1234','김세은','iidd4@kosta.com','010-
 ------------------------------------------------------------------------------------------------------------------------------------------------------
 -- 5.FAQ, 공지사항ㅇ
 drop table basic_board;
-create table basic_board(
-	basic_no number primary key,
-	basic_writer varchar2(50) not null,
-	basic_title varchar2(100) not null,
-	basic_content clob not null,	
-	basic_date varchar2(50) not null,
-	basic_hit number not null,
-	basic_type varchar2(30) not null
+create table basic_board(					-- 공지사항 & FAQ 테이블
+	basic_no number primary key,			-- 글 번호
+	basic_writer varchar2(50) not null,		-- 글 작성자
+	basic_title varchar2(100) not null,		-- 글 제목	
+	basic_content clob not null,			-- 글 내용
+	basic_date varchar2(50) not null,		-- 글 작성일	
+	basic_hit number not null,				-- 글 조회수	
+	basic_type varchar2(30) not null		-- 글 종류
 );
 drop sequence basic_board_seq; 
 create sequence basic_board_seq nocache;
 
 -- 6.수강 후기ㅇ
-drop table review_board;
-create table review_board(
-	review_no number primary key,
-	review_writer_id  varchar2(50) not null,
-	review_writer varchar2(50) not null,
-	lecture_title varchar2(100) not null,
-	lecture_subject varchar2(50) not null,
-	review_title varchar2(100) not null,
-	review_content clob not null,
-	review_date varchar2(50) not null,
-	review_hit number not null
+drop table review_board;					
+create table review_board(						-- 수강후기 테이블
+	review_no number primary key,				-- 수강후기 번호
+	review_writer_id  varchar2(50) not null,	-- 수강후기 작성자 아이디
+	review_writer varchar2(50) not null,		-- 수강후기 작성자
+	lecture_title varchar2(100) not null,		-- 강의 제목
+	lecture_subject varchar2(50) not null,		-- 강의 종류
+	review_title varchar2(100) not null,		-- 수강후기 제목
+	review_content clob not null,				-- 수강후기 내용
+	review_date varchar2(50) not null,			-- 수강후기 작성일
+	review_hit number not null					-- 수강후기 조회수
 );
 DROP SEQUENCE review_board_seq;
 CREATE SEQUENCE review_board_seq nocache;
 
 -- 7.강의ㅇ
 DROP table lecture cascade constraint;
-CREATE TABLE lecture(
-	lecture_no number primary key, --강의번호 primary key
-	lecture_title varchar2(100) not null, --강의제목
-	lecture_description varchar2(1000) not null, --강의 설명
-	lecture_start_time varchar2(15) not null, --강의 시작 시간
-	lecture_end_time varchar2(15) not null, --강의 끝 시간
-	lecture_day varchar2(50) not null, --강의 요일
-	lecture_start_date varchar2(50) not null, --강의 시작일
-	lecture_end_date varchar2(50) not null, --강의 종료일
-	lecture_price number not null, --강의 수강료
-	lecture_total_student number not null, --강의 수강가능 인원
-	lecture_current_student number not null, --강의 현재수강 인원
-	lecture_subject varchar2(50) not null, --강의 종류
-	teacher_id2 varchar2(50), --강사아이디 foreign key
+CREATE TABLE lecture(								-- 강의 테이블
+	lecture_no number primary key, 					-- 강의 번호 
+	lecture_title varchar2(100) not null, 			-- 강의 제목
+	lecture_description varchar2(1000) not null, 	-- 강의 설명
+	lecture_start_time varchar2(15) not null, 		-- 강의 시작 시간
+	lecture_end_time varchar2(15) not null, 		-- 강의 종료 시간
+	lecture_day varchar2(50) not null, 				-- 강의 요일
+	lecture_start_date varchar2(50) not null, 		-- 강의 시작일
+	lecture_end_date varchar2(50) not null, 		-- 강의 종료일
+	lecture_price number not null, 					-- 강의 수강료
+	lecture_total_student number not null, 			-- 강의 수강가능 인원
+	lecture_current_student number not null, 		-- 강의 현재수강 인원
+	lecture_subject varchar2(50) not null, 			-- 강의 종류
+	teacher_id2 varchar2(50), 						-- 강사회원 아이디 foreign key
 	constraint fk_lecture_teacher foreign key (teacher_id2) references teacher(teacher_id)
 );
 drop sequence lecture_seq;
@@ -115,14 +115,14 @@ select * from lecture;
 
 -- 8. 1:1문의, 질문게시판ㅇ
 drop table advanced_board cascade constraint;
-create table advanced_board(
-	advanced_no number primary key,
-	advanced_secret varchar2(20) not null,
-	advanced_title varchar2(100) not null,
-	advanced_content clob not null,
-	advanced_date varchar2(50) not null,
-	advanced_hit number not null,
-	advanced_id varchar2(50) not null,
+create table advanced_board(						-- 1:1문의 & 질문게시판 테이블
+	advanced_no number primary key,					-- 글 번호
+	advanced_secret varchar2(20) not null,			-- 비밀글 여부	
+	advanced_title varchar2(100) not null,			-- 글 제목
+	advanced_content clob not null,					-- 글 내용
+	advanced_date varchar2(50) not null,			-- 글 작성일
+	advanced_hit number not null,					-- 글 조회수
+	advanced_id varchar2(50) not null,				--  
 	advanced_type varchar2(50) not null,
 	lecture_no2 number,
 	constraint fk_advanced_lecture foreign key(lecture_no2) references lecture(lecture_no)
@@ -162,6 +162,7 @@ insert into COMMENT_TABLE values(1, '댓글내용1', '2015-06-04', 'student2', '
 
 select * from file_board;
 drop table file_board cascade constraint;
+
 --10. 영주 파일업로드할 테이블
 create table file_board(
 title varchar2(1000) null ,  -->사용안함
@@ -215,10 +216,10 @@ insert into assignment_board values(assignment_board_seq.nextval,'1',0,'고등�
 -- 12. 학생 강의 조인
 DROP table student_lecture_join cascade constraint;
 CREATE TABLE student_lecture_join(
-	student_id3 varchar2(50),
-	lecture_no3 number,
-	primary key (student_id3, lecture_no3), --학생아이디 primary key, --강의번호 primary key
-	zzim_option varchar2(1) not null, --찜여부
+	student_id3 varchar2(50),				-- 학생회원 아이디
+	lecture_no3 number,						-- 강의 번호
+	primary key (student_id3, lecture_no3), -- 학생아이디 primary key, -- 강의번호 primary key
+	zzim_option varchar2(1) not null, 		-- 찜여부
 	constraint fk_student_lecture_join foreign key (student_id3) references student(student_id),
 	constraint fk_lecture_student_join foreign key (lecture_no3) references lecture(lecture_no)
 );
@@ -226,10 +227,10 @@ CREATE TABLE student_lecture_join(
 -- 13. 출석부
 DROP table attendance;
 CREATE TABLE attendance( 
-	attandance_state varchar2(6) not null, --출석상태
-	lecture_day number not null, --강의일차
-	student_id2 varchar2(50) not null, --학생아이디 foreign key
-	lecture_no2 number not null, --강의번호 foreign key
+	attandance_state varchar2(6) not null, 				-- 출석상태
+	lecture_day number not null, 						-- 강의일차
+	student_id2 varchar2(50) not null,					-- 학생회원 아이디 foreign key
+	lecture_no2 number not null, 						-- 강의번호 foreign key
 	constraint fk_attendance foreign key (student_id2, lecture_no2) references student_lecture_join(student_id3, lecture_no3)
 );
 ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -241,114 +242,3 @@ insert into CODE_TABLE values(code_table_seq.nextval, '영어', 'teacherSubject'
 insert into CODE_TABLE values(code_table_seq.nextval, '수학', 'teacherSubject');
 drop sequence CODE_TABLE_seq;
 create sequence CODE_TABLE_seq nocache;
-
---끝
---아래x
-
-
-
-
-
---drop sequence code_table_seq;
---create sequence code_table_seq nocache;
---
---select *from code_table
---
---select * from CODE_TABLE;
---	SELECT *
---	from code_table
---	where code_type = 'basic_board'
---
---select * from LECTURE;
---INSERT INTO lecture VALUES(1, '국어1', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
---INSERT INTO lecture VALUES(2, '국어2', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
---INSERT INTO lecture VALUES(3, '국어3', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
---INSERT INTO lecture VALUES(4, '국어4', '국어수업입니다', 13, 17,'목,금', '0620', '0720', 15000, 30, 5, '국어', null);
---
-----수강후기
---insert into REVIEW_BOARD values(review_board_seq.nextval,'id-1','이영주','국어','국어고등3','국어 수업재미있어요','내용입니다 재미있어요1','20160203',1);
---insert into REVIEW_BOARD values(review_board_seq.nextval,'id-2','김수진','영어','국어고등3','영어 수업재미있어요','내용입니다 재미있어요2','20160203',1);
---insert into REVIEW_BOARD values(review_board_seq.nextval,'id-1','이영주','영어','수학고등3','수학 수업재미있어요','내용입니다 재미있어요2','20160203',1);
---
---
---INSERT INTO administrator values('admin', '1234');
---
---SELECT * FROM student_lecture_join;
---DELETE FROM student_lecture_join;
---
---select  * from review_board where review_no=75;
---
--- 		SELECT *
--- 		FROM   advanced_board
--- 		where advanced_title like '%3%'
---
---
---delete from lecture where lecture_no=-1 cascade constraint;
-----select  * from review_board where review_no=75;
---
---
---drop table secret_table;
---create table secret_table(
---	secret varchar2(20) primary key
---);
---
---
---select * from assignment_board where assignment_no in(161, 170)
---
---
-
-
-
-
-
---		select 	i.advanced_no,
---				i.advanced_secret,
---				i.advanced_title,
---				i.advanced_content,
---				i.advanced_date,
---				i.advanced_hit,
---				i.advanced_id,
---				i.advanced_type,
---				c.comment_no,
---				c.comment_content,
---				c.comment_date,
---				c.comment_writer,
---				c.advanced_no2
---		from 	advanced_board i, comment_table c
---		where 	i.advanced_no = c.advanced_no2
---		and advanced_type = '1:1문의' and advanced_no = 1
---
---		update(		select 	i.advanced_no,
---				i.advanced_secret,
---				i.advanced_title,
---				i.advanced_content,
---				i.advanced_date,
---				i.advanced_hit,
---				i.advanced_id,
---				i.advanced_type,
---				c.comment_no,
---				c.comment_content,
---				c.comment_date,
---				c.comment_writer,
---				c.advanced_no2
---		from 	advanced_board i, comment_table c
---		where 	c.comment_no = 1)
---		set comment_content = '뭐지'
---		
---		delete from comment_table c
---		where exists(select 	i.advanced_no,
---				i.advanced_secret,
---				i.advanced_title,
---				i.advanced_content,
---				i.advanced_date,
---				i.advanced_hit,
---				i.advanced_id,
---				i.advanced_type		
---		from 	 advanced_board i
---		
---		where c.advanced_no2 = i.advanced_no
---		)
---		
---
---select * from lecture;
---

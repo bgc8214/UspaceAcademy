@@ -25,10 +25,6 @@ $(document).ready(function(){
 	$(".checkbox").on("mouseover",function(){
 		this.style.cursor = 'pointer';
 	})
-	$(document).ready(effect);
-	function effect() {
-		$("tr:eq(2)").css("background-color", "#D4F4FA");
-	}
 	
 	$("#removeZzim").on("click", function(){
 		return confirm("정말 삭제하시겠습니까?");

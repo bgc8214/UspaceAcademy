@@ -6,7 +6,7 @@
 
 <style type="text/css">
 table#tb {
-	width: 700px;
+	width: 1000px;
 	heiht: 100px;
 
 }

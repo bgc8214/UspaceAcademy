@@ -56,13 +56,6 @@ public class MemberService
 		
 	}
 	
-	//영주1
-	public List searchCode(String code)
-	{
-		return dao.selectCode(code);
-	}
-	
-	
 	public Student findStudentById(String id) //로그인 때 필요한 아이디 찾기
 	{
 		return dao.findStudentById(id);
@@ -109,10 +102,6 @@ public class MemberService
 		return dao.updateTeacher(teacher);
 	}
 	
-/*	// 강사 탈퇴
-	public int removeTeacher(String teacherId) {
-		return dao.deleteTeacher(teacherId);
-	}*/
 	
 	// 학생 개인정보 수정
 	public int modifyStudent(Student student) {
@@ -142,7 +131,6 @@ public class MemberService
 			System.out.println(dao.deleteAttendanceForTeacher((int)list.get(i)));	// 강의번호로 출석부 테이블의 강사의 강좌 출석부 정보 삭제
 			System.out.println(dao.deleteByLectureNo((int)list.get(i)));	// 학생_강의 테이블 강의번호로 삭제
 			System.out.println(dao.deleteTeacherInfoDao((int)list.get(i))); // 과제게시판 강의번호로 삭제
-//			dao.deleteByLectureNo((int)list.get(i));
 		}
 		System.out.println("강의 테이블에서 강사번호로 강의 삭제 Service");
 		dao.deleteByTeacherId(teacherId);		// 강의 테이블에서 강사번호로 강의 들 삭제

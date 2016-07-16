@@ -31,33 +31,12 @@ $(document).ready(function(){
 						}
 						tmp.next().next().children().eq(0).append($(temp));
 					}
-					if(list[1]=="administrator"){
-						var txt2 = tmp.children().eq(0).text();
-						var temp2 = "<a href="+"/UspaceAcademy/lecture/getModifyForm.do?page="+$("#page").val()+"&lectureNo="+txt2+"&codeType=teacherSubject><button class='btn btn-warning'>강의수정</button></a>"+
-								    "<a href="+"/UspaceAcademy/lecture/removeLectureByNo.do?page="+$("#page").val()+"&lectureNo="+txt2+">&nbsp;&nbsp;<button id='removeBtn' class='btn btn-danger'>강의삭제</button></a>";
-						tmp.next().children().eq(0).append($(temp2));
-					}
-				
-/*	정훈 - 강의일수 확인을 위해서...
-				var start_String = list[0].lectureStartDate;
-				var end_String = list[0].lectureEndDate;
-				var start_Array = start_String.split("/");
-				var end_Array = end_String.split("/");
-				var start_date = new Date(start_Array[0], Number(start_Array[1])-1, start_Array[2]);
-				var end_date = new Date(end_Array[0], Number(end_Array[1])-1, end_Array[2]);
-				var between_day = (end_date.getTime() - start_date.getTime())/1000/60/60/24;
-				alert("강의일수 - " +(between_day+1));		
- */	 
 			},
 			"error":function(xhr, status, errorMsg){
 				alert("오류가 발생했습니다."+status+", "+errorMsg);
 			},
 			"beforeSend":function(){
-				/*if(!$("#id").val()){	
-					alert("조회할 ID를 입력하세요");
-					$("#id").focus();
-					return false;
-				}*/
+				
 			}
 		})
 		

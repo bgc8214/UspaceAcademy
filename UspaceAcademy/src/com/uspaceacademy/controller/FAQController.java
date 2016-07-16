@@ -1,10 +1,8 @@
 package com.uspaceacademy.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -21,15 +19,14 @@ import org.springframework.web.servlet.ModelAndView;
 import com.uspaceacademy.service.CodeService;
 import com.uspaceacademy.service.FAQService;
 import com.uspaceacademy.validaotor.FAQValidator;
-import com.uspaceacademy.vo.Code;
 import com.uspaceacademy.vo.FAQ;
-import com.uspaceacademy.vo.Teacher;
 
 
 @Controller
 @RequestMapping("/FAQ")
 public class FAQController
 {
+	
 	private String value;
 	
 	@Autowired
@@ -55,19 +52,18 @@ public class FAQController
 		System.out.printf("FAQ 등록 처리중 에러 발생 여부 : %s, 발생 에러 개수 : %d%n", error, errorCount);
 		
 		if(errors.hasErrors()) {
-			return "/FAQ/codeList.do?codeNames="+faq.getBasicType();
+			return "/FAQ/codeList.do?codeName="+faq.getBasicType();
 		}
-		FAQ faq1 = new FAQ(service.selectSeq(), "administrator", faq.getBasicTitle(), faq.getBasicContent(), new SimpleDateFormat("yyyy-MM-dd kk:mm").format(new Date()), 0, faq.getBasicType());
+		FAQ faq1 = new FAQ(service.selectSeq(), "administrator", faq.getBasicTitle(), faq.getBasicContent(), new SimpleDateFormat("yyyy-MM-dd kk:mm").format(new Date()), 0, "FAQ");
 		service.insertFAQService(faq1);
-		List list = service.FAQListService(faq.getBasicType());
-		return "redirect:/FAQ/FAQList.do?type="+faq.getBasicType();
+		return "redirect:/FAQ/FAQList.do?type=FAQ";
 	}
 	
+	// 새로고침 시 더 등록 안되도록 redirect 처리
 	@RequestMapping("/FAQRedirect.do")
-	public String FAQRedirectRegister(int no) {	// 새로고침 시 더 등록 안되도록 redirect 처리
+	public String FAQRedirectRegister(int no) {			
 		return "redirect:/FAQ/FAQDetatil.do?no="+no;
 	}
-	
 	
 	// FAQ Paging 리스트
 	@RequestMapping("/FAQList.do")
@@ -80,7 +76,7 @@ public class FAQController
 	// FAQ 수정
 	@RequestMapping("/FAQModify.do")
 	public String FAQModify(@RequestParam(defaultValue="1") int page, @ModelAttribute("FAQForm") FAQ faq, BindingResult errors) {
-	// 검증
+	
 		FAQValidator validator = new FAQValidator();
 		validator.validate(faq, errors);
 		boolean error = errors.hasErrors();
@@ -100,8 +96,7 @@ public class FAQController
 	}
 	
 	@RequestMapping("/FAQModifyRedirect.do")
-	public String FAQModifyRedirect(String type) {	// 새로고침 시 더 등록 안되도록 redirect 처리
-		System.out.println("수정 리다이렉트 "+type);
+	public String FAQModifyRedirect(String type) {			// 새로고침 시 더 등록 안되도록 redirect 처리
 		return "redirect:/FAQ/FAQList.do?type="+type;
 	}
 	

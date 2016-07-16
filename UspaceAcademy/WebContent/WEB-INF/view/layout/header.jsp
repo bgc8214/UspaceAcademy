@@ -7,7 +7,7 @@
 		padding-left : 200px;
 		position :relative;
 		position : absolute;
-		left:750px;
+		left:1000px;
 		color : white;
 		top : 12px;
 		bold;
@@ -75,9 +75,9 @@
 						<li class="down"><a class="dropdown-toggle"
 							data-toggle="dropdown" id="ff">고객센터</a>
 							<ul class="dropdown-menu">
-								<li><a href="/UspaceAcademy/FAQ/FAQList.do?type=FAQ" id="ff">FAQ</a></li>
+								<li><a href="/UspaceAcademy/FAQ/FAQList.do?type=FAQ">FAQ</a></li>
 								<li><a
-									href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의" id="ff">1:1문의</a></li>
+									href="/UspaceAcademy/inquiry/inquiryList.do?advancedType=1:1문의">1:1문의</a></li>
 							</ul>
 					</ul>
 					<ul class="nav navbar-nav">
@@ -96,8 +96,8 @@
 		<!-- 로그인 안했을 때 -->
 
 		<form action="/UspaceAcademy/member/login.do" method="post" id="loginForm">
-			ID : <input type="text" name="id" placeholder="id를 입력하세요" id="aa"> PASSWORD :<input
-				type="password" name="password" placeholder="비밀번호를 입력하세요" id="aa"> <input type="submit"
+			ID : <input type="text" name="id" placeholder="&nbsp;아이디를 입력하세요" id="aa"> PASSWORD :<input
+				type="password" name="password" placeholder="&nbsp;비밀번호를 입력하세요" id="aa"> <input type="submit"
 				value="login" class="btn btn-success">
 		</form>
 	</c:when>
@@ -204,9 +204,9 @@
 
 								<form action="/UspaceAcademy/member/login.do" method="post"
 									id="loginForm" id="ff">
-									ID : <input type="text" name="id" placeholder="id를 입력하세요"
+									ID : <input type="text" name="id" placeholder="&nbsp;아이디를 입력하세요"
 										id="aa"> PASSWORD :<input type="password"
-										name="password" placeholder="비밀번호를 입력하세요" id="aa"> <input
+										name="password" placeholder="&nbsp;비밀번호를 입력하세요" id="aa"> <input
 										type="submit" value="login" class="btn btn-success">
 								</form>
 							</c:when>

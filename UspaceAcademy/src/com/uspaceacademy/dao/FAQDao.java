@@ -38,11 +38,6 @@ public class FAQDao
 		return session.selectList(namespace+"selectList", type);
 	}
 	
-	// codeTable에서 name값 가져오기
-	public List selectCode(String code) {
-		return session.selectList("codeTable.selectCodeName", code);
-	}
-	
 	// 공지사항 게시물 수정
 	public int updateFAQDao(FAQ faq) {
 		return session.update(namespace+"update_faq", faq);

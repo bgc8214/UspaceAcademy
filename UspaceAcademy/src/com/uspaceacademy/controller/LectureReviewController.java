@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.uspaceacademy.service.CodeService;
 import com.uspaceacademy.service.LectureReviewService;
 import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.vo.LectureReview;
@@ -33,6 +34,8 @@ public class LectureReviewController{
 	private LectureReviewService service; 
 	@Autowired
 	private LectureService lectureService;
+	@Autowired
+	private CodeService codeService;
 	
 	//mybatis.config.xml에 mapper 등록하기
 
@@ -87,7 +90,7 @@ public class LectureReviewController{
 	public ModelAndView registerForm(String codeType){
 		
 		HashMap map = new HashMap<>();
-		List codeList = service.selectCodeName(codeType);
+		List codeList = codeService.searchCodeNameByType(codeType);
 		List lectureTitle = lectureService.selectLectureTitleByLectureSubject("국어"); //lecture 테이블에서 가져옴
 		
 		map.put("lectureTitle", lectureTitle); // lecture테이블에서 가져온 강의명 뿌려줌 lectureTitle라는 이름으로
@@ -181,7 +184,7 @@ public class LectureReviewController{
 	public ModelAndView modifyForm(int reviewNo, String codeType){
 
 		LectureReview lectureReview = service.selectNo(reviewNo); //글번호     수정폼가기전에 reviewNo로 vo가져온다
-		List codeList = service.selectCodeName(codeType);//코드타입
+		List codeList = codeService.searchCodeNameByType(codeType);//코드타입
 		List lectureTitle = lectureService.selectLectureTitleByLectureSubject("국어");//lecture 테이블에서 가져옴.
 				
 		HashMap map = new HashMap<>();
@@ -255,7 +258,7 @@ public class LectureReviewController{
 			map.put("keyword",keyword);
 		}else{
 			map = service.selectPagingCount(page);
-			List codeList = service.selectCodeName("teacherSubject");
+			List codeList = codeService.searchCodeNameByType("teacherSubject");
 			map.put("page", page);
 			map.put("codeList",codeList );
 			map.put("searchType",searchType );

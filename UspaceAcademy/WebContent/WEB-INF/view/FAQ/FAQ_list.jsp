@@ -19,7 +19,7 @@ $(document).ready(function() {
 			"dataType":"json", //	응답데이터 타입 지정. text는 default
 			"success":function(faq) {
 				$("tbody tr.dummy").remove();
- 				$('<tr class="dummy"><td colspan="7" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">답변 :'+faq.basicContent+'</textarea></td></tr>').insertAfter(tmp); // 이벤트 소스의 다음 형제로 추가
+ 				$('<tr class="dummy"><td colspan="7" class="dummy"><textarea rows="10" cols="50" readonly="readonly" class="form-control">'+faq.basicContent+'</textarea></td></tr>').insertAfter(tmp); // 이벤트 소스의 다음 형제로 추가
 				
 			
 				tmp.children().eq(3).text(faq.basicHit); 

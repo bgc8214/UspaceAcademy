@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.uspaceacademy.service.AttendanceService;
+import com.uspaceacademy.service.CodeService;
 import com.uspaceacademy.service.LectureService;
 import com.uspaceacademy.service.MemberService;
 import com.uspaceacademy.validaotor.StudentValidator;
@@ -48,6 +49,8 @@ public class MemberController
 	@Autowired
 	private AttendanceService attendanceService;
 	
+	@Autowired
+	private CodeService codeService;
 
 	/*
 	 * @RequestMapping("/register_form.do") public String register_form() {
@@ -61,24 +64,16 @@ public class MemberController
 	public ModelAndView selectSalaryList() {
 		
 		Map map = new HashMap<>();
-		
-		List teacherSalaryList = service.selectSalaryList();
-		List lectureList = lectureService.getLectureList();
-		
-		map.put("teacherSalaryList", teacherSalaryList);
-		map.put("lectureList", lectureList);
-
-
+		map.put("teacherSalaryList", service.selectSalaryList());
+		map.put("lectureList", lectureService.getLectureList());
 		
 		return new ModelAndView("member/teacherSalary_list.tiles", map);
 	}
 	
 	//강사아이디로 월급 조회
 	@RequestMapping("/selectSalaryByTeacherId.do")
-	public ModelAndView selectSalaryByTeacherId(String teacherId) {
-		Teacher teacherDetail = service.selectSalaryByTeacherId(teacherId);
-		
-		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", teacherDetail);
+	public ModelAndView selectSalaryByTeacherId(String teacherId) {		
+		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", service.selectSalaryByTeacherId(teacherId));
 	}
 	
 	//월급 등록 폼
@@ -112,17 +107,14 @@ public class MemberController
 	public ModelAndView redirectInsertSalary(String teacherId) // 새로고침 시 더 등록 안되도록 redirect 처리
 	{
 		System.out.println("리다이렉트");
-		Teacher teacherDetail = service.findTeacherById(teacherId);
 
-		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", teacherDetail);
+		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", service.findTeacherById(teacherId));
 	}
 	
 	//월급 수정 폼
 	@RequestMapping("/updateSalaryForm.do")
-	public ModelAndView updateSalaryForm(String teacherId){		
-		Teacher teacherDetail = service.selectSalaryByTeacherId(teacherId);		
-		
-		return new ModelAndView("member/teacherSalary_update.tiles", "teacherDetail", teacherDetail);
+	public ModelAndView updateSalaryForm(String teacherId){				
+		return new ModelAndView("member/teacherSalary_update.tiles", "teacherDetail", service.selectSalaryByTeacherId(teacherId));
 	}
 	
 	//월급 수정하기
@@ -160,17 +152,13 @@ public class MemberController
 	@RequestMapping("/redirectUpdateSalary.do")
 	public ModelAndView redirectUpdateSalary(String teacherId) // 새로고침 시 더 등록 안되도록 redirect 처리
 	{		
-		Teacher teacherDetail = service.selectSalaryByTeacherId(teacherId);
-		
 //		return "/member/selectSalaryByTeacherId.do?teacherId=" + teacherId;
 //		return new ModelAndView("/member/selectSalaryByTeacherId.do?teacherId=" + teacherId);
-		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", teacherDetail);
+		return new ModelAndView("member/teacherSalary_detail.tiles", "teacherDetail", service.selectSalaryByTeacherId(teacherId));
 //		return "/member/teacherAllInfo.do";
 	}
 	
 	
-	
-
 	@RequestMapping("/studentRegister.do")
 	public String studentRegister(@ModelAttribute Student student, String addr1, String addr2, BindingResult errors)
 	{
@@ -229,22 +217,17 @@ public class MemberController
 	}
 
 	
-	
 	//영주1
 	@RequestMapping("/teacherRegisterForm.do") // 강사가입폼으로 이동 , 코드 타입을 받아온다
 	public ModelAndView moveTeacher(String codeType)
 	{
 		HashMap map = new HashMap<>(); // 코드테이블을 넘기기 위한 맵
 		System.out.println("멤버컨트롤러 코드타입"+codeType);
-		List codeList = service.searchCode(codeType); // 코드타입 정보를 리스트로 받는다.
-		System.out.println("멤버컨트롤러 코드리스트"+codeList);
 
-		map.put("codeType", codeList);
+		map.put("codeType", codeService.searchCodeNameByType(codeType));
 		return new ModelAndView("member/teacherRegisterForm.tiles", map);
 	}
 
-	
-	
 	
 	@RequestMapping("/login.do")
 	public String memberLogin(String id, String password, HttpServletRequest request)
@@ -552,6 +535,7 @@ public class MemberController
 			return "main.tiles";
 		}
 	}
+	
 	// 강사의 회원정보 수정을 위한 폼으로 이동
 	@RequestMapping("/updateTeacherForm.do")
 	public ModelAndView updateTeacherForm() {

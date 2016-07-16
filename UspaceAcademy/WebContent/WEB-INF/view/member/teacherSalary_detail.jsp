@@ -1,6 +1,7 @@
 <%@ page contentType ="text/html;charset=utf-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <h3 class="pageTlt">${requestScope.teacherDetail.teacherName } 강사님 월급 정보</h3>
 <hr>
@@ -23,14 +24,14 @@
 				<td>${requestScope.teacherDetail.teacherId }</td>
 				<td>${requestScope.teacherDetail.teacherName }</td>
 				<td>${requestScope.teacherDetail.teacherSubject }</td>
-				<td>${requestScope.teacherDetail.teacherSalary }</td>
+				<td>
+					<fmt:formatNumber value="${requestScope.teacherDetail.teacherSalary}" pattern="#,###원"/>
+				</td>
 			</tr> 
 	</tbody>
 	
 </table>
-
 <p>
-
 <c:choose>
 	<c:when test="${sessionScope.memberType=='administrator'}">
 
