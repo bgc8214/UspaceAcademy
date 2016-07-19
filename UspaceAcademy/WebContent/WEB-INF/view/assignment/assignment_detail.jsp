@@ -36,7 +36,7 @@ td{
 
 
 
-<table  board="1" class="table_list" summary="영주" cellpacing="0">
+<table class="table table-bordered form-table">
 	<caption></caption>
 <tbody>
 
@@ -53,13 +53,22 @@ td{
 <td>${assignment.assignmentDate}</td>
 <th scope="col">마감일</th>	
 <td>${assignment.assignmentDeadline}</td>
-<th scope="col">조회수</th>	
-<td>${assignment.assignmentHit}</td>
 </tr>
 
+<th scope="col">조회수</th>	
+<td>${assignment.assignmentHit}</td>
+
+<th scope="col">파일받기</th><!--  jstl 라이브러리 등록하기(pom.xml하고, 위에 taglib-->
+<td>
+<a href="/UspaceAcademy/uploadFile/${assignment.assignmentFile }">${assignment.assignmentFile }</a>
+
+</tr>
+</table>
 
 
 
+
+<table class="table table-bordered form-table">
 <tr>
 <th scope="col">제목</th>	
 <td>${assignment.assignmentTitle}</td>
@@ -67,16 +76,13 @@ td{
 
 <tr>
 <th scope="col">내용</th>	
-<td>${assignment.assignmentContent}</td>
+<td>${assignment.assignmentContent}<br><br><br></td>
 </tr>
 
-<tr>
-<th scope="col">파일받기</th><!--  jstl 라이브러리 등록하기(pom.xml하고, 위에 taglib-->
-<td>
-<a href="/UspaceAcademy/uploadFile/${assignment.assignmentFile }">${assignment.assignmentFile }</a>
 
 </td>
 </tr>
+</table>
 							<%-- <h4>DownloadView를 이용해 다운처리</h4> com.uspaceacademy.view패키지에있음
 							<c:forEach items="${requestScope.fileNames}" var="fileName">
 							<a href="/UspaceAcademy/assignment/download.do?fileName=${fileName }">${fileName }</a><!--  링크가 download.do로 걸림* -->

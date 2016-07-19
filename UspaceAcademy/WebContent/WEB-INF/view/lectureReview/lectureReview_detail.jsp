@@ -6,31 +6,43 @@
 
 
 </style>
-<h3>수강후기|상세보기</h3>
+<h3>수강후기|  상세보기</h3>
 <hr/>
-<table border="1">
+<table class="table table-bordered form-table">
+<tbody></tbody>
 	<tr>
-		<td>글번호: ${requestScope.lectureListReview.reviewNo}&nbsp;<!--  오류난거메모 : 상세페이지니까 반복문 돌리면 안됨 -->
-			아이디: ${requestScope.lectureListReview.reviewWriterId}&nbsp;
-			이름:${requestScope.lectureListReview.reviewWriter}&nbsp;
+		<th>글번호</th>
+		<td>${requestScope.lectureListReview.reviewNo}&nbsp;<!--  오류난거메모 : 상세페이지니까 반복문 돌리면 안됨 -->
+		<th>아이디</th>
+		<td>${requestScope.lectureListReview.reviewWriterId}&nbsp;</td>
+		<th>이름</th>
+		<td>${requestScope.lectureListReview.reviewWriter}&nbsp;</td>
 		</td>
 	</tr>
 
 	<tr>
-		<td>강의과목:${requestScope.lectureListReview.lectureSubject}&nbsp;
-			강의명:${requestScope.lectureListReview.lectureTitle}&nbsp;
-			날짜:${requestScope.lectureListReview.reviewDate}&nbsp;</td>
-	</tr>
-
-	<tr>
-		<td>제목: ${requestScope.lectureListReview.reviewTitle}</td>
-	</tr>
-
-	<tr>
-		<td>내용<br> ${requestScope.lectureListReview.reviewContent}
+		<th>강의과목</th>
+		<td>${requestScope.lectureListReview.lectureSubject}&nbsp;
+		<th>강의명</th>
+		<td>${requestScope.lectureListReview.lectureTitle}&nbsp;</td>
+		<th>날짜</th>
+		<td>${requestScope.lectureListReview.reviewDate}&nbsp;</td>
 		</td>
 	</tr>
+</table>
 
+
+
+<table class="table table-bordered form-table">
+	<tr>
+		<th>제목</th>
+		<td>${requestScope.lectureListReview.reviewTitle}</td>
+	</tr>
+
+	<tr>
+		<th>내용</th>
+		<td>${requestScope.lectureListReview.reviewContent}<br><br><br><br><br><br></td>
+	</tr>
 </table>
 
 
