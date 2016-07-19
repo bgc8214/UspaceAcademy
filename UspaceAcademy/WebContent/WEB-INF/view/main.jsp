@@ -6,6 +6,6 @@
 <html>
 <body>
 <!-- <img src="image/main.jpg"> -->
-<img src="/UspaceAcademy/image/main.jpg">
+<img align="middle" src="/UspaceAcademy/image/main_img.jpg">
 </body>
 </html>

@@ -22,6 +22,7 @@ import com.uspaceacademy.service.InquiryService;
 import com.uspaceacademy.validaotor.InquiryValidator;
 import com.uspaceacademy.vo.Comment;
 import com.uspaceacademy.vo.Inquiry;
+import com.uspaceacademy.vo.LectureInquiry;
 import com.uspaceacademy.vo.Student;
 import com.uspaceacademy.vo.Teacher;
 
@@ -34,7 +35,7 @@ public class InquiryController {
 	
 	//댓글 작성
 	@RequestMapping("/insertComment")
-	public ModelAndView insertComment(String commentContent, int advancedNo2, HttpSession session){
+	public String insertComment(String commentContent, int advancedNo2, HttpSession session){
 		
 		int commentNo = service.increaseCommentNo();
 		String commentDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
@@ -58,8 +59,9 @@ public class InquiryController {
 			map.put("inquiryDetail", inquiry);
 			map.put("commentList", commentList);		
 			
-			return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
-			+ inquiry.getAdvancedSecret(), map);
+//			return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+//			+ inquiry.getAdvancedSecret(), map);
+			return "redirect:/inquiry/insertCommentRedirect.do?advancedNo2=" + advancedNo2;
 		}
 		
 		else if(member.equals("teacher")){	
@@ -77,8 +79,9 @@ public class InquiryController {
 			map.put("inquiryDetail", inquiry);
 			map.put("commentList", commentList);		
 			
-			return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
-			+ inquiry.getAdvancedSecret(), map);
+//			return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+//			+ inquiry.getAdvancedSecret(), map);
+			return "redirect:/inquiry/insertCommentRedirect.do?advancedNo2=" + advancedNo2;
 		}
 		
 		else if(member.equals("administrator")){	
@@ -96,12 +99,28 @@ public class InquiryController {
 			map.put("inquiryDetail", inquiry);
 			map.put("commentList", commentList);
 			
-			return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
-			+ inquiry.getAdvancedSecret(), map);
+//			return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret="
+//			+ inquiry.getAdvancedSecret(), map);
+			return "redirect:/inquiry/insertCommentRedirect.do?advancedNo2=" + advancedNo2;
 		}
 		
 		else
-			return new ModelAndView("main.tiles");
+			return "main.tiles";
+	}
+	
+	//댓글 등록하기 리다이렉트
+	@RequestMapping("/insertCommentRedirect")
+	public ModelAndView insertCommentRedirect(int advancedNo2){
+		Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo2);
+		List commentList = service.commentList(advancedNo2);
+		
+		Map map = new HashMap<>();
+		map.put("inquiryDetail", inquiry);
+		map.put("commentList", commentList);
+
+//		return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret=" + 
+//		lectureInquiry.getAdvancedSecret() + "&lectureNo2" + lectureNo2);
+		return new ModelAndView("inquiry/inquiry_detail.tiles", map);
 	}
 	
 	//댓글 수정폼
@@ -122,7 +141,7 @@ public class InquiryController {
 	
 	//댓글 수정하기
 	@RequestMapping("/updateComment")
-	public ModelAndView updateComment(int commentNo, int advancedNo2, String commentContent){
+	public String updateComment(int commentNo, int advancedNo2, String commentContent){
 		String commentType = "1:1문의댓글";
 		String commentDate = new SimpleDateFormat("yyyy/MM/dd hh:mm").format(new Date());
 		
@@ -134,8 +153,24 @@ public class InquiryController {
 		int updateComment = service.updateComment(comment);	
 		System.out.println(updateComment);
 
-		return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret=" + 
-		lecturInquiry.getAdvancedSecret());
+//		return new ModelAndView("/inquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret=" + 
+//		lecturInquiry.getAdvancedSecret());
+		return "redirect:/inquiry/updateCommentRedirect.do?advancedNo2=" + advancedNo2;
+	}	
+	
+	//댓글 수정하기 리다이렉트
+	@RequestMapping("/updateCommentRedirect")
+	public ModelAndView updateCommentRedirect(int advancedNo2){
+		Inquiry inquiry = service.selectByAdvancedNoWithComment(advancedNo2);
+		List commentList = service.commentList(advancedNo2);
+		
+		Map map = new HashMap<>();
+		map.put("inquiryDetail", inquiry);
+		map.put("commentList", commentList);
+
+//		return new ModelAndView("/lectureInquiry/selectByAdvancedNoWithComment.do?advancedNo=" + advancedNo2 + "&advancedSecret=" + 
+//		lectureInquiry.getAdvancedSecret() + "&lectureNo2" + lectureNo2);
+		return new ModelAndView("inquiry/inquiry_detail.tiles", map);
 	}	
 	
 	//댓글 삭제하기
